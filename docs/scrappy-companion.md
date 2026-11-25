@@ -405,3 +405,78 @@ Scrappys Eigenständigkeit darf keine unerwünschten Nebenwirkungen auf den Betr
 - Schutzregeln, die verhindern, dass Scrappy wichtige Gegenstände aufnimmt oder Arbeitswege blockiert.
 
 Weitere Fortbewegungsmodule, umfangreiche NPC-Interaktionen, komplexe Maschinenassistenz und eigene längerfristige Projekte werden schrittweise ergänzt.
+
+
+## 20. Energieversorgung und Aufladen
+
+Scrappy besitzt eine interne Energieversorgung, die seine technischen Fähigkeiten glaubwürdig ergänzt. Sie ist jedoch kein Bedürfnis- oder Bestrafungssystem. Der Spieler soll Scrappy nicht regelmäßig versorgen müssen und darf durch einen niedrigen Energiestand keine wichtigen Spielmöglichkeiten verlieren.
+
+### Grundprinzipien
+
+- Scrappy besitzt einen internen Energiespeicher, dessen Kapazität und Verbrauch von seiner Grundkonstruktion und optionalen Modulen abhängen können.
+- Energie wird vor allem für besondere Werkzeuge, aktive Assistenzfunktionen und aufwendige technische Aktionen benötigt.
+- Grundlegende Begleiterfunktionen wie Folgen, Kommunikation, einfache Bewegungen und normale Interaktionen bleiben auch bei niedrigem Energiestand verfügbar.
+- Scrappy kann nicht dauerhaft zerstört werden, verschwinden oder durch Energiemangel aus dem Spiel genommen werden.
+- Der Energiestand erzeugt keine Pflichtaufgabe und darf keinen Zeitdruck auf den Spieler ausüben.
+
+### Aufladen und Ladestationen
+
+- Eine einfache Lademöglichkeit ist früh auf dem Schrottplatz verfügbar oder wird mit geringem Aufwand eingerichtet.
+- Später kann der Spieler komfortablere Ladestationen bauen und in geeigneten Bereichen platzieren.
+- Scrappy kann bei niedrigem Energiestand selbstständig eine erreichbare Ladestation aufsuchen, sofern gerade keine höher priorisierte Spielerinteraktion oder wichtige Aktivität ansteht.
+- Ist keine Ladestation erreichbar oder vorhanden, kann Scrappy bei einer sicheren Ruheposition in einen sparsamen Zustand wechseln und langsam Energie zurückgewinnen.
+- Das Aufladen erfolgt automatisch. Der Spieler muss keinen Ladevorgang starten, überwachen oder manuell abbrechen.
+- Ladestationen blockieren keine wichtigen Wege und müssen nicht in jeder Betriebszone vorhanden sein.
+
+### Energieverbrauch und Module
+
+- Energieintensive Werkzeuge und besondere Fähigkeiten können einen höheren Verbrauch verursachen.
+- Fortbewegungsmodule dürfen sich in ihrer Effizienz unterscheiden, sollen aber keine ständige Optimierung verlangen.
+- Upgrades können Kapazität, Ladegeschwindigkeit oder Effizienz verbessern.
+- Ein niedriger Energiestand schränkt zuerst optionale, energieintensive Zusatzfunktionen ein, nicht Scrappys grundlegende Präsenz oder Persönlichkeit.
+- Die konkreten Werte und Verbrauchsraten werden erst im Prototyp getestet.
+
+### Verhalten bei niedrigem Energiestand
+
+Scrappy reagiert charaktervoll, aber ohne Alarmismus:
+
+- Er kann eine Tätigkeit beenden und eine Ladestation aufsuchen.
+- Er kann eine kurze, trockene Bemerkung über seinen Energiezustand machen.
+- Er kann sich an einem sicheren Ort ausruhen, wenn keine Ladestation verfügbar ist.
+- Animationen können etwas ruhiger werden oder er kann eine kurze Pause einlegen.
+- Er darf den Spieler gelegentlich informieren, aber nicht wiederholt warnen oder um Energie bitten.
+
+### Humoristische Komponente
+
+Energieversorgung bietet Raum für kleine, optionale Scrapstead-Momente:
+
+- Scrappy kommentiert eine improvisierte Ladestation wie eine hochmoderne technische Errungenschaft, obwohl sie aus einem Kabel, einer alten Steckdose und einem fragwürdigen Holzbrett besteht.
+- Er entwickelt eine bevorzugte Ladestation und behauptet, deren Ladequalität sei „wissenschaftlich nicht zu beanstanden“.
+- Beim Aufladen kann er kleine Ruhe- oder Beschäftigungsanimationen zeigen, etwa ein Nickerchen, leises Selbstgespräch oder das Sortieren seiner Gedanken.
+- Er kann gelegentlich über seinen Energieverbrauch philosophieren oder eine völlig übertriebene Diagnose abgeben.
+- Solche Momente sind selten, abwechslungsreich und dürfen den Ladevorgang nicht verlängern oder funktional beeinflussen.
+
+Beispieldialoge:
+
+> „Ich lade gerade meine Energiereserven auf. Bitte bewundere die Effizienz dieser hochentwickelten Technologie.“
+
+> „Ladestand 14 Prozent. Ich würde sagen, das ist noch ausreichend. Für eine sehr kurze und ausgesprochen unwichtige Tätigkeit.“
+
+> „Diese Ladestation ist ausgezeichnet. Sie knistert nur an zwei Stellen. Das ist innerhalb meiner Toleranz.“
+
+### Designregeln
+
+- Energie ist ein unterstützendes Charakter- und Fähigkeitssystem, kein Tamagotchi- oder Wartungssystem.
+- Aufladen geschieht selbstständig und ohne wiederkehrende Aufforderungen an den Spieler.
+- Energiemangel darf weder Scrappys grundlegende Funktionen noch den Spielfortschritt blockieren.
+- Humor entsteht durch Dialoge, Animationen und seine übertriebene technische Selbsteinschätzung, nicht durch künstliche Ladeprobleme.
+- Der Spieler kann Ladestationen und Upgrades gestalten, muss dies aber nicht in kurzen Abständen tun.
+
+## 21. Umfang des ersten Energieprototyps
+
+- Ein einfacher interner Energiestand ohne sichtbare Pflichtanzeige.
+- Eine zugängliche Lademöglichkeit auf dem Startgrundstück.
+- Automatisches Aufsuchen der Ladestation bei niedrigem Energiestand, sofern dies ohne Unterbrechung wichtiger Aktivitäten möglich ist.
+- Ein sicherer sparsamer Zustand mit passiver Erholung, falls keine Ladestation verfügbar ist.
+- Eine kleine Auswahl seltener Dialoge und Ladeanimationen.
+- Keine Energieanforderung für Folgen, Kommunikation und grundlegende Interaktionen.
