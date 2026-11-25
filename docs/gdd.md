@@ -368,3 +368,12 @@ Bisherige Systemspezifikationen beschreiben mögliche Funktionen und sind nicht 
 Die vorläufige Zielspielzeit des Hauptdurchlaufs bleibt 30–40 Stunden und wird durch spielbare Tests validiert.
 
 Vollständige Produktionsleitplanke, Content-Rahmen, Entwicklungsphasen, Abnahmekriterien und Streichreihenfolge: [Produktionsumfang und Entwicklungsfahrplan](production-scope-and-roadmap.md).
+
+
+## Ergänzung: Core-Gameplay-Matrix
+
+Die Core-Gameplay-Matrix konkretisiert die Kernschleife in einzelne Spielerhandlungen. Sie definiert für jede Mechanik die minimale vollständige Umsetzung, Abhängigkeiten, Entwicklungsphase, optionale Erweiterungen und einen MVP-Nachweis.
+
+Sie dient als Produktionsfilter und verhindert, dass optionale Detailkonzepte automatisch zu Release-Anforderungen werden.
+
+Details: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
