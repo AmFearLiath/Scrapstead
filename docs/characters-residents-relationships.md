@@ -359,3 +359,10 @@ Der Prototyp ist erfolgreich, wenn:
 - Welche regionalen Veränderungen dauerhaft oder rückgängig zu machen sind.
 
 Diese Punkte werden im nächsten Schritt anhand einer konkreten NPC-Besetzung und des Quest-/Event-Systems ausgearbeitet.
+
+
+## Ergänzung: Charaktere und Auftragsintegration
+
+Bewohner und Unternehmen sind natürliche Quellen für persönliche Geschichten, regionale Aufgaben und wiederkehrende Dienstleistungen. Nicht jedes Gespräch erzeugt einen Auftrag. Aufgaben entstehen aus konkreten Anliegen und nutzen vorhandene Gameplay-Systeme. Optionale persönliche Geschichten dürfen keine unverzichtbaren Kernfunktionen blockieren.
+
+Die vollständigen Regeln für Aufträge, Fristen, Ereignisse, Belohnungen und Fortschrittsprüfung stehen in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
