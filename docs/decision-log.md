@@ -257,3 +257,16 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Emotionale Momente dürfen ohne Pointe stehen bleiben.
 - Deutsche und englische Texte müssen denselben Charakter und dieselbe Wirkung transportieren; Wortspiele dürfen lokal angepasst werden.
 - Begründung: Der Humor soll Scrapstead wiedererkennbar machen, ohne gekünstelt, aufdringlich oder beliebig zu wirken.
+
+
+## 25.11.2026 — Walts Tod durch seine eigene Erfindung
+
+**Beschluss:** Als neuer erzählerischer Entwurf wird festgelegt, dass Walt bei einem Unfall mit seiner eigenen Maschine ums Leben kam.
+
+- Walts letzte große Erfindung ist die „The Everything-O-Matic 3000“, eine überambitionierte Anlage zur automatischen Erkennung, Sortierung und Zerlegung von Schrott.
+- Bei einem letzten Testlauf begibt sich Walt zur Behebung einer Verklemmung in das Maschineninnere. Die Anlage startet unerwartet erneut; Walt überlebt den Unfall nicht.
+- Der Unfall selbst wird nicht gezeigt. Spieler rekonstruieren die Ereignisse aus Wartungsnotizen, Warnschildern, Maschinenzustand und Scrappys Erinnerungen.
+- Scrappy wird beim Versuch, Walt zu erreichen, schwer beschädigt. Seine Kernkomponente war vor dem Testlauf ausgebaut und im roten Werkzeugkasten gesichert.
+- Der Humor entsteht aus Walts Erfindung, seiner fragwürdigen Dokumentation und trockenen Betriebsnotizen – nicht aus einer Verspottung seines Todes.
+- Die Maschine bleibt zunächst stillgelegt als erzählerisches Relikt auf dem Grundstück. Eine spätere Reparatur oder Nutzung ist noch offen.
+- Begründung: Walts Leidenschaft wird auf tragikomische, zur Welt passende Weise Teil seiner Geschichte. Der Unfall verbindet Scrappys Beschädigung, den roten Werkzeugkasten und die Vergangenheit des Schrottplatzes logisch miteinander.
