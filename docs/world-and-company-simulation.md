@@ -246,3 +246,12 @@ Grundsatz: Die Region ist eine kompakte, handgefertigte und belebte Spielwelt �
 - Statistikdefinitionen und Auszeichnungsregeln.
 
 Diese offenen Punkte werden in den jeweiligen Spezifikationen ausgearbeitet und anhand von Prototypen validiert.
+
+
+## Ergänzung: Begrenzter Tycoon-Umfang
+
+Scrapstead ist kein umfassender Unternehmenssimulator. Die volle wirtschaftliche Tiefe liegt beim eigenen Schrottplatz. Regionale Betriebe besitzen vereinfachte Zustände und Funktionen; der regionale Markt bietet stabile Grundpreise und gelegentliche Chancen. Fremde Unternehmen, Konkurrenz, Buchhaltung und Lieferketten werden nicht vollständig simuliert.
+
+Außenstandorte sind gezielte Erweiterungen des Spielerbetriebs. Neue wirtschaftliche Funktionen müssen einen klaren Spielnutzen rechtfertigen und den Projektumfang nicht unverhältnismäßig vergrößern.
+
+Ausführliche Leitplanke: [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
