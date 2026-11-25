@@ -1,43 +1,4 @@
-[gd_resource type="Theme" load_steps=9 format=3]
-
-[sub_resource type="StyleBoxFlat" id="button_normal"]
-content_margin_left = 22.0
-content_margin_top = 10.0
-content_margin_right = 22.0
-content_margin_bottom = 10.0
-bg_color = Color(0.784, 0.392, 0.176, 1)
-border_width_bottom = 4
-border_color = Color(0.48, 0.22, 0.1, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="button_hover"]
-content_margin_left = 22.0
-content_margin_top = 10.0
-content_margin_right = 22.0
-content_margin_bottom = 10.0
-bg_color = Color(0.878, 0.62, 0.231, 1)
-border_width_bottom = 4
-border_color = Color(0.6, 0.38, 0.1, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="button_pressed"]
-content_margin_left = 22.0
-content_margin_top = 12.0
-content_margin_right = 22.0
-content_margin_bottom = 8.0
-bg_color = Color(0.62, 0.29, 0.13, 1)
-border_width_top = 2
-border_color = Color(0.4, 0.18, 0.08, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+[gd_resource type="Theme" format=3 uid="uid://dedhsyfmsfno7"]
 
 [sub_resource type="StyleBoxFlat" id="button_disabled"]
 content_margin_left = 22.0
@@ -67,6 +28,45 @@ expand_margin_left = 3.0
 expand_margin_top = 3.0
 expand_margin_right = 3.0
 expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="button_hover"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.878, 0.62, 0.231, 1)
+border_width_bottom = 4
+border_color = Color(0.6, 0.38, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="button_normal"]
+content_margin_left = 22.0
+content_margin_top = 10.0
+content_margin_right = 22.0
+content_margin_bottom = 10.0
+bg_color = Color(0.784, 0.392, 0.176, 1)
+border_width_bottom = 4
+border_color = Color(0.48, 0.22, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="button_pressed"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+bg_color = Color(0.62, 0.29, 0.13, 1)
+border_width_top = 2
+border_color = Color(0.4, 0.18, 0.08, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="panel"]
 content_margin_left = 20.0

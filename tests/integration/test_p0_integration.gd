@@ -62,6 +62,11 @@ func test_int02_new_game_starts_clean() -> void:
 	check(_session.is_session_active(), "session active")
 	var player: CharacterBody3D = _player(scene)
 	check(player.global_position.distance_to(Vector3(8, 0, -3)) < 0.3, "player at spawn")
+	# Guards against accidental editor moves: ground, objects and spawn share y = 0.
+	check(scene.get_node("LevelGeometry").global_transform == Transform3D.IDENTITY, "level geometry at origin")
+	await wait_physics_frames(30)
+	check(absf(player.global_position.y) < 0.1, "player stands on the ground (y=%.2f)" % player.global_position.y)
+	check(player.is_on_floor(), "player on floor")
 	check(scene.get_world_object("scrap_rusted_bolt_02").is_interaction_available(), "pickup available")
 	check(not scene.get_world_object("p0_use_floodlight_01").is_on(), "floodlight off")
 

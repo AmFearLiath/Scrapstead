@@ -99,7 +99,6 @@ debug_toggle_overlay={
 [internationalization]
 
 locale/translations=PackedStringArray("res://localization/scrapstead.en.translation", "res://localization/scrapstead.de.translation")
-locale/fallback="en"
 
 [layer_names]
 
@@ -115,5 +114,5 @@ jolt_physics_3d/simulation/areas_detect_static_bodies=true
 
 [rendering]
 
-anti_aliasing/quality/msaa_3d=2
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+anti_aliasing/quality/msaa_3d=2

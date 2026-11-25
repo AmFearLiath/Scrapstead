@@ -1,6 +1,6 @@
-[gd_scene load_steps=30 format=3]
+[gd_scene format=3 uid="uid://cgi7dpa4pg7jj"]
 
-[ext_resource type="Script" path="res://scripts/world/OldYardTestController.gd" id="1_controller"]
+[ext_resource type="Script" uid="uid://cdlpivcyxd4ku" path="res://scripts/world/OldYardTestController.gd" id="1_controller"]
 [ext_resource type="Environment" path="res://assets/environment/yard_environment.tres" id="2_env"]
 [ext_resource type="PackedScene" path="res://scenes/world/YardBlockout.tscn" id="3_yard"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/InspectTestObject.tscn" id="5_inspect"]
@@ -22,15 +22,15 @@
 [ext_resource type="Resource" path="res://data/items/item_catalog.tres" id="21_items"]
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_catalog.tres" id="22_upgrades"]
 [ext_resource type="Resource" path="res://data/prototype/p1_balance.tres" id="23_balance"]
-[ext_resource type="Resource" path="res://data/items/scrap_empty_can.tres" id="def_scrap_empty_can"]
-[ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="def_scrap_rusted_bolt"]
-[ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="def_scrap_wire_coil"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/DismantleStation.tscn" id="30_dismantle"]
 [ext_resource type="Resource" path="res://data/items/device_broken_radio.tres" id="def_device_broken_radio"]
 [ext_resource type="Resource" path="res://data/items/mat_copper_wire.tres" id="def_mat_copper_wire"]
 [ext_resource type="Resource" path="res://data/items/mat_electronic_parts.tres" id="def_mat_electronic_parts"]
+[ext_resource type="Resource" path="res://data/items/scrap_empty_can.tres" id="def_scrap_empty_can"]
+[ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="def_scrap_rusted_bolt"]
+[ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="def_scrap_wire_coil"]
 
-[node name="OldYardTest" type="Node3D" node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "upgrade_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "upgrade_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -49,111 +49,108 @@ item_catalog = ExtResource("21_items")
 upgrade_catalog = ExtResource("22_upgrades")
 balance = ExtResource("23_balance")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=265555798]
 environment = ExtResource("2_env")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 20, -18)
-rotation = Vector3(-0.96, -1.05, 0)
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=483212802]
+transform = Transform3D(0.49757108, 0.7105858, -0.49748453, 0, 0.57352, 0.8191916, 0.8674232, -0.40760604, 0.28536698, 24, 20, -18)
 light_color = Color(1, 0.93, 0.82, 1)
 light_energy = 1.25
 shadow_enabled = true
 directional_shadow_max_distance = 80.0
 
-[node name="LevelGeometry" parent="." instance=ExtResource("3_yard")]
+[node name="LevelGeometry" parent="." unique_id=1654515028 instance=ExtResource("3_yard")]
+metadata/_edit_lock_ = true
 
-[node name="TestObjects" type="Node3D" parent="."]
+[node name="TestObjects" type="Node3D" parent="." unique_id=330993599]
 
-[node name="InspectTestObject" parent="TestObjects" instance=ExtResource("5_inspect")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 0, -3.2)
-rotation = Vector3(0, -0.785398, 0)
+[node name="InspectTestObject" parent="TestObjects" unique_id=959878076 instance=ExtResource("5_inspect")]
+transform = Transform3D(0.7071069, 0, -0.70710665, 0, 1, 0, 0.70710665, 0, 0.7071069, 4.6, 0, -3.2)
 
-[node name="UseTestObject" parent="TestObjects" instance=ExtResource("6_use")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, -9)
-rotation = Vector3(0, -0.785398, 0)
+[node name="UseTestObject" parent="TestObjects" unique_id=104686804 instance=ExtResource("6_use")]
+transform = Transform3D(0.7071069, 0, -0.70710665, 0, 1, 0, 0.70710665, 0, 0.7071069, 17.5, 0, -9)
 
-[node name="SellStation" parent="TestObjects" instance=ExtResource("15_sell")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 0, -6)
-rotation = Vector3(0, -1.5708, 0)
+[node name="SellStation" parent="TestObjects" unique_id=131772909 instance=ExtResource("15_sell")]
+transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 11.6, 0, -6)
 
-[node name="UpgradeStation" parent="TestObjects" instance=ExtResource("16_upgrade")]
+[node name="UpgradeStation" parent="TestObjects" unique_id=1693960008 instance=ExtResource("16_upgrade")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, -14.2)
 
-[node name="scrap_rusted_bolt_01" parent="TestObjects" instance=ExtResource("13_item")]
+[node name="scrap_rusted_bolt_01" parent="TestObjects" unique_id=663560678 instance=ExtResource("13_item")]
 transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 9.6, 0, -5.4)
+definition = ExtResource("def_scrap_rusted_bolt")
 object_id = "scrap_rusted_bolt_01"
-definition = ExtResource("def_scrap_rusted_bolt")
 
-[node name="scrap_empty_can_01" parent="TestObjects" instance=ExtResource("13_item")]
+[node name="scrap_empty_can_01" parent="TestObjects" unique_id=850201062 instance=ExtResource("13_item")]
 transform = Transform3D(0.819152, 0, 0.573576, 0, 1, 0, -0.573576, 0, 0.819152, 6.5, 0, -8.5)
+definition = ExtResource("def_scrap_empty_can")
 object_id = "scrap_empty_can_01"
-definition = ExtResource("def_scrap_empty_can")
 
-[node name="scrap_wire_coil_01" parent="TestObjects" instance=ExtResource("13_item")]
-transform = Transform3D(1.0, 0, -0.0, 0, 1, 0, 0.0, 0, 1.0, 14.0, 0, -11.2)
+[node name="scrap_wire_coil_01" parent="TestObjects" unique_id=584338310 instance=ExtResource("13_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -11.2)
+definition = ExtResource("def_scrap_wire_coil")
 object_id = "scrap_wire_coil_01"
-definition = ExtResource("def_scrap_wire_coil")
 
-[node name="scrap_rusted_bolt_02" parent="TestObjects" instance=ExtResource("13_item")]
-transform = Transform3D(0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, 0.34202, 24.5, 0, -9.0)
-object_id = "scrap_rusted_bolt_02"
+[node name="scrap_rusted_bolt_02" parent="TestObjects" unique_id=1330407708 instance=ExtResource("13_item")]
+transform = Transform3D(0.34202, 0, -0.939693, 0, 1, 0, 0.939693, 0, 0.34202, 24.5, 0, -9)
 definition = ExtResource("def_scrap_rusted_bolt")
+object_id = "scrap_rusted_bolt_02"
 
-[node name="scrap_empty_can_02" parent="TestObjects" instance=ExtResource("13_item")]
+[node name="scrap_empty_can_02" parent="TestObjects" unique_id=381990877 instance=ExtResource("13_item")]
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 29.5, 0, -15.4)
-object_id = "scrap_empty_can_02"
 definition = ExtResource("def_scrap_empty_can")
+object_id = "scrap_empty_can_02"
 
-[node name="scrap_wire_coil_02" parent="TestObjects" instance=ExtResource("13_item")]
-transform = Transform3D(1.0, 0, -0.0, 0, 1, 0, 0.0, 0, 1.0, 19.4, 0, -23.0)
-object_id = "scrap_wire_coil_02"
+[node name="scrap_wire_coil_02" parent="TestObjects" unique_id=378140172 instance=ExtResource("13_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4, 0, -23)
 definition = ExtResource("def_scrap_wire_coil")
+object_id = "scrap_wire_coil_02"
 
-[node name="bulk_metal_beam_01" parent="TestObjects" instance=ExtResource("14_salvage")]
+[node name="bulk_metal_beam_01" parent="TestObjects" unique_id=592874977 instance=ExtResource("14_salvage")]
 transform = Transform3D(0.978148, 0, 0.207912, 0, 1, 0, -0.207912, 0, 0.978148, 31.5, 0, -25.2)
 object_id = "bulk_metal_beam_01"
 
-[node name="device_broken_radio_01" parent="TestObjects" instance=ExtResource("13_item")]
-transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 12.0, 0, -30.0)
-object_id = "device_broken_radio_01"
+[node name="device_broken_radio_01" parent="TestObjects" unique_id=1803804436 instance=ExtResource("13_item")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 12, 0, -30)
 definition = ExtResource("def_device_broken_radio")
+object_id = "device_broken_radio_01"
 
-[node name="DismantleStation" parent="TestObjects" instance=ExtResource("30_dismantle") node_paths=PackedStringArray("output_items")]
+[node name="DismantleStation" parent="TestObjects" unique_id=1623495191 node_paths=PackedStringArray("output_items") instance=ExtResource("30_dismantle")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, -7)
 input_object_id = "device_broken_radio_01"
 output_items = [NodePath("../device_broken_radio_01_copper_wire"), NodePath("../device_broken_radio_01_electronic_parts")]
 
-[node name="device_broken_radio_01_copper_wire" parent="TestObjects" instance=ExtResource("13_item")]
+[node name="device_broken_radio_01_copper_wire" parent="TestObjects" unique_id=522374790 instance=ExtResource("13_item")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -6.1)
-object_id = "device_broken_radio_01_copper_wire"
 definition = ExtResource("def_mat_copper_wire")
 starts_pending = true
+object_id = "device_broken_radio_01_copper_wire"
 
-[node name="device_broken_radio_01_electronic_parts" parent="TestObjects" instance=ExtResource("13_item")]
+[node name="device_broken_radio_01_electronic_parts" parent="TestObjects" unique_id=1210878546 instance=ExtResource("13_item")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5, 0, -6.1)
-object_id = "device_broken_radio_01_electronic_parts"
 definition = ExtResource("def_mat_electronic_parts")
 starts_pending = true
+object_id = "device_broken_radio_01_electronic_parts"
 
-[node name="PlayerStart" type="Marker3D" parent="."]
+[node name="PlayerStart" type="Marker3D" parent="." unique_id=320113948]
+transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -3)
+
+[node name="Player" parent="." unique_id=1851910532 instance=ExtResource("7_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -3)
-rotation = Vector3(0, 3.14159, 0)
 
-[node name="Player" parent="." instance=ExtResource("7_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -3)
+[node name="GameplayCamera" parent="." unique_id=380493830 instance=ExtResource("8_camera")]
 
-[node name="GameplayCamera" parent="." instance=ExtResource("8_camera")]
-
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1365753430]
 process_mode = 3
 
-[node name="EconomyHud" parent="HUD" instance=ExtResource("17_economy")]
+[node name="EconomyHud" parent="HUD" unique_id=949145890 instance=ExtResource("17_economy")]
 
-[node name="InteractionPrompt" parent="HUD" instance=ExtResource("9_prompt")]
+[node name="InteractionPrompt" parent="HUD" unique_id=1526437171 instance=ExtResource("9_prompt")]
 
-[node name="FeedbackToast" parent="HUD" instance=ExtResource("11_toast")]
+[node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
 
-[node name="ControlsHint" type="Label" parent="HUD"]
+[node name="ControlsHint" type="Label" parent="HUD" unique_id=1385263399]
+auto_translate_mode = 2
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -166,14 +163,13 @@ theme_override_colors/font_color = Color(0.976, 0.941, 0.871, 0.85)
 theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 16
-auto_translate_mode = 2
 
-[node name="InspectPanel" parent="HUD" instance=ExtResource("12_inspect_panel")]
+[node name="InspectPanel" parent="HUD" unique_id=1901206679 instance=ExtResource("12_inspect_panel")]
 
-[node name="SellPanel" parent="HUD" instance=ExtResource("18_sell_panel")]
+[node name="SellPanel" parent="HUD" unique_id=1172746647 instance=ExtResource("18_sell_panel")]
 
-[node name="UpgradePanel" parent="HUD" instance=ExtResource("19_upgrade_panel")]
+[node name="UpgradePanel" parent="HUD" unique_id=297656786 instance=ExtResource("19_upgrade_panel")]
 
-[node name="PauseMenu" parent="HUD" instance=ExtResource("20_pause")]
+[node name="PauseMenu" parent="HUD" unique_id=640406047 instance=ExtResource("20_pause")]
 
-[node name="DebugOverlay" parent="HUD" instance=ExtResource("10_debug")]
+[node name="DebugOverlay" parent="HUD" unique_id=1859011714 instance=ExtResource("10_debug")]
