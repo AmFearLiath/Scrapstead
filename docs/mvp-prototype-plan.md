@@ -621,3 +621,8 @@ Die Spielerbewegung wird gemäß der [P0-PlayerController-Spezifikation](p0-play
 ## Ergänzung: P0-Gameplay-Kamera
 
 Die isometrische Gameplay-Kamera wird gemäß der [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md) umgesetzt. Sie konkretisiert den vorhandenen P0-Nachweis für Kamera und Bewegung: orthografische Perspektive, ruhiges Spieler-Following und begrenzter stufenloser Zoom. Freie Kameradrehung und komplexe Sichtbarkeits- oder Hindernisvermeidungssysteme bleiben ausdrücklich außerhalb von P0.
+
+
+## Ergänzung: P0-Interaktionssteuerung
+
+Die Interaktionssteuerung wird gemäß der [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md) umgesetzt. P0 validiert Kandidatenerkennung, stabile Zielauswahl, Hervorhebung, HUD-Hinweis und die drei Testaktionen Pickup, Inspect und Use. Ein vollständiges Inventar, Kontextmenüs, Zerlegung und Bauinteraktionen sind nicht Teil dieses Nachweises.
