@@ -654,3 +654,22 @@ Referenz: [P0-Gameplay-Blockout](p0-gameplay-blockout.md).
 **Begründung:** Die vorhandenen Einzelspezifikationen benötigen einen klaren gemeinsamen Ablauf. Explizite Datenübergaben und wenige Dienste halten P0 testbar und verhindern, dass die technische Grundlage bereits vor dem ersten Gameplay-Prototyp unnötig komplex wird.
 
 Referenz: [P0-Systemintegration und Ablauf](p0-system-integration.md).
+
+
+## 25.11.2026 — P0-Implementierungsstruktur und Reihenfolge
+
+**Beschluss:** Die P0-Umsetzung folgt einer konkreten, schlanken Godot-Projektstruktur und wird in überprüfbaren Phasen aufgebaut.
+
+- Szenen, Scripts, UI und Prototypdaten erhalten getrennte, nachvollziehbare Ordner.
+- Main, MainMenu, MenuBackdrop, OldYardTest, Player und GameplayCamera bleiben eigenständige Szenen mit klaren Aufgaben.
+- PlayerController sitzt auf CharacterBody3D; GameplayCameraController auf dem Kamera-Rig; PlayerInteractor bleibt Kind des Players.
+- Ein CameraAnchor am Player stellt den expliziten Follow-Referenzpunkt bereit.
+- GameSession und SaveService sind die einzigen P0-Autoloads; SaveService wird vor GameSession registriert.
+- Input Map enthält ausschließlich die für P0 erforderlichen Bewegungs-, Interaktions-, Zoom- und temporären Debug-Speicheraktionen.
+- Die Implementierung erfolgt nacheinander: Projektbasis, Menü/Einstieg, Spieler/Kamera, Interaktion, Zustand/Persistenz, Integration/Blockout-Abnahme.
+- Jede Phase besitzt konkrete Abnahmekriterien. Unfertige oder leere Architekturbausteine werden nicht vorsorglich angelegt.
+- Es wird weiterhin kein GDScript implementiert, bevor die ausdrückliche Freigabe zur Umsetzung erfolgt.
+
+**Begründung:** Die Einzelspezifikationen sind nun ausreichend konkret, um eine reproduzierbare Projektstruktur und einen kontrollierten Implementierungsablauf festzulegen. Die phasenweise Umsetzung verhindert, dass Fehler aus mehreren gleichzeitig entstehenden Systemen schwer zuzuordnen sind.
+
+Referenz: [P0-Implementierungs- und Projektstruktur](p0-implementation-readiness.md).
