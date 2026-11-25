@@ -636,3 +636,8 @@ Der gemeinsame räumliche Testaufbau für Spieler, Gameplay-Kamera und Interakti
 ## Ergänzung: P0-Systemintegration
 
 Vor Beginn der P0-Implementierung wird die Systemintegration anhand der [P0-Systemintegrationsspezifikation](p0-system-integration.md) umgesetzt und geprüft. Sie schließt den technischen Bauplan für Start, Fortsetzen, Gameplay-Komponenten, HUD, Debugging und minimale Persistenz. Die Integration erweitert den P0-Gameplay-Umfang nicht.
+
+
+## Ergänzung: P0-Implementierungsvorbereitung
+
+Die konkrete Projektstruktur und Implementierungsreihenfolge sind in der [P0-Implementierungsvorbereitung](p0-implementation-readiness.md) festgelegt. Die Phasen reichen von der Godot-Projektbasis über Menü, Spieler/Kamera und Interaktion bis zu Persistenz und Integrationstests. Jede Phase besitzt eine eigene Abnahme; P1 bleibt bis zur erfolgreichen P0-Freigabe gesperrt.
