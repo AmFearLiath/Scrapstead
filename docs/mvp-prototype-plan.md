@@ -626,3 +626,8 @@ Die isometrische Gameplay-Kamera wird gemäß der [P0-GameplayCameraController-S
 ## Ergänzung: P0-Interaktionssteuerung
 
 Die Interaktionssteuerung wird gemäß der [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md) umgesetzt. P0 validiert Kandidatenerkennung, stabile Zielauswahl, Hervorhebung, HUD-Hinweis und die drei Testaktionen Pickup, Inspect und Use. Ein vollständiges Inventar, Kontextmenüs, Zerlegung und Bauinteraktionen sind nicht Teil dieses Nachweises.
+
+
+## Ergänzung: P0-Gameplay-Blockout und Bedienungstest
+
+Der gemeinsame räumliche Testaufbau für Spieler, Gameplay-Kamera und Interaktion ist in der [P0-Gameplay-Blockout-Spezifikation](p0-gameplay-blockout.md) beschrieben. Er nutzt den bestehenden Old-Yard-Grundstücksentwurf als Grundlage und definiert reproduzierbare Testabläufe sowie P0-Abnahmekriterien. P1 beginnt erst nach erfolgreicher Validierung von Bewegung, Kamera, Interaktion und minimaler Persistenz.
