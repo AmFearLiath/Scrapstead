@@ -488,3 +488,20 @@ Referenz: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
 **Begründung:** Die wichtigste Produktionsgefahr ist, zu viele Systeme gleichzeitig zu entwickeln und dadurch nicht zu erkennen, ob der eigentliche Spielkern trägt. Kleine, isoliert prüfbare Schritte reduzieren das Risiko und schützen den überschaubaren Gesamtumfang.
 
 Referenz: [MVP- und Prototypenplan](mvp-prototype-plan.md).
+
+## 25.11.2026 — Hauptmenü und animierter Startbildschirm im ersten Prototyp
+
+**Beschluss:** Bereits der erste spielbare Prototyp erhält ein eigenständiges Hauptmenü mit Scrapstead-Logo und einer animierten Kamerafahrt durch den Old Yard.
+
+- Das Spiel startet direkt in das Hauptmenü.
+- Im Hintergrund zeigt eine vorbereitete, ruhige Kamerafahrt den Old Yard. Für den frühen Prototyp darf dafür der einfache 3D-Blockout verwendet werden.
+- Die Kamerafahrt läuft unabhängig von der Gameplay-Kamera und kann kontrolliert wiederholt werden.
+- Das Menü bietet Neues Spiel, Fortsetzen, Einstellungen und Beenden.
+- Fortsetzen ist nur bei vorhandenem gültigem Spielstand aktiv.
+- Einstellungen werden nur soweit angeboten, wie die Optionen im Prototyp tatsächlich funktionieren.
+- Logo, Menü und Hintergrund erhalten eine klare visuelle Hierarchie und bleiben gut lesbar.
+- Aufwendige Logoanimationen, Effekte und ein vollständiges Optionsmenü sind nicht Teil dieses frühen Umfangs.
+
+**Begründung:** Der erste Prototyp soll nicht nur eine technische Testumgebung sein, sondern bereits einen erkennbaren ersten Eindruck von Scrapstead vermitteln. Der Aufwand bleibt durch eine vorbereitete Kameraroute und den wiederverwendeten Blockout begrenzt.
+
+Referenzen: [MVP- und Prototypenplan](mvp-prototype-plan.md), [UI- und UX-Spezifikation](ui-ux.md).
