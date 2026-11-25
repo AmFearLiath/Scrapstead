@@ -560,3 +560,20 @@ Referenz: [P0-Szenenarchitektur](p0-scene-architecture.md).
 **Begründung:** Die Steuerung soll in der isometrischen Perspektive intuitiv und präzise bleiben. Die Trennung von Bewegungslogik, visueller Ausrichtung, Kamera und Interaktion verhindert unnötige Abhängigkeiten.
 
 Referenz: [P0-PlayerController-Spezifikation](p0-player-controller.md).
+
+
+## 25.11.2026 — P0-Gameplay-Kamera
+
+**Beschluss:** Die Gameplay-Kamera verwendet für den ersten Prototyp eine feste orthografische isometrische Perspektive mit ruhigem Spieler-Following und begrenztem, stufenlosem Zoom.
+
+- Die Kamera bleibt eine eigenständige Szene und ist von der Menü-Kamerafahrt getrennt.
+- Ein definierter Kamera-Anker am Spieler dient als Follow-Ziel.
+- Die Kamera folgt weich und framerate-unabhängig; beim Szenenstart wird die Ausgangsposition ohne sichtbaren Schwenk gesetzt.
+- Der Zoom erfolgt stufenlos über das Mausrad und verändert ausschließlich die orthografische Größe.
+- Kamerawinkel und Ausrichtung bleiben in P0 fest; freie Rotation und Neigung sind nicht vorgesehen.
+- Automatische Hindernisvermeidung, dynamische Gebäudetransparenz und Innenraum-Kameraprofile werden nicht in P0 implementiert.
+- Winkel, Zoomgrenzen und Glättung sind Startwerte und werden im Old-Yard-Blockout mit kleinen und großen Objekten geprüft.
+
+**Begründung:** Eine feste, gut lesbare Perspektive hält die Steuerung vorhersehbar und reduziert technische Komplexität. Der begrenzte Zoom gibt dem Spieler Übersicht und Nähe, ohne eine zusätzliche freie Kamerasteuerung einzuführen.
+
+Referenz: [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md).
