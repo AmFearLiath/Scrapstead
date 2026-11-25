@@ -1,6 +1,6 @@
 # Scrapstead — Game Design Document
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Status:** Pre-production  
 **Genre:** Cozy Automation Tycoon / Incremental Simulation  
 **Platform target:** PC first  
@@ -24,6 +24,7 @@ A small, eccentric robot named Scrappy becomes the player's loyal companion. The
 4. **Meaningful choices without mandatory complexity.** Players can sell directly or invest effort for better returns.
 5. **Cozy personality.** Humor, small discoveries, warm visuals, and expressive machinery.
 6. **Player freedom.** Players choose their preferred balance of collecting, processing, building, and optimization.
+7. **Fully multilingual from day one.** All player-facing content is localization-key driven, and all systems, data, UI, and content pipelines are designed for additional languages from the start.
 
 ## 3. Core loop
 
@@ -153,7 +154,24 @@ The player can make practical, ridiculous, mismatched, or purely cosmetic builds
 - No excessive nested menus.
 - Clear costs, yields, and upgrade effects.
 
-## 11. MVP direction
+## 11. Multilingual development
+
+Scrapstead is developed as a fully multilingual game from the beginning. Localization is a foundational production and architecture requirement, not a post-production translation task.
+
+- Every player-facing string must be stored in localization resources and referenced through a stable key.
+- No UI, item, machine, dialogue, tutorial, notification, objective, accessibility label, or error message may rely on hard-coded display text.
+- Gameplay IDs, save data, asset identifiers, and logic must never depend on translated names.
+- English and German are the initial reference locales.
+- The localization architecture must allow additional languages without changes to gameplay code or content IDs.
+- Layouts must support text expansion, language-specific typography, Unicode glyph coverage, and locale-aware number/date/currency formatting.
+- Plural forms, grammatical variation, and placeholders must use localization-aware formatting rather than string concatenation.
+- Missing translations and key mismatches must be detected by automated validation.
+- Scrappy's humor, tone, and personality must be adapted naturally in every language, not translated mechanically.
+- Subtitles and accessibility text are localization content even when voice-over is unavailable in a language.
+
+The detailed production rules, key conventions, validation gates, and content workflow are defined in [Localization & Internationalization Standard](localization.md).
+
+## 12. MVP direction
 
 The first prototype should validate one small plot and the complete progression loop:
 - Collect small scrap manually.
@@ -166,7 +184,7 @@ The first prototype should validate one small plot and the complete progression 
 
 The MVP should prove that the game remains enjoyable before and after the first automation purchase.
 
-## 12. Non-goals for the first version
+## 13. Non-goals for the first version
 
 - Multiplayer.
 - Complex logistics programming.
@@ -177,6 +195,8 @@ The MVP should prove that the game remains enjoyable before and after the first 
 - Large narrative campaign.
 - Mandatory machine maintenance micromanagement.
 
-## 13. Success criteria
+## 14. Success criteria
 
 The core experience succeeds when a new player can understand the first actions without a manual, feels a meaningful reward from the first sale, sees a clear reason to save for the next investment, and enjoys the gradual transition from doing the work to building a business.
+
+The production pipeline succeeds when new content can be authored once with stable IDs and validated localized text, without introducing hard-coded language dependencies.
