@@ -344,3 +344,34 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Ignorieren verursacht weder Beziehungsverlust noch Gameplay-Nachteile.
 - Wiederholungsabstände und Prioritäten verhindern aufdringliche oder ständig wiederkehrende Kontaktversuche.
 - Begründung: Scrappy soll wie eine eigenständige Figur wirken, die aus eigenem Antrieb etwas mitteilen möchte, dabei aber die Aufmerksamkeit und Handlungsfreiheit des Spielers respektiert.
+
+
+## 25.11.2026 — Scrappys Bewegung und Interaktion mit der Welt
+
+**Beschluss:** Scrappy wird als Begleiter und eigenständiger Bewohner des Schrottplatzes umgesetzt. Seine Bewegung umfasst Begleiten, eigenständige Aktivitäten, Assistenz und selbst gewählte Aufenthaltsorte.
+
+- Scrappy folgt dem Spieler bei Bedarf mit angemessenem Abstand und vermeidet es, Wege oder Arbeitsbereiche zu blockieren.
+- Wenn der Spieler beschäftigt ist, darf Scrappy die Umgebung erkunden, Gegenstände untersuchen, eigene Tätigkeiten verfolgen oder an geeigneten Orten verweilen.
+- Bei kompatiblen Maschinen und Aufgaben kann Scrappy selbstständig eine Assistenzposition aufsuchen, sofern seine Module und Fähigkeiten ausreichen.
+- Fortbewegungsmodule besitzen eigene funktionale Eigenschaften und Animationen. Vorgesehen sind Räder, Ketten, Beine und als mögliche spätere Erweiterung ein Schwebemodul.
+- Der Spieler bestimmt durch den Einbau das Fortbewegungsverhalten. Ein automatischer Wechsel zwischen Fortbewegungsarten ist nicht vorgesehen.
+- Fortbewegungsmodule dürfen Vorteile bieten, aber keine wichtigen Spielbereiche oder Inhalte ausschließlich hinter einer bestimmten Konfiguration sperren.
+- Scrappy interagiert mit Gegenständen, Maschinen, Gebäuden und NPCs. Die Interaktionen sind durch Fähigkeiten, Objekt-Tags und Kontext begrenzt.
+- Kleine, unkritische Fundstücke darf Scrappy für eigene Projekte oder Untersuchungen bewegen, sofern passende Regeln dies erlauben.
+- Wertvolle, verkaufsfähige, questrelevante oder anderweitig wichtige Gegenstände bleiben ohne ausdrückliche Erlaubnis des Spielers geschützt.
+- Scrappy erhält gut lesbare Grundanimationen für Leerlauf, Neugier, Nachdenken, Aufregung, Verlegenheit, Arbeit, soziale Interaktion und Ruhe.
+- Sein Verhalten wird über ein leichtgewichtiges Prioritäts- und Zustandsmodell gesteuert. Notfälle und direkte Spielerinteraktionen haben Vorrang vor persönlichen Aktivitäten und Leerlauf.
+- Navigation, Animationen und Interaktionen bleiben modular. Ein Behavior Tree oder eine überschaubare Zustandsmaschine sind mögliche Umsetzungsoptionen; die endgültige Wahl erfolgt im Prototyp.
+- Begründung: Scrappy soll als physisch präsente Figur mit eigenen Bewegungsgewohnheiten und Interaktionen glaubwürdig wirken. Seine Eigenständigkeit darf weder die Spielerfreiheit noch den reibungslosen Betrieb des Schrottplatzes beeinträchtigen.
+
+## 25.11.2026 — Schutzregeln für Scrappys eigenständige Aktivitäten
+
+**Beschluss:** Scrappys Eigeninitiative wird durch klare Berechtigungs- und Prioritätsregeln begrenzt.
+
+- Scrappy darf kleine, unkritische Gegenstände für eigene Aktivitäten verwenden.
+- Wertvolle, verkaufsfähige, questrelevante und wichtige Ressourcen werden nicht ungefragt aufgenommen, verbraucht, bewegt oder verbaut.
+- Weitergehende Eigeninitiative kann der Spieler bei Bedarf ausdrücklich erlauben.
+- Scrappy erledigt keine kritischen Aufgaben oder wichtigen Entdeckungen eigenmächtig.
+- Er blockiert keine Wege, Maschinenzugänge oder Arbeitsbereiche dauerhaft.
+- Eigenständige Tätigkeiten sind unterbrechbar und werden bei höher priorisierten Spielerinteraktionen oder Notfällen kontrolliert beendet.
+- Begründung: Scrappys Eigenleben soll charmant und überraschend sein, aber niemals zum Verlust von Ressourcen, Kontrolle oder Spielfortschritt führen.
