@@ -392,3 +392,62 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Der Energiestand wird nicht als dauerhaft präsente Pflichtanzeige inszeniert. Hinweise bleiben selten und kontextbezogen.
 - Humor entsteht durch Scrappys übertriebene technische Selbsteinschätzung, kleine Ladeanimationen, bevorzugte Ladestationen und trockene Kommentare. Ladezeiten oder Ladeprobleme werden nicht künstlich verlängert.
 - Begründung: Energieversorgung verleiht Scrappy technische Glaubwürdigkeit und bietet zusätzliche Charakter- und Humor-Momente, ohne ihn zu einem Tamagotchi oder einer weiteren Verwaltungsaufgabe für den Spieler zu machen.
+
+## 25.11.2026 — Scrappys Alltag und Eigeninitiative
+
+**Beschluss:** Scrappy erhält einen eigenen, ereignis- und interessenbasierten Alltag ohne starren Stundenplan.
+
+- Aktivitäten umfassen Erkunden, Beobachten, Tüfteln, soziale Begegnungen, Ruhe und persönliche Projekte.
+- Projekte dürfen dekorativ, erzählerisch oder charakterbildend sein und müssen keinen wirtschaftlichen Nutzen besitzen.
+- Aktivitäten sind unterbrechbar und können später fortgesetzt oder aufgegeben werden.
+- Scrappy darf freigegebene Kleinteile für eigene Projekte nutzen, aber keine wichtigen Ressourcen oder Gegenstände.
+- Eigeninitiative und Kontaktfrequenz sind konfigurierbar.
+- Leerlauf und Stille sind ausdrücklich gültige Verhaltensweisen.
+- Begründung: Scrappy soll eigenständig wirken, ohne eine zusätzliche Lebenssimulation oder Pflegepflicht zu erzeugen.
+
+## 25.11.2026 — Fähigkeits- und Erfahrungsmodell
+
+**Beschluss:** Scrappys Fähigkeiten folgen einem Hardware-Erfahrung-Persönlichkeit-Modell.
+
+- Hardware schaltet Funktionen frei und definiert ihre Voraussetzungen.
+- Erfahrung verbessert vorhandene Funktionen durch tatsächliche Nutzung.
+- Persönlichkeit beeinflusst Ausdruck, Interessen und Verhalten, nicht die technischen Voraussetzungen.
+- Es gibt keinen universellen Charakterlevel und keine Pflicht-Skillpunkte.
+- Fähigkeiten werden in Wahrnehmung, Weltinteraktion, Spielerassistenz, autonome Aktivitäten, soziale Fähigkeiten, persönliche Entwicklung und Spezialfunktionen gegliedert.
+- Erfahrung wird tätigkeitsbezogen und in wenigen verständlichen Stufen gespeichert.
+- Begründung: Technische Entwicklung soll nachvollziehbar sein und organisch aus Scrappys tatsächlichen Erlebnissen entstehen.
+
+## 25.11.2026 — Modulare Konstruktion und persönliche Ausstattung
+
+**Beschluss:** Scrappy wird aus vorbereiteten, standardisierten und kompatiblen 3D-Komponenten zusammengesetzt.
+
+- Montagepositionen, Anschlüsse, Ausrichtungen, Animationspunkte und Kompatibilitätsregeln sind standardisiert.
+- Linker und rechter Arm können unabhängig bestückt werden; koordinierte Tätigkeiten benötigen kompatible Kombinationen.
+- Beliebige Geometriegenerierung, freie Gelenkerzeugung und unkontrollierte Skalierung sind nicht vorgesehen.
+- Technische Module und persönliche kosmetische Gegenstände besitzen getrennte Systeme.
+- Scrappy besitzt ein eigenes persönliches Inventar und darf innerhalb der Spielereinstellungen selbstständig Gegenstände kombinieren und tragen.
+- Bedeutsame Erinnerungsstücke sind geschützt.
+- Begründung: Hohe Individualisierung soll mit einem realistisch produzierbaren Asset- und Animationsumfang vereinbar bleiben.
+
+## 25.11.2026 — Körperdesign und Ausdruck
+
+**Beschluss:** Scrappys visuelle Identität verbindet einen stabilen mechanischen Kern mit asymmetrischen, wiederverwendeten Schrottteilen.
+
+- Kompakte Proportionen, relativ großer Kopf und niedriger Schwerpunkt.
+- Zwei große, leicht asymmetrische optische Sensoren, mechanische Blenden, beweglicher Kopf und charakteristische Antenne bilden die wiedererkennbare Ausdrucksgrundlage.
+- Stimme und Persönlichkeit bleiben unabhängig von Hardware.
+- Räder, Ketten, Beine und Schwebemodule erhalten eigene Bewegungsprofile.
+- Animationen werden aus wiederverwendbaren Schichten und standardisierten Ankerpunkten kombiniert.
+- Begründung: Scrappy muss aus der isometrischen Kameradistanz erkennbar und emotional lesbar bleiben, auch mit wechselnder Ausstattung.
+
+## 25.11.2026 — Technische Architektur und Prototypumfang von Scrappy
+
+**Beschluss:** Scrappy wird als eigenständiges, datengetriebenes und ereignisbasiertes System umgesetzt.
+
+- Module, Fähigkeiten, Wahrnehmung, Gedächtnis, Absichten, Aktivitäten, Navigation, Ausdruck und Kommunikation bleiben getrennte Systembausteine.
+- Autonome Entscheidungen werden priorisiert, begrenzt und nur bei relevanten Ereignissen oder in kontrollierten Intervallen getroffen.
+- Ein dauerhaft laufendes LLM ist keine Voraussetzung.
+- Sicherheit, direkte Spielerinteraktion und ausdrücklich erteilte Aufträge haben Vorrang vor persönlichen Aktivitäten.
+- Der erste Prototyp konzentriert sich auf Folgen, einfache Erkundung, eine persönliche Aktivität, Grundausstattung, eine Moduländerung, begrenzte Erinnerungen und automatisches Aufladen.
+- Dialogtexte, vollständige Sprachproduktion und umfangreiche Animationsvarianten bleiben spätere Arbeitspakete.
+- Begründung: Der Prototyp soll Scrappys Kernversprechen nachweisen, bevor der volle Content- und Produktionsumfang entsteht.
