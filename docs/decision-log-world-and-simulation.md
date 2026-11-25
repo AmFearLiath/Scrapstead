@@ -210,7 +210,23 @@ Geplante Gruppen: Zeit, Wirtschaft, Recycling, Unternehmen, Automatisierung, Ent
 - Energiespeicher und einfache Verbraucherprioritäten sind als spätere Erweiterung vorgesehen.
 - Kein verpflichtendes Mikromanagement einzelner Stromkreise und keine Energie-Softlocks.
 
-## 20. Noch offen
+## 20. Welt, Erkundung und regionale Aktivitäten
+
+**Konzeptioneller Beschluss:** Die Hauptregion wird als kompakte, handgefertigte und belebte Spielwelt gestaltet. Sie ist keine leere Open World und keine reine Materialfarm.
+
+- Die sechs Gebiete Old Yard, Scrapstead Town, Industrial Quarter, Railway District, Greenbelt und Quarry & Extraction bilden die regionale Struktur.
+- Erkundung bietet unterschiedliche Belohnungen: Materialien, Wertfunde, Ausrüstung, Informationen, Orte, Geschichten und Geschäftsmöglichkeiten.
+- Handgefertigte Story- und Landmarkenfunde werden mit kontrolliert wiederkehrenden Fundquellen und Ereignisfunden kombiniert.
+- Bewohner und kleine Unternehmen besitzen erkennbare Rollen und reagieren auf die Entwicklung der Region, ohne eine vollständige Konkurrenz- oder Lebenssimulation zu erfordern.
+- Aufträge verbinden bestehende Systeme wie Beschaffung, Bergung, Transport, Verarbeitung und Gemeinschaftsprojekte.
+- Beziehungen entstehen durch wiederholte Interaktion und erfüllte Zusagen, nicht durch einen globalen moralischen Punktestand.
+- Gemeinschaftsprojekte können sichtbare Veränderungen, neue Kontakte und zusätzliche Dienste freischalten.
+- Dynamische Ereignisse bleiben überschaubar und optional. Verpasste Ereignisse blockieren keine Kerninhalte.
+- Scrappy kann Hinweise geben und kleine Funde unterstützen, ersetzt aber nicht die Erkundung des Spielers.
+
+Die ausführliche Spezifikation mit Gebietsprofilen, Landmarken, Fundquellen, Auftragsarten, Progression, UX und Prototyp-Abnahmekriterien steht in [Welt, Erkundung und Aktivitäten](world-exploration-activities.md). Namen, Karte, konkrete NPCs und Zahlen bleiben in Ausarbeitung.
+
+## 21. Noch offen
 
 - Exakte Regionkarte und Freischaltfolge.
 - Fahrzeugliste und Fahrmodell.
