@@ -29,6 +29,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - Grafikstil: Stylized Low-Poly / Cozy Miniatur-Diorama.
 - Spielidentität: Kombination aus Cozy, Tycoon und Sandbox.
 - Welt: Zusammenhängende Hauptregion plus separate Spezialstandorte (Hybrid).
+- Weltaktivitäten: Erkundung, Fundorte, Bewohner, regionale Aufträge, Ereignisse und sichtbare Gemeinschaftsprojekte.
 - Fortbewegung: Zu Fuß und mit Fahrzeugen.
 - Bauen: Hybrid aus Raster/definierten Bauflächen und freierer Platzierung.
 - Wirtschaft: Stabile Grundpreise mit dynamischer Nachfrage und Sonderaufträgen.
@@ -56,6 +57,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Welt-, Unternehmens- und Simulationskonzept](docs/world-and-company-simulation.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Interaktion, Transport, Lager, Produktion und Energie](docs/gameplay-interaction-logistics-production.md)
+- [Welt, Erkundung und Aktivitäten](docs/world-exploration-activities.md)
 - [Ergänzungsprotokoll: Welt und Unternehmenssimulation](docs/decision-log-world-and-simulation.md)
 - [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
 - [First-Hour-Experience – Spielstart und erste Stunde](docs/first-hour-experience.md)
