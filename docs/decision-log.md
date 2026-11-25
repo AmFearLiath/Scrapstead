@@ -80,3 +80,27 @@ This file records decisions considered canonical for the current design. New dec
 - Ordinary scrap can be sold directly.
 - Selected items can be sorted, dismantled, or processed for better potential value.
 - Processing is optional and must not become a mandatory chore.
+
+## 2026-11-25 — Fully multilingual development
+
+**Decision:** Scrapstead is multilingual by design from the first production asset.
+
+- Every player-facing string must use a localization key; hard-coded display strings are not permitted.
+- Stable gameplay IDs, save data, asset identifiers, and logic are independent of language.
+- English and German are the initial reference locales.
+- Additional languages must be addable without changing gameplay code or content IDs.
+- UI, fonts, formatting, subtitles, accessibility text, and content validation must support localization from the beginning.
+- Missing translations and key mismatches must be detectable through automated checks.
+- Rationale: retrofitting localization later would create avoidable architectural, content, and UI rework.
+
+## 2026-11-25 — First property item catalog
+
+**Decision:** Build the first property's object catalog as a compact gameplay system rather than an unstructured list.
+
+- Catalog entries use stable language-independent IDs and localized name/description keys.
+- The initial catalog includes loose scrap, bulk scrap, dismantling candidates, discovery sources, valuable finds, and standardized processing outputs.
+- Direct sale remains available for sellable objects.
+- Processing is optional and selective.
+- Economy values remain relative tiers until prototype balancing.
+- The red toolbox's Scrappy Core Component is an authored, guaranteed progression discovery rather than a random blocker.
+- Rationale: a focused catalog should teach the core loop and create meaningful variety without overwhelming the first property.
