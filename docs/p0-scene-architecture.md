@@ -340,3 +340,10 @@ Der Controller verwendet kamerabezogene Bewegung, normalisierte diagonale Eingab
 Die konkrete Perspektive, Follow-Logik, Zoomsteuerung und die P0-Abnahmekriterien der Gameplay-Kamera sind in der [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md) festgehalten.
 
 Die Gameplay-Kamera verwendet als Ausgangspunkt eine orthografische isometrische Perspektive, folgt einem definierten Kamera-Anker am Spieler und bietet einen begrenzten, stufenlosen Mausrad-Zoom. Freie Rotation, automatische Hindernisvermeidung und dynamische Gebäudetransparenz gehören nicht zum P0-Umfang.
+
+
+## 15. PlayerInteractor / InteractionController
+
+Die konkrete Erkennung, Bewertung und Auswahl von Interaktionszielen sowie Hervorhebung, HUD-Hinweis und Aktionsausführung sind in der [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md) festgehalten.
+
+Die bestehende Komponente `PlayerInteractor` ist die Interaktionssteuerung. Ein zweiter paralleler InteractionController wird nicht eingeführt. Der InteractionDetector erkennt Kandidaten; PlayerInteractor bewertet und verwaltet das aktive Ziel. Die Testszene prüft Pickup, Inspect und Use.
