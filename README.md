@@ -2,53 +2,54 @@
 
 **Every Scrap Has a Story.**
 
-Scrapstead is a cozy, humorous isometric automation tycoon about turning a forgotten scrapyard into a thriving recycling business.
+Scrapstead ist ein gemütliches, humorvolles isometrisches Automatisierungs-Tycoon-Spiel über den Aufbau eines florierenden Recyclingbetriebs aus einem heruntergekommenen Schrottplatz.
 
-## Project status
+## Projektstatus
 
-Pre-production / Game Design.
+Vorproduktion / Spieldesign.
 
-The repository is currently used to collect the game's design documentation, decisions, specifications, and development planning. No engine implementation is assumed yet.
+Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikationen und Entwicklungsplanung. Eine konkrete Engine-Implementierung ist noch nicht vorausgesetzt.
 
-## Design pillars
+## Design-Leitlinien
 
-1. **Easy to learn, fun to explore.** Simple interactions; depth through combinations.
-2. **Visible progression.** The yard visibly transforms as the business grows.
-3. **Hybrid gameplay.** The player begins with manual work and gradually delegates tasks to employees and machines.
-4. **Meaningful automation.** Machines have clear, understandable jobs.
-5. **Cozy personality.** Warm diorama visuals, humor, charming machines, and Scrappy.
-6. **Player freedom.** Multiple ways to collect, process, sell, build, and customize.
-7. **Fully multilingual from day one.** All player-facing content is localization-key driven and designed for internationalization from the beginning.
+1. **Leicht zu lernen, spannend zu entdecken.** Einfache Interaktionen, Tiefe durch Kombinationen.
+2. **Sichtbarer Fortschritt.** Der Schrottplatz verändert sich mit dem Wachstum des Betriebs.
+3. **Hybrides Gameplay.** Der Spieler beginnt mit manueller Arbeit und delegiert Aufgaben nach und nach an Mitarbeiter und Maschinen.
+4. **Sinnvolle Automatisierung.** Maschinen haben klare, verständliche Aufgaben.
+5. **Gemütlicher Charakter.** Warme Diorama-Optik, Humor, charmante Maschinen und Scrappy.
+6. **Freiheit für den Spieler.** Verschiedene Wege zum Sammeln, Verarbeiten, Verkaufen, Bauen und Anpassen.
+7. **Von Anfang an vollständig mehrsprachig.** Alle spielerseitigen Inhalte sind über Lokalisierungsschlüssel eingebunden und von Beginn an internationalisierbar.
 
-## Canonical decisions
+## Grundsatzentscheidungen
 
-- Perspective: isometric 3D.
-- Atmosphere: cozy, funny, whimsical.
-- Art direction: stylized low-poly / miniature diorama.
-- Gameplay: hybrid manual + automation.
-- Collection: direct pickup for small objects; tools or equipment for larger objects.
-- Scrap economy: basic scrap can be sold directly; sorting and processing are optional ways to achieve better returns.
-- Progression: player performs the work first, then hires help, buys initial machines, and gradually builds an automated operation.
-- Companion: Scrappy, a modular robot whose head is found under a scrap pile and restored using a special component from the red toolbox.
-- Scrappy customization: player builds him from salvaged parts; combinations can be useful, absurd, or purely cosmetic.
-- Localization: fully multilingual development from the first production asset; no hard-coded player-facing strings; stable IDs and localization keys.
-- Initial reference locales: English and German; further locales must be addable without gameplay-code changes.
-- Core design rule: **Simple Core, Endless Possibilities.**
+- Perspektive: Isometrisches 3D.
+- Atmosphäre: Gemütlich, humorvoll, skurril.
+- Grafikstil: Stylized Low-Poly / Miniatur-Diorama.
+- Gameplay: Kombination aus manueller Arbeit und Automatisierung.
+- Sammeln: Kleine Gegenstände direkt aufheben; größere Objekte benötigen Werkzeuge oder Ausrüstung.
+- Schrottwirtschaft: Gewöhnlicher Schrott kann direkt verkauft werden; Sortierung und Verarbeitung sind optionale Wege zu besseren Erträgen.
+- Fortschritt: Der Spieler erledigt die Arbeit zunächst selbst, stellt später Mitarbeiter ein, kauft Maschinen und baut schrittweise einen automatisierten Betrieb auf.
+- Begleiter: Scrappy, ein modularer Roboter. Sein Kopf wird unter einem Schrotthaufen gefunden und mit einer besonderen Komponente aus dem roten Werkzeugkasten wiederhergestellt.
+- Scrappy-Anpassung: Der Spieler baut ihn aus gefundenen Teilen zusammen. Kombinationen können nützlich, absurd oder rein kosmetisch sein.
+- Mehrsprachigkeit: Vollständig mehrsprachige Entwicklung ab dem ersten Produktionsinhalt. Keine fest codierten Anzeigetexte; stabile IDs und Lokalisierungsschlüssel.
+- Erste Referenzsprachen: Deutsch und Englisch. Weitere Sprachen müssen ohne Änderungen an der Spiellogik ergänzt werden können.
+- Zentrale Designregel: **Simple Core, Endless Possibilities.**
 
-## Documentation map
+## Dokumentationsübersicht
 
-- [Game Design Document](docs/gdd.md)
-- [Gameplay & Economy Specification](docs/gameplay-economy.md)
-- [Progression & Business Growth](docs/progression-business-growth.md)
-- [Starting Yard Item Catalog](docs/starting-yard-item-catalog.md)
-- [Localization & Internationalization Standard](docs/localization.md)
-- [Scrappy Companion Specification](docs/scrappy-companion.md)
-- [Machines & Automation Specification](docs/machines-automation.md)
-- [World & Asset Design](docs/world-art-assets.md)
-- [UI & UX Specification](docs/ui-ux.md)
-- [Technical Architecture](docs/technical-architecture.md)
-- [Decision Log](docs/decision-log.md)
+- [Spieldesign-Dokument](docs/gdd.md)
+- [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
+- [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
+- [Gegenstandskatalog des Startgrundstücks](docs/starting-yard-item-catalog.md)
+- [Lage- und Entdeckungsplan des Startgrundstücks](docs/starting-yard-layout-discovery.md)
+- [Standard für Lokalisierung und Internationalisierung](docs/localization.md)
+- [Spezifikation des Begleiters Scrappy](docs/scrappy-companion.md)
+- [Maschinen und Automatisierung](docs/machines-automation.md)
+- [Welt- und Assetgestaltung](docs/world-art-assets.md)
+- [UI- und UX-Spezifikation](docs/ui-ux.md)
+- [Technische Architektur](docs/technical-architecture.md)
+- [Entscheidungsprotokoll](docs/decision-log.md)
 
-## Guiding rule
+## Leitgedanke
 
-Scrapstead should offer many possibilities without making the player manage unnecessary complexity. Complexity should emerge from simple systems working together—not from complicated controls, excessive menus, or mandatory micromanagement.
+Scrapstead soll viele Möglichkeiten bieten, ohne den Spieler mit unnötiger Komplexität zu belasten. Tiefe entsteht durch das Zusammenspiel einfacher Systeme – nicht durch komplizierte Steuerung, überladene Menüs oder verpflichtendes Mikromanagement.
