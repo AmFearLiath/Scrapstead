@@ -55,6 +55,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 
 - [Spieldesign-Dokument](docs/gdd.md)
 - [Produktionsumfang und Entwicklungsfahrplan](docs/production-scope-and-roadmap.md)
+- [Core-Gameplay-Matrix](docs/core-gameplay-matrix.md)
 - [Welt-, Unternehmens- und Simulationskonzept](docs/world-and-company-simulation.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Regionale Wirtschaft und begrenzter Simulationsumfang](docs/regional-economy-scope.md)
