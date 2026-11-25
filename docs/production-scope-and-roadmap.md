@@ -534,3 +534,18 @@ Die Produktionsplanung wird durch eine Mechanik-Matrix konkretisiert. Für Beweg
 Der kleinste aussagekräftige MVP-Test bleibt bewusst auf Bewegung, Sammeln, Bergen, Verkauf, Credits, einem Upgrade und optionaler Verarbeitung begrenzt. Mitarbeiter, regionale Wirtschaft und komplexe Logistik sind dafür nicht erforderlich.
 
 Spezifikation: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
+
+## Ergänzung: MVP- und Prototypenplan
+
+Der Entwicklungsfahrplan wird vor der vollständigen Produktion durch klar getrennte Prototypstufen konkretisiert:
+
+- **P0:** Technisches Fundament – Bewegung, Kamera, Interaktion und minimale Persistenz.
+- **P1:** Kernschleife – Sammeln, Bergen, Verkaufen, Credits und erstes Upgrade.
+- **P1b:** Eine optionale Verwertungsentscheidung, sofern sie den Direktverkauf sinnvoll ergänzt.
+- **P2:** Erste 30–60 Minuten und Scrappys Wiederherstellung.
+- **P3:** Ein Mitarbeiter mit einer Aufgabe, danach der kleine Magnetsammler.
+- **P4:** Vertical Slice des Old Yard.
+
+Jede Stufe besitzt eigene Abnahmekriterien und einen Freigabepunkt. Insbesondere werden Scrappy, Delegation, Maschinen und Region nicht genutzt, um eine noch nicht validierte Kernschleife zu überdecken.
+
+Die konkrete Szenen-/Objektplanung, fachlichen Datenobjekte, Vereinfachungen, Tests und Definition of Done stehen im [MVP- und Prototypenplan](mvp-prototype-plan.md).
