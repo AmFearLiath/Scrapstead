@@ -45,6 +45,7 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 - [Grundstücksgeometrie und Blockout-Spezifikation](docs/starting-yard-blockout.md)
 - [Bauen, Platzierung und Maschinenverbindungen](docs/building-and-logistics.md)
 - [Baumodus und Bauinteraktionen](docs/build-mode-and-interactions.md)
+- [Gebäude- und Modulsystem](docs/buildings-and-modular-construction.md)
 - [Standard für Lokalisierung und Internationalisierung](docs/localization.md)
 - [Spezifikation des Begleiters Scrappy](docs/scrappy-companion.md)
 - [Maschinen und Automatisierung](docs/machines-automation.md)
