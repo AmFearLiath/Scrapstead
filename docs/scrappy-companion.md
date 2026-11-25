@@ -277,3 +277,131 @@ Mögliche Auslöser:
 ### Gestaltungsregel
 
 Scrappy spricht den Spieler an, weil er etwas mitteilen möchte – nicht, weil ein Dialogtimer abgelaufen ist. Seine Kontaktaufnahme soll wie eine natürliche Handlung einer eigenständigen Figur wirken.
+
+
+## 14. Bewegung und räumliches Verhalten
+
+Scrappy ist sowohl Begleiter als auch eigenständiger Bewohner des Schrottplatzes. Seine Bewegung soll nicht auf permanentes Folgen des Spielers reduziert sein. Er bewegt sich abhängig von Situation, Umgebung, verfügbaren Modulen und eigenen Aktivitäten.
+
+### Verhaltensweisen
+
+- **Begleiten:** Scrappy folgt dem Spieler bei Bedarf mit angemessenem Abstand. Er vermeidet es, Wege zu blockieren oder dem Spieler ständig vor die Füße zu fahren.
+- **Eigenständig unterwegs:** Wenn der Spieler beschäftigt ist, kann Scrappy die nähere Umgebung erkunden, interessante Objekte untersuchen oder eigene Tätigkeiten verfolgen.
+- **Assistieren:** Bei geeigneten Maschinen und Tätigkeiten kann Scrappy selbstständig eine passende Position aufsuchen und unterstützen, sofern seine Module und Fähigkeiten dafür geeignet sind.
+- **Aufhalten und Beobachten:** Scrappy kann geeignete Plätze aufsuchen, dort verweilen, Mitarbeiter beobachten, nachdenken oder sich mit einer kleinen eigenen Aktivität beschäftigen.
+
+### Fortbewegungsmodule
+
+Fortbewegungsmodule unterscheiden sich funktional und visuell. Der Spieler bestimmt durch den Einbau, wie Scrappy sich bewegt. Ein automatischer Wechsel zwischen unterschiedlichen Fortbewegungsarten ist nicht vorgesehen.
+
+Vorgesehene Varianten:
+
+- **Räder:** Schnell und wendig auf ebenem Untergrund, weniger geeignet für stark unebenes Gelände.
+- **Ketten:** Stabil auf Schotter und unebenem Untergrund, dafür tendenziell langsamer.
+- **Beine:** Können bestimmte Hindernisse besser überwinden, bewegen sich aber eher langsam und bieten Raum für tollpatschige Animationen.
+- **Schwebemodul:** Eine mögliche spätere Erweiterung, die kleine Hindernisse überwinden und ein eigenständiges Bewegungsgefühl erzeugen kann.
+
+Fortbewegungsmodule dürfen Vorteile und Eigenheiten bieten, aber keine wichtigen Spielbereiche oder Inhalte ausschließlich hinter einer bestimmten Scrappy-Konfiguration sperren.
+
+### Bewegungscharakter und Animation
+
+Scrappys Bewegung soll seine Persönlichkeit sichtbar machen und darf bewusst kleine mechanische Eigenheiten besitzen:
+
+- Kleine Korrekturbewegungen und leichtes Wackeln beim Anfahren oder Anhalten.
+- Kopfbewegungen und kurzes Zögern beim Untersuchen unbekannter Dinge.
+- Übertriebene Gesten bei Aufregung oder besonders wichtigen Aussagen.
+- Kleine unbeholfene Bewegungen, die zu seiner improvisierten Konstruktion passen.
+- Stolzes Präsentieren eigener Projekte oder gefundener Gegenstände.
+
+Bewegung und Animation müssen aus der isometrischen Kameradistanz gut lesbar bleiben. Nicht jede Geste benötigt einen Dialog.
+
+## 15. Interaktion mit der Umgebung
+
+Scrappys Interaktionen werden in vier Bereiche gegliedert.
+
+### Gegenstände
+
+- Gegenstände ansehen, untersuchen oder vorsichtig antippen.
+- Kleine, unkritische Fundstücke mit geeigneten Modulen aufnehmen und für eigene Projekte oder Untersuchungen verwenden.
+- Eigene Fundstücke an einem persönlichen Platz sammeln oder präsentieren.
+- Wertvolle, verkaufsfähige oder für Quests und Fortschritt wichtige Gegenstände bleiben geschützt, sofern der Spieler keine ausdrückliche Erlaubnis erteilt.
+
+### Maschinen
+
+- Maschinen beobachten und auf Geräusche, Zustandsänderungen oder ungewöhnliche Abläufe reagieren.
+- Sich an geeigneten Stationen aufhalten.
+- Bei kompatiblen Aufgaben assistieren, sofern die benötigten Module und Fähigkeiten vorhanden sind.
+- Keine kritischen Maschinenprozesse eigenmächtig starten, verändern oder unterbrechen.
+
+### Gebäude und Einrichtungen
+
+- Türen und Tore sowie vorgesehene Wege und Rampen benutzen.
+- Geeignete Innen- und Außenbereiche aufsuchen.
+- Lieblingsplätze entwickeln und diese gelegentlich wieder aufsuchen.
+- Bewegungs- und Navigationsregeln müssen berücksichtigen, dass Scrappy ein kleiner Begleiter ist und keine Wege oder Arbeitsbereiche blockieren soll.
+
+### NPCs und Mitarbeiter
+
+- Mitarbeiter gelegentlich besuchen und bei ihrer Arbeit beobachten.
+- Gespräche und Situationen wahrnehmen und passend darauf reagieren.
+- Durch wiederholte Begegnungen individuelle Bekanntschaften, Sympathien oder kleine Rivalitäten entwickeln.
+- Soziale Interaktionen bleiben optional und dürfen Arbeitsabläufe nicht behindern.
+
+## 16. Animation und Ausdruck
+
+Ein wiederverwendbarer Satz klar lesbarer Grundanimationen vermittelt Scrappys Zustand und Persönlichkeit:
+
+- **Idle:** Mehrere dezente Warte- und Ruhevarianten.
+- **Curious:** Kopf neigen, näher heranfahren, Gegenstand betrachten.
+- **Thinking:** Kurze Pause, Blickbewegungen und kleine mechanische Gesten.
+- **Excited:** Lebhaftere Bewegungen, Gesten und kurze Drehungen.
+- **Embarrassed:** Zurückweichen, Blick abwenden oder kurz verstummen.
+- **Working:** Werkzeuge einsetzen und einfache Arbeitsabläufe ausführen.
+- **Social:** Winken, Nicken und auf Personen reagieren.
+- **Resting / Charging:** Ruhige Haltung und gegebenenfalls Energiesparverhalten.
+
+Animationen sollen nicht ständig wiederholt werden. Kontext, Abwechslung und Pausen sind wichtiger als eine möglichst hohe Anzahl an Bewegungen. Stille Reaktionen ohne Dialog sind ausdrücklich erwünscht.
+
+## 17. Verhaltenssteuerung und technische Leitplanken
+
+Scrappys Verhalten wird durch ein leichtgewichtiges Prioritäts- und Zustandsmodell gesteuert. Ein Behavior Tree oder eine überschaubare Zustandsmaschine sind geeignete Umsetzungsoptionen; die endgültige technische Wahl erfolgt im Prototyp.
+
+Vorgesehene Prioritätsebenen:
+
+1. **Notfall und Sicherheit:** Gefahren meiden, blockierte Bewegung erkennen und sich aus ungültigen Situationen lösen.
+2. **Spielerinteraktion:** Auf direkte Ansprache reagieren, dem Spieler folgen oder bei einer geeigneten Aufgabe assistieren.
+3. **Persönliche Aktivitäten:** Erkunden, untersuchen, eigene Projekte verfolgen und soziale Kontakte pflegen.
+4. **Leerlauf:** Beobachten, nachdenken, ruhen oder einen geeigneten Aufenthaltsort wählen.
+
+Technische Grundsätze:
+
+- Navigation und Wegfindung erfolgen über die Navigationssysteme der Spielwelt, beispielsweise Navigation Mesh und Pathfinding.
+- Verhalten wird situations- und ereignisbasiert aktualisiert, nicht durch einen permanent rechnenden KI-Agenten.
+- Bewegungszustände und Animationen werden über klar definierte Übergänge miteinander verbunden.
+- Interaktionen werden durch passende Ereignisse, Reichweiten, Fähigkeiten und Objekt-Tags ausgelöst.
+- Lieblingsplätze, aktuelle Tätigkeiten und zuletzt ausgeführte Aktionen können in Scrappys Gedächtnis berücksichtigt werden.
+- Höher priorisierte Aufgaben unterbrechen oder beenden niedrig priorisierte Tätigkeiten kontrolliert.
+- Häufigkeit und Intensität eigenständiger Aktivitäten bleiben begrenzt und konfigurierbar.
+
+## 18. Schutz der Spielerfreiheit und Gegenstandsregeln
+
+Scrappys Eigenständigkeit darf keine unerwünschten Nebenwirkungen auf den Betrieb oder das Inventar des Spielers haben.
+
+- Scrappy darf kleine, unkritische Gegenstände für eigene Aktivitäten verwenden, wenn passende Regeln dies erlauben.
+- Wertvolle Gegenstände, verkaufsfähiger Schrott, Questobjekte und wichtige Ressourcen werden nicht ungefragt bewegt, verbraucht oder verbaut.
+- Für optionale weitergehende Eigeninitiative kann der Spieler ausdrücklich Berechtigungen erteilen.
+- Scrappy darf keine kritischen Aufgaben, Entdeckungen oder Entscheidungen eigenmächtig erledigen.
+- Er darf Wege, Maschinenzugänge und Arbeitsbereiche nicht dauerhaft blockieren.
+- Seine Aktivitäten müssen unterbrechbar sein und dürfen den Spielfluss nicht dominieren.
+
+## 19. Umfang des ersten Bewegungs- und Interaktionsprototyps
+
+- Eine funktionierende Fortbewegungsvariante mit klarer Silhouette und eigenem Bewegungsgefühl.
+- Folgen des Spielers mit angemessenem Abstand und einfacher Hindernisvermeidung.
+- Eigenständiges Aufsuchen eines nahegelegenen Interessenspunkts.
+- Eine einfache Untersuchungsinteraktion mit einem unkritischen Gegenstand.
+- Mehrere Idle- und Curious-Animationen.
+- Ein kontrollierter Wechsel zwischen Folgen, Untersuchen und Leerlauf.
+- Schutzregeln, die verhindern, dass Scrappy wichtige Gegenstände aufnimmt oder Arbeitswege blockiert.
+
+Weitere Fortbewegungsmodule, umfangreiche NPC-Interaktionen, komplexe Maschinenassistenz und eigene längerfristige Projekte werden schrittweise ergänzt.
