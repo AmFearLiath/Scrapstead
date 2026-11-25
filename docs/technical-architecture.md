@@ -149,3 +149,10 @@ Die Werkstatt ist ein zentraler Zugang zu spezialisierten Werkzeugen, kein zwing
 Die Entwicklungswerkstatt muss nicht im fertigen Spiel enthalten sein. Das Spiel muss mit den freigegebenen Daten ohne Editor-Plugins oder Admin-Oberfläche lauffähig sein. Ein Laufzeit-Adminsystem oder Web-Backend wird dadurch nicht vorausgesetzt.
 
 Details: [Zentrale Entwicklungswerkstatt und Admin-Tooling](development-workbench-and-admin-tooling.md).
+
+
+## 13. P0-Systemintegration
+
+Die konkrete Kommunikation zwischen MainMenu, GameSession, SaveService, OldYardTest, PlayerController, GameplayCameraController, PlayerInteractor und HUD ist in der [P0-Systemintegrationsspezifikation](p0-system-integration.md) festgelegt.
+
+Die Integration konkretisiert die bestehenden Architekturprinzipien: maximal zwei globale Dienste, explizite lokale Referenzen, Signale für Ereignisse, Methoden für gezielte Anfragen, versionierte Datensnapshots und keine Serialisierung von Nodes oder Szenen. Ein globaler Event-Bus oder SceneManager ist für P0 nicht erforderlich.
