@@ -227,7 +227,13 @@ Die detaillierten Entscheidungen zu Interaktion und Zerlegung, Werkzeugen und Cr
 
 Grundsatz: Der Spieler steuert Ziele, Prioritäten und Ausbau. Fahrzeuge, Mitarbeiter, Lagerbewegungen und Maschinen übernehmen die operative Ausführung innerhalb nachvollziehbarer Regeln. Komplexität wird schrittweise eingeführt und bleibt – soweit sie nicht für eine konkrete Aktion erforderlich ist – optional.
 
-## 16. Noch offene Ausarbeitung
+## 16. Welt, Erkundung und regionale Aktivitäten
+
+Die konkrete Ausarbeitung der sechs Gebiete, Landmarken, Fundorte, Aktivitäten außerhalb des Schrottplatzes, Bewohner, Unternehmen, Aufträge, dynamischen Ereignisse und regionalen Veränderungen steht in [Welt, Erkundung und Aktivitäten](world-exploration-activities.md).
+
+Grundsatz: Die Region ist eine kompakte, handgefertigte und belebte Spielwelt – keine leere Open World und keine reine Materialfarm. Orte sollen mehrere Funktionen aus Erkundung, Wirtschaft und Erzählung verbinden. Optionale Aktivitäten dürfen keine Kernprogression blockieren.
+
+## 17. Noch offene Ausarbeitung
 
 - Exakte Karte, Maßstab und Freischaltfolge der Region.
 - Konkrete Fahrzeugklassen und Fahrmodell.
