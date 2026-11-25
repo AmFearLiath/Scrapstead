@@ -172,3 +172,18 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Fehlgeschlagene Aktionen müssen verständlich erklären, woran sie scheitern und möglichst eine Lösung anbieten.
 - PC-Tastenbelegung, Raster, Werkzeugleistenlayout und technische Details bleiben bis zum Prototyp-Test vorläufig.
 - Begründung: Freies Bauen soll intuitiv und fehlertolerant sein. Das Spiel übernimmt Prüfungen und Routenplanung, ohne dem Spieler die Kontrolle über seine Produktionsstruktur zu nehmen.
+
+
+## 25.11.2026 — Fertiggebäude und modularer Gebäudebau
+
+**Beschluss:** Das Gebäudesystem kombiniert platzierbare Fertiggebäude mit frei kombinierbaren Bauteilen.
+
+- Fertiggebäude ermöglichen einen schnellen Einstieg und können als vollständige Konstruktionen platziert werden.
+- Zusätzlich kann der Spieler eigene Gebäude aus Fundamenten, Böden, Wänden, Fenstern, Türen, Dächern und weiteren Modulen zusammensetzen.
+- Fertiggebäude sind nicht unveränderlich. Sie können umgebaut, erweitert und optisch angepasst werden.
+- Bauteile besitzen passende Verbindungspunkte und rasten bei kompatiblen Konstruktionen automatisch ein.
+- Konstruktion, Gebäudefunktion und Gestaltung werden konzeptionell getrennt. Die Optik eines Gebäudes bestimmt nicht automatisch seine Funktion.
+- Gebäude sollen nutzbare Innenräume besitzen, in denen Maschinen, Werkbänke und Lager untergebracht werden können.
+- Baupläne zum Speichern und Wiederverwenden eigener Konstruktionen sind als spätere Komfort- und Community-Funktion vorgesehen.
+- Komplexe Statik, umfangreiche Materialeigenschaften und Bauplan-Sharing sind nicht Bestandteil des ersten Prototyps.
+- Begründung: Spieler sollen zwischen schnellem, unkompliziertem Bauen und individueller Gestaltung wählen können, ohne dass eine der beiden Spielweisen benachteiligt wird.
