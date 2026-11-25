@@ -251,3 +251,27 @@ Die ausführliche Spezifikation mit Gebietsprofilen, Landmarken, Fundquellen, Au
 - Optionale Beziehungen und persönliche Geschichten dürfen den Kernfortschritt nicht blockieren.
 
 Die vollständige Konzeption und die Abnahmekriterien für den ersten Welt-Prototyp stehen in [Bewohner, Charaktere und Beziehungen](characters-residents-relationships.md). Namen, Biografien und das konkrete Beziehungsnetz bleiben in Ausarbeitung.
+
+
+## 22. Quest-, Missions- und Ereignissystem
+
+**Konzeptioneller Beschluss:** Scrapstead verwendet drei miteinander verbundene Aufgabenebenen:
+
+1. Hauptmissionen und Progressionsaufgaben.
+2. Persönliche und regionale Geschichten.
+3. Wiederkehrende Aufträge und Dienstleistungen.
+
+Regionale Ereignisse ergänzen diese Ebenen, ohne tägliche Login-Pflichten zu erzeugen.
+
+- Aufgaben entstehen aus Bewohnern, Unternehmen, Entdeckungen und nachvollziehbaren wirtschaftlichen Situationen.
+- Aufträge kombinieren bestehende Aktivitäten wie Beschaffung, Bergung, Transport, Handel, Verarbeitung, Reparatur, Bau und Erkundung.
+- Alternative Lösungswege sind zulässig, wenn das Ergebnis die eigentliche Anforderung erfüllt.
+- Hauptmissionen und persönliche Geschichten erhalten keine harten Fristen.
+- Zeitlimits werden sparsam und transparent eingesetzt; verpasste optionale Inhalte blockieren keine Kernprogression.
+- Wiederkehrende Aufträge nutzen kontrollierte Variationen statt bloßer Mengensteigerung.
+- Gemeinschaftsprojekte erzeugen sichtbare Veränderungen an Orten und Betrieben.
+- Wichtige Storyfunde sind garantiert auffindbar und vor versehentlichem Verbrauch geschützt.
+- Questfortschritt wird ereignisbasiert geprüft; Belohnungen werden genau einmal vergeben.
+- Journal und Karte bieten Orientierung, ohne die Welt mit permanenten Markern zu überladen.
+
+Die vollständige Spezifikation einschließlich Datenstruktur, Zustandsmodell, Abnahmekriterien und offenen Punkten steht in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
