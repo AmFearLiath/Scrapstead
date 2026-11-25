@@ -577,3 +577,23 @@ Referenz: [P0-PlayerController-Spezifikation](p0-player-controller.md).
 **Begründung:** Eine feste, gut lesbare Perspektive hält die Steuerung vorhersehbar und reduziert technische Komplexität. Der begrenzte Zoom gibt dem Spieler Übersicht und Nähe, ohne eine zusätzliche freie Kamerasteuerung einzuführen.
 
 Referenz: [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md).
+
+
+## 25.11.2026 — Zentrale Entwicklungswerkstatt und Admin-Tooling
+
+**Beschluss:** Scrapstead erhält eine zentrale Entwicklungswerkstatt als zusammenhängenden Zugang zu den Werkzeugen für Spielkonfiguration, Balancing und Content-Produktion.
+
+- Alle geeigneten Spielwerte, Preise und Formeln sollen konfigurierbar sein, ohne für normale Balancingänderungen Gameplay-Code bearbeiten zu müssen.
+- Texte, Lokalisierung, Quests und NPC-Definitionen sollen zentral gepflegt werden.
+- Gebäude, modulare Bauteile, Flächen und Karten sollen mit geeigneten Werkzeugen erstellt und bearbeitet werden können.
+- Die Werkstatt darf Godot-interne Ressourcen, Szenen, EditorPlugins, Inspector-Erweiterungen, Docks und Tool-Skripte verwenden.
+- Bevorzugt wird ein zentraler Einstieg mit spezialisierten Werkzeugen statt eines vollständig selbst entwickelten monolithischen Editors.
+- Spiel und Werkstatt verwenden dieselben Datenquellen, stabilen IDs und versionierten Datenverträge.
+- Validierung, Referenzprüfung und die Aktualisierung der Werkzeuge bei neuen Gameplay-Systemen sind verbindliche Anforderungen.
+- Die Werkstatt ist primär ein Entwicklungswerkzeug und muss nicht Bestandteil des fertigen Spiels sein.
+- Ein separates Web-Backend, ein Online-Adminsystem oder ein Laufzeit-Adminbereich wird nicht vorausgesetzt.
+- Der Ausbau erfolgt schrittweise zusammen mit den jeweiligen Spielsystemen und darf die Fertigstellung des Kerns nicht blockieren.
+
+**Begründung:** Eine zentrale Verwaltungs- und Produktionsumgebung beschleunigt Balancing und Content-Arbeit, reduziert manuelle Fehler und verhindert verstreute, voneinander abweichende Datenpflege. Durch die Nutzung Godot-nativer Werkzeuge bleibt der Eigenentwicklungsaufwand begrenzt.
+
+Referenz: [Zentrale Entwicklungswerkstatt und Admin-Tooling](development-workbench-and-admin-tooling.md).
