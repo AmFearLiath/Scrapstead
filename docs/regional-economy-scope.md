@@ -150,3 +150,12 @@ Priorität:
 5. Der Hauptabschluss ist mit diesen Systemen vollständig erreichbar.
 
 Optionale Tiefe darf erst nach einem funktionierenden Kern entstehen. Das Projekt soll einen klaren, erreichbaren Abschluss haben und nicht durch immer neue Simulationssysteme endlos wachsen.
+
+
+## Ergänzung: Konkrete regionale Anlaufstellen
+
+Die Umfangsgrenze wird durch eine kleine, konkrete Besetzung umgesetzt. Der erste Kernentwurf sieht fünf dauerhafte Anlaufstellen vor: General Store, Repair Workshop, Materials & Salvage Dealer, Farm & Supply und Freight Office. Die Community Hall ist ein öffentlicher Treffpunkt, temporäre Marktstände sind ereignisgebunden.
+
+Diese Betriebe besitzen einfache Zustände und klar begrenzte Interaktionen. Sie werden nicht als eigenständige Unternehmen mit vollständiger Lager-, Personal-, Produktions- und Buchhaltungssimulation umgesetzt. Der erste Prototyp kann mit drei Betrieben und einem öffentlichen Aushang auskommen.
+
+Vollständige Funktionsbeschreibung: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
