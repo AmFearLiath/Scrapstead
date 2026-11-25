@@ -361,3 +361,10 @@ Der Blockout verwendet die bestehenden 48 × 36 m und die fünf Funktionszonen d
 Die verbindlichen Kommunikationswege, Zustandsübergänge, Snapshot-Regeln, Fehlerfälle und Integrationstests sind in der [P0-Systemintegrationsspezifikation](p0-system-integration.md) beschrieben.
 
 Für P0 bleibt GameSession die sitzungsweite Dateninstanz und SaveService der reine Persistenzdienst. Die Gameplay-Szene stellt Laufzeit-Nodes aus den Sitzungsdaten her und erzeugt bei Speicheranforderungen einen einfachen Datensnapshot. UI bleibt reine Darstellung; ein globaler SceneManager oder Event-Bus wird nicht eingeführt.
+
+
+## 18. P0-Implementierungs- und Projektstruktur
+
+Die konkrete Ordnerstruktur, Node-Hierarchien, Autoload-Konfiguration, Input-Map-Aktionen und Implementierungsphasen sind in der [P0-Implementierungsvorbereitung](p0-implementation-readiness.md) festgelegt.
+
+Die Struktur konkretisiert die vorhandene Szenenarchitektur. Sie führt keine zusätzlichen globalen Dienste ein und hält die Umsetzung bei GameSession und SaveService als einzigen Autoloads.
