@@ -1,6 +1,6 @@
 # Scrapstead — Welt-, Unternehmens- und Simulationskonzept
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Status:** Konzeptzwischenstand  
 **Stand:** 25.11.2026
 
@@ -221,7 +221,13 @@ Relevante Ereignisse sollen vom Spielbeginn an erfasst werden. Geplante Statisti
 
 Die Statistikwerte sind zunächst Berichtsdaten. Nicht jede Kennzahl muss in eine Abschlussnote oder Punktzahl einfließen.
 
-## 15. Noch offene Ausarbeitung
+## 15. Interaktion, Logistik und Produktion
+
+Die detaillierten Entscheidungen zu Interaktion und Zerlegung, Werkzeugen und Crafting, Fahrzeugbetrieb, Transportaufträgen, Lagerverwaltung, standortübergreifender Versorgung, Produktionslinien und Energie sind in [Interaktion, Transport, Lager, Produktion und Energie](gameplay-interaction-logistics-production.md) dokumentiert.
+
+Grundsatz: Der Spieler steuert Ziele, Prioritäten und Ausbau. Fahrzeuge, Mitarbeiter, Lagerbewegungen und Maschinen übernehmen die operative Ausführung innerhalb nachvollziehbarer Regeln. Komplexität wird schrittweise eingeführt und bleibt – soweit sie nicht für eine konkrete Aktion erforderlich ist – optional.
+
+## 16. Noch offene Ausarbeitung
 
 - Exakte Karte, Maßstab und Freischaltfolge der Region.
 - Konkrete Fahrzeugklassen und Fahrmodell.
