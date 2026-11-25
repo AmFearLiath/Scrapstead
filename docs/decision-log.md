@@ -202,3 +202,18 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Alle Gebäude und Module sollen langfristig eine gemeinsame, wiederverwendbare Bauteil- und Materialbibliothek nutzen. Das System soll den Entwicklungsaufwand begrenzen und kein separates Gestaltungssystem pro Gebäude erfordern.
 - Konkrete Freischaltzeitpunkte und Voraussetzungen werden im First-Hour- und Progressionsprototyp getestet.
 - Begründung: Der Einstieg muss unmittelbar fesseln und die Kernspielschleife vermitteln. Umfangreiche kreative Systeme sollen später als motivierende Erweiterung und Belohnung hinzukommen, nicht als Einstiegshürde.
+
+
+## 25.11.2026 — First-Hour-Experience und Spielstart
+
+**Beschluss:** Der Einstieg vermittelt die Kernmechaniken durch natürliche Interaktionen und eine schrittweise emotionale Dramaturgie.
+
+- Die erste Spielphase führt über Ankommen, erste Arbeit, ersten Verkauf, Scrappys Entdeckung und eine erste sichtbare Betriebsverbesserung.
+- Die Zeitangaben von etwa 30 bis 60 Minuten sind Richtwerte, keine Timer oder starren Questvorgaben.
+- Der Spieler darf früh frei erkunden und selbst entscheiden, womit er sich beschäftigt.
+- Lange Tutorialtexte und häufige Pop-ups werden vermieden. Hinweise erscheinen kurz und kontextbezogen.
+- Scrappys Kopf und der rote Werkzeugkasten bilden eine zusammengehörige Entdeckung. Seine Wiederherstellung soll ein besonderer emotionaler Moment sein.
+- Umfangreiche Systeme wie modulare Gebäudegestaltung, komplexe Maschinenverbindungen und Bauplanverwaltung werden nicht in der ersten Stunde ausführlich eingeführt.
+- Die erste Stunde soll einen frühen wirtschaftlichen Erfolg und eine erste sichtbare Verbesserung des Betriebs ermöglichen.
+- Die konkrete Vorgeschichte und der Grund, warum der Schrottplatz dem Spieler gehört, bleiben offen.
+- Begründung: Der Einstieg soll Neugier, Entdeckung, Erfolg, Bindung und Stolz vermitteln und den Spieler zum Weiterspielen motivieren, ohne ihn mit Systemen zu überfordern.
