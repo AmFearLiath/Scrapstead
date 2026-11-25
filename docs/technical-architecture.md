@@ -1,11 +1,22 @@
 # Scrapstead — Technische Architektur
 
-**Version:** 0.2  
-**Status:** Vorgeschlagene Architektur; durch Prototypen zu validieren
+**Version:** 0.3  
+**Status:** Technische Basis beschlossen; Detailentscheidungen werden durch Prototypen validiert
 
 ## 1. Engine
 
-Vorgeschlagen: Godot 4.x mit 3D-Rendering und isometrischer Kamera. Die genaue Engine-Version und Rendering-Entscheidungen werden bei Einrichtung der Entwicklungsumgebung bestätigt.
+**Beschlossene Basis:** Godot Engine 4.7.2 Stable mit GDScript.
+
+- Projekttyp: 3D.
+- Zielplattform zum Einstieg: PC, zunächst Windows und Linux.
+- Rendering: Forward+ als Ausgangskonfiguration; Performance und Hardwarekompatibilität werden im Prototyp geprüft.
+- Perspektive: isometrische 3D-Kamera.
+- Physik: Godot 3D Physics.
+- Benutzeroberfläche: Godot Control Nodes.
+- Datenhaltung: Godot Resources für geeignete Definitionen sowie strukturierte, versionierte Spieldaten für Spielstände.
+- Versionsverwaltung: Git.
+
+Die Engine-Version und Sprache sind festgelegt. Renderer-Konfiguration, Eingabegefühl und konkrete technische Parameter bleiben anhand des P0-Prototyps überprüfbar. Ein Wechsel der Engine oder Sprache ist keine reguläre Optimierungsmaßnahme und müsste ausdrücklich neu entschieden werden.
 
 ## 2. Architekturprinzipien
 
@@ -109,7 +120,7 @@ Regionale Expansion, komplexe Schichtplanung, vollständige Offline-Simulation u
 
 ## 10. Offene technische Entscheidungen
 
-- Exakte Godot-Version und Rendering-Konfiguration.
+- Feinabstimmung der Rendering-Konfiguration und Performance auf der Zielhardware.
 - Eingabe- und Bewegungsmodell.
 - Rastergröße, freie Platzierung und Bauflächenregeln.
 - Inventar- und Transportmodell.
