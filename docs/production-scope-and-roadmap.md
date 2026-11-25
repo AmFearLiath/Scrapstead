@@ -525,3 +525,12 @@ Die erste vollständige Version von Scrapstead konzentriert sich auf einen ausge
 Die bisher erdachten größeren Systeme bleiben als Ideen- und Ausbaupool erhalten. Sie sind keine automatische Verpflichtung.
 
 **Simple Core, Endless Possibilities — aber erst, wenn der Core fertig ist.**
+
+
+## Ergänzung: Core-Gameplay-Matrix
+
+Die Produktionsplanung wird durch eine Mechanik-Matrix konkretisiert. Für Bewegung, Erkundung, Sammeln, Bergen, Lager, Wirtschaft, Verarbeitung, Bauen, Mitarbeiter, Maschinen, Scrappy, Aufträge, Region und technische Basis sind minimale vollständige Umsetzungen, Abhängigkeiten, Entwicklungsphasen und optionale Erweiterungen definiert.
+
+Der kleinste aussagekräftige MVP-Test bleibt bewusst auf Bewegung, Sammeln, Bergen, Verkauf, Credits, einem Upgrade und optionaler Verarbeitung begrenzt. Mitarbeiter, regionale Wirtschaft und komplexe Logistik sind dafür nicht erforderlich.
+
+Spezifikation: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
