@@ -307,3 +307,12 @@ Regionale Expansion, vollständiges Schichtsystem, vollständige Offline-Simulat
 Der Kern funktioniert, wenn neue Spieler die ersten Aktionen ohne Handbuch verstehen, der erste Verkauf belohnend wirkt, das nächste Investitionsziel klar ist und die Entwicklung von manueller Arbeit zu einem selbstständig laufenden Unternehmen Freude bereitet.
 
 Langfristig soll Scrapstead unterschiedliche Spielstile unterstützen: gemütliches Gestalten, wirtschaftliches Optimieren, kreative Automatisierung und das Entdecken einer lebendigen Region.
+
+
+## Ergänzung: Bewohner und regionale Beziehungen
+
+Bewohner werden als wiederkehrende, individuell erkennbare Figuren mit eigenen Rollen, Interessen und Beziehungen gestaltet. Die Weltbevölkerung ist in Hauptfiguren, wiederkehrende Nebenfiguren und vereinfachte Hintergrundbevölkerung gegliedert. Beziehungen entstehen durch konkrete Begegnungen, eingehaltene Zusagen, gemeinsame Projekte und sichtbare Veränderungen – nicht über einen globalen Ruf- oder Moralwert.
+
+Lokale Unternehmen verbinden Charaktere mit Handel, Dienstleistungen, Lieferketten und regionaler Entwicklung. Optionale soziale Inhalte dürfen den Kernfortschritt nicht blockieren. Eine vollständige Lebenssimulation ist ausdrücklich nicht vorgesehen.
+
+Die detaillierte Konzeption steht in [Bewohner, Charaktere und Beziehungen](characters-residents-relationships.md).
