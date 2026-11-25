@@ -1,6 +1,6 @@
 # Scrapstead — Technische Architektur
 
-**Version:** 0.3  
+**Version:** 0.4  
 **Status:** Technische Basis beschlossen; Detailentscheidungen werden durch Prototypen validiert
 
 ## 1. Engine
@@ -129,3 +129,12 @@ Regionale Expansion, komplexe Schichtplanung, vollständige Offline-Simulation u
 - Speicherformat und Migrationsstrategie.
 - Zielhardware und Performancebudget.
 - Technische Aufteilung zusammenhängender Welt und separat geladener Spezialstandorte.
+
+
+## 11. P0-Szenenarchitektur
+
+Die konkrete Aufteilung der Einstiegsszene, des Hauptmenüs, des Menü-Hintergrunds und der Gameplay-Testszene ist in der [P0-Szenenarchitektur](p0-scene-architecture.md) festgehalten.
+
+Für P0 werden globale Dienste bewusst auf GameSession und SaveService begrenzt. Ein eigener globaler SceneManager ist zunächst nicht erforderlich. Die Menü-Kamerafahrt bleibt eine Präsentationsszene und ist vollständig von der Gameplay-Kamera getrennt.
+
+Die Interaktion wird im ersten Prototyp reichweitenbasiert umgesetzt. Das System erkennt gültige Ziele in Spielnähe; das Zielobjekt selbst führt seine jeweilige Aktion aus.
