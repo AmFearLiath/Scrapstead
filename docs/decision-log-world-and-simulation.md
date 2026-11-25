@@ -236,3 +236,18 @@ Die ausführliche Spezifikation mit Gebietsprofilen, Landmarken, Fundquellen, Au
 - Offline-Simulationsdetails.
 - Finale Abschlussmission und Meisteranforderungen.
 - Statistikdefinitionen und Auszeichnungsregeln.
+
+
+## 21. Bewohner, Charaktere und Beziehungen
+
+**Konzeptioneller Beschluss:** Scrapstead erhält eine überschaubare, wiedererkennbare Gemeinschaft statt einer großen Menge austauschbarer Questgeber.
+
+- Bevölkerung in drei Ebenen: individuell ausgearbeitete Hauptfiguren, wiederkehrende Nebenfiguren und vereinfachte Hintergrundbevölkerung.
+- Charaktere besitzen erkennbare Rollen, Eigenheiten, Interessen, Sprachstile und regionale Verankerung.
+- Beziehungen entstehen durch konkrete Begegnungen, Zusammenarbeit und eingehaltene Zusagen; kein universeller Ruf- oder Moralwert.
+- Lokale Unternehmen verbinden Bewohner mit Dienstleistungen, Handel, Lieferketten und sichtbarer regionaler Entwicklung.
+- Präsenz und Tagesabläufe werden vereinfacht. Keine vollständige Lebenssimulation, keine täglichen sozialen Pflichten und keine unnötigen Wartezeiten.
+- Aufträge entstehen aus Rollen und Situationen der Figuren und verbinden bestehende Gameplay-Systeme.
+- Optionale Beziehungen und persönliche Geschichten dürfen den Kernfortschritt nicht blockieren.
+
+Die vollständige Konzeption und die Abnahmekriterien für den ersten Welt-Prototyp stehen in [Bewohner, Charaktere und Beziehungen](characters-residents-relationships.md). Namen, Biografien und das konkrete Beziehungsnetz bleiben in Ausarbeitung.
