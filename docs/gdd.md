@@ -1,6 +1,6 @@
 # Scrapstead — Game Design Document
 
-**Version:** 1.4  
+**Version:** 1.5  
 **Status:** Pre-production / Konzeptionsstand  
 **Genre:** Cozy Automation Tycoon mit Sandbox-Charakter / Incremental Simulation  
 **Plattformziel:** Zunächst PC  
@@ -142,17 +142,21 @@ Erste konzeptionelle Bereiche:
 
 Die Gebietsliste und konkrete Karte sind noch nicht final.
 
-## 10. Fortbewegung
+## 10. Fortbewegung, Transport und Logistik
 
-Der Spieler bewegt sich zu Fuß und nutzt Fahrzeuge für größere Entfernungen und Transporte.
+Der Spieler bewegt sich zu Fuß für Erkundung, Sammeln, Interaktionen und kleinere Arbeiten. Fahrzeuge dienen größeren Distanzen, schweren Gegenständen und Materialtransporten.
 
-- Zu Fuß: Erkunden, Sammeln, Interagieren und kleinere Arbeiten.
-- Fahrzeuge: größere Distanzen, schwere Gegenstände, Materialtransporte und später automatisierte Routen.
-- Mögliche Fahrzeugklassen sind Pickup, Pritschenwagen, Gabelstapler und größere Nutzfahrzeuge.
-- Fahrzeuge können repariert, verbessert und individualisiert werden.
-- Spätere Transportautomatisierung kann eigene Standorte miteinander verbinden.
+**Fahrzeuge werden nicht direkt vom Spieler gesteuert.** Sie sind Teil des Unternehmens- und Logistiksystems und werden über Einzelaufträge, feste Routen und intelligente Dispositionsregeln organisiert.
 
-Die konkrete Fahrzeugliste und Fahrphysik werden später festgelegt.
+- Kleine Gegenstände werden über persönliches Inventar bzw. Sammelbehälter transportiert; größere Gegenstände über Handtransport, Fahrzeuge und Maschinen.
+- Kleinteile werden bei Fahrzeugen abstrakt über Kapazität und Gewicht geladen. Mittlere und große Gegenstände können sichtbar auf Ladeflächen dargestellt bzw. verladen werden.
+- Fahrzeugklasse, Beladung, Gewicht, Zustand und Streckenbedingungen beeinflussen Eignung und Transportleistung; eine vollständige Fahrphysik ist nicht vorgesehen.
+- Fahrzeuge können autonom, personalgebunden oder situationsabhängig betrieben werden.
+- Das Logistiksystem kombiniert Einzelaufträge, feste Routen und intelligente Zuordnung.
+- Unkritische Transportprobleme werden automatisch gelöst. Bei wichtigen Entscheidungen oder fehlenden Lösungen wird der Spieler informiert bzw. um Freigabe gebeten.
+- Lagerbestände bleiben standortgebunden. Versorgung anderer Standorte erfolgt über simulierte Transporte mit realistischen Kapazitäten und Transportzeiten.
+
+Details stehen in [Interaktion, Transport, Lager, Produktion und Energie](gameplay-interaction-logistics-production.md).
 
 ## 11. Bauen und Gestaltung
 
@@ -163,6 +167,7 @@ Das Bausystem ist hybrid:
 - Wege, Lagerbereiche, Dekorationen und kleinere Objekte erhalten weitgehende Gestaltungsfreiheit.
 - Ein Raster dient als Orientierung und Präzisionshilfe, nicht als universelle Einschränkung.
 - Funktionale Regeln prüfen Zugänge, Arbeitsbereiche, Kollisionen, Ein- und Ausgabepunkte sowie Transportverbindungen.
+- Produktionsanlagen können physische Fördertechnik und logische Materialverbindungen kombinieren. Einzelmaschinen bleiben ebenso sinnvoll wie komplexe Produktionslinien.
 - Maschinenverbindungen sollen einfach angelegt werden können; die Routenplanung wird soweit möglich vom Spiel unterstützt.
 - Komplexe manuelle Logistikprogrammierung ist kein Pflichtsystem.
 
@@ -195,6 +200,8 @@ Die Zerlegung folgt einem Hybridansatz:
 - Nicht jeder Gegenstand benötigt alle Stufen oder eine detaillierte Komponentenliste.
 
 Der Umfang wird schrittweise erweitert. Eine große Materialtaxonomie ist kein Selbstzweck.
+
+Die Interaktion, Werkzeuge, das begrenzte modulare Crafting und die wirtschaftlichen Auswirkungen sorgfältiger Zerlegung sind in [Interaktion, Transport, Lager, Produktion und Energie](gameplay-interaction-logistics-production.md) konkretisiert.
 
 ## 13. Zeit und Offline-Simulation
 
