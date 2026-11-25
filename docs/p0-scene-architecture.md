@@ -354,3 +354,10 @@ Die bestehende Komponente `PlayerInteractor` ist die Interaktionssteuerung. Ein 
 Der räumliche Testaufbau, die drei Interaktionstestobjekte, Hindernisvolumen und reproduzierbaren Testabläufe sind in der [P0-Gameplay-Blockout-Spezifikation](p0-gameplay-blockout.md) beschrieben.
 
 Der Blockout verwendet die bestehenden 48 × 36 m und die fünf Funktionszonen des Startgrundstücksentwurfs als vorläufige Grundlage. Er ergänzt keine Wirtschaft, Story oder späteren Gameplay-Systeme.
+
+
+## 17. P0-Systemintegration
+
+Die verbindlichen Kommunikationswege, Zustandsübergänge, Snapshot-Regeln, Fehlerfälle und Integrationstests sind in der [P0-Systemintegrationsspezifikation](p0-system-integration.md) beschrieben.
+
+Für P0 bleibt GameSession die sitzungsweite Dateninstanz und SaveService der reine Persistenzdienst. Die Gameplay-Szene stellt Laufzeit-Nodes aus den Sitzungsdaten her und erzeugt bei Speicheranforderungen einen einfachen Datensnapshot. UI bleibt reine Darstellung; ein globaler SceneManager oder Event-Bus wird nicht eingeführt.
