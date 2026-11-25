@@ -156,3 +156,19 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Komplexe manuelle Förderbandplanung und verpflichtendes Logistik-Mikromanagement gehören nicht zum Ziel des ersten Prototyps.
 - Rastergröße, Routenführung und konkrete Maschinenanforderungen bleiben bis zum Prototyp-Test offen.
 - Begründung: Der Spieler soll seinen Betrieb selbst gestalten können. Das Spiel stellt sicher, dass die Gestaltung funktional bleibt, ohne die kreative Freiheit durch starre Bauplätze oder komplizierte Logistik zu beschneiden.
+
+
+## 25.11.2026 — Bedienkonzept des Baumodus
+
+**Beschluss:** Das Bausystem erhält einen zentralen, kompakten Baumodus mit kontextabhängigen Werkzeugen.
+
+- Vorgesehene Werkzeuge: Platzieren, Verschieben, Drehen, Verbinden, Entfernen und Inspizieren.
+- Platzierungen werden durch eine transparente Vorschau mit objektabhängigen Funktions- und Platzierungsinformationen vorbereitet.
+- Bestehende Objekte können verschoben und gedreht werden. Betroffene Maschinenverbindungen müssen vor der Bestätigung sichtbar sein.
+- Maschinenverbindungen werden bewusst über ausgewählte Ein- und Ausgabepunkte angelegt.
+- Das Spiel berechnet eine passende Transportroute automatisch und zeigt sie vor der Bestätigung.
+- Einrasten (Snap) dient der geometrisch sauberen Ausrichtung. Es erzeugt keine ungefragten Maschinenverbindungen.
+- Der Baumodus soll Rückgängig und Wiederholen sowie das wiederholte Platzieren gleicher Objekte unterstützen.
+- Fehlgeschlagene Aktionen müssen verständlich erklären, woran sie scheitern und möglichst eine Lösung anbieten.
+- PC-Tastenbelegung, Raster, Werkzeugleistenlayout und technische Details bleiben bis zum Prototyp-Test vorläufig.
+- Begründung: Freies Bauen soll intuitiv und fehlertolerant sein. Das Spiel übernimmt Prüfungen und Routenplanung, ohne dem Spieler die Kontrolle über seine Produktionsstruktur zu nehmen.
