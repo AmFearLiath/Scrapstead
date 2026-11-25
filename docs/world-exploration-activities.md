@@ -531,3 +531,12 @@ Die in diesem Dokument beschriebenen Bewohner, Unternehmen, Erkundungsorte und G
 Regionale Ereignisse wie Märkte, Sonderlieferungen, Engpässe oder Gemeinschaftstage bieten zeitweise Chancen, ohne tägliche Pflichten zu erzeugen. Handgefertigte Entdeckungen und wichtige Storyfunde bleiben geschützt und zuverlässig auffindbar.
 
 Details zu Auftragsarten, Voraussetzungen, Fristen, Variationen, Belohnungen, Ereignisregeln und technischer Struktur stehen in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
+
+
+## Ergänzung: Regionalkarte und Weltfreischaltung
+
+Die räumliche Struktur der Hauptregion wird als kompakte Industrietal-Region konzipiert. Old Yard liegt am südwestlichen Stadtrand, Scrapstead Town bildet den sozialen und wirtschaftlichen Mittelpunkt, Industrial Quarter und Railway District bilden den nördlichen Wirtschaftskorridor. Das Greenbelt bildet den ländlichen Gegenpol. Quarry & Extraction bleibt zunächst ein separat ladbarer Spezialstandort mit gemeinsamer Wirtschaft und Logistik.
+
+Die Gebiete werden über wenige klare Hauptachsen, Nebenstraßen, Feldwege und Landmarken verbunden. Freischaltungen erfolgen nachvollziehbar über Erkundung, Reparaturen, Projekte, Vereinbarungen oder Investitionen – nicht über willkürliche Levelgrenzen. Weltzustände wie Wiedereröffnung, Reparatur und Freiräumung bleiben sichtbar und dauerhaft.
+
+Die räumliche Spezifikation mit Zonen, Verkehrsnetz, Zugängen, Karten-UX und Blockout-Abnahmekriterien steht in [Regionalkarte, Gebietsstruktur und Weltfreischaltung](regional-map-and-world-progression.md).
