@@ -634,3 +634,23 @@ Referenz: [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md).
 **Begründung:** Die grundlegende Steuerung soll in einem räumlichen Ausschnitt getestet werden, der später tatsächlich zum Spiel gehört. Dadurch können Probleme mit Wegen, Sichtachsen und Objektgrößen früh erkannt werden, ohne bereits Produktionsassets zu erstellen.
 
 Referenz: [P0-Gameplay-Blockout](p0-gameplay-blockout.md).
+
+
+## 25.11.2026 — P0-Systemintegration und Datenfluss
+
+**Beschluss:** Die P0-Systeme werden über explizite Verantwortlichkeiten und begrenzte Kommunikationswege verbunden.
+
+- GameSession ist die sitzungsweite Quelle des P0-Spielzustands und koordiniert Neues Spiel, Fortsetzen und Speicheranforderungen.
+- SaveService übernimmt ausschließlich Dateizugriff, JSON-Serialisierung, Versionsprüfung und Validierung. Er kennt keine Gameplay-Nodes und lädt keine Szenen.
+- MainMenuController kommuniziert für Start- und Fortsetzen-Abläufe mit GameSession; es verwaltet keinen eigenen Spielzustand.
+- OldYardTest stellt Laufzeitobjekte aus den Sitzungsdaten her und erstellt bei Speicheranforderungen einen Datensnapshot.
+- PlayerController, GameplayCameraController und PlayerInteractor behalten getrennte Verantwortlichkeiten und kommunizieren über explizite lokale Referenzen.
+- InteractionDetector erkennt Kandidaten; PlayerInteractor wählt und löst Aktionen aus; das Zielobjekt verantwortet seine konkrete Aktion.
+- HUD und DebugOverlay bleiben reine Darstellung und Diagnose.
+- Persistenz verwendet versionierte einfache Daten und stabile Objekt-IDs, niemals serialisierte Nodes oder Szenenbäume.
+- Es wird kein globaler SceneManager, Event-Bus oder Service-Locator eingeführt.
+- Für den P0-Persistenztest ist eine temporäre Entwickler-Speicheraktion vorgesehen; automatisches Speichern beim Beenden ist nicht vorausgesetzt.
+
+**Begründung:** Die vorhandenen Einzelspezifikationen benötigen einen klaren gemeinsamen Ablauf. Explizite Datenübergaben und wenige Dienste halten P0 testbar und verhindern, dass die technische Grundlage bereits vor dem ersten Gameplay-Prototyp unnötig komplex wird.
+
+Referenz: [P0-Systemintegration und Ablauf](p0-system-integration.md).
