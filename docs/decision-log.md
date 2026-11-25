@@ -1,106 +1,128 @@
-# Scrapstead — Decision Log
+# Scrapstead — Entscheidungsprotokoll
 
-This file records decisions considered canonical for the current design. New decisions should be appended with date, context, decision, and consequences.
+Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue Entscheidungen werden mit Datum, Kontext, Beschluss und Auswirkungen ergänzt.
 
-## 2026-11-25 — Project identity and core design
+## 25.11.2026 — Projektidentität und grundlegendes Design
 
 - Name: Scrapstead.
-- Tagline: Every Scrap Has a Story.
+- Slogan: Every Scrap Has a Story.
 - Genre: Cozy Automation Tycoon.
-- Camera: Isometric 3D.
-- Gameplay: Hybrid manual work and automation.
-- Atmosphere: Cozy, funny, whimsical.
-- Art direction: Stylized low-poly / miniature diorama.
-- Core principle: Simple Core, Endless Possibilities.
-- Scrappy is the companion and mascot.
+- Kamera: Isometrisches 3D.
+- Gameplay: Kombination aus manueller Arbeit und Automatisierung.
+- Atmosphäre: Gemütlich, humorvoll, skurril.
+- Grafikstil: Stylized Low-Poly / Miniatur-Diorama.
+- Grundprinzip: Simple Core, Endless Possibilities.
+- Scrappy ist Begleiter und Maskottchen.
 
-## 2026-11-25 — Collection model
+## 25.11.2026 — Sammelsystem
 
-**Decision:** Hybrid collection.
+**Beschluss:** Hybrides Sammelsystem.
 
-- Small loose objects are picked up directly.
-- Larger or embedded objects require tools or equipment.
-- Rationale: direct interaction keeps the game fast, while tools create progression and variety.
+- Kleine, lose Gegenstände können direkt aufgehoben werden.
+- Größere oder feststeckende Objekte benötigen Werkzeuge oder Ausrüstung.
+- Begründung: Direkte Interaktionen halten das Spiel flott. Werkzeuge schaffen sinnvolle Fortschrittsmöglichkeiten.
 
-## 2026-11-25 — Scrap economy
+## 25.11.2026 — Schrottwirtschaft
 
-**Decision:** Direct sale plus optional value path.
+**Beschluss:** Direktverkauf plus optionale Wertverarbeitung.
 
-- Ordinary scrap may be sold directly for a lower predictable return.
-- Selected items can be sorted, dismantled, or processed for potentially better returns, components, or discoveries.
-- Processing is optional, not mandatory.
-- Rationale: the game stays approachable while still offering meaningful choices.
+- Gewöhnlicher Schrott kann direkt und mit geringerem, aber verlässlichem Erlös verkauft werden.
+- Ausgewählte Gegenstände können sortiert, zerlegt oder verarbeitet werden und dadurch potenziell bessere Erträge, Komponenten oder Entdeckungen liefern.
+- Verarbeitung ist optional und nicht verpflichtend.
+- Begründung: Das Spiel bleibt zugänglich und bietet trotzdem sinnvolle Entscheidungen.
 
-## 2026-11-25 — Business progression
+## 25.11.2026 — Unternehmensentwicklung
 
-**Decision:** Gradual earned delegation.
+**Beschluss:** Schrittweise, selbst erarbeitete Delegation.
 
-- The player begins doing almost everything personally.
-- Better tools and carrying capacity come first.
-- The player can then afford a first employee.
-- The player later saves for the first machine.
-- Employees and machines gradually take over clear tasks.
-- Automation grows over time; it does not arrive immediately.
-- Rationale: each investment should feel earned and visibly meaningful.
+- Der Spieler erledigt zu Beginn fast alle Arbeiten selbst.
+- Bessere Werkzeuge und Transportkapazität kommen zuerst.
+- Danach kann der Spieler den ersten Mitarbeiter einstellen.
+- Anschließend spart er auf die erste Maschine.
+- Mitarbeiter und Maschinen übernehmen nach und nach klar definierte Aufgaben.
+- Automatisierung wächst schrittweise und steht nicht sofort zur Verfügung.
+- Begründung: Jede Investition soll verdient und sichtbar bedeutsam sein.
 
-## 2026-11-25 — Scrappy's origin and customization
+## 25.11.2026 — Scrappys Herkunft und Anpassung
 
-**Decision:** The player initially finds only Scrappy's head beneath scrap.
+**Beschluss:** Der Spieler findet zunächst nur Scrappys Kopf unter Schrott.
 
-- A special component from the red toolbox restores the head.
-- The player builds Scrappy from salvaged body, locomotion, arm, sensor, and cosmetic parts.
-- Builds can be practical, silly, or cosmetic.
-- Scrappy remains loyal, witty, and a little talkative.
-- His personality must not depend on the chosen parts.
+- Eine besondere Komponente aus dem roten Werkzeugkasten stellt den Kopf wieder her.
+- Der Spieler baut Scrappy aus gefundenen Körper-, Bewegungs-, Arm-, Sensor- und Dekorationsteilen zusammen.
+- Konstruktionen können praktisch, albern oder rein kosmetisch sein.
+- Scrappy bleibt loyal, trocken-humorvoll und gelegentlich etwas geschwätzig.
+- Seine Persönlichkeit hängt nicht von den verbauten Teilen ab.
 
-## 2026-11-25 — Simplicity
+## 25.11.2026 — Einfachheit
 
-**Decision:** Keep the game simple while offering many possibilities.
+**Beschluss:** Das Spiel bleibt einfach bedienbar und bietet dennoch viele Möglichkeiten.
 
-- Complexity comes from combinations of understandable systems.
-- Avoid mandatory micromanagement, complex logistics programming, excessive menus, and unnecessarily large resource taxonomies.
-- Introduce systems gradually.
+- Komplexität entsteht durch die Kombination verständlicher Systeme.
+- Kein verpflichtendes Mikromanagement, keine komplizierte Logistikprogrammierung, keine überladenen Menüs und keine unnötig große Ressourcen-Taxonomie.
+- Neue Systeme werden schrittweise eingeführt.
 
-## 2026-11-25 — First progression sequence
+## 25.11.2026 — Erste Fortschrittsfolge
 
-**Decision:** The player's business grows through earned, gradual delegation.
+**Beschluss:** Der Betrieb wächst durch schrittweise, selbst erarbeitete Delegation.
 
-- The player begins by doing nearly all work personally.
-- Basic tool and carrying improvements come first.
-- The first employee is intended to arrive before the first machine, subject to playtest validation.
-- The employee takes over one clear task the player already understands.
-- The first machine then automates a similarly clear task.
-- Exact prices, wages, and timing are deliberately not fixed before the economy prototype.
-- Rationale: each investment should feel like a meaningful step toward a larger business, not an instant jump to automation.
+- Der Spieler erledigt zu Beginn fast alle Arbeiten selbst.
+- Verbesserungen an Werkzeugen und Transport kommen zuerst.
+- Der erste Mitarbeiter soll vor der ersten Maschine kommen. Diese Reihenfolge muss im Prototyp überprüft werden.
+- Der Mitarbeiter übernimmt eine klar definierte Aufgabe, die der Spieler bereits selbst kennt.
+- Die erste Maschine automatisiert anschließend eine ebenso verständliche Aufgabe.
+- Exakte Preise, Löhne und Zeitpunkte werden erst im Wirtschaftsprototyp festgelegt.
+- Begründung: Jede Investition soll ein spürbarer Schritt zum größeren Betrieb sein und keinen sofortigen Sprung in die Automatisierung darstellen.
 
-## 2026-11-25 — Hybrid collection and optional processing
+## 25.11.2026 — Hybrides Sammeln und optionale Verarbeitung
 
-- Small loose objects can be picked up directly.
-- Larger or embedded objects require suitable tools or equipment.
-- Ordinary scrap can be sold directly.
-- Selected items can be sorted, dismantled, or processed for better potential value.
-- Processing is optional and must not become a mandatory chore.
+- Kleine, lose Gegenstände können direkt aufgehoben werden.
+- Größere oder feststeckende Objekte benötigen passende Werkzeuge oder Ausrüstung.
+- Gewöhnlicher Schrott kann direkt verkauft werden.
+- Ausgewählte Gegenstände können sortiert, zerlegt oder verarbeitet werden, um potenziell mehr Wert zu erzielen.
+- Verarbeitung bleibt optional und darf nicht zur Pflichtaufgabe werden.
 
-## 2026-11-25 — Fully multilingual development
+## 25.11.2026 — Vollständig mehrsprachige Entwicklung
 
-**Decision:** Scrapstead is multilingual by design from the first production asset.
+**Beschluss:** Scrapstead wird vom ersten Produktionsinhalt an mehrsprachig entwickelt.
 
-- Every player-facing string must use a localization key; hard-coded display strings are not permitted.
-- Stable gameplay IDs, save data, asset identifiers, and logic are independent of language.
-- English and German are the initial reference locales.
-- Additional languages must be addable without changing gameplay code or content IDs.
-- UI, fonts, formatting, subtitles, accessibility text, and content validation must support localization from the beginning.
-- Missing translations and key mismatches must be detectable through automated checks.
-- Rationale: retrofitting localization later would create avoidable architectural, content, and UI rework.
+- Jeder spielerseitige Text muss über einen Lokalisierungsschlüssel eingebunden werden. Fest codierte Anzeigetexte sind nicht zulässig.
+- Spiel-IDs, Speicherdaten, Asset-Bezeichner und Spiellogik sind unabhängig von der Sprache.
+- Deutsch und Englisch sind die ersten Referenzsprachen.
+- Weitere Sprachen müssen ohne Änderungen an Spiellogik oder Inhalts-IDs ergänzt werden können.
+- Benutzeroberfläche, Schriftarten, Formatierungen, Untertitel, Barrierefreiheitstexte und Inhaltsprüfung berücksichtigen Mehrsprachigkeit von Anfang an.
+- Fehlende Übersetzungen und abweichende Schlüssel müssen automatisiert erkannt werden.
+- Begründung: Eine nachträgliche Internationalisierung würde vermeidbare Architektur-, Inhalts- und UI-Änderungen verursachen.
 
-## 2026-11-25 — First property item catalog
+## 25.11.2026 — Gegenstandskatalog des Startgrundstücks
 
-**Decision:** Build the first property's object catalog as a compact gameplay system rather than an unstructured list.
+**Beschluss:** Der Gegenstandskatalog wird als kompaktes Gameplay-System und nicht als ungeordnete Objektliste aufgebaut.
 
-- Catalog entries use stable language-independent IDs and localized name/description keys.
-- The initial catalog includes loose scrap, bulk scrap, dismantling candidates, discovery sources, valuable finds, and standardized processing outputs.
-- Direct sale remains available for sellable objects.
-- Processing is optional and selective.
-- Economy values remain relative tiers until prototype balancing.
-- The red toolbox's Scrappy Core Component is an authored, guaranteed progression discovery rather than a random blocker.
-- Rationale: a focused catalog should teach the core loop and create meaningful variety without overwhelming the first property.
+- Katalogeinträge verwenden stabile, sprachunabhängige IDs und lokalisierte Namens- und Beschreibungsschlüssel.
+- Der erste Katalog umfasst lose Schrottteile, sperrige Objekte, zerlegbare Geräte, Entdeckungsquellen, wertvolle Fundstücke und standardisierte Verarbeitungsergebnisse.
+- Direktverkauf bleibt für verkäufliche Gegenstände möglich.
+- Verarbeitung ist optional und gezielt.
+- Wirtschaftswerte bleiben bis zum Balancing des Prototyps relative Stufen.
+- Die Scrappy-Kernkomponente wird garantiert im roten Werkzeugkasten platziert und ist kein zufälliger Fortschrittsblocker.
+- Begründung: Ein fokussierter Katalog soll den grundlegenden Spielablauf vermitteln und abwechslungsreiche Möglichkeiten bieten, ohne das erste Grundstück zu überladen.
+
+## 25.11.2026 — Lage- und Entdeckungsplan des Startgrundstücks
+
+**Beschluss:** Das Startgrundstück wird in funktionale, aber frei begehbare Bereiche gegliedert.
+
+- Einfahrt und Annahme bilden den leicht verständlichen Einstieg.
+- Büro und Werkstatt bilden den funktionalen Ausgangspunkt.
+- Eine freie Arbeitsfläche reserviert Platz für erste Sortieraktionen und Maschinen.
+- Lager- und Schrottbereiche bieten Gegenstände unterschiedlicher Größe und Zugänglichkeit.
+- Scrappys Kopf und der rote Werkzeugkasten sind eigenständige, miteinander verbundene Entdeckungen.
+- Die Wegeführung und Objektverteilung vermitteln die ersten Spielmechaniken, ohne ein starres Tutorial zu erzwingen.
+- Begründung: Die räumliche Anordnung soll Orientierung, Erkundung, Spielfortschritt und die Geschichte des Grundstücks miteinander verbinden.
+
+## 25.11.2026 — Sprache der Entwicklungsdokumentation
+
+**Beschluss:** Die interne Scrapstead-Entwicklungsdokumentation wird auf Deutsch geführt.
+
+- Neue Konzepte, Spezifikationen, Entscheidungsprotokolle und Planungsdokumente werden auf Deutsch erstellt.
+- Technische Bezeichner, stabile IDs, Code-Symbole und Lokalisierungsschlüssel bleiben sprachneutral bzw. in ihrer technischen Schreibweise erhalten.
+- Die Spielinhalte selbst bleiben vollständig mehrsprachig.
+- Bestehende englische Dokumente werden bei ihrer Überarbeitung schrittweise auf Deutsch umgestellt.
+- Begründung: Die gemeinsame Konzeptions- und Entwicklungsarbeit soll sprachlich einheitlich und gut lesbar bleiben, ohne die internationale Ausrichtung des Spiels zu beeinträchtigen.
