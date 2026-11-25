@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/DismantleStation.gd" id="1_station"]
-[ext_resource type="PackedScene" path="res://assets/objects/dismantle_table.tscn" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/dismantle_table.glb" id="2_model"]
 [ext_resource type="Resource" path="res://data/processing/dismantle_broken_radio.tres" id="3_profile"]
 
 [sub_resource type="BoxShape3D" id="shape"]

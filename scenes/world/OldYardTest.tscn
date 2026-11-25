@@ -35,9 +35,9 @@
 [ext_resource type="PackedScene" path="res://scenes/interaction/SourceToolbox.tscn" id="42_toolbox"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/SourceCrate.tscn" id="43_crate"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/SourceDrum.tscn" id="44_drum"]
-[ext_resource type="PackedScene" path="res://assets/objects/equipment_crowbar.tscn" id="45_eq_crowbar"]
-[ext_resource type="PackedScene" path="res://assets/objects/equipment_hoist.tscn" id="46_eq_hoist"]
-[ext_resource type="PackedScene" path="res://assets/objects/equipment_handcart.tscn" id="47_eq_handcart"]
+[ext_resource type="PackedScene" path="res://assets/models/equipment_crowbar.glb" id="45_eq_crowbar"]
+[ext_resource type="PackedScene" path="res://assets/models/equipment_hoist.glb" id="46_eq_hoist"]
+[ext_resource type="PackedScene" path="res://assets/models/equipment_handcart.glb" id="47_eq_handcart"]
 [ext_resource type="Resource" path="res://data/items/scrap_wood_offcut.tres" id="def_scrap_wood_offcut"]
 [ext_resource type="Resource" path="res://data/items/scrap_copper_pipe.tres" id="def_scrap_copper_pipe"]
 [ext_resource type="Resource" path="res://data/items/find_brass_figurine.tres" id="def_find_brass_figurine"]
@@ -271,10 +271,10 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.5, 0, -20.0)
 visible = false
 
 [node name="PlayerStart" type="Marker3D" parent="." unique_id=320113948]
-transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -3)
+transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -4.6)
 
 [node name="Player" parent="." unique_id=1851910532 instance=ExtResource("7_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4.6)
 
 [node name="GameplayCamera" parent="." unique_id=380493830 instance=ExtResource("8_camera")]
 

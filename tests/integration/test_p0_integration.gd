@@ -61,7 +61,7 @@ func test_int02_new_game_starts_clean() -> void:
 	check(scene != null, "gameplay scene loads")
 	check(_session.is_session_active(), "session active")
 	var player: CharacterBody3D = _player(scene)
-	check(player.global_position.distance_to(Vector3(8, 0, -3)) < 0.3, "player at spawn")
+	check(player.global_position.distance_to(Vector3(8, 0, -4.6)) < 0.3, "player at spawn")
 	# Guards against accidental editor moves: ground, objects and spawn share y = 0.
 	check(scene.get_node("LevelGeometry").global_transform == Transform3D.IDENTITY, "level geometry at origin")
 	await wait_physics_frames(30)
@@ -292,7 +292,7 @@ func test_invalid_saved_position_falls_back_to_spawn() -> void:
 	_session.continue_game()
 	var scene: Node = await wait_for_scene(YARD)
 	await wait_physics_frames(2)
-	check(_player(scene).global_position.distance_to(Vector3(8, 0, -3)) < 0.3, "fallback spawn used")
+	check(_player(scene).global_position.distance_to(Vector3(8, 0, -4.6)) < 0.3, "fallback spawn used")
 
 
 func test_int11_save_write_failure_keeps_session() -> void:

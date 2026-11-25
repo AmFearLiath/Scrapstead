@@ -765,3 +765,16 @@ Referenz: [P1: Erste Gameplay-Schleife, Abschnitt 14](p1-gameplay-loop.md).
 **Technische Entscheidungen:** Gebäude und Deko des Hofs werden als Modellinstanzen in den generierten Blockout eingebunden; Kollisionen bleiben einfache Boxen. Benannte Zustandsgruppen (`Closed`, `Open`, `Beam`, `Debris`) kommen direkt aus Blender. Meshes werden pro Gruppe zusammengefasst, um Draw Calls zu begrenzen.
 
 Referenz: [Art Direction](world-art-assets.md).
+
+
+## 26.11.2026 — Gesamter Old Yard im Flickwerk-Stil
+
+**Beschluss (Projektleitung):** Der restliche Hof wird im neuen Stil umgebaut.
+
+- Alle sichtbaren Objekte des Old Yard sind nun Blender-Modelle (50 Stück); Blockout-Primitive bleiben nur für Boden, Wege und Markierungen.
+- Zäune werden aus 4-m-Modulen in drei Varianten zusammengesetzt und auf die Lauflänge skaliert; Grasbüschel werden deterministisch entlang der Zäune und in ruhigen Ecken verteilt.
+- Kleine Humor-Details im Sinne der Säulen 1 und 3: schlafende Katze auf dem Container, Gummiente im Regal, Pfeil „Diese Seite oben“ verkehrt herum, Badewanne als Blumenbeet, Gipfelfahne auf dem großen Schrotthaufen, Reifen als Blumenbeet.
+- Der Spielerstart rückt 1,6 m nach Norden (Layout 8 / 4,6), damit der Torbogen die Figur im ersten Bild nicht verdeckt. Kein Einfluss auf Spielmechanik.
+- Die Linse des Hofstrahlers behält ein eigenes leuchtendes Material; alle übrigen Modelle nutzen das gemeinsame Toon-Material.
+
+Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/interaction/UseTestObject.gd" id="1_use"]
-[ext_resource type="PackedScene" path="res://assets/objects/floodlight.tscn" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/floodlight.glb" id="2_model"]
 
 [sub_resource type="CylinderShape3D" id="shape"]
 height = 1.4
@@ -16,7 +16,7 @@ name_key = "object.use_test.name"
 action_key = "ui.action.use"
 highlight_radius = 0.7
 light = NodePath("YardLight")
-lens = NodePath("VisualRoot/PlaceholderModel/Head/Lens")
+lens = NodePath("VisualRoot/PlaceholderModel/Head/Lens/Lens_Mesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)

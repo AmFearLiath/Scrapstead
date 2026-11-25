@@ -15,7 +15,7 @@ extends CharacterBody3D
 ## Turn speed of the visual model in rad/s.
 @export var turn_speed: float = 10.0
 ## Spawn used when no valid saved position exists.
-@export var fallback_spawn: Vector3 = Vector3(8.0, 0.1, -3.0)
+@export var fallback_spawn: Vector3 = Vector3(8.0, 0.1, -4.6)
 ## Saved positions outside this XZ rectangle (plot minus margin) are rejected.
 ## Rect2 uses (world x, world z); north is -Z.
 @export var valid_area: Rect2 = Rect2(0.5, -35.5, 47.0, 35.0)

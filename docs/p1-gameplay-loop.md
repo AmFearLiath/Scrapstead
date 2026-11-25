@@ -21,7 +21,7 @@ Der P1-Ausschnitt liegt im bestehenden Old-Yard-Blockout. Alle Positionen sind L
 
 | Element | Layoutposition | Zone | Zweck |
 |---|---|---|---|
-| Spielerstart | 8 / 3, Blick Nord | E | Einstieg an der Einfahrt |
+| Spielerstart | 8 / 4,6, Blick Nord | E | Einstieg an der Einfahrt (seit Art-Pass 26.11.2026; vorher 8 / 3) |
 | Annahmetresen (`station_sell_counter`) | 11,6 / 6, Kundenseite West | E | Verkauf |
 | Büro: Bestellkatalog (`station_order_desk`) | 5,4 / 14,2, Front Süd | C | Kauf von Werkzeug und Transportmitteln (0.2) |
 | Werkbank (`station_workbench`) | 10,5 / 14,2, Front Süd | C | Nur untersuchbar, Crafting folgt (0.2) |

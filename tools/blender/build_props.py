@@ -490,6 +490,11 @@ ASSETS = {
 }
 
 
+import props_world  # noqa: E402
+
+ASSETS.update(props_world.ASSETS)
+
+
 def main():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     out_dir = argv[argv.index("--out") + 1] if "--out" in argv else "assets/models"

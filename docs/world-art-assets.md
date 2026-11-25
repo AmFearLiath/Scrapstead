@@ -75,7 +75,7 @@ Visueller Humor folgt den Säulen aus `lore-walt-wren.md` und wird sparsam einge
 
 ## 5. Technische Pipeline
 
-- **Modelle** werden per Python-Skript in Blender erzeugt (`tools/blender/`), reproduzierbar und versioniert. Ausgabe: `.glb` nach `assets/models/`.
+- **Modelle** werden per Python-Skript in Blender erzeugt (`tools/blender/build_props.py` für Hauptobjekte, `tools/blender/props_world.py` für Welt, Fundstücke und Bewuchs), reproduzierbar und versioniert. Ausgabe: `.glb` nach `assets/models/`. Der Hof-Generator `tools/build_blockout.gd` platziert sie mit einfachen Kollisionsboxen.
 - **Maßstab:** 1 Blender-Einheit = 1 m. Ursprung in der Bodenmitte des Objekts. Vorderseite zeigt in Blender nach −Y (wird in Godot +Z = Modellvorderseite).
 - **Farben** als Vertex-Farben (Farbattribut `Col`) auf einem einzigen Material `Scrap`. Godot ersetzt es beim Import durch das gemeinsame Toon-Material.
 - **Benannte Teilknoten** (z. B. `Closed`, `Open`, `Debris`, `Beam`) werden als leere Eltern-Objekte angelegt, damit Spielskripte Zustände umschalten können.
@@ -110,14 +110,14 @@ Instanzen für wiederholte Requisiten, ein gemeinsames Material für alle Modell
 
 ## 9. Umsetzungsstand (Art-Direction-Prototyp)
 
-Vorher/Nachher: `docs/art/before_after.png`, Einzelbilder in `docs/art/before/` und `docs/art/after/`, Modellübersicht `docs/art/blender_props_contact_sheet.png`.
+Vorher/Nachher: `docs/art/before_after.png`, Einzelbilder in `docs/art/before/` und `docs/art/after/`, Modellübersichten `docs/art/blender_props_contact_sheet.png` und `docs/art/blender_world_contact_sheet.png`.
 
 | Bereich | Stand |
 |---|---|
 | Toon-Shader, Umrisse, Schattentönung, Lichtsaum | Umgesetzt, gilt für Modelle und Blockout |
 | Miniatur-Effekt (Tilt-Shift, Vignette) | Umgesetzt (`ui/post/DioramaPost.tscn`) in Spiel und Menü |
-| Blender-Modelle | Annahmetresen, Bürotisch, Rostfass, Lagerkiste, Werkzeugkasten, Metallträger, Werkbank, Walts Schubkarre, Werkstattschuppen, Verkaufskiosk, Spielfigur, Hinweisbrett |
-| Noch Blockout-Primitive | Zäune und Tor, Schrotthaufen, Autowrack, Container, Kisten- und Fassgruppen der Lagerzone, Paletten, Hofstrahler, Zerlegetisch, lose Kleinteile, Lieferware, Boden |
+| Blender-Modelle | 50 Modelle: alle Gebäude, Stationen, Suchquellen, Zäune (je 3 Varianten hoch/niedrig), Tor, Ziegelmauer, Träger, drei Schrotthaufen, Autowrack, Container mit Katze, Motorblock, Lagerzone (Kisten, Fässer, Regal mit Gummiente), Paletten, Reifen, Badewannen-Beet, Hofstrahler, Zerlegetisch, Lieferware, alle Fundstücke, Spielfigur, drei Grasbüschel-Varianten |
+| Noch Blockout-Primitive | Boden, Wege, Maschinenfläche (bewusst flach), Zaun-Endpfosten |
 | Spielfigur | Statisches Modell im Zielstil, keine Lauf-/Aktionsanimation |
 
 ## 10. Abgrenzung zu menschlicher Kunstarbeit

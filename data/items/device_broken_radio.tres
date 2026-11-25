@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
-[ext_resource type="PackedScene" path="res://assets/objects/device_broken_radio.tscn" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/device_broken_radio.glb" id="2_model"]
 
 [resource]
 script = ExtResource("1_def")
