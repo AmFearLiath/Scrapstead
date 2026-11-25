@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://assets/shaders/diorama_post.gdshader" id="1_post"]
+
+[sub_resource type="ShaderMaterial" id="post_material"]
+shader = ExtResource("1_post")
+
+[node name="DioramaPost" type="CanvasLayer"]
+layer = -1
+
+[node name="Screen" type="ColorRect" parent="."]
+material = SubResource("post_material")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

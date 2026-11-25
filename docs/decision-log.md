@@ -750,3 +750,18 @@ Referenz: [Prototyp-Abnahme](prototype-acceptance.md).
 - Spielstandschema bleibt Version 2, da nur neue IDs und Zustandswerte hinzukommen.
 
 Referenz: [P1: Erste Gameplay-Schleife, Abschnitt 14](p1-gameplay-loop.md).
+
+
+## 25.11.2026 — Art Direction „Walts Flickwerk-Diorama“ und Blender-Pipeline
+
+**Beschluss (Projektleitung):** Scrapstead erhält einen eigenen, unverwechselbaren und professionellen Grafikstil, passend zu Witz und Charme des Spiels. Als erster Schritt wird ein Art-Direction-Prototyp umgesetzt.
+
+- Leitidee: Miniatur-Diorama eines Schrottplatzes, auf dem alles schon einmal repariert wurde. Walts Flicken, Klebeband und zweckentfremdete Teile sind das visuelle Erkennungsmerkmal; neue Dinge sind sauber und gerade, damit Fortschritt sichtbar wird.
+- Toon-Shading mit drei Lichtstufen, pflaumenfarbenen Schatten, warmem Lichtsaum und dunkelbraunen Umrissen; dezenter Tilt-Shift-Effekt.
+- Keine Bildtexturen, sondern eine feste Palette als Vertex-Farben bzw. Shaderparameter.
+- Modelle entstehen reproduzierbar per Python-Skript in Blender 4.2 und werden als glTF importiert; Godot ersetzt das Exportmaterial beim Import durch das gemeinsame Toon-Material.
+- Figuren mit hohem Charakteranspruch, Animation, Key Art und finales Logo sollen später durch menschliche Artists entstehen oder verfeinert werden.
+
+**Technische Entscheidungen:** Gebäude und Deko des Hofs werden als Modellinstanzen in den generierten Blockout eingebunden; Kollisionen bleiben einfache Boxen. Benannte Zustandsgruppen (`Closed`, `Open`, `Beam`, `Debris`) kommen direkt aus Blender. Meshes werden pro Gruppe zusammengefasst, um Draw Calls zu begrenzen.
+
+Referenz: [Art Direction](world-art-assets.md).

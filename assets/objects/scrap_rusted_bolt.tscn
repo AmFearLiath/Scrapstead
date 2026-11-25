@@ -1,37 +1,52 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o017c"]
-albedo_color = Color(0.6039216, 0.2901961, 0.13333334, 1)
-metallic = 0.3
-roughness = 0.85
+[ext_resource type="Material" path="res://assets/materials/outline.tres" id="1_rqe22"]
+[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="2_pdxl8"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_h7hy6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2t5lm"]
+render_priority = 0
+next_pass = ExtResource("1_rqe22")
+shader = ExtResource("2_pdxl8")
+shader_parameter/albedo = Color(0.6039216, 0.2901961, 0.13333334, 1)
+shader_parameter/use_vertex_color = null
+shader_parameter/mid_step = null
+shader_parameter/step_softness = null
+shader_parameter/rim_color = null
+shader_parameter/rim_strength = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fbu47"]
 top_radius = 0.045
 bottom_radius = 0.045
 height = 0.36
 radial_segments = 8
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trx3l"]
-albedo_color = Color(0.78431374, 0.39215687, 0.1764706, 1)
-metallic = 0.3
-roughness = 0.8
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kwnra"]
+render_priority = 0
+next_pass = ExtResource("1_rqe22")
+shader = ExtResource("2_pdxl8")
+shader_parameter/albedo = Color(0.78431374, 0.39215687, 0.1764706, 1)
+shader_parameter/use_vertex_color = null
+shader_parameter/mid_step = null
+shader_parameter/step_softness = null
+shader_parameter/rim_color = null
+shader_parameter/rim_strength = null
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_0krw1"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_7xkfc"]
 top_radius = 0.11
 bottom_radius = 0.11
 height = 0.07
 radial_segments = 6
 rings = 1
 
-[node name="RustedBolt" type="Node3D" unique_id=526205975]
+[node name="RustedBolt" type="Node3D" unique_id=1856544227]
 
-[node name="Shaft" type="MeshInstance3D" parent="." unique_id=2011667635]
+[node name="Shaft" type="MeshInstance3D" parent="." unique_id=195305829]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.23, -0.18)
-material_override = SubResource("StandardMaterial3D_o017c")
-mesh = SubResource("CylinderMesh_h7hy6")
+material_override = SubResource("ShaderMaterial_2t5lm")
+mesh = SubResource("CylinderMesh_fbu47")
 
-[node name="Head" type="MeshInstance3D" parent="." unique_id=25679006]
+[node name="Head" type="MeshInstance3D" parent="." unique_id=473356939]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.085, 0.12)
-material_override = SubResource("StandardMaterial3D_trx3l")
-mesh = SubResource("CylinderMesh_0krw1")
+material_override = SubResource("ShaderMaterial_kwnra")
+mesh = SubResource("CylinderMesh_7xkfc")

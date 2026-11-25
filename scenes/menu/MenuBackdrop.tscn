@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/menu/MenuBackdrop.gd" id="1_backdrop"]
 [ext_resource type="Environment" path="res://assets/environment/yard_environment.tres" id="2_env"]
 [ext_resource type="PackedScene" path="res://scenes/world/YardBlockout.tscn" id="3_yard"]
-[ext_resource type="PackedScene" path="res://assets/objects/sell_counter.tscn" id="4_counter"]
-[ext_resource type="PackedScene" path="res://assets/objects/workbench.tscn" id="5_bench"]
+[ext_resource type="PackedScene" path="res://assets/models/sell_counter.glb" id="4_counter"]
+[ext_resource type="PackedScene" path="res://assets/models/workbench.glb" id="5_bench"]
 
 [sub_resource type="Curve3D" id="camera_curve"]
 _data = {

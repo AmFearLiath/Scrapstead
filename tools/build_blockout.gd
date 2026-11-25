@@ -19,7 +19,12 @@ const PLOT_W: float = 48.0
 const PLOT_D: float = 36.0
 const LAYER_WORLD: int = 1
 
+## Flat ground surfaces get no ink outline.
+const NO_OUTLINE: PackedStringArray = ["ground", "ground_outside", "gravel", "concrete", "paint_line"]
+
 var _materials: Dictionary = {}
+var _toon_shader: Shader = load("res://assets/shaders/toon.gdshader")
+var _outline_material: Material = load("res://assets/materials/outline.tres")
 var _rng := RandomNumberGenerator.new()
 ## True while building the yard: layout coordinates are mirrored to world Z.
 var _mirror_z: bool = false
@@ -32,26 +37,17 @@ func _init() -> void:
 	_mirror_z = true
 	ok = _save(_build_yard(), "res://scenes/world/YardBlockout.tscn") and ok
 	_mirror_z = false
-	ok = _save(_build_player_model(), "res://assets/objects/player_model.tscn") and ok
 	ok = _save(_build_bolt(), "res://assets/objects/scrap_rusted_bolt.tscn") and ok
 	ok = _save(_build_can(), "res://assets/objects/scrap_empty_can.tscn") and ok
 	ok = _save(_build_wire_coil(), "res://assets/objects/scrap_wire_coil.tscn") and ok
-	ok = _save(_build_metal_beam(), "res://assets/objects/bulk_metal_beam.tscn") and ok
 	ok = _save(_build_radio(), "res://assets/objects/device_broken_radio.tscn") and ok
 	ok = _save(_build_copper_spool(), "res://assets/objects/mat_copper_wire.tscn") and ok
 	ok = _save(_build_electronic_parts(), "res://assets/objects/mat_electronic_parts.tscn") and ok
-	ok = _save(_build_sell_counter(), "res://assets/objects/sell_counter.tscn") and ok
-	ok = _save(_build_workbench(), "res://assets/objects/workbench.tscn") and ok
 	ok = _save(_build_dismantle_table(), "res://assets/objects/dismantle_table.tscn") and ok
-	ok = _save(_build_notice_board(), "res://assets/objects/notice_board.tscn") and ok
 	ok = _save(_build_floodlight(), "res://assets/objects/floodlight.tscn") and ok
 	ok = _save(_build_wood_offcut(), "res://assets/objects/scrap_wood_offcut.tscn") and ok
 	ok = _save(_build_copper_pipe(), "res://assets/objects/scrap_copper_pipe.tscn") and ok
 	ok = _save(_build_brass_figurine(), "res://assets/objects/find_brass_figurine.tscn") and ok
-	ok = _save(_build_order_desk(), "res://assets/objects/order_desk.tscn") and ok
-	ok = _save(_build_old_toolbox(), "res://assets/objects/source_old_toolbox.tscn") and ok
-	ok = _save(_build_storage_crate(), "res://assets/objects/source_storage_crate.tscn") and ok
-	ok = _save(_build_rusted_drum(), "res://assets/objects/source_rusted_drum.tscn") and ok
 	ok = _save(_build_equipment_crowbar(), "res://assets/objects/equipment_crowbar.tscn") and ok
 	ok = _save(_build_equipment_hoist(), "res://assets/objects/equipment_hoist.tscn") and ok
 	ok = _save(_build_equipment_handcart(), "res://assets/objects/equipment_handcart.tscn") and ok
@@ -99,11 +95,13 @@ func _build_materials() -> void:
 	_materials["lens"] = lens
 
 
-func _mat(key: String, color: Color, roughness: float = 0.9, metallic: float = 0.0) -> void:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = roughness
-	material.metallic = metallic
+func _mat(key: String, color: Color, _roughness: float = 0.9, _metallic: float = 0.0) -> void:
+	# All blockout geometry uses the shared toon shader (docs/world-art-assets.md).
+	var material := ShaderMaterial.new()
+	material.shader = _toon_shader
+	material.set_shader_parameter("albedo", color)
+	if not NO_OUTLINE.has(key):
+		material.next_pass = _outline_material
 	_materials[key] = material
 
 
@@ -178,6 +176,14 @@ func _group(parent: Node, node_name: String, position: Vector3 = Vector3.ZERO, y
 	return node
 
 
+## Instances an imported model (e.g. a Blender .glb) under `parent`.
+func _model(parent: Node3D, node_name: String, path: String) -> Node3D:
+	var instance: Node3D = load(path).instantiate()
+	instance.name = node_name
+	_attach(parent, instance)
+	return instance
+
+
 ## Adds an invisible collision box (bottom-center at `base`).
 func _barrier(parent: Node3D, node_name: String, base: Vector3, size: Vector3) -> void:
 	var body := StaticBody3D.new()
@@ -228,7 +234,9 @@ func _save(root: Node, path: String) -> bool:
 func _set_owner_recursive(node: Node, root: Node) -> void:
 	for child: Node in node.get_children():
 		child.owner = root
-		_set_owner_recursive(child, root)
+		# Instanced scenes keep their own internals.
+		if child.scene_file_path.is_empty():
+			_set_owner_recursive(child, root)
 
 
 # --- Old Yard ----------------------------------------------------------------
@@ -309,21 +317,14 @@ func _fence_run(parent: Node3D, node_name: String, from: Vector3, to: Vector3, h
 
 
 func _build_walls(walls: Node3D) -> void:
-	# Office / workshop shed, zone C (9 x 6 m).
+	# Office / workshop shed, zone C (9 x 6 m) and sales kiosk, zone E: modelled
+	# in Blender (tools/blender/build_props.py); collision stays simple here.
 	var shed := _group(walls, "WorkshopShed", Vector3(8.5, 0, 18))
-	_box(shed, "Body", Vector3.ZERO, Vector3(9, 3.2, 6), "wall_teal", true)
-	_box(shed, "Roof", Vector3(0, 3.2, 0), Vector3(9.6, 0.35, 6.6), "roof_rust")
-	_box(shed, "RoofRidge", Vector3(0, 3.55, 0), Vector3(9.6, 0.3, 2.0), "roof_rust")
-	_box(shed, "Door", Vector3(-1.5, 0, -3.02), Vector3(1.6, 2.3, 0.06), "wood_dark")
-	_box(shed, "Window", Vector3(2.2, 1.2, -3.02), Vector3(2.2, 1.0, 0.06), "glass")
-	_box(shed, "WindowFrame", Vector3(2.2, 1.1, -3.04), Vector3(2.5, 0.12, 0.06), "wood_light")
-	_box(shed, "Chimney", Vector3(3.2, 3.2, 1.5), Vector3(0.6, 1.4, 0.6), "brick")
-	# Sales kiosk, zone E (5 x 4 m block including counter area).
+	_model(shed, "Model", "res://assets/models/workshop_shed.glb")
+	_barrier(shed, "Collision", Vector3.ZERO, Vector3(9.1, 3.2, 6.1))
 	var kiosk := _group(walls, "SalesKiosk", Vector3(14.5, 0, 6))
-	_box(kiosk, "Body", Vector3.ZERO, Vector3(3, 2.6, 4), "wood_light", true)
-	_box(kiosk, "Roof", Vector3(0, 2.6, 0), Vector3(3.4, 0.25, 4.4), "teal")
-	_box(kiosk, "Awning", Vector3(-1.9, 2.1, 0), Vector3(1.0, 0.08, 4.2), "rust_light", false, 0.0, Vector3(0, 0, -15))
-	_box(kiosk, "Hatch", Vector3(-1.52, 1.0, 0), Vector3(0.06, 0.9, 2.2), "dark")
+	_model(kiosk, "Model", "res://assets/models/sales_kiosk.glb")
+	_barrier(kiosk, "Collision", Vector3.ZERO, Vector3(3.0, 2.6, 4.0))
 	# Free-standing brick wall segment between workshop and storage (4 m).
 	_box(walls, "WallSegment", Vector3(6, 0, 24), Vector3(4, 1.8, 0.4), "brick", true)
 	# Posts / girders forming a 1.5 m pinch point along the storage side path.
@@ -358,6 +359,10 @@ func _build_obstacles(obstacles: Node3D) -> void:
 	_box(work, "Pallet2", Vector3(28, 0.15, 16.5), Vector3(1.2, 0.15, 1.0), "wood_light", false, 8.0)
 	_box(work, "Tyres", Vector3(42.5, 0, 8), Vector3(0.9, 0.3, 0.9), "tyre", true)
 	_cyl(work, "TyreStack", Vector3(43.8, 0, 9.3), 0.45, 0.9, "tyre", true, 14)
+	# Walt's self-driving wheelbarrow, parked and "thinking" next to the side path.
+	var barrow := _group(obstacles, "WaltsWheelbarrow", Vector3(16.2, 0, 22.8), -110.0)
+	_model(barrow, "Model", "res://assets/models/deco_wheelbarrow.glb")
+	_barrier(barrow, "Collision", Vector3(0.1, 0, 0), Vector3(2.0, 1.0, 0.9))
 	# Zone E - entrance decoration (no collision for tiny items).
 	var entrance := _group(obstacles, "EntranceE")
 	_cyl(entrance, "Planter", Vector3(3, 0, 9), 0.5, 0.5, "wood_dark", true)
@@ -405,24 +410,6 @@ func _car_shell(parent: Node3D, base: Vector3) -> void:
 # --- Characters and props ----------------------------------------------------
 # Model forward is local +Z. Origin is on the floor.
 
-func _build_player_model() -> Node3D:
-	var root := Node3D.new()
-	root.name = "PlayerModel"
-	var body := CapsuleMesh.new()
-	body.radius = 0.3
-	body.height = 1.2
-	_place(root, "Body", Vector3(0, 0.62, 0), body, null, "rust_light", 0.0, Vector3.ZERO)
-	_box(root, "Belt", Vector3(0, 0.62, 0), Vector3(0.62, 0.1, 0.62), "dark")
-	var head := SphereMesh.new()
-	head.radius = 0.2
-	head.height = 0.4
-	_place(root, "Head", Vector3(0, 1.42, 0), head, null, "skin", 0.0, Vector3.ZERO)
-	_cyl(root, "Cap", Vector3(0, 1.5, 0), 0.21, 0.13, "teal", false, 16)
-	_box(root, "Visor", Vector3(0, 1.52, 0.2), Vector3(0.32, 0.04, 0.2), "teal")
-	_box(root, "Nose", Vector3(0, 1.36, 0.19), Vector3(0.06, 0.06, 0.06), "skin")
-	_box(root, "Basket", Vector3(0, 0.75, -0.36), Vector3(0.46, 0.5, 0.18), "wood")
-	_box(root, "BasketStrap", Vector3(0, 0.95, -0.05), Vector3(0.5, 0.06, 0.6), "wood_dark")
-	return root
 
 
 func _build_bolt() -> Node3D:
@@ -455,22 +442,6 @@ func _build_wire_coil() -> Node3D:
 	return root
 
 
-func _build_metal_beam() -> Node3D:
-	var root := Node3D.new()
-	root.name = "MetalBeam"
-	var beam := _group(root, "Beam", Vector3(0, 0.12, 0), 0.0)
-	beam.rotation = Vector3(0, deg_to_rad(15), deg_to_rad(-8))
-	_box(beam, "Web", Vector3(0, 0.04, 0), Vector3(2.6, 0.26, 0.06), "rust")
-	_box(beam, "FlangeTop", Vector3(0, 0.3, 0), Vector3(2.6, 0.05, 0.26), "rust_light")
-	_box(beam, "FlangeBottom", Vector3(0, 0.0, 0), Vector3(2.6, 0.05, 0.26), "rust_light")
-	# Debris lying on top marks the beam as stuck before it is salvaged.
-	var debris := _group(root, "Debris")
-	_box(debris, "Plate", Vector3(0.6, 0.38, 0.1), Vector3(1.1, 0.08, 0.9), "corrugated", false, 30.0,
-		Vector3(6, 0, -10))
-	_box(debris, "Chunk", Vector3(0.9, 0.44, -0.2), Vector3(0.5, 0.35, 0.45), "steel_dark", false, 12.0,
-		Vector3(0, 0, 14))
-	_cyl(debris, "Pipe", Vector3(0.2, 0.5, 0.35), 0.07, 1.0, "steel", false, 8, Vector3(80, 30, 0))
-	return root
 
 
 func _build_radio() -> Node3D:
@@ -503,38 +474,8 @@ func _build_electronic_parts() -> Node3D:
 	return root
 
 
-func _build_sell_counter() -> Node3D:
-	var root := Node3D.new()
-	root.name = "SellCounter"
-	_box(root, "Counter", Vector3.ZERO, Vector3(2.2, 1.0, 1.0), "wood")
-	_box(root, "CounterTop", Vector3(0, 1.0, 0), Vector3(2.4, 0.08, 1.15), "wood_light")
-	_box(root, "ScalePlate", Vector3(-0.55, 1.08, 0.05), Vector3(0.7, 0.05, 0.6), "steel")
-	_cyl(root, "ScaleDial", Vector3(-0.55, 1.13, -0.3), 0.18, 0.06, "cream", false, 16, Vector3(70, 0, 0))
-	_cyl(root, "CoinTray", Vector3(0.5, 1.08, 0.1), 0.2, 0.05, "mustard", false, 16)
-	_box(root, "SignPostL", Vector3(-1.0, 1.08, -0.45), Vector3(0.08, 1.3, 0.08), "wood_dark")
-	_box(root, "SignPostR", Vector3(1.0, 1.08, -0.45), Vector3(0.08, 1.3, 0.08), "wood_dark")
-	_box(root, "SignBoard", Vector3(0, 2.0, -0.45), Vector3(2.2, 0.5, 0.06), "mustard")
-	_cyl(root, "SignCoin", Vector3(0, 2.25, -0.41), 0.16, 0.04, "rust_light", false, 16, Vector3(90, 0, 0))
-	return root
 
 
-func _build_workbench() -> Node3D:
-	var root := Node3D.new()
-	root.name = "Workbench"
-	_box(root, "Top", Vector3(0, 0.85, 0), Vector3(2.5, 0.1, 1.0), "wood_light")
-	for index: int in 4:
-		var x: float = -1.1 if index % 2 == 0 else 1.1
-		var z: float = -0.4 if index < 2 else 0.4
-		_box(root, "Leg%d" % index, Vector3(x, 0, z), Vector3(0.1, 0.85, 0.1), "wood_dark")
-	_box(root, "Shelf", Vector3(0, 0.25, 0), Vector3(2.3, 0.06, 0.8), "wood")
-	_box(root, "Pegboard", Vector3(0, 0.95, -0.48), Vector3(2.5, 1.2, 0.06), "cream")
-	_box(root, "Vice", Vector3(0.9, 0.95, 0.25), Vector3(0.3, 0.22, 0.25), "teal")
-	_box(root, "Hammer", Vector3(-0.6, 1.4, -0.44), Vector3(0.06, 0.45, 0.04), "wood_dark")
-	_box(root, "HammerHead", Vector3(-0.6, 1.78, -0.44), Vector3(0.22, 0.08, 0.06), "steel_dark")
-	_box(root, "Wrench", Vector3(-0.2, 1.4, -0.44), Vector3(0.05, 0.5, 0.03), "steel")
-	_box(root, "Basket", Vector3(0.1, 0.95, 0.1), Vector3(0.55, 0.35, 0.4), "wood")
-	_box(root, "BasketBand", Vector3(0.1, 1.15, 0.1), Vector3(0.58, 0.05, 0.43), "rust_light")
-	return root
 
 
 func _build_dismantle_table() -> Node3D:
@@ -554,16 +495,6 @@ func _build_dismantle_table() -> Node3D:
 	return root
 
 
-func _build_notice_board() -> Node3D:
-	var root := Node3D.new()
-	root.name = "NoticeBoard"
-	_box(root, "PostL", Vector3(-0.65, 0, 0), Vector3(0.1, 1.9, 0.1), "wood_dark")
-	_box(root, "PostR", Vector3(0.65, 0, 0), Vector3(0.1, 1.9, 0.1), "wood_dark")
-	_box(root, "Board", Vector3(0, 0.9, 0.02), Vector3(1.5, 0.95, 0.06), "wood")
-	_box(root, "Paper1", Vector3(-0.35, 1.05, 0.06), Vector3(0.45, 0.55, 0.01), "cream", false, 0.0, Vector3(0, 0, 4))
-	_box(root, "Paper2", Vector3(0.3, 1.0, 0.06), Vector3(0.5, 0.4, 0.01), "cream", false, 0.0, Vector3(0, 0, -6))
-	_box(root, "RoofBoard", Vector3(0, 1.9, 0.0), Vector3(1.7, 0.08, 0.35), "rust_light")
-	return root
 
 
 func _build_floodlight() -> Node3D:
@@ -614,65 +545,12 @@ func _build_brass_figurine() -> Node3D:
 	return root
 
 
-func _build_order_desk() -> Node3D:
-	var root := Node3D.new()
-	root.name = "OrderDesk"
-	_box(root, "Top", Vector3(0, 0.78, 0), Vector3(1.6, 0.07, 0.8), "wood")
-	_box(root, "DrawerBlock", Vector3(0.55, 0, 0), Vector3(0.45, 0.78, 0.75), "wood_dark")
-	_box(root, "LegL1", Vector3(-0.72, 0, -0.32), Vector3(0.07, 0.78, 0.07), "wood_dark")
-	_box(root, "LegL2", Vector3(-0.72, 0, 0.32), Vector3(0.07, 0.78, 0.07), "wood_dark")
-	_box(root, "Catalog", Vector3(-0.25, 0.85, 0.08), Vector3(0.42, 0.09, 0.3), "mustard", false, -8.0)
-	_box(root, "CatalogSpine", Vector3(-0.25, 0.94, 0.08), Vector3(0.42, 0.01, 0.3), "rust_light", false, -8.0)
-	_box(root, "Phone", Vector3(0.45, 0.85, -0.15), Vector3(0.26, 0.1, 0.2), "dark")
-	_cyl(root, "Dial", Vector3(0.45, 0.95, -0.12), 0.07, 0.015, "cream", false, 12)
-	_box(root, "Receiver", Vector3(0.45, 0.96, -0.22), Vector3(0.3, 0.05, 0.06), "dark")
-	_box(root, "Tray", Vector3(0.2, 0.85, 0.22), Vector3(0.3, 0.05, 0.22), "steel")
-	_box(root, "Papers", Vector3(0.2, 0.9, 0.22), Vector3(0.26, 0.04, 0.18), "cream", false, 6.0)
-	_box(root, "SignPost", Vector3(-0.9, 0, -0.3), Vector3(0.07, 1.7, 0.07), "wood_dark")
-	_box(root, "SignBoard", Vector3(-0.9, 1.45, -0.26), Vector3(0.6, 0.4, 0.05), "teal", false, 0.0, Vector3(0, 0, -4))
-	_box(root, "SignMark", Vector3(-0.9, 1.55, -0.23), Vector3(0.3, 0.14, 0.02), "cream", false, 0.0, Vector3(0, 0, -4))
-	return root
 
 
-func _build_old_toolbox() -> Node3D:
-	var root := Node3D.new()
-	root.name = "OldToolbox"
-	_box(root, "Body", Vector3.ZERO, Vector3(0.65, 0.28, 0.32), "toolbox")
-	var closed := _group(root, "Closed")
-	_box(closed, "Lid", Vector3(0, 0.28, 0), Vector3(0.67, 0.06, 0.34), "toolbox")
-	_box(closed, "Handle", Vector3(0, 0.34, 0), Vector3(0.3, 0.06, 0.04), "dark")
-	var opened := _group(root, "Open")
-	_box(opened, "LidLeft", Vector3(-0.3, 0.3, 0), Vector3(0.34, 0.04, 0.34), "toolbox", false, 0.0, Vector3(0, 0, 60))
-	_box(opened, "LidRight", Vector3(0.3, 0.3, 0), Vector3(0.34, 0.04, 0.34), "toolbox", false, 0.0, Vector3(0, 0, -60))
-	return root
 
 
-func _build_storage_crate() -> Node3D:
-	var root := Node3D.new()
-	root.name = "StorageCrate"
-	_box(root, "Body", Vector3.ZERO, Vector3(1.0, 0.75, 0.8), "wood")
-	_box(root, "Label", Vector3(0, 0.3, 0.405), Vector3(0.6, 0.2, 0.01), "cream")
-	var closed := _group(root, "Closed")
-	_box(closed, "Lid", Vector3(0, 0.75, 0), Vector3(1.02, 0.05, 0.82), "wood_light")
-	_box(closed, "Plank1", Vector3(0, 0.8, -0.15), Vector3(1.1, 0.04, 0.12), "wood_dark", false, 12.0)
-	_box(closed, "Plank2", Vector3(0, 0.8, 0.18), Vector3(1.1, 0.04, 0.12), "wood_dark", false, -9.0)
-	var opened := _group(root, "Open")
-	_box(opened, "LidOff", Vector3(-0.85, 0, 0.1), Vector3(0.82, 0.05, 1.02), "wood_light", false, 20.0, Vector3(0, 0, 8))
-	return root
 
 
-func _build_rusted_drum() -> Node3D:
-	var root := Node3D.new()
-	root.name = "RustedDrum"
-	_cyl(root, "Body", Vector3.ZERO, 0.38, 0.95, "rust", false, 14)
-	_cyl(root, "RingLow", Vector3(0, 0.25, 0), 0.395, 0.05, "rust_light", false, 14)
-	_cyl(root, "RingHigh", Vector3(0, 0.65, 0), 0.395, 0.05, "rust_light", false, 14)
-	var closed := _group(root, "Closed")
-	_cyl(closed, "Lid", Vector3(0, 0.95, 0), 0.39, 0.04, "steel_dark", false, 14)
-	_box(closed, "Seal", Vector3(0, 0.99, 0), Vector3(0.12, 0.03, 0.4), "red")
-	var opened := _group(root, "Open")
-	_cyl(opened, "LidOff", Vector3(0.6, 0.02, 0.2), 0.39, 0.04, "steel_dark", false, 14, Vector3(12, 0, 0))
-	return root
 
 
 func _build_equipment_crowbar() -> Node3D:

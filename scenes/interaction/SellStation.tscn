@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/SellStation.gd" id="1_sell"]
-[ext_resource type="PackedScene" path="res://assets/objects/sell_counter.tscn" id="2_model"]
+[ext_resource type="PackedScene" path="res://assets/models/sell_counter.glb" id="2_model"]
 
 [sub_resource type="BoxShape3D" id="shape"]
 size = Vector3(2.4, 1.1, 1.15)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/world/SalvageableScrap.gd" id="1_salvage"]
 [ext_resource type="Resource" path="res://data/items/bulk_metal_beam.tres" id="2_definition"]
-[ext_resource type="PackedScene" path="res://assets/objects/bulk_metal_beam.tscn" id="3_model"]
+[ext_resource type="PackedScene" path="res://assets/models/bulk_metal_beam.glb" id="3_model"]
 
 [sub_resource type="BoxShape3D" id="shape"]
 size = Vector3(2.6, 0.6, 1.0)

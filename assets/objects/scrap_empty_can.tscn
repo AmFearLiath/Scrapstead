@@ -1,36 +1,52 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dyym"]
-albedo_color = Color(0.5411765, 0.56078434, 0.57254905, 1)
-metallic = 0.7
-roughness = 0.5
+[ext_resource type="Material" path="res://assets/materials/outline.tres" id="1_myvxv"]
+[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="2_i0i0c"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_d3mqe"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbegg"]
+render_priority = 0
+next_pass = ExtResource("1_myvxv")
+shader = ExtResource("2_i0i0c")
+shader_parameter/albedo = Color(0.5411765, 0.56078434, 0.57254905, 1)
+shader_parameter/use_vertex_color = null
+shader_parameter/mid_step = null
+shader_parameter/step_softness = null
+shader_parameter/rim_color = null
+shader_parameter/rim_strength = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_slgqj"]
 top_radius = 0.11
 bottom_radius = 0.11
 height = 0.28
 radial_segments = 12
 rings = 1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ywwyx"]
-albedo_color = Color(0.72156864, 0.2509804, 0.18431373, 1)
-roughness = 0.9
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3y27n"]
+render_priority = 0
+next_pass = ExtResource("1_myvxv")
+shader = ExtResource("2_i0i0c")
+shader_parameter/albedo = Color(0.72156864, 0.2509804, 0.18431373, 1)
+shader_parameter/use_vertex_color = null
+shader_parameter/mid_step = null
+shader_parameter/step_softness = null
+shader_parameter/rim_color = null
+shader_parameter/rim_strength = null
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_myvxv"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_4jo4o"]
 top_radius = 0.113
 bottom_radius = 0.113
 height = 0.16
 radial_segments = 12
 rings = 1
 
-[node name="EmptyCan" type="Node3D" unique_id=494576194]
+[node name="EmptyCan" type="Node3D" unique_id=1005832636]
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=2083230793]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=786994009]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.14, 0.25, 0)
-material_override = SubResource("StandardMaterial3D_2dyym")
-mesh = SubResource("CylinderMesh_d3mqe")
+material_override = SubResource("ShaderMaterial_nbegg")
+mesh = SubResource("CylinderMesh_slgqj")
 
-[node name="Label" type="MeshInstance3D" parent="." unique_id=589758395]
+[node name="Label" type="MeshInstance3D" parent="." unique_id=1677495829]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.08, 0.19, 0)
-material_override = SubResource("StandardMaterial3D_ywwyx")
-mesh = SubResource("CylinderMesh_myvxv")
+material_override = SubResource("ShaderMaterial_3y27n")
+mesh = SubResource("CylinderMesh_4jo4o")

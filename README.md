@@ -46,6 +46,12 @@ godot --headless --path . -s res://tests/run_tests.gd
 godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=play
 godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=continue
 
+# Modelle in Blender erzeugen (Stil: docs/world-art-assets.md) und importieren
+blender -b -P tools/blender/build_props.py -- --out assets/models --preview tests/_output/blender
+godot --headless --path . --import
+godot --headless --path . -s res://tools/configure_model_imports.gd
+godot --headless --path . --import
+
 # Old-Yard-Blockout und Platzhaltermodelle neu erzeugen
 godot --headless --path . -s res://tools/build_blockout.gd
 
@@ -56,7 +62,7 @@ godot --path . -s res://tools/capture_screens.gd
 ### Projektstruktur
 
 ```text
-assets/        Platzhaltermodelle (generiert), Theme, Umgebung, Icons
+assets/        Blender-Modelle (models/), Shader, Materialien, Platzhalter, Theme, Icons
 data/          Gegenstände, Upgrades, Verarbeitung, Balancing (Godot-Resources)
 localization/  scrapstead.csv (en/de)
 scenes/        Main, Menü, Old Yard, Spieler, Kamera, Interaktionsobjekte
@@ -64,7 +70,7 @@ scripts/       core (Autoloads), player, camera, interaction, world, economy,
                inventory, progression, data, ui, menu, debug
 ui/            HUD, Panels, Hauptmenü
 tests/         Headless-Testrunner, Unit-, Integrations- und Neustarttests
-tools/         Blockout-Generator, Screenshot-Werkzeug
+tools/         Blender-Modellskripte (blender/), Blockout-Generator, Import- und Screenshot-Werkzeuge
 docs/          Konzept, Spezifikationen, Decision Log, Abnahme
 ```
 
@@ -140,7 +146,7 @@ docs/          Konzept, Spezifikationen, Decision Log, Abnahme
 - [Standard für Lokalisierung und Internationalisierung](docs/localization.md)
 - [Spezifikation des Begleiters Scrappy](docs/scrappy-companion.md)
 - [Maschinen und Automatisierung](docs/machines-automation.md)
-- [Welt- und Assetgestaltung](docs/world-art-assets.md)
+- [Art Direction: Walts Flickwerk-Diorama](docs/world-art-assets.md)
 - [UI- und UX-Spezifikation](docs/ui-ux.md)
 - [Technische Architektur](docs/technical-architecture.md)
 - [Entscheidungsprotokoll (bisherige Entscheidungen)](docs/decision-log.md)

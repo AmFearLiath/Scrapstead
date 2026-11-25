@@ -1,50 +1,59 @@
 [gd_scene format=3]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryfn0"]
-albedo_color = Color(0.7882353, 0.63529414, 0.28235295, 1)
-metallic = 0.85
-roughness = 0.35
+[ext_resource type="Material" path="res://assets/materials/outline.tres" id="1_8datl"]
+[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="2_rdid6"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_vq831"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clqia"]
+render_priority = 0
+next_pass = ExtResource("1_8datl")
+shader = ExtResource("2_rdid6")
+shader_parameter/albedo = Color(0.7882353, 0.63529414, 0.28235295, 1)
+shader_parameter/use_vertex_color = null
+shader_parameter/mid_step = null
+shader_parameter/step_softness = null
+shader_parameter/rim_color = null
+shader_parameter/rim_strength = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mnme7"]
 top_radius = 0.1
 bottom_radius = 0.1
 height = 0.04
 radial_segments = 12
 rings = 1
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_8datl"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c1rgp"]
 radius = 0.05
 height = 0.2
 
-[sub_resource type="SphereMesh" id="SphereMesh_rdid6"]
+[sub_resource type="SphereMesh" id="SphereMesh_7xwua"]
 radius = 0.045
 height = 0.09
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_clqia"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_66khq"]
 top_radius = 0.015
 bottom_radius = 0.015
 height = 0.06
 radial_segments = 6
 rings = 1
 
-[node name="BrassFigurine" type="Node3D" unique_id=479106902]
+[node name="BrassFigurine" type="Node3D" unique_id=321854117]
 
-[node name="Base" type="MeshInstance3D" parent="." unique_id=828439058]
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1438470973]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
-material_override = SubResource("StandardMaterial3D_ryfn0")
-mesh = SubResource("CylinderMesh_vq831")
+material_override = SubResource("ShaderMaterial_clqia")
+mesh = SubResource("CylinderMesh_mnme7")
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=1311985047]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=784857405]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
-material_override = SubResource("StandardMaterial3D_ryfn0")
-mesh = SubResource("CapsuleMesh_8datl")
+material_override = SubResource("ShaderMaterial_clqia")
+mesh = SubResource("CapsuleMesh_c1rgp")
 
-[node name="Head" type="MeshInstance3D" parent="." unique_id=557378738]
+[node name="Head" type="MeshInstance3D" parent="." unique_id=543197009]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
-material_override = SubResource("StandardMaterial3D_ryfn0")
-mesh = SubResource("SphereMesh_rdid6")
+material_override = SubResource("ShaderMaterial_clqia")
+mesh = SubResource("SphereMesh_7xwua")
 
-[node name="TinyFigure" type="MeshInstance3D" parent="." unique_id=679673357]
+[node name="TinyFigure" type="MeshInstance3D" parent="." unique_id=122024677]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, 0.19, 0.03)
-material_override = SubResource("StandardMaterial3D_ryfn0")
-mesh = SubResource("CylinderMesh_clqia")
+material_override = SubResource("ShaderMaterial_clqia")
+mesh = SubResource("CylinderMesh_66khq")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteractor.gd" id="2_interactor"]
-[ext_resource type="PackedScene" path="res://assets/objects/player_model.tscn" id="3_model"]
+[ext_resource type="PackedScene" path="res://assets/models/player_model.glb" id="3_model"]
 
 [sub_resource type="CapsuleShape3D" id="body_shape"]
 radius = 0.3
