@@ -217,3 +217,14 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Die erste Stunde soll einen frühen wirtschaftlichen Erfolg und eine erste sichtbare Verbesserung des Betriebs ermöglichen.
 - Die konkrete Vorgeschichte und der Grund, warum der Schrottplatz dem Spieler gehört, bleiben offen.
 - Begründung: Der Einstieg soll Neugier, Entdeckung, Erfolg, Bindung und Stolz vermitteln und den Spieler zum Weiterspielen motivieren, ohne ihn mit Systemen zu überfordern.
+
+
+## 25.11.2026 — Herkunft des Startgrundstücks
+
+**Beschluss:** Der Spieler hat den Schrottplatz geerbt.
+
+- Die Erbschaft ist der erzählerische Grund, warum der Spieler den heruntergekommenen Betrieb übernimmt.
+- Die Identität des früheren Besitzers und dessen Beziehung zum Spieler sind noch nicht festgelegt.
+- Auch die konkrete Übergabe – etwa durch Nachlassunterlagen, Schlüssel und eine persönliche Nachricht – bleibt offen.
+- Die Vorgeschichte soll kurz bleiben. Die eigentliche Geschichte entfaltet sich auf dem Grundstück durch Gegenstände, Fundstücke, Scrappy und später auftauchende Figuren.
+- Begründung: Eine Erbschaft schafft einen glaubwürdigen Einstieg, gibt dem Grundstück eine Vergangenheit und ermöglicht erzählerische Entdeckungen, ohne den Spielstart mit umfangreicher Vorgeschichte aufzuhalten.
