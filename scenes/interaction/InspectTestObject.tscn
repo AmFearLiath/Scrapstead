@@ -14,7 +14,7 @@ object_id = "p0_inspect_board_01"
 name_key = "object.inspect_test.name"
 action_key = "ui.action.inspect"
 highlight_radius = 0.9
-text_key = "object.inspect_test.text"
+description_key = "object.inspect_test.text"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

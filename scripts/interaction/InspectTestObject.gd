@@ -1,13 +1,10 @@
 extends Interactable
-## P0 inspect test object: shows a prepared, localized text. The world state
-## stays unchanged.
-
-## Localization key of the inspection text.
-@export var text_key: String = ""
+## Inspect-only object (P0 notice board, P1 workbench): its main action shows a
+## prepared, localized text. The world state stays unchanged.
 
 
-func interact(_context: InteractionContext) -> Dictionary:
+func interact(context: InteractionContext) -> Dictionary:
 	var result: Dictionary = make_result(true)
 	result["panel"] = "inspect"
-	result["panel_data"] = {"title_key": name_key, "text_key": text_key}
+	result["panel_data"] = get_inspection(context)
 	return result

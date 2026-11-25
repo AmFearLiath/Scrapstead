@@ -24,7 +24,8 @@ godot --path .
 | Aktion | Taste |
 |---|---|
 | Bewegen | WASD / Pfeiltasten |
-| Interagieren, Bergen/Zerlegen (halten) | E |
+| Interagieren, Bergen/Durchsuchen/Zerlegen (halten) | E |
+| Fundstück oder Einrichtung ansehen | R |
 | Zuletzt aufgenommenes Teil ablegen | Q |
 | Pausemenü (Speichern) / Panel schließen | Esc |
 | Zoom | Mausrad |
@@ -32,7 +33,7 @@ godot --path .
 
 ### Ziel der Prototyp-Schleife
 
-Schrott im Hof aufsammeln → den festsitzenden Metallträger bergen → am Annahmetresen verkaufen → an der Werkbank den **Großen Tragekorb** kaufen → mit doppelter Kapazität weitersammeln. Optional: das defekte Radio direkt verkaufen oder am Zerlegetisch in wertvollere Teile zerlegen.
+Schrott im Hof aufsammeln und am Annahmetresen verkaufen → im Büro aus dem **Bestellkatalog** Werkzeug bestellen (Brechstange, Flaschenzug) → vernagelte Kisten und versiegelte Fässer öffnen, Schrotthaufen durchsuchen, den festsitzenden Metallträger anheben → **Großer Tragekorb** und **Handkarren** für mehr Kapazität. Optional: das defekte Radio direkt verkaufen oder am Zerlegetisch in wertvollere Teile zerlegen.
 
 ### Tests und Werkzeuge
 

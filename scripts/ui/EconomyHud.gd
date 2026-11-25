@@ -8,9 +8,11 @@ extends Control
 @onready var _carry_slots: HBoxContainer = %CarrySlots
 @onready var _carry_list: VBoxContainer = %CarryList
 @onready var _drop_hint: Label = %DropHint
+@onready var _equipment: Label = %Equipment
 
 var _wallet: Wallet
 var _inventory: CarryInventory
+var _upgrades: UpgradeProgress
 var _displayed_credits: int = 0
 var _delta_tween: Tween
 var _count_tween: Tween
@@ -21,9 +23,11 @@ func _ready() -> void:
 
 
 ## Connects the display sources.
-func setup(wallet: Wallet, inventory: CarryInventory) -> void:
+func setup(wallet: Wallet, inventory: CarryInventory, upgrades: UpgradeProgress) -> void:
 	_wallet = wallet
 	_inventory = inventory
+	_upgrades = upgrades
+	_upgrades.upgrade_purchased.connect(func(_definition: UpgradeDefinition) -> void: _refresh_inventory())
 	_wallet.balance_changed.connect(_on_balance_changed)
 	_inventory.changed.connect(_refresh_inventory)
 	_displayed_credits = _wallet.get_balance()
@@ -80,6 +84,12 @@ func _refresh_inventory() -> void:
 		_carry_list.add_child(line)
 	_drop_hint.text = tr("ui.hud.drop_hint").format({"key": InputHints.key_name(&"drop_item")})
 	_drop_hint.visible = not _inventory.is_empty()
+	var tools: PackedStringArray = []
+	for definition: UpgradeDefinition in _upgrades.get_catalog().upgrades:
+		if not definition.grants_tool.is_empty() and _upgrades.is_owned(definition.id):
+			tools.append(tr(UpgradeProgress.tool_name_key(definition.grants_tool)))
+	_equipment.text = tr("ui.hud.equipment").format({"tools": ", ".join(tools)})
+	_equipment.visible = not tools.is_empty()
 
 
 func _format_credits(value: int) -> String:

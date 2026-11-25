@@ -6,6 +6,8 @@ extends ScrapItem
 ## it behaves like any other carried item (it can be dropped and picked up
 ## again without a second salvage).
 
+## Tool ID required to free the object (e.g. "hoist"); empty = bare hands.
+@export var required_tool: String = ""
 ## Seconds the interact key must be held to pry the object loose.
 @export_range(0.5, 10.0) var salvage_seconds: float = 2.5
 ## Debris node that is removed when salvaged.
@@ -33,6 +35,9 @@ func get_hold_duration() -> float:
 func get_prompt_detail(context: InteractionContext) -> String:
 	if _salvaged:
 		return super(context)
+	if not _has_tool(context):
+		return tr("ui.salvage.needs_tool").format({"tool": tr(UpgradeProgress.tool_name_key(required_tool)),
+			"value": definition.sell_value})
 	var detail: String = tr("ui.salvage.requirement").format({"size": definition.carry_size,
 		"value": definition.sell_value})
 	if context != null and context.inventory != null and not context.inventory.can_add(definition.id):
@@ -43,6 +48,9 @@ func get_prompt_detail(context: InteractionContext) -> String:
 func check_requirements(context: InteractionContext) -> Dictionary:
 	if _salvaged or context == null or context.inventory == null:
 		return super(context)
+	if not _has_tool(context):
+		return {"ok": false, "message_key": "ui.salvage.missing_tool." + required_tool,
+			"message_args": {"name": get_display_name()}}
 	if not context.inventory.can_add(definition.id):
 		return {"ok": false, "message_key": "ui.salvage.no_space", "message_args": {
 			"size": definition.carry_size, "free": context.inventory.get_free_slots()}}
@@ -89,6 +97,11 @@ func get_save_state() -> Dictionary:
 func apply_save_state(state: Dictionary) -> void:
 	_set_salvaged(bool(state.get("salvaged", false)))
 	super(state)
+
+
+func _has_tool(context: InteractionContext) -> bool:
+	return required_tool.is_empty() or (context != null and context.upgrades != null
+		and context.upgrades.has_tool(required_tool))
 
 
 func _set_salvaged(value: bool) -> void:

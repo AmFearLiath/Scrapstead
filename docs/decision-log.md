@@ -728,3 +728,25 @@ Referenz: [P1: Erste Gameplay-Schleife](p1-gameplay-loop.md).
 **Begründung:** Die Verarbeitung soll eine verständliche Entscheidung zwischen schnellem Direktverkauf und mehr Ertrag für mehr Aufwand zeigen, ohne Produktionsketten oder Lagerlogistik einzuführen. Die Bewertung des Mehrwerts erfolgt im Playtest.
 
 Referenz: [Prototyp-Abnahme](prototype-acceptance.md).
+
+
+## 25.11.2026 — P1-Vertiefung: Bestellkatalog, Werkzeuge, Suchquellen, Inspektion
+
+**Kontext:** Nach dem ersten Anspielen bewertet die Projektleitung das Spielgefühl als gut. P1 gilt aber noch nicht als spielerisch freigegeben; die Schleife wird vor P2 vertieft.
+
+**Beschluss (Projektleitung):**
+
+- Suchquellen, ein erstes Werkzeug, ein zweites Transport-Upgrade und Objekt-Inspektion werden ergänzt.
+- Werkzeuge, Ausrüstung und Transportmittel werden **im Büro über einen Bestellkatalog gekauft** („Hinterhof-Versand“). Die **Werkbank dient später dem Herstellen**; Crafting wird erst in einer späteren Stufe umgesetzt, bis dahin ist die Werkbank nur untersuchbar.
+- Der Metallträger erfordert ein **Hebemittel (Flaschenzug)**; der **Handkarren** ist das separate zweite Transport-Upgrade und setzt den Großen Tragekorb voraus.
+- Alle neuen Texte folgen der Humoridentität von Scrapstead.
+
+**Implementierungsentscheidungen:**
+
+- Brechstange 12 Cr, Großer Tragekorb 30 Cr, Flaschenzug 25 Cr, Handkarren 40 Cr (+4 Plätze). Werte sind Playtest-Startwerte.
+- Vier einmalige Suchquellen mit festgelegtem Inhalt; zwei davon erfordern die Brechstange. Funde fallen sichtbar vor die Quelle, keine Zufallsverteilung, keine Regeneration (Matrix: Regeneration erst Phase 4–5).
+- Gekaufte Ware erscheint sofort an einer Lieferstelle vor dem Büro; das HUD zeigt besessene Werkzeuge.
+- Inspektion über eine zweite Eingabe (R); sie verändert nie den Zustand.
+- Spielstandschema bleibt Version 2, da nur neue IDs und Zustandswerte hinzukommen.
+
+Referenz: [P1: Erste Gameplay-Schleife, Abschnitt 14](p1-gameplay-loop.md).

@@ -35,29 +35,29 @@ roughness = 0.1
 [sub_resource type="BoxMesh" id="BoxMesh_rfxvj"]
 size = Vector3(0.12, 0.08, 0.1)
 
-[node name="ElectronicParts" type="Node3D" unique_id=1351352801]
+[node name="ElectronicParts" type="Node3D" unique_id=1562014634]
 
-[node name="Board" type="MeshInstance3D" parent="." unique_id=543159490]
+[node name="Board" type="MeshInstance3D" parent="." unique_id=2096199039]
 transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, 0, 0.015, 0)
 material_override = SubResource("StandardMaterial3D_be3xp")
 mesh = SubResource("BoxMesh_hlx7w")
 
-[node name="Chip1" type="MeshInstance3D" parent="." unique_id=1767603990]
+[node name="Chip1" type="MeshInstance3D" parent="." unique_id=1891949394]
 transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, -0.06, 0.044999998, 0.02)
 material_override = SubResource("StandardMaterial3D_hj8mw")
 mesh = SubResource("BoxMesh_ot5h8")
 
-[node name="Chip2" type="MeshInstance3D" parent="." unique_id=2055399128]
+[node name="Chip2" type="MeshInstance3D" parent="." unique_id=1281354964]
 transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, 0.09, 0.049999997, -0.04)
 material_override = SubResource("StandardMaterial3D_hj8mw")
 mesh = SubResource("BoxMesh_rtktd")
 
-[node name="Capacitor" type="MeshInstance3D" parent="." unique_id=2029153151]
+[node name="Capacitor" type="MeshInstance3D" parent="." unique_id=259620991]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.07, 0.07)
 material_override = SubResource("StandardMaterial3D_s71bt")
 mesh = SubResource("CylinderMesh_26h7e")
 
-[node name="Tube" type="MeshInstance3D" parent="." unique_id=254430165]
+[node name="Tube" type="MeshInstance3D" parent="." unique_id=1715907004]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -0.12, 0.04, -0.12)
 material_override = SubResource("StandardMaterial3D_ewke5")
 mesh = SubResource("BoxMesh_rfxvj")

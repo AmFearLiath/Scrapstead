@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryfn0"]
+albedo_color = Color(0.7882353, 0.63529414, 0.28235295, 1)
+metallic = 0.85
+roughness = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vq831"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.04
+radial_segments = 12
+rings = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8datl"]
+radius = 0.05
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_rdid6"]
+radius = 0.045
+height = 0.09
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_clqia"]
+top_radius = 0.015
+bottom_radius = 0.015
+height = 0.06
+radial_segments = 6
+rings = 1
+
+[node name="BrassFigurine" type="Node3D" unique_id=479106902]
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=828439058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+material_override = SubResource("StandardMaterial3D_ryfn0")
+mesh = SubResource("CylinderMesh_vq831")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1311985047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
+material_override = SubResource("StandardMaterial3D_ryfn0")
+mesh = SubResource("CapsuleMesh_8datl")
+
+[node name="Head" type="MeshInstance3D" parent="." unique_id=557378738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28, 0)
+material_override = SubResource("StandardMaterial3D_ryfn0")
+mesh = SubResource("SphereMesh_rdid6")
+
+[node name="TinyFigure" type="MeshInstance3D" parent="." unique_id=679673357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07, 0.19, 0.03)
+material_override = SubResource("StandardMaterial3D_ryfn0")
+mesh = SubResource("CylinderMesh_clqia")

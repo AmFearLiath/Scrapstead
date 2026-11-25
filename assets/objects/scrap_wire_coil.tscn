@@ -23,19 +23,19 @@ outer_radius = 0.224
 rings = 16
 ring_segments = 8
 
-[node name="WireCoil" type="Node3D" unique_id=145757206]
+[node name="WireCoil" type="Node3D" unique_id=464987057]
 
-[node name="Loop0" type="MeshInstance3D" parent="." unique_id=1730628237]
+[node name="Loop0" type="MeshInstance3D" parent="." unique_id=683804379]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, 0)
 material_override = SubResource("StandardMaterial3D_agtoo")
 mesh = SubResource("TorusMesh_l7ciu")
 
-[node name="Loop1" type="MeshInstance3D" parent="." unique_id=650785424]
+[node name="Loop1" type="MeshInstance3D" parent="." unique_id=457402726]
 transform = Transform3D(0.9945219, 0.104528464, 0, -0.10427384, 0.99209934, -0.06975647, -0.007291537, 0.06937434, 0.9975641, 0.02, 0.075, 0)
 material_override = SubResource("StandardMaterial3D_agtoo")
 mesh = SubResource("TorusMesh_wjn6o")
 
-[node name="Loop2" type="MeshInstance3D" parent="." unique_id=819131779]
+[node name="Loop2" type="MeshInstance3D" parent="." unique_id=399470089]
 transform = Transform3D(0.9781476, 0.2079117, 0, -0.20588832, 0.96862835, -0.1391731, -0.028935717, 0.13613184, 0.99026805, 0.04, 0.11, 0)
 material_override = SubResource("StandardMaterial3D_agtoo")
 mesh = SubResource("TorusMesh_a6eup")

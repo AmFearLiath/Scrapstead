@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://assets/objects/find_brass_figurine.tscn" id="2_model"]
+
+[resource]
+script = ExtResource("1_def")
+id = "find_brass_figurine"
+name_key = "item.find_brass_figurine.name"
+description_key = "item.find_brass_figurine.description"
+category = "collectible"
+handling_class = 0
+sell_value = 15
+carry_size = 1
+model = ExtResource("2_model")

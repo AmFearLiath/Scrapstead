@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agtoo"]
+albedo_color = Color(0.78039217, 0.48235294, 0.27058825, 1)
+metallic = 0.9
+roughness = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hvmyx"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.6
+radial_segments = 10
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v1kqb"]
+top_radius = 0.055
+bottom_radius = 0.055
+height = 0.12
+radial_segments = 10
+rings = 1
+
+[node name="CopperPipe" type="Node3D" unique_id=1048707350]
+
+[node name="Pipe" type="MeshInstance3D" parent="." unique_id=83845970]
+transform = Transform3D(-4.1075268e-08, -0.9396926, 0.34202012, 1, -4.371139e-08, 0, 1.4950174e-08, 0.34202012, 0.9396926, 0, 0.35000002, -0.05)
+material_override = SubResource("StandardMaterial3D_agtoo")
+mesh = SubResource("CylinderMesh_hvmyx")
+
+[node name="Elbow" type="MeshInstance3D" parent="." unique_id=831467517]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.28, 0.11, 0.05)
+material_override = SubResource("StandardMaterial3D_agtoo")
+mesh = SubResource("CylinderMesh_v1kqb")

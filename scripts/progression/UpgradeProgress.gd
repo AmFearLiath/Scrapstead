@@ -26,6 +26,22 @@ func is_owned(upgrade_id: String) -> bool:
 	return _owned.has(upgrade_id)
 
 
+## True if an owned ware grants the tool.
+func has_tool(tool_id: String) -> bool:
+	if tool_id.is_empty():
+		return true
+	for upgrade_id: String in _owned:
+		var definition: UpgradeDefinition = _catalog.get_definition(upgrade_id)
+		if definition != null and definition.grants_tool == tool_id:
+			return true
+	return false
+
+
+## Localization key of a tool's display name.
+static func tool_name_key(tool_id: String) -> String:
+	return "tool.%s.name" % tool_id
+
+
 ## Sum of all owned bonuses for a stat.
 func get_bonus(stat: String) -> int:
 	var total: int = 0

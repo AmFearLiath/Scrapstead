@@ -39,8 +39,7 @@ ui.panel.cancel,Cancel,Abbrechen
 ui.credits_amount,{credits} Cr,{credits} Cr
 ui.action.salvage,Salvage (hold),Bergen (halten)
 ui.action.sell,Sell scrap,Schrott verkaufen
-ui.action.open_workbench,Use workbench,Werkbank benutzen
-ui.item.detail,{category} · {value} Cr · {size} slot(s),{category} · {value} Cr · {size} Platz/Plätze
+ui.item.detail,{category} · {value} Cr · size {size},{category} · {value} Cr · Größe {size}
 item.category.loose_scrap,Loose scrap,Loser Schrott
 item.category.bulk_scrap,Bulky scrap,Sperriger Schrott
 item.category.device,Old device,Altgerät
@@ -56,9 +55,9 @@ ui.inventory.full_short,Basket full,Korb voll
 ui.inventory.no_space,"No room for {name}: {free} free slot(s), {size} needed.","Kein Platz für {name}: {free} Platz/Plätze frei, {size} benötigt."
 ui.inventory.nothing_to_drop,You are not carrying anything.,Du trägst nichts bei dir.
 ui.inventory.dropped,Put down: {name},Abgelegt: {name}
-ui.salvage.requirement,Stuck under debris · needs {size} free slots · {value} Cr,Steckt unter Gerümpel fest · braucht {size} freie Plätze · {value} Cr
+ui.salvage.requirement,Lift it with the hoist · needs {size} free slots · {value} Cr,Mit dem Flaschenzug anheben · braucht {size} freie Plätze · {value} Cr
 ui.salvage.no_space,You need {size} free slots to haul this out ({free} free). Sell or drop something first.,Zum Bergen brauchst du {size} freie Plätze ({free} frei). Verkaufe oder lege erst etwas ab.
-ui.salvage.done,Salvaged: {name} ({value} Cr),Geborgen: {name} ({value} Cr)
+ui.salvage.done,"The hoist creaks, the beam gives in: {name} salvaged ({value} Cr).","Der Flaschenzug ächzt, der Träger gibt nach: {name} geborgen ({value} Cr)."
 station.sell_counter.name,Scrap Counter,Annahmetresen
 ui.sell.detail,{count} item(s) · {total} Cr,{count} Teil(e) · {total} Cr
 ui.sell.nothing_short,Nothing to sell,Nichts zu verkaufen
@@ -75,23 +74,8 @@ ui.sell.failed,The sale could not be completed.,Der Verkauf konnte nicht abgesch
 ui.ledger.sale,Sale,Verkauf
 ui.ledger.upgrade,Upgrade,Upgrade
 station.workbench.name,Workbench,Werkbank
-ui.upgrade.detail_available,An upgrade is affordable,Ein Upgrade ist bezahlbar
-ui.upgrade.detail_none,Upgrades and prices,Upgrades und Preise
-ui.upgrade.title,Workbench,Werkbank
-ui.upgrade.subtitle,Invest your credits to work more efficiently.,"Investiere deine Credits, um effizienter zu arbeiten."
-ui.upgrade.effect.carry_capacity,Carry capacity: {current} → {after} slots,Tragekapazität: {current} → {after} Plätze
-ui.upgrade.price,Price: {credits} Cr,Preis: {credits} Cr
-ui.upgrade.status.available,Buy,Kaufen
-ui.upgrade.status.owned,Owned,Gekauft
-ui.upgrade.status.insufficient_funds,Not enough credits,Zu wenig Credits
-ui.upgrade.status.locked,Locked,Gesperrt
-ui.upgrade.bought,Built: {name}. Your basket is bigger now!,Gebaut: {name}. Dein Korb ist jetzt größer!
-ui.upgrade.insufficient_funds,Not enough credits ({price} Cr needed).,Nicht genug Credits ({price} Cr benötigt).
-ui.upgrade.already_owned,You already own this upgrade.,Dieses Upgrade besitzt du bereits.
-ui.upgrade.locked,This upgrade is not available yet.,Dieses Upgrade ist noch nicht verfügbar.
-ui.upgrade.failed,The upgrade could not be bought.,Das Upgrade konnte nicht gekauft werden.
 upgrade.upgrade_carry_basket.name,Big Carry Basket,Großer Tragekorb
-upgrade.upgrade_carry_basket.description,"A sturdy wicker basket with leather straps, patched together from yard finds. Carry twice as much per trip.","Ein stabiler Weidenkorb mit Lederriemen, aus Fundstücken zusammengeflickt. Du trägst doppelt so viel pro Gang."
+upgrade.upgrade_carry_basket.description,"A sturdy wicker basket with leather straps. Carries twice as much per trip – and holds its shape, unlike its predecessor.",Ein stabiler Weidenkorb mit Lederriemen. Fasst doppelt so viel pro Gang – und behält im Gegensatz zum Vorgänger seine Form.
 ui.hud.carry_title,Basket,Tragekorb
 ui.hud.carry_value,{used} / {capacity},{used} / {capacity}
 ui.hud.carry_line,{name} ×{count} · {value} Cr,{name} ×{count} · {value} Cr
@@ -103,7 +87,6 @@ ui.pause.resume,Resume,Weiterspielen
 ui.pause.save,Save,Speichern
 ui.pause.save_exit,Save & main menu,Speichern & Hauptmenü
 ui.pause.exit_without_saving,Main menu without saving,Hauptmenü ohne Speichern
-ui.upgrade.effect_owned.carry_capacity,Carry capacity: {current} slots (active),Tragekapazität: {current} Plätze (aktiv)
 item.category.material,Recovered material,Wertstoff
 item.device_broken_radio.name,Broken Radio,Defektes Radio
 item.device_broken_radio.description,"Silent for years. Sell it as it is, or take it apart.","Seit Jahren stumm. Verkauf es so, oder nimm es auseinander."
@@ -118,3 +101,63 @@ ui.dismantle.detail_missing,Needs: {input} · yields {outputs} = {value} Cr (sol
 ui.dismantle.missing_input,Bring a {input} to dismantle it here.,"Bring ein {input} mit, um es hier zu zerlegen."
 ui.dismantle.done_already,There is nothing left to take apart here.,Hier gibt es nichts mehr zu zerlegen.
 ui.dismantle.done,Dismantled {input} into {outputs} ({value} Cr).,{input} zerlegt in {outputs} ({value} Cr).
+ui.prompt.inspect_hint,[{key}] Look,[{key}] Ansehen
+ui.action.search,Search (hold),Durchsuchen (halten)
+ui.action.open_catalog,Browse the catalog,Im Katalog blättern
+item.category.collectible,Collectible,Sammlerstück
+ui.hud.equipment,Tools: {tools},Werkzeug: {tools}
+station.order_desk.name,Office: Order Catalog,Büro: Bestellkatalog
+station.order_desk.description,"Walt's desk. A rotary phone, a very thick catalog and a note: ""Please place orders loudly and clearly.""","Walts Schreibtisch. Ein Telefon mit Wählscheibe, ein sehr dicker Katalog und ein Zettel: „Bestellungen bitte laut und deutlich.“"
+ui.catalog.title,Backyard Mail Order,Hinterhof-Versand
+ui.catalog.subtitle,"Walt's trusted catalog. Delivery: ""immediately"" – according to the catalog, since 1974.",Walts Stammkatalog. Lieferung: „sofort“ – laut Katalog seit 1974.
+ui.catalog.detail_available,Something affordable inside,Etwas Bezahlbares im Angebot
+ui.catalog.detail_none,Browsing is free,Blättern kostet nichts
+ui.catalog.status.available,Order,Bestellen
+ui.catalog.status.owned,Delivered,Geliefert
+ui.catalog.status.insufficient_funds,Not enough credits,Zu wenig Credits
+ui.catalog.status.locked,Not yet,Noch nicht
+ui.catalog.effect.carry_capacity,Carry capacity {current} → {after} slots,Tragekapazität {current} → {after} Plätze
+ui.catalog.effect_owned.carry_capacity,Carry capacity: {current} slots (in use),Tragekapazität: {current} Plätze (im Einsatz)
+ui.catalog.effect.tool,Tool: {tool},Werkzeug: {tool}
+ui.catalog.requires,Requires: {requirement},Benötigt zuerst: {requirement}
+ui.catalog.insufficient_funds,The catalog does not accept promises. {price} Cr needed.,Der Katalog nimmt keine Versprechen an. {price} Cr nötig.
+ui.catalog.already_owned,Already delivered. Ordering twice doesn't make it twice as good.,Schon geliefert. Doppelt bestellt hilft nicht doppelt.
+ui.catalog.locked,First {requirement}. Even Backyard Mail Order has principles.,Erst {requirement}. Selbst der Hinterhof-Versand hat Prinzipien.
+ui.catalog.failed,The order got lost. Probably in the mailbox.,Die Bestellung ist verloren gegangen. Vermutlich im Briefkasten.
+tool.crowbar.name,Crowbar,Brechstange
+tool.hoist.name,Chain Hoist,Flaschenzug
+upgrade.tool_crowbar.name,Crowbar,Brechstange
+upgrade.tool_crowbar.description,"Opens nailed crates, sealed drums and occasionally new perspectives.","Öffnet vernagelte Kisten, versiegelte Fässer und gelegentlich neue Perspektiven."
+upgrade.tool_crowbar.bought,The crowbar is waiting outside the office. Crates across the yard grow nervous.,Die Brechstange liegt vor dem Büro. Im ganzen Hof werden Kisten nervös.
+upgrade.upgrade_carry_basket.bought,The big basket has arrived. It smells of wicker and optimism.,Der große Tragekorb ist da. Er riecht nach Weide und Optimismus.
+upgrade.tool_hoist.name,Chain Hoist,Flaschenzug
+upgrade.tool_hoist.description,"Lifts heavy things that consider themselves immovable. Tripod included, instructions sadly not.","Hebt schwere Dinge, die sich für unverrückbar halten. Dreibein inklusive, Anleitung leider nicht."
+upgrade.tool_hoist.bought,The hoist is standing outside the office. The steel beam suspects nothing.,Der Flaschenzug steht vor dem Büro. Der Metallträger ahnt nichts.
+upgrade.upgrade_handcart.name,Handcart,Handkarren
+upgrade.upgrade_handcart.description,"Two wheels, one bed, no opinions of its own. Unlike Walt's self-driving wheelbarrow.","Zwei Räder, eine Ladefläche, keine eigene Meinung. Im Gegensatz zu Walts selbstfahrender Schubkarre."
+upgrade.upgrade_handcart.bought,The handcart has arrived. It only moves when you push. Promise.,"Der Handkarren ist da. Er fährt nur, wenn du schiebst. Versprochen."
+ui.search.detail,Might be worth a look,Durchsuchen lohnt sich vielleicht
+ui.search.needs_tool,Requires: {tool},Benötigt: {tool}
+ui.search.missing_tool.crowbar,{name} won't budge. Bare hands won't do – a crowbar from the office catalog will.,{name} rührt sich nicht. Mit bloßen Händen wird das nichts – mit einer Brechstange aus dem Bürokatalog schon.
+source.small_scrap_pile.name,Small Scrap Pile,Kleiner Schrotthaufen
+source.small_scrap_pile.description,"A heap that looks like someone once said ""I'll sort it later"". Twenty years ago.","Ein Haufen, der aussieht, als hätte jemand mal „sortiere ich später“ gesagt. Vor zwanzig Jahren."
+ui.search.result.small_scrap_pile,"Between rust and dust, a few usable bits turn up.",Zwischen Rost und Staub kommen ein paar brauchbare Teile zum Vorschein.
+source.old_toolbox.name,Old Toolbox,Alter Werkzeugkasten
+source.old_toolbox.description,"Labelled ""Tools"". Walt clearly had a very broad definition of tools.",Beschriftet mit „Werkzeug“. Walt hatte offenbar eine sehr großzügige Definition von Werkzeug.
+ui.search.result.old_toolbox,Not a single tool. Instead: a brass figurine and some wire. Typical Walt.,Kein einziges Werkzeug. Dafür eine Messingfigur und Kabel. Typisch Walt.
+source.storage_crate.name,"Crate ""Important Spare Parts""",Kiste „Wichtige Ersatzteile“
+source.storage_crate.description,Nailed shut. Whoever used this many nails had either something important or too many nails.,"Fest zugenagelt. Wer so viele Nägel benutzt, hatte entweder etwas Wichtiges oder zu viele Nägel."
+ui.search.result.storage_crate,Important spare parts: three bolts of unknown origin and a wire coil. Important to whom remains unclear.,"Wichtige Ersatzteile: drei Schrauben unbekannter Herkunft und ein Kabelknäuel. Wichtig für wen, bleibt offen."
+source.rusted_drum.name,Sealed Rusty Drum,Versiegeltes Rostfass
+source.rusted_drum.description,"A seal reading ""Do not open"". Underneath, smaller: ""Unless it's worth it.""","Ein Siegel mit der Aufschrift „Nicht öffnen“. Darunter, kleiner: „Außer es lohnt sich.“"
+ui.search.result.rusted_drum,Inside: two cans and a copper pipe. It was worth it. Barely.,Im Fass: zwei Dosen und ein Kupferrohr. Es hat sich gelohnt. Knapp.
+ui.salvage.needs_tool,Stuck · requires: {tool} · {value} Cr,Steckt fest · benötigt: {tool} · {value} Cr
+ui.salvage.missing_tool.hoist,The beam doesn't move an inch. It seems to have put down roots. A chain hoist from the office catalog might change its mind.,Der Träger bewegt sich keinen Millimeter. Er hat hier offenbar Wurzeln geschlagen. Ein Flaschenzug aus dem Bürokatalog könnte ihn umstimmen.
+station.workbench.description,"This is where things will be built one day. A note on the pegboard: ""If it doesn't work, it probably wasn't finished yet."" The workbench isn't finished yet.","Hier wird eines Tages gebaut. Ein Zettel an der Lochwand: „Wenn es nicht funktioniert, war es vermutlich noch nicht fertig.“ Die Werkbank ist noch nicht fertig."
+item.scrap_wood_offcut.name,Wood Offcut,Holzabschnitt
+item.scrap_wood_offcut.description,Once part of something bigger. Probably a fence. Possibly a plan.,War mal Teil von etwas Größerem. Vermutlich eines Zauns. Möglicherweise eines Plans.
+item.scrap_copper_pipe.name,Copper Pipe,Kupferrohr
+item.scrap_copper_pipe.description,A bent length of copper pipe. Water last flowed through it in another millennium.,Ein geknicktes Stück Kupferrohr. Wasser floss hier zuletzt in einem anderen Jahrtausend.
+item.find_brass_figurine.name,Brass Figurine,Messingfigur
+item.find_brass_figurine.description,A small brass man holding an even smaller brass figurine. Probably of himself.,"Ein kleiner Messingmann, der eine noch kleinere Messingfigur hält. Vermutlich von sich selbst."
+ui.catalog.effect_locked.carry_capacity,Carry capacity +{bonus} slots,Tragekapazität +{bonus} Plätze

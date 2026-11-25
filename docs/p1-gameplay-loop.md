@@ -1,7 +1,7 @@
 # Scrapstead — P1: Erste Gameplay-Schleife (Umsetzung)
 
-**Version:** 0.1  
-**Status:** Implementiert und automatisiert getestet; manuelle Spielgefühl-Abnahme durch Projektverantwortliche offen  
+**Version:** 0.2  
+**Status:** Implementiert und automatisiert getestet. Spielgefühl von der Projektleitung als gut bewertet; P1 wird vertieft und ist noch nicht spielerisch freigegeben  
 **Engine:** Godot 4.7.2 Stable / GDScript  
 **Grundlage:** `mvp-prototype-plan.md` (Abschnitt 4), `starting-yard-item-catalog.md`, `core-gameplay-matrix.md`, P0-Spezifikationen
 
@@ -23,7 +23,8 @@ Der P1-Ausschnitt liegt im bestehenden Old-Yard-Blockout. Alle Positionen sind L
 |---|---|---|---|
 | Spielerstart | 8 / 3, Blick Nord | E | Einstieg an der Einfahrt |
 | Annahmetresen (`station_sell_counter`) | 11,6 / 6, Kundenseite West | E | Verkauf |
-| Werkbank (`station_workbench`) | 10,5 / 14,2, Front Süd | C | Upgrade |
+| Büro: Bestellkatalog (`station_order_desk`) | 5,4 / 14,2, Front Süd | C | Kauf von Werkzeug und Transportmitteln (0.2) |
+| Werkbank (`station_workbench`) | 10,5 / 14,2, Front Süd | C | Nur untersuchbar, Crafting folgt (0.2) |
 | Hinweisbrett (`p0_inspect_board_01`) | 4,6 / 3,2 | E | Untersuchen (aus P0) |
 | Hofstrahler (`p0_use_floodlight_01`) | 17,5 / 9 | E/D | Benutzen (aus P0) |
 | 6 lose Kleinteile | E, D, Weg nach A/B | E, D | Sammeln |
@@ -171,3 +172,65 @@ Dynamische Preise, Lager, Regeneration, Werkzeuge, Qualitätsstufen, Scrappy, St
 | Daten | `ProcessingProfile` in `data/processing/dismantle_broken_radio.tres` |
 
 Direktverkauf des Radios bleibt möglich. Bewertung in der [Prototyp-Abnahme](prototype-acceptance.md), Abschnitt 8.
+
+## 14. P1-Vertiefung (Version 0.2)
+
+**Status:** Beschlossen am 25.11.2026 nach dem ersten Anspielen; umgesetzt und automatisiert getestet. Die Abschnitte 2–8 beschreiben den Stand 0.1; wo 0.2 abweicht, gilt dieser Abschnitt.
+
+### 14.1 Entscheidungen der Projektverantwortlichen
+
+- Die Schleife wird vor P2 vertieft: Suchquellen, erstes Werkzeug, zweites Transport-Upgrade, Objekt-Inspektion.
+- Werkzeuge, Ausrüstung und Transportmittel werden **gekauft**, und zwar im **Büro über Walts alten Bestellkatalog** – nicht an der Werkbank.
+- Die **Werkbank ist für das Herstellen (Crafting)** vorgesehen. Crafting folgt später; bis dahin ist die Werkbank nur untersuchbar und täuscht keine Funktion vor.
+- Der Metallträger erfordert ein **Hebemittel (Flaschenzug)**. Der **Handkarren** ist das separate zweite Transport-Upgrade.
+- Alle Texte folgen der Humoridentität (lore-walt-wren.md, Abschnitte 7–8): trockener Ton, Komik über Objekte, Beschriftungen und den Katalog, sparsam dosiert, de/en gleichwertig. Scrappy tritt in P1 nicht auf.
+
+### 14.2 Bestellkatalog (Büro, Zone C)
+
+| ID | Ware | Preis | Wirkung | Voraussetzung |
+|---|---|---:|---|---|
+| `tool_crowbar` | Brechstange | 12 Cr | Werkzeug `crowbar`: öffnet vernagelte bzw. versiegelte Suchquellen | – |
+| `upgrade_carry_basket` | Großer Tragekorb | 30 Cr | Tragekapazität +4 (4 → 8) | – |
+| `tool_hoist` | Flaschenzug | 25 Cr | Werkzeug `hoist`: hebt feststeckende schwere Objekte frei | – |
+| `upgrade_handcart` | Handkarren | 40 Cr | Tragekapazität +4 (8 → 12) | Großer Tragekorb |
+
+- Bestellt wird am Schreibtisch neben der Bürotür (`station_order_desk`). Gekaufte Ware erscheint sichtbar an der Lieferstelle vor dem Büro.
+- Das HUD zeigt besessene Ausrüstung unter dem Tragekorb.
+- Datenmodell: `UpgradeDefinition` erhält `grants_tool`; Werkzeugbesitz fragt `UpgradeProgress.has_tool()` ab.
+
+### 14.3 Suchquellen
+
+Durchsuchen ist eine kurze Halte-Aktion (1,5 s). Die Funde sind festgelegt (kein Zufall) und fallen sichtbar vor die Quelle; aufgehoben werden sie wie jedes Fundstück. Jede Quelle ist einmalig.
+
+| ID | Quelle | Zone | Werkzeug | Inhalt |
+|---|---|---|---|---|
+| `source_small_scrap_pile_01` | Kleiner Schrotthaufen | A | – | Schraube, Dose, Holzabschnitt |
+| `source_old_toolbox_01` | Alter Werkzeugkasten | C | – | Messingfigur, Kabelknäuel |
+| `source_storage_crate_01` | Lagerkiste „Wichtige Ersatzteile“ | A | Brechstange | 3 Schrauben, Kabelknäuel |
+| `source_rusted_drum_01` | Versiegeltes Rostfass | B | Brechstange | 2 Dosen, Kupferrohr |
+
+Neue Gegenstände (Startkatalog): `scrap_wood_offcut` (2 Cr), `scrap_copper_pipe` (6 Cr), `find_brass_figurine` (15 Cr, Sammlerstück).
+
+### 14.4 Wirtschaftliche Prüfung
+
+Gesamterlös aller Funde: lose Teile 24, Suchquellen ohne Werkzeug 29, mit Brechstange 26, Träger 20, Radio 12 (zerlegt 16) → **111–115 Cr**. Gesamtkosten des Katalogs: **107 Cr**. Wer alles kauft, hat am Ende kaum Reserve; die Reihenfolge der Käufe ist eine echte Entscheidung (früh Kapazität oder früh Zugang). Werte bleiben Playtest-Startwerte in `data/`.
+
+### 14.5 Objekt-Inspektion
+
+- Neue Eingabe `inspect_target` (Taste R). Der Prompt zeigt sie zusätzlich, wenn das Ziel Informationen bietet.
+- Fundstücke zeigen Name, Kategorie, Wert, Plätze und eine kurze Beschreibung; Quellen und Einrichtungen eine Beschreibung.
+- Inspektion verändert keinen Zustand (Matrix 4.1, Objektinspektion).
+
+### 14.6 Umsetzung
+
+| Baustein | Datei |
+|---|---|
+| Bestellkatalog | `scripts/world/OrderDesk.gd`, `scenes/interaction/OrderDesk.tscn`, `scripts/ui/CatalogPanel.gd` |
+| Lieferstelle | `DeliveryArea` in `OldYardTest.tscn`; Kindknoten heißen wie die Waren-IDs |
+| Suchquellen | `scripts/world/SearchSource.gd`, `scenes/interaction/Source*.tscn`; Inhalte sind `ScrapItem` mit `starts_pending` |
+| Werkzeugpflicht | `SearchSource.required_tool`, `SalvageableScrap.required_tool`, `UpgradeProgress.has_tool()` |
+| Inspektion | `Interactable.get_inspection()`, Eingabe `inspect_target` (R), `InspectPanel` |
+| Werkbank | `scenes/interaction/Workbench.tscn` (Inspect-Objekt) |
+| Daten | `data/upgrades/*.tres`, neue `data/items/*.tres` |
+
+Der Spielstand bleibt Version 2: Werkzeuge stehen in `upgrades`, durchsuchte Quellen als `{"searched": true}` in `world_objects`.

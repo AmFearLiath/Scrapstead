@@ -14,10 +14,10 @@
 [ext_resource type="PackedScene" path="res://scenes/interaction/ScrapItem.tscn" id="13_item"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/SalvageableScrap.tscn" id="14_salvage"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/SellStation.tscn" id="15_sell"]
-[ext_resource type="PackedScene" path="res://scenes/interaction/UpgradeStation.tscn" id="16_upgrade"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/OrderDesk.tscn" id="16_upgrade"]
 [ext_resource type="PackedScene" path="res://ui/hud/EconomyHud.tscn" id="17_economy"]
 [ext_resource type="PackedScene" path="res://ui/interaction/SellPanel.tscn" id="18_sell_panel"]
-[ext_resource type="PackedScene" path="res://ui/interaction/UpgradePanel.tscn" id="19_upgrade_panel"]
+[ext_resource type="PackedScene" path="res://ui/interaction/CatalogPanel.tscn" id="19_upgrade_panel"]
 [ext_resource type="PackedScene" path="res://ui/hud/PauseMenu.tscn" id="20_pause"]
 [ext_resource type="Resource" path="res://data/items/item_catalog.tres" id="21_items"]
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_catalog.tres" id="22_upgrades"]
@@ -30,7 +30,18 @@
 [ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="def_scrap_rusted_bolt"]
 [ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="def_scrap_wire_coil"]
 
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "upgrade_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
+[ext_resource type="PackedScene" path="res://scenes/interaction/Workbench.tscn" id="40_workbench"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/SourceHeap.tscn" id="41_heap"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/SourceToolbox.tscn" id="42_toolbox"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/SourceCrate.tscn" id="43_crate"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/SourceDrum.tscn" id="44_drum"]
+[ext_resource type="PackedScene" path="res://assets/objects/equipment_crowbar.tscn" id="45_eq_crowbar"]
+[ext_resource type="PackedScene" path="res://assets/objects/equipment_hoist.tscn" id="46_eq_hoist"]
+[ext_resource type="PackedScene" path="res://assets/objects/equipment_handcart.tscn" id="47_eq_handcart"]
+[ext_resource type="Resource" path="res://data/items/scrap_wood_offcut.tres" id="def_scrap_wood_offcut"]
+[ext_resource type="Resource" path="res://data/items/scrap_copper_pipe.tres" id="def_scrap_copper_pipe"]
+[ext_resource type="Resource" path="res://data/items/find_brass_figurine.tres" id="def_find_brass_figurine"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -40,7 +51,7 @@ interaction_prompt = NodePath("HUD/InteractionPrompt")
 feedback_toast = NodePath("HUD/FeedbackToast")
 inspect_panel = NodePath("HUD/InspectPanel")
 sell_panel = NodePath("HUD/SellPanel")
-upgrade_panel = NodePath("HUD/UpgradePanel")
+catalog_panel = NodePath("HUD/CatalogPanel")
 pause_menu = NodePath("HUD/PauseMenu")
 economy_hud = NodePath("HUD/EconomyHud")
 controls_hint = NodePath("HUD/ControlsHint")
@@ -73,7 +84,11 @@ transform = Transform3D(0.7071069, 0, -0.70710665, 0, 1, 0, 0.70710665, 0, 0.707
 [node name="SellStation" parent="TestObjects" unique_id=131772909 instance=ExtResource("15_sell")]
 transform = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 11.6, 0, -6)
 
-[node name="UpgradeStation" parent="TestObjects" unique_id=1693960008 instance=ExtResource("16_upgrade")]
+[node name="OrderDesk" parent="TestObjects" node_paths=PackedStringArray("delivery_area") instance=ExtResource("16_upgrade")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4, 0, -14.2)
+delivery_area = NodePath("../../DeliveryArea")
+
+[node name="Workbench" parent="TestObjects" instance=ExtResource("40_workbench")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, -14.2)
 
 [node name="scrap_rusted_bolt_01" parent="TestObjects" unique_id=663560678 instance=ExtResource("13_item")]
@@ -132,6 +147,128 @@ definition = ExtResource("def_mat_electronic_parts")
 starts_pending = true
 object_id = "device_broken_radio_01_electronic_parts"
 
+[node name="source_small_scrap_pile_01" parent="TestObjects" node_paths=PackedStringArray("contents") instance=ExtResource("41_heap")]
+transform = Transform3D(1.0, 0, -0.0, 0, 1, 0, 0.0, 0, 1.0, 9.5, 0, -26.0)
+object_id = "source_small_scrap_pile_01"
+name_key = "source.small_scrap_pile.name"
+description_key = "source.small_scrap_pile.description"
+required_tool = ""
+result_key = "ui.search.result.small_scrap_pile"
+contents = [NodePath("../scrap_rusted_bolt_03"), NodePath("../scrap_empty_can_03"), NodePath("../scrap_wood_offcut_01")]
+
+[node name="scrap_rusted_bolt_03" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.838671, 0, -0.544639, 0, 1, 0, 0.544639, 0, 0.838671, 8.6, 0, -25.0)
+definition = ExtResource("def_scrap_rusted_bolt")
+object_id = "scrap_rusted_bolt_03"
+starts_pending = true
+
+[node name="scrap_empty_can_03" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.766044, 0, 0.642788, 0, 1, 0, -0.642788, 0, 0.766044, 9.6, 0, -24.6)
+definition = ExtResource("def_scrap_empty_can")
+object_id = "scrap_empty_can_03"
+starts_pending = true
+
+[node name="scrap_wood_offcut_01" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.990268, 0, 0.139173, 0, 1, 0, -0.139173, 0, 0.990268, 10.5, 0, -25.0)
+definition = ExtResource("def_scrap_wood_offcut")
+object_id = "scrap_wood_offcut_01"
+starts_pending = true
+
+[node name="source_old_toolbox_01" parent="TestObjects" node_paths=PackedStringArray("contents") instance=ExtResource("42_toolbox")]
+transform = Transform3D(0.0, 0, -1.0, 0, 1, 0, 1.0, 0, 0.0, 13.9, 0, -18.0)
+object_id = "source_old_toolbox_01"
+name_key = "source.old_toolbox.name"
+description_key = "source.old_toolbox.description"
+required_tool = ""
+result_key = "ui.search.result.old_toolbox"
+contents = [NodePath("../find_brass_figurine_01"), NodePath("../scrap_wire_coil_03")]
+
+[node name="find_brass_figurine_01" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.809017, 0, -0.587785, 0, 1, 0, 0.587785, 0, 0.809017, 15.0, 0, -17.3)
+definition = ExtResource("def_find_brass_figurine")
+object_id = "find_brass_figurine_01"
+starts_pending = true
+
+[node name="scrap_wire_coil_03" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.999391, 0, 0.034899, 0, 1, 0, -0.034899, 0, 0.999391, 15.1, 0, -18.7)
+definition = ExtResource("def_scrap_wire_coil")
+object_id = "scrap_wire_coil_03"
+starts_pending = true
+
+[node name="source_storage_crate_01" parent="TestObjects" node_paths=PackedStringArray("contents") instance=ExtResource("43_crate")]
+transform = Transform3D(1.0, 0, -0.0, 0, 1, 0, 0.0, 0, 1.0, 2.8, 0, -27.0)
+object_id = "source_storage_crate_01"
+name_key = "source.storage_crate.name"
+description_key = "source.storage_crate.description"
+required_tool = "crowbar"
+result_key = "ui.search.result.storage_crate"
+contents = [NodePath("../scrap_rusted_bolt_04"), NodePath("../scrap_rusted_bolt_05"), NodePath("../scrap_rusted_bolt_06"), NodePath("../scrap_wire_coil_04")]
+
+[node name="scrap_rusted_bolt_04" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.743145, 0, -0.669131, 0, 1, 0, 0.669131, 0, 0.743145, 2.0, 0, -25.8)
+definition = ExtResource("def_scrap_rusted_bolt")
+object_id = "scrap_rusted_bolt_04"
+starts_pending = true
+
+[node name="scrap_rusted_bolt_05" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.743145, 0, -0.669131, 0, 1, 0, 0.669131, 0, 0.743145, 2.8, 0, -25.5)
+definition = ExtResource("def_scrap_rusted_bolt")
+object_id = "scrap_rusted_bolt_05"
+starts_pending = true
+
+[node name="scrap_rusted_bolt_06" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.857167, 0, -0.515038, 0, 1, 0, 0.515038, 0, 0.857167, 3.6, 0, -25.8)
+definition = ExtResource("def_scrap_rusted_bolt")
+object_id = "scrap_rusted_bolt_06"
+starts_pending = true
+
+[node name="scrap_wire_coil_04" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.848048, 0, 0.529919, 0, 1, 0, -0.529919, 0, 0.848048, 2.8, 0, -24.9)
+definition = ExtResource("def_scrap_wire_coil")
+object_id = "scrap_wire_coil_04"
+starts_pending = true
+
+[node name="source_rusted_drum_01" parent="TestObjects" node_paths=PackedStringArray("contents") instance=ExtResource("44_drum")]
+transform = Transform3D(1.0, 0, -0.0, 0, 1, 0, 0.0, 0, 1.0, 38.0, 0, -22.5)
+object_id = "source_rusted_drum_01"
+name_key = "source.rusted_drum.name"
+description_key = "source.rusted_drum.description"
+required_tool = "crowbar"
+result_key = "ui.search.result.rusted_drum"
+contents = [NodePath("../scrap_empty_can_04"), NodePath("../scrap_empty_can_05"), NodePath("../scrap_copper_pipe_01")]
+
+[node name="scrap_empty_can_04" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, 37.3, 0, -21.4)
+definition = ExtResource("def_scrap_empty_can")
+object_id = "scrap_empty_can_04"
+starts_pending = true
+
+[node name="scrap_empty_can_05" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 38.1, 0, -21.1)
+definition = ExtResource("def_scrap_empty_can")
+object_id = "scrap_empty_can_05"
+starts_pending = true
+
+[node name="scrap_copper_pipe_01" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 38.9, 0, -21.5)
+definition = ExtResource("def_scrap_copper_pipe")
+object_id = "scrap_copper_pipe_01"
+starts_pending = true
+
+[node name="DeliveryArea" type="Node3D" parent="."]
+
+[node name="tool_crowbar" parent="DeliveryArea" instance=ExtResource("45_eq_crowbar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3, 0, -15.6)
+visible = false
+
+[node name="tool_hoist" parent="DeliveryArea" instance=ExtResource("46_eq_hoist")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6, 0, -17.6)
+visible = false
+
+[node name="upgrade_handcart" parent="DeliveryArea" instance=ExtResource("47_eq_handcart")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.5, 0, -20.0)
+visible = false
+
 [node name="PlayerStart" type="Marker3D" parent="." unique_id=320113948]
 transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -3)
 
@@ -147,7 +284,6 @@ process_mode = 3
 
 [node name="InteractionPrompt" parent="HUD" unique_id=1526437171 instance=ExtResource("9_prompt")]
 
-[node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
 
 [node name="ControlsHint" type="Label" parent="HUD" unique_id=1385263399]
 auto_translate_mode = 2
@@ -168,8 +304,10 @@ theme_override_font_sizes/font_size = 16
 
 [node name="SellPanel" parent="HUD" unique_id=1172746647 instance=ExtResource("18_sell_panel")]
 
-[node name="UpgradePanel" parent="HUD" unique_id=297656786 instance=ExtResource("19_upgrade_panel")]
+[node name="CatalogPanel" parent="HUD" unique_id=297656786 instance=ExtResource("19_upgrade_panel")]
 
 [node name="PauseMenu" parent="HUD" unique_id=640406047 instance=ExtResource("20_pause")]
+
+[node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
 
 [node name="DebugOverlay" parent="HUD" unique_id=1859011714 instance=ExtResource("10_debug")]

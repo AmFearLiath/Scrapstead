@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbeii"]
+albedo_color = Color(0.42745098, 0.49803922, 0.36862746, 1)
+metallic = 0.2
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_batso"]
+size = Vector3(0.65, 0.28, 0.32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1qxtg"]
+size = Vector3(0.67, 0.06, 0.34)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hj8mw"]
+albedo_color = Color(0.16862746, 0.12941177, 0.105882354, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_xjy6q"]
+size = Vector3(0.3, 0.06, 0.04)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ee6ul"]
+size = Vector3(0.34, 0.04, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_egf3c"]
+size = Vector3(0.34, 0.04, 0.34)
+
+[node name="OldToolbox" type="Node3D" unique_id=1952903288]
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1952674421]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14, 0)
+material_override = SubResource("StandardMaterial3D_qbeii")
+mesh = SubResource("BoxMesh_batso")
+
+[node name="Closed" type="Node3D" parent="." unique_id=342306426]
+
+[node name="Lid" type="MeshInstance3D" parent="Closed" unique_id=647156649]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.31, 0)
+material_override = SubResource("StandardMaterial3D_qbeii")
+mesh = SubResource("BoxMesh_1qxtg")
+
+[node name="Handle" type="MeshInstance3D" parent="Closed" unique_id=1850888156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37, 0)
+material_override = SubResource("StandardMaterial3D_hj8mw")
+mesh = SubResource("BoxMesh_xjy6q")
+
+[node name="Open" type="Node3D" parent="." unique_id=1069515978]
+
+[node name="LidLeft" type="MeshInstance3D" parent="Open" unique_id=474158418]
+transform = Transform3D(0.49999997, -0.86602545, 0, 0.86602545, 0.49999997, 0, 0, 0, 1, -0.3, 0.32000002, 0)
+material_override = SubResource("StandardMaterial3D_qbeii")
+mesh = SubResource("BoxMesh_ee6ul")
+
+[node name="LidRight" type="MeshInstance3D" parent="Open" unique_id=2065745249]
+transform = Transform3D(0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0, 1, 0.3, 0.32000002, 0)
+material_override = SubResource("StandardMaterial3D_qbeii")
+mesh = SubResource("BoxMesh_egf3c")

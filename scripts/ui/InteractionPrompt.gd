@@ -8,6 +8,7 @@ extends Control
 @onready var _input_hint: Label = %InputHint
 @onready var _detail: Label = %Detail
 @onready var _hold_progress: ProgressBar = %HoldProgress
+@onready var _inspect_hint: Label = %InspectHint
 
 
 func _ready() -> void:
@@ -16,7 +17,9 @@ func _ready() -> void:
 
 ## Shows name, action and key of the target plus an optional detail line.
 func show_target(target_name: String, action_text: String, input_hint: String, detail: String,
-		is_hold_action: bool) -> void:
+		is_hold_action: bool, inspect_hint: String = "") -> void:
+	_inspect_hint.text = inspect_hint
+	_inspect_hint.visible = not inspect_hint.is_empty()
 	_target_name.text = target_name
 	_action_label.text = action_text
 	_input_hint.text = input_hint

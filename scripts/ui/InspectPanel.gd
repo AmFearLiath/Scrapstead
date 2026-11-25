@@ -14,10 +14,10 @@ func _ready() -> void:
 	_close_button.pressed.connect(close)
 
 
-## Shows the localized title and text keys.
-func open(title_key: String, text_key: String) -> void:
-	_title.text = tr(title_key)
-	_body.text = tr(text_key)
+## Shows an already localized title and text.
+func open(title: String, body: String) -> void:
+	_title.text = title
+	_body.text = body
 	show()
 	_close_button.grab_focus()
 
@@ -32,6 +32,7 @@ func close() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
-	if event.is_action_pressed("interact") or event.is_action_pressed("pause_menu"):
+	if (event.is_action_pressed("interact") or event.is_action_pressed("pause_menu")
+			or event.is_action_pressed("inspect_target")):
 		get_viewport().set_input_as_handled()
 		close()

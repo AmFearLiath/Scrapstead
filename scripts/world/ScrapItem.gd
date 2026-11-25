@@ -75,6 +75,21 @@ func interact(context: InteractionContext) -> Dictionary:
 	return make_result(true, "ui.interaction.picked_up", {"name": get_display_name()})
 
 
+func get_inspection(context: InteractionContext) -> Dictionary:
+	return {"title": get_display_name(),
+		"body": get_prompt_detail(context) + "\n\n" + tr(definition.description_key)}
+
+
+## Makes a prepared (pending) placement appear in the yard with a small pop.
+func reveal() -> void:
+	set_state(State.IN_WORLD)
+	var visual_root: Node3D = get_node_or_null("VisualRoot")
+	if visual_root != null and is_inside_tree():
+		visual_root.scale = Vector3.ONE * 0.2
+		create_tween().tween_property(visual_root, "scale", Vector3.ONE, 0.35) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
 ## Puts the object back into the world at a new position (drop).
 func drop_at(world_position: Vector3, yaw: float) -> void:
 	global_position = world_position

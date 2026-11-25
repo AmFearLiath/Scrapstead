@@ -45,6 +45,16 @@ func _init() -> void:
 	ok = _save(_build_dismantle_table(), "res://assets/objects/dismantle_table.tscn") and ok
 	ok = _save(_build_notice_board(), "res://assets/objects/notice_board.tscn") and ok
 	ok = _save(_build_floodlight(), "res://assets/objects/floodlight.tscn") and ok
+	ok = _save(_build_wood_offcut(), "res://assets/objects/scrap_wood_offcut.tscn") and ok
+	ok = _save(_build_copper_pipe(), "res://assets/objects/scrap_copper_pipe.tscn") and ok
+	ok = _save(_build_brass_figurine(), "res://assets/objects/find_brass_figurine.tscn") and ok
+	ok = _save(_build_order_desk(), "res://assets/objects/order_desk.tscn") and ok
+	ok = _save(_build_old_toolbox(), "res://assets/objects/source_old_toolbox.tscn") and ok
+	ok = _save(_build_storage_crate(), "res://assets/objects/source_storage_crate.tscn") and ok
+	ok = _save(_build_rusted_drum(), "res://assets/objects/source_rusted_drum.tscn") and ok
+	ok = _save(_build_equipment_crowbar(), "res://assets/objects/equipment_crowbar.tscn") and ok
+	ok = _save(_build_equipment_hoist(), "res://assets/objects/equipment_hoist.tscn") and ok
+	ok = _save(_build_equipment_handcart(), "res://assets/objects/equipment_handcart.tscn") and ok
 	print("build_blockout: ", "done" if ok else "FAILED")
 	quit(0 if ok else 1)
 
@@ -78,6 +88,8 @@ func _build_materials() -> void:
 	_mat("tyre", Color("2e2b29"), 0.95)
 	_mat("glass", Color("bfe0e6"), 0.1, 0.0)
 	_mat("plant", Color("6f8a4a"))
+	_mat("brass", Color("c9a248"), 0.35, 0.85)
+	_mat("toolbox", Color("6d7f5e"), 0.7, 0.2)
 	var lens := StandardMaterial3D.new()
 	lens.albedo_color = Color("fff3c4")
 	lens.emission_enabled = true
@@ -564,4 +576,139 @@ func _build_floodlight() -> Node3D:
 	head.rotation.x = deg_to_rad(35)
 	_box(head, "Housing", Vector3.ZERO, Vector3(0.6, 0.35, 0.3), "steel_dark")
 	_box(head, "Lens", Vector3(0, 0.05, 0.16), Vector3(0.5, 0.25, 0.02), "lens")
+	return root
+
+
+# --- P1 deepening: finds, sources, office, equipment ------------------------
+
+func _build_wood_offcut() -> Node3D:
+	var root := Node3D.new()
+	root.name = "WoodOffcut"
+	_box(root, "Plank", Vector3.ZERO, Vector3(0.55, 0.07, 0.16), "wood_light", false, 15.0)
+	_box(root, "Chunk", Vector3(0.05, 0.07, 0.08), Vector3(0.25, 0.08, 0.12), "wood", false, -30.0)
+	return root
+
+
+func _build_copper_pipe() -> Node3D:
+	var root := Node3D.new()
+	root.name = "CopperPipe"
+	_cyl(root, "Pipe", Vector3(0, 0.05, -0.05), 0.045, 0.6, "copper", false, 10, Vector3(0, 20, 90))
+	_cyl(root, "Elbow", Vector3(0.28, 0.05, 0.05), 0.055, 0.12, "copper", false, 10, Vector3(90, 0, 0))
+	return root
+
+
+func _build_brass_figurine() -> Node3D:
+	var root := Node3D.new()
+	root.name = "BrassFigurine"
+	_cyl(root, "Base", Vector3.ZERO, 0.1, 0.04, "brass", false, 12)
+	var body := CapsuleMesh.new()
+	body.radius = 0.05
+	body.height = 0.2
+	_place(root, "Body", Vector3(0, 0.14, 0), body, null, "brass", 0.0, Vector3.ZERO)
+	var head := SphereMesh.new()
+	head.radius = 0.045
+	head.height = 0.09
+	_place(root, "Head", Vector3(0, 0.28, 0), head, null, "brass", 0.0, Vector3.ZERO)
+	# It holds a tiny figurine of itself.
+	_cyl(root, "TinyFigure", Vector3(0.07, 0.16, 0.03), 0.015, 0.06, "brass", false, 6)
+	return root
+
+
+func _build_order_desk() -> Node3D:
+	var root := Node3D.new()
+	root.name = "OrderDesk"
+	_box(root, "Top", Vector3(0, 0.78, 0), Vector3(1.6, 0.07, 0.8), "wood")
+	_box(root, "DrawerBlock", Vector3(0.55, 0, 0), Vector3(0.45, 0.78, 0.75), "wood_dark")
+	_box(root, "LegL1", Vector3(-0.72, 0, -0.32), Vector3(0.07, 0.78, 0.07), "wood_dark")
+	_box(root, "LegL2", Vector3(-0.72, 0, 0.32), Vector3(0.07, 0.78, 0.07), "wood_dark")
+	_box(root, "Catalog", Vector3(-0.25, 0.85, 0.08), Vector3(0.42, 0.09, 0.3), "mustard", false, -8.0)
+	_box(root, "CatalogSpine", Vector3(-0.25, 0.94, 0.08), Vector3(0.42, 0.01, 0.3), "rust_light", false, -8.0)
+	_box(root, "Phone", Vector3(0.45, 0.85, -0.15), Vector3(0.26, 0.1, 0.2), "dark")
+	_cyl(root, "Dial", Vector3(0.45, 0.95, -0.12), 0.07, 0.015, "cream", false, 12)
+	_box(root, "Receiver", Vector3(0.45, 0.96, -0.22), Vector3(0.3, 0.05, 0.06), "dark")
+	_box(root, "Tray", Vector3(0.2, 0.85, 0.22), Vector3(0.3, 0.05, 0.22), "steel")
+	_box(root, "Papers", Vector3(0.2, 0.9, 0.22), Vector3(0.26, 0.04, 0.18), "cream", false, 6.0)
+	_box(root, "SignPost", Vector3(-0.9, 0, -0.3), Vector3(0.07, 1.7, 0.07), "wood_dark")
+	_box(root, "SignBoard", Vector3(-0.9, 1.45, -0.26), Vector3(0.6, 0.4, 0.05), "teal", false, 0.0, Vector3(0, 0, -4))
+	_box(root, "SignMark", Vector3(-0.9, 1.55, -0.23), Vector3(0.3, 0.14, 0.02), "cream", false, 0.0, Vector3(0, 0, -4))
+	return root
+
+
+func _build_old_toolbox() -> Node3D:
+	var root := Node3D.new()
+	root.name = "OldToolbox"
+	_box(root, "Body", Vector3.ZERO, Vector3(0.65, 0.28, 0.32), "toolbox")
+	var closed := _group(root, "Closed")
+	_box(closed, "Lid", Vector3(0, 0.28, 0), Vector3(0.67, 0.06, 0.34), "toolbox")
+	_box(closed, "Handle", Vector3(0, 0.34, 0), Vector3(0.3, 0.06, 0.04), "dark")
+	var opened := _group(root, "Open")
+	_box(opened, "LidLeft", Vector3(-0.3, 0.3, 0), Vector3(0.34, 0.04, 0.34), "toolbox", false, 0.0, Vector3(0, 0, 60))
+	_box(opened, "LidRight", Vector3(0.3, 0.3, 0), Vector3(0.34, 0.04, 0.34), "toolbox", false, 0.0, Vector3(0, 0, -60))
+	return root
+
+
+func _build_storage_crate() -> Node3D:
+	var root := Node3D.new()
+	root.name = "StorageCrate"
+	_box(root, "Body", Vector3.ZERO, Vector3(1.0, 0.75, 0.8), "wood")
+	_box(root, "Label", Vector3(0, 0.3, 0.405), Vector3(0.6, 0.2, 0.01), "cream")
+	var closed := _group(root, "Closed")
+	_box(closed, "Lid", Vector3(0, 0.75, 0), Vector3(1.02, 0.05, 0.82), "wood_light")
+	_box(closed, "Plank1", Vector3(0, 0.8, -0.15), Vector3(1.1, 0.04, 0.12), "wood_dark", false, 12.0)
+	_box(closed, "Plank2", Vector3(0, 0.8, 0.18), Vector3(1.1, 0.04, 0.12), "wood_dark", false, -9.0)
+	var opened := _group(root, "Open")
+	_box(opened, "LidOff", Vector3(-0.85, 0, 0.1), Vector3(0.82, 0.05, 1.02), "wood_light", false, 20.0, Vector3(0, 0, 8))
+	return root
+
+
+func _build_rusted_drum() -> Node3D:
+	var root := Node3D.new()
+	root.name = "RustedDrum"
+	_cyl(root, "Body", Vector3.ZERO, 0.38, 0.95, "rust", false, 14)
+	_cyl(root, "RingLow", Vector3(0, 0.25, 0), 0.395, 0.05, "rust_light", false, 14)
+	_cyl(root, "RingHigh", Vector3(0, 0.65, 0), 0.395, 0.05, "rust_light", false, 14)
+	var closed := _group(root, "Closed")
+	_cyl(closed, "Lid", Vector3(0, 0.95, 0), 0.39, 0.04, "steel_dark", false, 14)
+	_box(closed, "Seal", Vector3(0, 0.99, 0), Vector3(0.12, 0.03, 0.4), "red")
+	var opened := _group(root, "Open")
+	_cyl(opened, "LidOff", Vector3(0.6, 0.02, 0.2), 0.39, 0.04, "steel_dark", false, 14, Vector3(12, 0, 0))
+	return root
+
+
+func _build_equipment_crowbar() -> Node3D:
+	var root := Node3D.new()
+	root.name = "CrowbarRack"
+	_box(root, "Post", Vector3.ZERO, Vector3(0.1, 1.3, 0.1), "wood_dark")
+	_box(root, "Hook", Vector3(0, 1.15, 0.08), Vector3(0.05, 0.05, 0.12), "steel_dark")
+	_box(root, "Bar", Vector3(0, 0.35, 0.14), Vector3(0.05, 0.85, 0.05), "red", false, 0.0, Vector3(0, 0, 6))
+	_box(root, "Claw", Vector3(0.04, 0.32, 0.14), Vector3(0.14, 0.05, 0.05), "red", false, 0.0, Vector3(0, 0, -25))
+	return root
+
+
+func _build_equipment_hoist() -> Node3D:
+	var root := Node3D.new()
+	root.name = "Hoist"
+	for index: int in 3:
+		var angle: float = index * 120.0
+		var foot := Vector3(sin(deg_to_rad(angle)) * 0.55, 0, cos(deg_to_rad(angle)) * 0.55)
+		_box(root, "Leg%d" % index, foot, Vector3(0.07, 1.9, 0.07), "steel_dark", false, angle,
+			Vector3(-17, 0, 0))
+	_box(root, "Block", Vector3(0, 1.5, 0), Vector3(0.22, 0.25, 0.14), "mustard")
+	_box(root, "Chain", Vector3(0, 0.75, 0), Vector3(0.03, 0.75, 0.03), "steel")
+	_box(root, "Hook", Vector3(0, 0.65, 0), Vector3(0.12, 0.1, 0.04), "steel_dark")
+	return root
+
+
+func _build_equipment_handcart() -> Node3D:
+	var root := Node3D.new()
+	root.name = "Handcart"
+	_box(root, "Bed", Vector3(0, 0.38, 0), Vector3(0.8, 0.08, 1.2), "teal")
+	_box(root, "SideL", Vector3(-0.4, 0.42, 0), Vector3(0.04, 0.25, 1.2), "teal")
+	_box(root, "SideR", Vector3(0.4, 0.42, 0), Vector3(0.04, 0.25, 1.2), "teal")
+	_box(root, "Handle", Vector3(0, 0.5, -0.85), Vector3(0.6, 0.05, 0.05), "wood_dark")
+	_box(root, "ArmL", Vector3(-0.3, 0.45, -0.7), Vector3(0.04, 0.04, 0.35), "wood_dark")
+	_box(root, "ArmR", Vector3(0.3, 0.45, -0.7), Vector3(0.04, 0.04, 0.35), "wood_dark")
+	_cyl(root, "WheelL", Vector3(-0.47, 0.0, 0.15), 0.25, 0.08, "tyre", false, 14, Vector3(0, 0, 90))
+	_cyl(root, "WheelR", Vector3(0.47, 0.0, 0.15), 0.25, 0.08, "tyre", false, 14, Vector3(0, 0, 90))
+	_box(root, "Stand", Vector3(0, 0, 0.5), Vector3(0.06, 0.38, 0.06), "steel_dark")
 	return root

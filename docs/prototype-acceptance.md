@@ -33,7 +33,7 @@ Alle Tests verwenden isolierte Speicherverzeichnisse (`user://test_run`, `user:/
 
 ## 3. Ergebnisse der automatisierten Tests
 
-Letzter Lauf: **38 Tests, 38 bestanden, 0 fehlgeschlagen.**
+Letzter Lauf: **45 Tests, 45 bestanden, 0 fehlgeschlagen** (Stand P1-Vertiefung 0.2). Die Tabellen unten nennen die Tests bis Stand 0.1; die Ergänzungen stehen in Abschnitt 3.4.
 
 ### 3.1 Unit-Tests
 
@@ -90,6 +90,22 @@ INT-03 (Fortsetzen mit gültigem Spielstand) ist in INT-09 und im Neustarttest e
 | `test_dismantle_yields_more_than_direct_sale` | Mehrwert, max. zwei Ausgaben, Abbruch, keine Duplikation, Persistenz | bestanden |
 | `test_direct_sale_of_radio_remains_possible` | Direktverkauf bleibt Alternative | bestanden |
 
+### 3.4 Ergänzungen P1-Vertiefung (0.2)
+
+| Test | Prüft | Ergebnis |
+|---|---|---|
+| `test_p1_gameplay_loop::test_full_p1_loop_with_save_and_continue` | Neue Sequenz: Verkauf → Brechstange → Kiste → Quellen → Flaschenzug → Träger → Tragekorb → 6 Teile in einem Gang → Speichern/Fortsetzen | bestanden |
+| `test_p1_gameplay_loop::test_unaffordable_ware_is_refused` | Katalog ohne Credits, gesperrter Handkarren | bestanden |
+| `test_p1_deepening::test_contents_stay_hidden_until_searched` | Inhalte verborgen bis zur Suche | bestanden |
+| `test_p1_deepening::test_crate_needs_crowbar_heap_does_not` | Werkzeugpflicht, Erklärung, einmalige Suche | bestanden |
+| `test_p1_deepening::test_beam_needs_hoist` | Träger nur mit Flaschenzug, Brechstange reicht nicht | bestanden |
+| `test_p1_deepening::test_handcart_requires_basket_and_stacks` | Voraussetzung, Kapazität 12, Preise aus Daten | bestanden |
+| `test_p1_deepening::test_searched_sources_and_revealed_items_persist` | Persistenz von Quellen und Funden | bestanden |
+| `test_p1_deepening::test_inspection_shows_info_without_changing_state` | Inspektion mit R, Wert und Beschreibung, kein Zustandswechsel | bestanden |
+| `test_p1_deepening::test_workbench_is_inspect_only` | Werkbank täuscht kein Crafting vor | bestanden |
+
+Der Neustarttest (Abschnitt 4) wurde auf den neuen Ablauf umgestellt und erneut bestanden (Endstand nach Fortsetzen: 34 Cr).
+
 ## 4. Finale Abnahme über echten Neustart
 
 | Schritt | Durchführung | Ergebnis |
@@ -135,7 +151,7 @@ Bei der Sichtprüfung gefundene und behobene Fehler: gespiegelte Grundstücksach
 | Stufe | Technisch | Spielerische Freigabe |
 |---|---|---|
 | P0 | Alle Kriterien automatisiert bzw. im Fensterlauf geprüft | Offen: Bedienungstest durch Menschen |
-| P1 | Abnahmesequenz 1–12 vollständig und wiederholbar geprüft | Offen: Playtest (MVP-Plan 11.3) |
+| P1 | Abnahmesequenz 1–12 vollständig und wiederholbar geprüft | Erstes Anspielen durch die Projektleitung: Spielgefühl gut. Noch nicht freigegeben – Schleife wird vertieft (0.2) |
 | P1b | Umgesetzt und geprüft (siehe 8) | Offen: Bewertung im Playtest |
 
 Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerische Bewertung („befriedigende Schleife“) kann nur durch menschliche Playtests erfolgen.
@@ -152,11 +168,13 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 
 1. Es gibt **einen Speicherplatz**. „Neues Spiel“ überschreibt den alten Stand erst beim nächsten Speichern.
 2. Kein automatisches Speichern (bewusst, siehe Integrationsspezifikation); ungespeicherter Fortschritt geht bei „Hauptmenü ohne Speichern“ verloren.
-3. Fundstücke regenerieren nicht. Nach dem vollständigen Abräumen endet die Schleife inhaltlich (MVP-Plan: keine Regeneration im ersten Test).
+3. Fundstücke regenerieren nicht. Mit den Suchquellen (0.2) gibt es rund 115 Cr Gesamterlös bei 107 Cr Katalogkosten; danach endet die Schleife inhaltlich (Regeneration laut Matrix erst Phase 4–5).
 4. Die Verarbeitung ist an genau eine Radio-Platzierung gebunden (vorbereitete Ausgabeplätze); mehrere Verarbeitungsobjekte erfordern später eine Erzeugung von Ausgaben zur Laufzeit.
 5. Ablegen nimmt immer das zuletzt aufgenommene Teil; es gibt keine Auswahl einzelner Teile.
 6. Zahlenformatierung ist nicht vollständig gebietsschemaabhängig (z. B. „3.5 s“ statt „3,5 s“ im Deutschen).
 7. Sprache lässt sich nur im Hauptmenü umstellen; Tastenbelegung ist nicht änderbar (kein Rebinding in P0/P1).
+12. Die Werkbank hat noch keine Funktion (Crafting folgt); sie ist nur untersuchbar.
+13. Gekaufte Ware wird ohne Lieferzeit sofort an der Lieferstelle angezeigt.
 8. Keine Sichtlinienprüfung bei Interaktionen; im Blockout traten keine offensichtlich falschen Interaktionen durch Wände auf.
 9. Keine Gebäudetransparenz; hohe Objekte (Werkstatt, Container) können den Spieler teilweise verdecken (laut Kamera-Spezifikation bewusst nicht Teil von P0).
 10. Platzhaltermodelle und Standardschrift; kein Audio.

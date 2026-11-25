@@ -25,6 +25,8 @@ const HIGHLIGHT_COLOR: Color = Color(0.878, 0.663, 0.231, 1.0)
 @export var name_key: String = ""
 ## Localization key of the main action shown in the prompt.
 @export var action_key: String = "ui.action.use"
+## Localization key of the inspection text (R); empty = not inspectable.
+@export var description_key: String = ""
 ## Radius of the ground highlight ring.
 @export var highlight_radius: float = 0.6
 
@@ -64,6 +66,14 @@ func get_action_key() -> String:
 ## Optional extra line for the prompt (e.g. value or requirement); localized.
 func get_prompt_detail(_context: InteractionContext) -> String:
 	return ""
+
+
+## Inspection content: {"title": String, "body": String}, already localized.
+## Empty dictionary = nothing to inspect. Never changes state.
+func get_inspection(_context: InteractionContext) -> Dictionary:
+	if description_key.is_empty():
+		return {}
+	return {"title": get_display_name(), "body": tr(description_key)}
 
 
 ## Seconds the action key must be held; 0 = instant action.

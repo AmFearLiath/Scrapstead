@@ -14,6 +14,7 @@ script = ExtResource("1_salvage")
 action_key = "ui.action.pick_up"
 highlight_radius = 1.3
 definition = ExtResource("2_definition")
+required_tool = "hoist"
 salvage_seconds = 2.5
 debris = NodePath("VisualRoot/PlaceholderModel/Debris")
 shake_target = NodePath("VisualRoot/PlaceholderModel/Beam")

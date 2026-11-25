@@ -37,24 +37,24 @@ height = 0.45
 radial_segments = 6
 rings = 1
 
-[node name="BrokenRadio" type="Node3D" unique_id=540853636]
+[node name="BrokenRadio" type="Node3D" unique_id=1279172144]
 
-[node name="Case" type="MeshInstance3D" parent="." unique_id=46251688]
+[node name="Case" type="MeshInstance3D" parent="." unique_id=302425430]
 transform = Transform3D(0.9975641, -0.06975647, 0, 0.06975647, 0.9975641, 0, 0, 0, 1, 0, 0.17, 0)
 material_override = SubResource("StandardMaterial3D_mdj2e")
 mesh = SubResource("BoxMesh_84htg")
 
-[node name="Speaker" type="MeshInstance3D" parent="." unique_id=1436063959]
+[node name="Speaker" type="MeshInstance3D" parent="." unique_id=1549835287]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.1, 0.18, 0.13)
 material_override = SubResource("StandardMaterial3D_hj8mw")
 mesh = SubResource("CylinderMesh_ex34e")
 
-[node name="Dial" type="MeshInstance3D" parent="." unique_id=724221610]
+[node name="Dial" type="MeshInstance3D" parent="." unique_id=1881143514]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0.17, 0.135)
 material_override = SubResource("StandardMaterial3D_3jxnp")
 mesh = SubResource("BoxMesh_c87mt")
 
-[node name="Antenna" type="MeshInstance3D" parent="." unique_id=283717701]
+[node name="Antenna" type="MeshInstance3D" parent="." unique_id=351094441]
 transform = Transform3D(0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 0, 0, 1, 0.2, 0.565, -0.05)
 material_override = SubResource("StandardMaterial3D_2dyym")
 mesh = SubResource("CylinderMesh_ytioc")

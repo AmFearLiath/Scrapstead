@@ -17,7 +17,7 @@ extends Node3D
 @export var feedback_toast: Control
 @export var inspect_panel: Control
 @export var sell_panel: Control
-@export var upgrade_panel: Control
+@export var catalog_panel: Control
 @export var pause_menu: Control
 @export var economy_hud: Control
 @export var controls_hint: Label
@@ -66,11 +66,11 @@ func _ready() -> void:
 	_interactor.interaction_finished.connect(_on_interaction_finished)
 	_connect_stations()
 	# Step 9: HUD and diagnostics.
-	economy_hud.setup(_wallet, _inventory)
+	economy_hud.setup(_wallet, _inventory, _upgrades)
 	inspect_panel.closed.connect(_close_modal)
 	sell_panel.closed.connect(_on_sell_panel_closed)
-	upgrade_panel.action_result.connect(_show_result)
-	upgrade_panel.closed.connect(_close_modal)
+	catalog_panel.action_result.connect(_show_result)
+	catalog_panel.closed.connect(_close_modal)
 	pause_menu.resume_requested.connect(_close_pause_menu)
 	pause_menu.save_requested.connect(func() -> void: save_game())
 	pause_menu.save_and_exit_requested.connect(_on_save_and_exit)
@@ -190,6 +190,8 @@ func _connect_stations() -> void:
 			(target as SellStation).sale_completed.connect(_on_sale_completed)
 		elif target is DismantleStation:
 			(target as DismantleStation).set_world_objects(_objects)
+		elif target is OrderDesk:
+			(target as OrderDesk).refresh_deliveries(_upgrades)
 
 
 func _register_world_objects() -> void:
@@ -255,13 +257,13 @@ func _on_interaction_finished(_target_id: String, result: Dictionary) -> void:
 	match result.get("panel", ""):
 		"inspect":
 			_open_modal()
-			inspect_panel.open(data.get("title_key", ""), data.get("text_key", ""))
+			inspect_panel.open(data.get("title", ""), data.get("body", ""))
 		"sell":
 			_open_modal()
 			sell_panel.open(data["station"])
-		"upgrade":
+		"catalog":
 			_open_modal()
-			upgrade_panel.open(data["station"])
+			catalog_panel.open(data["station"])
 
 
 func _show_result(result: Dictionary) -> void:

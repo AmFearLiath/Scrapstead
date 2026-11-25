@@ -10,3 +10,5 @@ description_key = "upgrade.upgrade_carry_basket.description"
 price = 30
 stat = "carry_capacity"
 bonus = 4
+grants_tool = ""
+requires = ""

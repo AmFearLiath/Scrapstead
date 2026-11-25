@@ -101,6 +101,10 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _enabled:
 		return
+	if event.is_action_pressed("inspect_target") and not event.is_echo():
+		get_viewport().set_input_as_handled()
+		_inspect_current()
+		return
 	if event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
 		var target: Interactable = get_current_target()
@@ -195,8 +199,26 @@ func _update_prompt() -> void:
 	if target == null:
 		_prompt.hide_prompt()
 		return
+	var inspect_hint: String = ""
+	if target.get_action_key() != "ui.action.inspect" and not target.get_inspection(_context).is_empty():
+		inspect_hint = tr("ui.prompt.inspect_hint").format({"key": InputHints.key_name(&"inspect_target")})
 	_prompt.show_target(target.get_display_name(), tr(target.get_action_key()), _input_hint(),
-		target.get_prompt_detail(_context), target.get_hold_duration() > 0.0)
+		target.get_prompt_detail(_context), target.get_hold_duration() > 0.0, inspect_hint)
+
+
+## Shows the inspection of the current target; changes no state.
+func _inspect_current() -> void:
+	var target: Interactable = get_current_target()
+	if target == null or not _is_target_usable(target):
+		return
+	var inspection: Dictionary = target.get_inspection(_context)
+	if inspection.is_empty():
+		return
+	_cancel_hold()
+	var result: Dictionary = Interactable.make_result(true)
+	result["panel"] = "inspect"
+	result["panel_data"] = inspection
+	interaction_finished.emit(target.object_id, result)
 
 
 func _start_hold(target: Interactable) -> void:

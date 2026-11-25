@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/SearchSource.gd" id="1_source"]
+[ext_resource type="PackedScene" path="res://assets/objects/source_storage_crate.tscn" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="shape"]
+size = Vector3(1.0, 0.85, 0.8)
+
+[node name="SourceCrate" type="StaticBody3D" node_paths=PackedStringArray("closed_visual", "open_visual") ]
+collision_layer = 5
+collision_mask = 0
+script = ExtResource("1_source")
+action_key = "ui.action.search"
+highlight_radius = 0.8
+closed_visual = NodePath("VisualRoot/PlaceholderModel/Closed")
+open_visual = NodePath("VisualRoot/PlaceholderModel/Open")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
+shape = SubResource("shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="PlaceholderModel" parent="VisualRoot" instance=ExtResource("2_model")]
+
+[node name="InteractionPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.8)
