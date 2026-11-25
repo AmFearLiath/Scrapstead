@@ -62,3 +62,19 @@ Use contextual guidance and Scrappy's dialogue. Introduce one system at a time. 
 - Volume controls.
 - Camera sensitivity and zoom options.
 - Avoid color-only status communication.
+
+## 7. Hauptmenü und erster Spieleindruck
+
+Bereits der erste spielbare Prototyp besitzt ein eigenständiges Hauptmenü. Der Startbildschirm soll Scrapstead als Spiel erkennbar machen und eine kleine Atmosphäre des Old Yard vermitteln.
+
+- Das Scrapstead-Logo ist ein zentraler Bestandteil des Startbildschirms und bleibt gut lesbar.
+- Im Hintergrund läuft eine ruhige, vorbereitete Kamerafahrt durch den Old Yard.
+- Die Hintergrundkamera ist unabhängig von der Gameplay-Kamera und verwendet eine feste, kontrollierte Route.
+- Das Menü bietet zunächst **Neues Spiel**, **Fortsetzen**, **Einstellungen** und **Beenden**.
+- Fortsetzen ist nur verfügbar, wenn ein gültiger Spielstand existiert.
+- Einstellungen zeigen nur Optionen, die im jeweiligen Prototyp tatsächlich unterstützt werden.
+- Der Übergang in die Spielszene ist klar und ohne unnötige Zwischenschritte.
+- Menü und Hintergrund dürfen sich visuell nicht gegenseitig behindern. Logo und Bedienelemente benötigen ausreichend ruhige Bildbereiche.
+
+Für den ersten Prototyp genügen ein einfacher Logo-Einsatz, wenige Kamerapunkte und zurückhaltende Übergänge. Eine finale Logoanimation, aufwendige Menüeffekte und ein vollständiges Optionsmenü sind keine Voraussetzung.
+
