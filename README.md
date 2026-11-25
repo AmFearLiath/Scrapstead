@@ -18,6 +18,7 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 4. **Sinnvolle Automatisierung.** Maschinen haben klare, verständliche Aufgaben.
 5. **Gemütlicher Charakter.** Warme Diorama-Optik, Humor, charmante Maschinen und Scrappy.
 6. **Freiheit für den Spieler.** Verschiedene Wege zum Sammeln, Verarbeiten, Verkaufen, Bauen und Anpassen.
+8. **Komplexität im richtigen Moment.** Neue Bau- und Gestaltungsmöglichkeiten werden schrittweise freigeschaltet, wenn der Spieler mit den Grundlagen vertraut ist.
 7. **Von Anfang an vollständig mehrsprachig.** Alle spielerseitigen Inhalte sind über Lokalisierungsschlüssel eingebunden und von Beginn an internationalisierbar.
 
 ## Grundsatzentscheidungen
