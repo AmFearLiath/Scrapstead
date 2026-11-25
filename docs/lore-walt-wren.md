@@ -72,23 +72,74 @@ Beispiel:
 
 Scrappys Persönlichkeit bleibt unabhängig von seinen später verbauten Modulen. Seine Konstruktion beeinflusst Fähigkeiten und Erscheinungsbild, nicht seinen grundlegenden Charakter.
 
-## 4. Der Unfall und die Beschädigung
+## 4. Walts letzte Erfindung — The Everything-O-Matic 3000
 
-Während eines heftigen Sturms wurde ein alter Lagerbereich des Schrottplatzes beschädigt. Ein Teil der gelagerten Gegenstände und Konstruktionen stürzte ein. Scrappy wurde dabei schwer beschädigt; sein Kopf wurde unter Schrott begraben.
+Walt wollte den Schrottplatz auf die nächste Stufe bringen. Seine größte und ambitionierteste Erfindung sollte praktisch alles übernehmen: Gegenstände erkennen, Materialien sortieren, brauchbare Teile retten und den Rest zerlegen.
 
-Walt konnte den Kopf bergen. Die Kernkomponente war jedoch beschädigt beziehungsweise musste ausgebaut werden, um sie zu sichern. Er legte sie in den roten Werkzeugkasten in der Werkstatt und wollte Scrappy zu einem späteren Zeitpunkt vollständig reparieren.
+Er nannte die Maschine **The Everything-O-Matic 3000**.
 
-Die Reparatur blieb unvollendet.
+Der Name war – wie so vieles bei Walt – deutlich größer als die bisherige Zuverlässigkeit des Produkts.
 
-Walt verstarb, bevor er Scrappy wiederherstellen und den Betrieb in Ordnung bringen konnte. Der Schrottplatz blieb mit angefangenen Projekten, provisorischen Reparaturen, beschrifteten Kisten und zahlreichen kleinen Spuren seines früheren Besitzers zurück.
+### Geplante Funktionen
+
+- Schrott und Gegenstände automatisch erkennen.
+- Materialien und brauchbare Bauteile sortieren.
+- Geeignete Gegenstände zerlegen.
+- Wertlose Reste in Sammelbehälter befördern.
+- Den manuellen Arbeitsaufwand auf dem Schrottplatz reduzieren.
+
+### Bekannte Eigenheiten aus der Testphase
+
+- Die Maschine verwechselte gelegentlich Metall mit Werkzeugen.
+- Holz galt für sie als besonders hartnäckiger Staub.
+- Sie sortierte Gegenstände zuverlässig, aber nicht immer in die richtigen Behälter.
+- Der Not-Aus-Schalter war an einer Stelle montiert, die bei laufender Maschine nur schwer erreichbar war.
+- Eine automatische Rückführung funktionierte ausgezeichnet. Wohin sie zurückführte, war noch Gegenstand laufender Untersuchungen.
+
+Auf einem Werkstattzettel stand:
+
+> „Fast fertig! Nur noch ein kleines Problem mit der Rückführung. Und möglicherweise der Vorwärtsführung. Eigentlich mit der gesamten Führung.“
+
+### Der letzte Testlauf
+
+An einem gewöhnlichen Arbeitstag wollte Walt einen verklemmten Gegenstand aus dem Inneren der Maschine entfernen. Er schaltete die Anlage ab und öffnete die Wartungsklappe.
+
+Die Maschine startete unerwartet erneut. Die genaue Ursache ist nicht abschließend dokumentiert. Ein defekter Sensor, eine fehlerhafte Verriegelung und ein von Walt selbst überbrückter Sicherheitsschalter sind gleichermaßen plausible Erklärungen.
+
+Walt befand sich zu diesem Zeitpunkt noch im Maschineninneren. Er überlebte den Unfall nicht.
+
+Der Vorfall wird im Spiel nicht grafisch oder als makabre Szene gezeigt. Seine Umstände werden indirekt durch Werkstattnotizen, den Zustand der Maschine, einen unvollständigen Wartungsbericht und Scrappys beschädigte Erinnerungen rekonstruiert.
+
+### Scrappys Beschädigung
+
+Scrappy war vor dem Testlauf teilweise demontiert. Walt hatte seine Kernkomponente vorsorglich ausgebaut und im roten Werkzeugkasten aufbewahrt, damit sie während der Arbeiten an der Maschine nicht beschädigt würde.
+
+Als der Unfall geschah, versuchte Scrappy dennoch, Walt zu erreichen. Er wurde von der außer Kontrolle geratenen Anlage erfasst und schwer beschädigt. Sein Kopf landete unter einem Schrotthaufen; weitere Teile wurden über den Arbeitsbereich verteilt.
+
+Die Kernkomponente blieb sicher im roten Werkzeugkasten. Dadurch können Spieler Kopf und Komponente unabhängig voneinander entdecken und Scrappy später wiederherstellen.
+
+### Was die Spieler zunächst erfahren
+
+Die vollständige Wahrheit wird nicht direkt zu Beginn erzählt. Zunächst finden Spieler nur widersprüchliche Spuren:
+
+- Ein Warnschild an der Maschine: „Vor Wartungsarbeiten vollständig abschalten.“
+- Darunter eine handschriftliche Ergänzung: „Auch den zweiten Schalter.“
+- Ein Wartungsprotokoll mit dem letzten Eintrag: „Automatiktest 17. Ergebnis: erstaunlich.“
+- Ein abgerissener Prüfbericht, auf dem „Sicherheitsverriegelung vorläufig überbrückt“ lesbar ist.
+- Eine Maschine, die noch immer gelegentlich versucht, einen einzelnen Gegenstand zu sortieren.
+- Scrappys unvollständige Erinnerungen an den Testlauf.
+
+Die Hinweise sollen zunächst schmunzeln lassen. Mit zunehmendem Kontext wird deutlich, dass der letzte Testlauf Walt das Leben gekostet hat.
 
 ### Inszenierungsregeln
 
-- Der Unfall wird nicht als großes Katastrophenereignis inszeniert.
-- Es gibt keinen übernatürlichen oder weltbedrohlichen Hintergrund.
-- Die Beschädigung erklärt nachvollziehbar, warum Scrappys Kopf und Kernkomponente getrennt gefunden werden.
-- Der Spieler setzt die Ereignisse aus Umgebung und Fundstücken zusammen.
+- Walts Tod ist ein Unfall und keine absichtliche Selbstgefährdung oder ein Suizid.
+- Die Szene selbst wird nicht gezeigt. Keine grafische Darstellung, kein makabrer Slapstick im Todesmoment.
+- Der Humor entsteht aus Walts übertriebener Erfindung, seiner fragwürdigen Dokumentation und den nüchternen Spuren des Betriebs – nicht daraus, dass sein Tod verspottet wird.
+- Der emotionale Kern bleibt spürbar: Walt liebte seine Arbeit und Scrappy, aber seine Leidenschaft und sein Improvisationsdrang hatten tragische Folgen.
+- Scrappy war beim Unfall beschädigt, aber seine Kernkomponente war bereits vorher ausgebaut und im roten Werkzeugkasten gesichert.
 - Der rote Werkzeugkasten enthält garantiert die benötigte Kernkomponente. Der Fortschritt darf nicht von Zufallsbeute abhängen.
+- Die Maschine bleibt als stillgelegtes, später erkundbares Relikt auf dem Grundstück erhalten. Ob sie irgendwann repariert oder wieder in Betrieb genommen werden kann, ist eine spätere Gameplay-Entscheidung.
 
 ## 5. Die Erbschaft des Spielers
 
@@ -224,7 +275,7 @@ Diese Punkte bleiben bewusst offen. Sie sollen später anhand der Hauptgeschicht
 
 ## Zusammenfassung
 
-Walter „Walt“ Wren war ein freundlicher, eigenwilliger Bastler, der den Schrottplatz mit Kreativität, Improvisation und einer gesunden Portion Selbstüberschätzung führte. Scrappy war sein wichtigstes Projekt und wurde mit der Zeit zu seinem Begleiter. Nach einem Sturm wurde Scrappy beschädigt; Walt sicherte seine Kernkomponente im roten Werkzeugkasten, konnte die Reparatur aber nicht mehr abschließen. Nach Walts Tod erbt der Spieler den Schrottplatz und entdeckt dessen Geschichte nach und nach.
+Walter „Walt“ Wren war ein freundlicher, eigenwilliger Bastler, der den Schrottplatz mit Kreativität, Improvisation und einer gesunden Portion Selbstüberschätzung führte. Scrappy war sein wichtigstes Projekt und wurde mit der Zeit zu seinem Begleiter. Bei einem Testlauf von Walts überambitionierter Everything-O-Matic 3000 kam Walt durch einen Maschinenunfall ums Leben. Scrappy wurde dabei schwer beschädigt; seine zuvor ausgebaute Kernkomponente blieb im roten Werkzeugkasten erhalten. Nach Walts Tod erbt der Spieler den Schrottplatz und entdeckt dessen Geschichte nach und nach.
 
 Der Humor von Scrapstead entsteht aus trockenem Charakterwitz, erfinderischem Unsinn, liebevollen Umgebungsdetails und glaubwürdigen Figuren in absurden Situationen. Die Welt bleibt warm und menschlich; nicht jeder Moment muss lustig sein.
 
