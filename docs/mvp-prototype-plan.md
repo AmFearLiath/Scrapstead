@@ -631,3 +631,8 @@ Die Interaktionssteuerung wird gemäß der [P0-PlayerInteractor-Spezifikation](p
 ## Ergänzung: P0-Gameplay-Blockout und Bedienungstest
 
 Der gemeinsame räumliche Testaufbau für Spieler, Gameplay-Kamera und Interaktion ist in der [P0-Gameplay-Blockout-Spezifikation](p0-gameplay-blockout.md) beschrieben. Er nutzt den bestehenden Old-Yard-Grundstücksentwurf als Grundlage und definiert reproduzierbare Testabläufe sowie P0-Abnahmekriterien. P1 beginnt erst nach erfolgreicher Validierung von Bewegung, Kamera, Interaktion und minimaler Persistenz.
+
+
+## Ergänzung: P0-Systemintegration
+
+Vor Beginn der P0-Implementierung wird die Systemintegration anhand der [P0-Systemintegrationsspezifikation](p0-system-integration.md) umgesetzt und geprüft. Sie schließt den technischen Bauplan für Start, Fortsetzen, Gameplay-Komponenten, HUD, Debugging und minimale Persistenz. Die Integration erweitert den P0-Gameplay-Umfang nicht.
