@@ -366,3 +366,10 @@ Diese Punkte werden im nächsten Schritt anhand einer konkreten NPC-Besetzung un
 Bewohner und Unternehmen sind natürliche Quellen für persönliche Geschichten, regionale Aufgaben und wiederkehrende Dienstleistungen. Nicht jedes Gespräch erzeugt einen Auftrag. Aufgaben entstehen aus konkreten Anliegen und nutzen vorhandene Gameplay-Systeme. Optionale persönliche Geschichten dürfen keine unverzichtbaren Kernfunktionen blockieren.
 
 Die vollständigen Regeln für Aufträge, Fristen, Ereignisse, Belohnungen und Fortschrittsprüfung stehen in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
+
+
+## Ergänzung: Begrenzte regionale Betriebsbesetzung
+
+Für die erste Kernregion werden wenige wiedererkennbare Anlaufstellen vorgesehen: Grundversorgung, Reparatur, Materialhandel, Farm-/Naturversorgung und Fracht. Betreiber und Funktionen werden mit den Hauptfiguren verbunden. Nicht jeder Betrieb braucht eine eigene lange Geschichte oder alle Interaktionsarten.
+
+Der Spieler muss keine fremden Unternehmen verwalten. Die Betriebe liefern Dienstleistungen, Aufträge, Informationen und sichtbare Weltveränderungen. Details: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
