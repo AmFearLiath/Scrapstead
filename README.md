@@ -56,6 +56,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Spieldesign-Dokument](docs/gdd.md)
 - [Welt-, Unternehmens- und Simulationskonzept](docs/world-and-company-simulation.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
+- [Regionale Wirtschaft und begrenzter Simulationsumfang](docs/regional-economy-scope.md)
 - [Interaktion, Transport, Lager, Produktion und Energie](docs/gameplay-interaction-logistics-production.md)
 - [Welt, Erkundung und Aktivitäten](docs/world-exploration-activities.md)
 - [Regionalkarte, Gebietsstruktur und Weltfreischaltung](docs/regional-map-and-world-progression.md)
