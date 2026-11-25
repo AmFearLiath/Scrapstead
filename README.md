@@ -58,6 +58,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Interaktion, Transport, Lager, Produktion und Energie](docs/gameplay-interaction-logistics-production.md)
 - [Welt, Erkundung und Aktivitäten](docs/world-exploration-activities.md)
+- [Regionalkarte, Gebietsstruktur und Weltfreischaltung](docs/regional-map-and-world-progression.md)
 - [Bewohner, Charaktere und Beziehungen](docs/characters-residents-relationships.md)
 - [Quest-, Missions- und Ereignissystem](docs/quest-mission-event-system.md)
 - [Ergänzungsprotokoll: Welt und Unternehmenssimulation](docs/decision-log-world-and-simulation.md)
