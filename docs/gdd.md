@@ -339,3 +339,12 @@ Die räumliche Planung konkretisiert die sechs Gebiete als kompakte Industrietal
 Gebiete werden nicht über willkürliche Levelgrenzen freigeschaltet. Erkundung, Infrastrukturprojekte, Reparaturen, Vereinbarungen und Investitionen können neue Bereiche nutzbar machen. Die Welt reagiert mit dauerhaft sichtbaren Zustandsänderungen.
 
 Details und offene Kartenfragen stehen in [Regionalkarte, Gebietsstruktur und Weltfreischaltung](regional-map-and-world-progression.md).
+
+
+## Ergänzung: Begrenzter wirtschaftlicher Simulationsumfang
+
+**Leitplanke:** Scrapstead bleibt ein persönliches Recycling-, Erkundungs- und Aufbau-Spiel mit überschaubarer Tycoon-Tiefe. Der eigene Schrottplatz ist der zentrale und am stärksten simulierte Betrieb. Regionale Unternehmen werden vereinfacht über Betreiber, Standort, Waren/Dienstleistungen, Verfügbarkeit und ausgewählte Weltzustände abgebildet. Der regionale Markt nutzt stabile Grundpreise und wenige, zeitlich begrenzte Nachfrage- oder Angebotsereignisse.
+
+Keine vollständige Simulation fremder Unternehmen, keine Konkurrenz- oder Börsensimulation, keine komplexe Buchhaltung, keine unbegrenzten Filialketten und keine Pflichtverwaltung fremder Lieferketten. Außenstandorte erweitern den eigenen Betrieb gezielt und in begrenzter Zahl.
+
+Neue Wirtschaftsfunktionen müssen einen klaren Spielspaß- oder Progressionsnutzen nachweisen und dürfen den erreichbaren Projektumfang nicht gefährden. Details: [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
