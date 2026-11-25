@@ -1,6 +1,6 @@
 # Gameplay & Economy Specification
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Status:** Initial system specification
 
 ## 1. Core decisions
@@ -102,7 +102,18 @@ Employees should have simple, legible roles. Initial candidate roles:
 
 For the first prototype, implement only one employee role. The player should assign the role in one or two interactions. Avoid complex schedules and needs.
 
-## 8. Early prototype acceptance tests
+## 8. Progression pacing
+
+The intended early investment order is:
+1. Basic tool improvement.
+2. Carrying / transport improvement.
+3. First employee, preferably before the first machine.
+4. First machine.
+5. First optional processing station or further specialization.
+
+The first employee should take over one task the player already understands. The first machine should automate one similarly clear task. Exact prices, wages, sale values, and time targets remain open until a playable economy prototype can be tested.
+
+## 9. Early prototype acceptance tests
 
 - A small object can be collected manually.
 - A large object visibly requires an appropriate tool.
