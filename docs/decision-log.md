@@ -451,3 +451,14 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Der erste Prototyp konzentriert sich auf Folgen, einfache Erkundung, eine persönliche Aktivität, Grundausstattung, eine Moduländerung, begrenzte Erinnerungen und automatisches Aufladen.
 - Dialogtexte, vollständige Sprachproduktion und umfangreiche Animationsvarianten bleiben spätere Arbeitspakete.
 - Begründung: Der Prototyp soll Scrappys Kernversprechen nachweisen, bevor der volle Content- und Produktionsumfang entsteht.
+
+
+## Ergänzung: Produktionsumfang und Scope-Grenzen
+
+**Leitentscheidung:** Scrapstead soll als vollständiges, überschaubares Spiel fertiggestellt werden. Die erste vollständige Version konzentriert sich auf den Old Yard, eine kompakte Region, wenige regionale Anlaufstellen, Scrappy, begrenzte Mitarbeiter- und Maschinenfunktionen sowie einen klaren Hauptabschluss.
+
+Die bisherigen Systemspezifikationen sind ein Ideen- und Detailpool, keine automatische Verpflichtung zur Umsetzung sämtlicher beschriebenen Funktionen. Optionale Erweiterungen werden erst nach Stabilisierung des Kerns freigegeben. Bei Umfangsdruck werden zusätzliche Figuren, Ereignisse, Maschinenvarianten, Spezialstandorte und erweiterte Simulation zuerst reduziert oder verschoben.
+
+Die Hauptspielzeit von 30–40 Stunden bleibt ein vorläufiges Balancing-Ziel. Sie darf nicht durch künstliche Wartezeiten oder Pflicht-Mikromanagement erzeugt werden.
+
+Verbindliche Produktionsleitplanke: [Produktionsumfang und Entwicklungsfahrplan](production-scope-and-roadmap.md).
