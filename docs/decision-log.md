@@ -597,3 +597,23 @@ Referenz: [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-control
 **Begründung:** Eine zentrale Verwaltungs- und Produktionsumgebung beschleunigt Balancing und Content-Arbeit, reduziert manuelle Fehler und verhindert verstreute, voneinander abweichende Datenpflege. Durch die Nutzung Godot-nativer Werkzeuge bleibt der Eigenentwicklungsaufwand begrenzt.
 
 Referenz: [Zentrale Entwicklungswerkstatt und Admin-Tooling](development-workbench-and-admin-tooling.md).
+
+
+## 25.11.2026 — P0-Interaktionssteuerung
+
+**Beschluss:** Die bestehende Komponente `PlayerInteractor` übernimmt die Interaktionssteuerung. Ein zusätzlicher paralleler InteractionController wird nicht eingeführt.
+
+- InteractionDetector erkennt mögliche Ziele im Nahbereich, trifft aber keine Auswahlentscheidung.
+- PlayerInteractor prüft Gültigkeit und Verfügbarkeit, bewertet Kandidaten und verwaltet genau ein aktives Ziel.
+- Nähe ist das primäre Auswahlkriterium; Blickrichtung dient als sekundäres Kriterium bei annähernd gleicher Distanz.
+- Eine kleine Auswahlstabilität verhindert Flackern zwischen gleichwertigen Zielen.
+- Das aktive Ziel wird sichtbar hervorgehoben und über einen kompakten HUD-Hinweis mit Name, Aktion und Eingabe kommuniziert.
+- P0 verwendet die zentrale Eingabeaktion `interact` (Standard: E).
+- Die drei Testaktionen sind Pickup, Inspect und Use.
+- Vor Ausführung wird die Gültigkeit des Ziels erneut geprüft.
+- Die konkrete Aktion und deren fachliche Voraussetzungen liegen beim Zielobjekt; UI entscheidet nicht über Gameplay-Regeln.
+- Reichweiten, Auswahlgewichtung und Hervorhebungsdarstellung werden im Blockout abgestimmt.
+
+**Begründung:** Reichweitenbasierte Interaktion passt zur isometrischen Perspektive und vermeidet pixelgenaues Anvisieren. Die Trennung von Kandidatenerkennung, Zielauswahl, Darstellung und Zielaktion hält die Architektur verständlich und erweiterbar.
+
+Referenz: [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md).
