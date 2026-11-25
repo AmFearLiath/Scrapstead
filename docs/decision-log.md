@@ -617,3 +617,20 @@ Referenz: [Zentrale Entwicklungswerkstatt und Admin-Tooling](development-workben
 **Begründung:** Reichweitenbasierte Interaktion passt zur isometrischen Perspektive und vermeidet pixelgenaues Anvisieren. Die Trennung von Kandidatenerkennung, Zielauswahl, Darstellung und Zielaktion hält die Architektur verständlich und erweiterbar.
 
 Referenz: [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md).
+
+
+## 25.11.2026 — P0-Gameplay-Blockout als Old-Yard-Testgrundlage
+
+**Beschluss:** Der gemeinsame P0-Bedienungstest verwendet einen vereinfachten Blockout des Old Yard statt einer unabhängigen Testarena.
+
+- Ausgangspunkt sind die vorläufigen Grundstücksmaße 48 × 36 m, das 1-m-Raster und die fünf Funktionszonen aus der bestehenden Grundstücksplanung.
+- P0 ergänzt nur die Geometrie, die für Bewegung, Kollision, Kamera und Interaktion benötigt wird.
+- Drei funktionale Testobjekte prüfen Pickup, Inspect und Use.
+- Große, nicht-interaktive Volumen prüfen Sichtbarkeit, Kameralesbarkeit und Kollision.
+- Reproduzierbare Testabläufe prüfen Erststart, Bewegung, Kamera/Zoom, Zielauswahl, Interaktionen und minimale Persistenz.
+- Die Grundstücksmaße bleiben bis zum erfolgreichen Blockout-Test vorläufig.
+- P0 enthält weiterhin keine Wirtschaft, Scrappy-Story, Maschinen, Mitarbeiter oder vollständigen Baumodus.
+
+**Begründung:** Die grundlegende Steuerung soll in einem räumlichen Ausschnitt getestet werden, der später tatsächlich zum Spiel gehört. Dadurch können Probleme mit Wegen, Sichtachsen und Objektgrößen früh erkannt werden, ohne bereits Produktionsassets zu erstellen.
+
+Referenz: [P0-Gameplay-Blockout](p0-gameplay-blockout.md).
