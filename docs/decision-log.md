@@ -471,3 +471,20 @@ Verbindliche Produktionsleitplanke: [Produktionsumfang und Entwicklungsfahrplan]
 Der erste aussagekräftige Prototyp prüft Bewegung, Interaktion, Sammeln, eine größere Bergungsaktion, Direktverkauf, Credits, ein Upgrade und optional eine einfache Verarbeitung. Erst nach erfolgreicher Validierung werden Scrappy, Delegation, Maschinen und Region schrittweise ergänzt.
 
 Referenz: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
+
+## 25.11.2026 — Stufenweise MVP- und Prototypenvalidierung
+
+**Beschluss:** Scrapstead wird vor der breiteren Produktion in klar getrennten Prototypstufen validiert. Der erste aussagekräftige Gameplay-Prototyp konzentriert sich auf Sammeln, Bergen, Direktverkauf, Credits und ein erstes sinnvolles Upgrade.
+
+- P0 prüft Bewegung, isometrische Kamera, Interaktion und minimale Persistenz.
+- P1 prüft die Kernschleife ohne Scrappy, Mitarbeiter, Maschinen, regionale Wirtschaft oder vollständigen Baumodus.
+- P1b prüft eine einzelne optionale Verarbeitungsaktion. Direktverkauf muss weiterhin eine sinnvolle Alternative bleiben.
+- P2 verbindet den validierten Kern mit der ersten Stunde und Scrappys garantierter Wiederherstellung. Scrappy erhält zunächst nur Begleiter-Grundverhalten und wenige vorbereitete Reaktionen.
+- P3 prüft zuerst einen Mitarbeiter mit einer einzigen Aufgabe und anschließend den kleinen Magnetsammler als erste Maschine.
+- P4 verbindet die validierten Systeme in einem repräsentativen Vertical Slice des Old Yard.
+- Jede Stufe besitzt Abnahmekriterien und muss freigegeben werden, bevor der nächste Umfangsschritt beginnt.
+- Die technische Umsetzung bleibt zunächst so einfach wie möglich. Fachliche Datenobjekte und Systemgrenzen werden nur soweit eingeführt, wie sie für den jeweiligen Prototyp erforderlich sind.
+
+**Begründung:** Die wichtigste Produktionsgefahr ist, zu viele Systeme gleichzeitig zu entwickeln und dadurch nicht zu erkennen, ob der eigentliche Spielkern trägt. Kleine, isoliert prüfbare Schritte reduzieren das Risiko und schützen den überschaubaren Gesamtumfang.
+
+Referenz: [MVP- und Prototypenplan](mvp-prototype-plan.md).
