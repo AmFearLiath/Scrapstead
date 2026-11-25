@@ -541,3 +541,22 @@ Referenzen: [MVP- und Prototypenplan](mvp-prototype-plan.md), [UI- und UX-Spezif
 **Begründung:** Eine klare Trennung der Verantwortlichkeiten erleichtert Tests und spätere Erweiterungen, ohne für P0 bereits ein großes Framework oder zukünftige Gameplay-Systeme vorwegzunehmen.
 
 Referenz: [P0-Szenenarchitektur](p0-scene-architecture.md).
+
+
+## 25.11.2026 — P0-Spielersteuerung
+
+**Beschluss:** Die erste Spielersteuerung verwendet eine direkte, kamerabezogene Bewegung mit geglätteter Beschleunigung und Ausrichtung.
+
+- Der Spieler wird über `CharacterBody3D` bewegt.
+- WASD und Pfeiltasten bilden die P0-Standardbelegung.
+- Bewegungsrichtungen werden aus der horizontal projizierten Ausrichtung der Gameplay-Kamera abgeleitet.
+- Diagonale Eingaben werden normalisiert.
+- Beschleunigung und Bremsverhalten werden getrennt abgestimmt.
+- Das visuelle Modell dreht sich weich in Bewegungsrichtung; der Kollisionskörper wird dadurch nicht mitgedreht.
+- Schwerkraft, Bodenstatus und Kollision werden im Physik-Update verarbeitet.
+- Sprinten, Springen, Schleichen und Ausweichen sind nicht Bestandteil von P0.
+- Die Startwerte für Geschwindigkeit und Beschleunigung sind Testparameter und keine finalen Balancingwerte.
+
+**Begründung:** Die Steuerung soll in der isometrischen Perspektive intuitiv und präzise bleiben. Die Trennung von Bewegungslogik, visueller Ausrichtung, Kamera und Interaktion verhindert unnötige Abhängigkeiten.
+
+Referenz: [P0-PlayerController-Spezifikation](p0-player-controller.md).
