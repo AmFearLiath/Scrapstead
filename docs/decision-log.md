@@ -287,3 +287,18 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Er kommentiert nicht jede Aktion. Stille und emotionale Momente ohne Pointe sind ausdrücklich erwünscht.
 - Er darf den Spieler necken, aber niemals herabsetzen oder dauerhaft aufdringlich sein.
 - Begründung: Scrappy soll sich wie eine eigenständige Figur anfühlen, die auch dann eine Persönlichkeit besitzt, wenn der Spieler gerade nicht mit ihm interagiert. Sein Humor und seine Initiative sollen die Welt bereichern, ohne den Spielfluss oder die Spielerfreiheit zu beeinträchtigen.
+
+
+## 25.11.2026 — Scrappys persönliche Entwicklung
+
+**Beschluss:** Scrappy wächst im Laufe des Spiels mit dem Spieler. Seine Entwicklung umfasst technische, persönliche, soziale und emotionale Aspekte.
+
+- Technische Entwicklung entsteht durch neue Module, Werkzeuge, Sensoren und Fähigkeiten.
+- Persönliche Entwicklung entsteht durch gemeinsame Erlebnisse und kann neue Interessen, Vorlieben, Marotten, Gewohnheiten und eigene Projekte hervorbringen.
+- Soziale Entwicklung entsteht durch wiederholte Begegnungen und Situationen mit Mitarbeitern und NPCs.
+- Emotionale Entwicklung wird durch gemeinsame Erfolge, Rückschläge, die Bindung zum Spieler und Erinnerungen an Walt geprägt.
+- Veränderungen sollen möglichst aus konkreten Erlebnissen hervorgehen und nicht nur über abstrakte Level oder Werte abgebildet werden.
+- Scrappy darf sich verändern und dazulernen, behält aber seine grundlegende Identität und Eigenständigkeit.
+- Persönliche Entwicklung darf kein Pflicht-, Pflege- oder Mikromanagementsystem werden. Der Spieler muss Scrappy nicht optimieren, um einen vollständigen Begleiter zu erhalten.
+- Manche Entwicklungen werden subtil über Verhalten, Animationen, eigene Projekte oder Dialogvarianten sichtbar, ohne ausdrücklich als Belohnung angekündigt zu werden.
+- Begründung: Scrappy soll nicht nur mit dem Betrieb leistungsfähiger werden, sondern durch die gemeinsame Reise zu einer vertrauten, eigenständigen Figur heranwachsen.
