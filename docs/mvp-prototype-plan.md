@@ -616,3 +616,8 @@ Die Szenen- und Systemverantwortlichkeiten für P0 sind in der [P0-Szenenarchite
 ## Ergänzung: P0-Spielersteuerung
 
 Die Spielerbewegung wird gemäß der [P0-PlayerController-Spezifikation](p0-player-controller.md) kamerabezogen umgesetzt. Die Spezifikation konkretisiert den bestehenden P0-Nachweis für Bewegung und Kollision, ohne Sprinten, Springen oder weitere Bewegungsmechaniken in den Prototyp aufzunehmen.
+
+
+## Ergänzung: P0-Gameplay-Kamera
+
+Die isometrische Gameplay-Kamera wird gemäß der [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md) umgesetzt. Sie konkretisiert den vorhandenen P0-Nachweis für Kamera und Bewegung: orthografische Perspektive, ruhiges Spieler-Following und begrenzter stufenloser Zoom. Freie Kameradrehung und komplexe Sichtbarkeits- oder Hindernisvermeidungssysteme bleiben ausdrücklich außerhalb von P0.
