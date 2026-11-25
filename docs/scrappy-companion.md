@@ -14,15 +14,17 @@ Scrappy wurde von Walter „Walt“ Wren gebaut und über lange Zeit erweitert. 
 
 ## 2. Persönlichkeit
 
-- Loyal und neugierig.
-- Trockener, gelegentlich frecher Humor.
-- Selbstbewusst, auch bei zweifelhaftem Wissen.
-- Stolz auf seine improvisierte Konstruktion.
-- Gelegentlich ein liebenswerter Quasselkopf, aber niemals dauerhaft aufdringlich.
+- Loyal, neugierig und grundsätzlich hilfsbereit.
+- Im Alltag trocken, sachlich und gelegentlich besserwisserisch.
+- Kann überraschend frech, bissig oder überschwänglich reagieren, wenn eine Situation ihn aus der Fassung bringt.
+- Selbstbewusst bis zur gelegentlichen Selbstüberschätzung; er hält sich für deutlich kompetenter, als es seine tatsächlichen Fähigkeiten immer rechtfertigen.
+- Stolz auf seine improvisierte Konstruktion und seine vermeintlich herausragende technische Expertise.
+- Er besitzt eine eigene Meinung und äußert sie gelegentlich ungefragt, ohne zum permanenten Kommentator zu werden.
 - Seine Persönlichkeit bleibt unabhängig von den eingebauten Komponenten.
 - Er bezeichnet sich gern als technischen Leiter des Schrottplatzes und stellt Walts frühere Rolle gelegentlich etwas eigenwillig dar.
+- Hinter der frechen Fassade ist er herzlich, loyal und emotional verletzlich.
 
-Scrappy darf den Spieler necken, aber nicht herabsetzen. Seine Kommentare sollen Situationen bereichern, nicht den Spielfluss unterbrechen.
+Scrappy darf den Spieler necken, aber niemals herabsetzen. Seine Kommentare sollen Situationen bereichern, nicht den Spielfluss unterbrechen. Sein Humor lebt von Kontrasten: trockene Sachlichkeit, plötzliche Ausbrüche und unerwartet ehrliche oder stille Momente.
 
 ## 3. Modularer Aufbau
 
@@ -77,7 +79,31 @@ Scrappy erhält Fähigkeiten, wenn der Spieler passende Teile findet und Fortsch
 
 Fähigkeiten müssen einfach verständlich bleiben und dürfen den Spieler nicht überflüssig machen.
 
-## 7. Reaktionen und Dialoge
+## 7. Reaktionen, Eigeninitiative und Dialoge
+
+### Eigenständigkeit und Initiative
+
+Scrappy ist kein passives Werkzeug, das ausschließlich auf Eingaben des Spielers wartet. Er soll den Eindruck vermitteln, auch unabhängig vom Spieler eine eigene kleine Existenz zu führen.
+
+Mögliche Verhaltensweisen:
+
+- Interessante Gegenstände, Maschinen oder Veränderungen in der Umgebung selbstständig untersuchen.
+- Den Spieler gelegentlich auf ungewöhnliche Fundstücke, Gefahren oder bemerkenswerte Details aufmerksam machen.
+- An passenden Stellen kleine eigene Tätigkeiten oder Projekte verfolgen, etwa ein Fundstück genauer untersuchen oder versuchen, ein herumliegendes Teil zu identifizieren.
+- Auf bereits erlebte Situationen zurückkommen und frühere Entscheidungen oder wiederkehrende Fehler des Spielers kommentieren.
+- Eigene kleine Vorlieben, Vermutungen und Interessen zeigen, ohne wichtige Spielhandlungen eigenmächtig auszuführen.
+
+Scrappys Initiative bleibt unterstützend und darf weder Kontrolle noch Entdeckungsfreude des Spielers ersetzen. Er nimmt keine wichtigen Gegenstände ungefragt an sich, löst keine kritischen Aufgaben selbstständig und drängt sich nicht dauerhaft in den Vordergrund. Häufigkeit und Intensität seiner Aktionen müssen zurückhaltend und konfigurierbar bleiben.
+
+### Timing und Kommunikationsformen
+
+Scrappys Kommunikation wird in drei grundlegende Formen gegliedert:
+
+- **Situative Kommentare:** kurze Reaktionen auf Aktionen, Konstruktionen, Funde, Maschinen und Ereignisse.
+- **Initiative Kommentare:** gelegentliche eigene Gesprächsanfänge oder Hinweise, wenn Scrappy etwas Interessantes bemerkt oder mitteilen möchte.
+- **Erinnerungsmomente:** besondere Reaktionen auf Orte, Gegenstände und Situationen, die Erinnerungen an Walt oder Scrappys Vergangenheit auslösen.
+
+Nicht jede Aktion benötigt eine Reaktion. Stille ist ein bewusst eingesetztes Gestaltungsmittel. Kommentare müssen abwechslungsreich sein, Wiederholungen vermeiden und dürfen den Spielfluss nicht stören.
 
 Scrappy kann kontextbezogen reagieren auf:
 
@@ -129,8 +155,13 @@ Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch
 - Einfache, slotbasierte Anpassungsoberfläche.
 - Erste Reaktionen auf mindestens einen Ort oder Gegenstand aus Walts Vergangenheit.
 
-## 10. Designregel
+## 10. Designregeln
 
-Scrappy darf immer leistungsfähiger werden, aber niemals seinen Charme verlieren. Seine Persönlichkeit ist wichtiger als seine Werte.
+- Scrappy darf immer leistungsfähiger werden, aber niemals seinen Charme verlieren. Seine Persönlichkeit ist wichtiger als seine Werte.
+- Eigeninitiative macht ihn lebendig, darf aber niemals die Handlungsfreiheit des Spielers einschränken.
+- Humor braucht Timing. Scrappy muss nicht jede Situation kommentieren.
+- Er darf frech sein, aber niemals verletzend oder herablassend gegenüber dem Spieler.
+- Emotionale Momente dürfen ohne Witz, Kommentar oder Pointe stehen bleiben.
+- Scrappy soll durch wiederkehrende Erlebnisse, Erinnerungen und Running Gags eine glaubwürdige gemeinsame Geschichte mit dem Spieler entwickeln.
 
-**Scrappy ist kein Werkzeug mit Dialogen. Er ist eine Figur, die zufällig aus Schrott besteht.**
+**Scrappy ist kein Werkzeug mit Dialogen. Er ist eine Figur, die zufällig aus Schrott besteht – und gelegentlich vergisst, dass sie selbst auch aus Schrott besteht.**
