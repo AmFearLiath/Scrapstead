@@ -1,103 +1,136 @@
-# Scrappy — Companion & Modular Robot Specification
+# Scrappy — Begleiter- und modularer Roboter-Spezifikation
 
-**Version:** 0.1  
-**Status:** Initial concept
+**Version:** 0.2  
+**Status:** Konzept  
+**Zugehörige Hintergrundgeschichte:** [Walt Wren und die Geschichte hinter dem Schrottplatz](lore-walt-wren.md)
 
-## 1. Character concept
+## 1. Charakterkonzept
 
-Scrappy is a lovable, eccentric, slightly outdated scrapyard robot. The player initially discovers only his head beneath a pile of scrap. A special component from the red toolbox restores his core systems. The player then builds the rest of him from salvaged parts.
+Scrappy ist ein liebenswerter, eigenwilliger und etwas in die Jahre gekommener Schrottplatzroboter. Der Spieler findet zunächst nur seinen Kopf unter einem Schrotthaufen. Eine besondere Kernkomponente aus dem roten Werkzeugkasten stellt seine grundlegenden Systeme wieder her. Anschließend baut der Spieler Scrappy nach und nach aus gefundenen Schrottteilen zusammen.
 
-Scrappy becomes companion, helper, guide, commentator, and the emotional face of Scrapstead.
+Scrappy ist Begleiter, Helfer, gelegentlicher Guide, Kommentator und das emotionale Gesicht von Scrapstead.
 
-## 2. Personality
+Scrappy wurde von Walter „Walt“ Wren gebaut und über lange Zeit erweitert. Ursprünglich war er als praktischer Helfer gedacht, entwickelte sich aber zum persönlichen Begleiter seines Erbauers. Scrappy erinnert sich an Walt und den Schrottplatz, sein Speicher ist nach dem Unfall jedoch unvollständig.
 
-- Loyal and curious.
-- Dry, occasionally cheeky humor.
-- Overconfident about questionable knowledge.
-- Proud of his improvised construction.
-- Occasionally a lovable chatterbox, but never constantly intrusive.
-- His personality is consistent regardless of the components fitted.
+## 2. Persönlichkeit
 
-## 3. Modular construction
+- Loyal und neugierig.
+- Trockener, gelegentlich frecher Humor.
+- Selbstbewusst, auch bei zweifelhaftem Wissen.
+- Stolz auf seine improvisierte Konstruktion.
+- Gelegentlich ein liebenswerter Quasselkopf, aber niemals dauerhaft aufdringlich.
+- Seine Persönlichkeit bleibt unabhängig von den eingebauten Komponenten.
+- Er bezeichnet sich gern als technischen Leiter des Schrottplatzes und stellt Walts frühere Rolle gelegentlich etwas eigenwillig dar.
 
-Initial module slots:
-- Head / face.
-- Body.
-- Locomotion.
-- Left tool / arm.
-- Right tool / arm.
-- Sensors / antenna.
-- Cosmetic accessories.
+Scrappy darf den Spieler necken, aber nicht herabsetzen. Seine Kommentare sollen Situationen bereichern, nicht den Spielfluss unterbrechen.
 
-The first version should use clear attachment points and compatible module categories rather than a free-form physics construction system.
+## 3. Modularer Aufbau
 
-## 4. Parts and attributes
+Vorgesehene Modulplätze:
 
-Each part may define:
-- Stable ID and display name.
-- Slot type.
-- Visual model.
-- Functional tags.
-- Gameplay effect, if any.
-- Rarity / discovery source.
-- Unlock conditions.
-- Optional dialogue tags.
+- Kopf / Gesicht.
+- Körper.
+- Fortbewegung.
+- Linkes Werkzeug / linker Arm.
+- Rechtes Werkzeug / rechter Arm.
+- Sensoren / Antenne.
+- Kosmetische Accessoires.
 
-Parts should be discoverable in the scrapyard, earned through progression, or obtained from special events. Avoid pay-to-win style mechanics.
+Die erste Version verwendet klare Anschlusspunkte und kompatible Modulkategorien statt eines vollständig freien Physik-Bausystems.
 
-## 5. Useful, silly, and cosmetic builds
+## 4. Teile und Attribute
 
-Builds can be:
-- Functional: a magnet arm helps collect metal.
-- Utility-focused: a larger body increases carrying capacity.
-- Mobility-focused: wheels or tracks alter movement.
-- Silly: mismatched wheels, oversized antennae, refrigerator body.
-- Cosmetic: paint, stickers, hats, odd accessories.
+Jedes Teil kann folgende Daten definieren:
 
-A part need not be optimal to be worth using. Humor and self-expression are core goals.
+- Stabile ID und Lokalisierungsschlüssel für Name und Beschreibung.
+- Slot-Typ.
+- Visuelles Modell.
+- Funktionale Tags.
+- Gameplay-Effekt, falls vorhanden.
+- Seltenheit / Fundquelle.
+- Freischaltbedingungen.
+- Optionale Dialog-Tags.
 
-## 6. Abilities
+Teile können auf dem Schrottplatz gefunden, durch Fortschritt verdient oder bei besonderen Ereignissen erhalten werden. Pay-to-win-Mechaniken sind nicht vorgesehen.
 
-Scrappy gains abilities as the player finds compatible parts and reaches progression milestones. Examples:
-- Highlight nearby valuable objects.
-- Collect selected small items.
-- Carry a small load.
-- Assist at a compatible station.
-- Detect a special object or hidden cache.
+## 5. Nützliche, alberne und kosmetische Konstruktionen
 
-Abilities must remain simple to understand and should not make the player obsolete.
+Konstruktionen können sein:
 
-## 7. Reactions and dialogue
+- Funktional: Ein Magnetarm hilft beim Sammeln von Metall.
+- Zweckorientiert: Ein größerer Körper erhöht die Transportkapazität.
+- Mobilitätsbezogen: Räder oder Ketten verändern die Fortbewegung.
+- Albern: Unterschiedliche Räder, übergroße Antennen oder ein Kühlschrank als Körper.
+- Kosmetisch: Farbe, Aufkleber, Hüte und ungewöhnliche Accessoires.
 
-Scrappy comments on:
-- New parts and unusual combinations.
-- Rare discoveries.
-- First employee / machine purchases.
-- Machine mishaps.
-- Player milestones.
-- Returning to the yard.
+Ein Teil muss nicht optimal sein, um interessant zu sein. Humor und Selbstausdruck sind zentrale Ziele.
 
-Dialogue should be contextual, varied, skippable, and rate-limited to avoid repetition or chatter fatigue.
+## 6. Fähigkeiten
 
-## 8. Visual design
+Scrappy erhält Fähigkeiten, wenn der Spieler passende Teile findet und Fortschrittsmeilensteine erreicht. Beispiele:
 
-- Chunky, readable silhouette.
-- Reused salvaged materials and mismatched components.
-- Expressive eyes / face.
-- Slightly wonky movement and mechanical imperfections.
-- Strong silhouette readability at the isometric camera distance.
+- Nahegelegene wertvolle Gegenstände hervorheben.
+- Ausgewählte Kleinteile einsammeln.
+- Eine kleine Ladung transportieren.
+- An einer kompatiblen Station assistieren.
+- Besondere Objekte oder versteckte Fundorte erkennen.
 
-## 9. Prototype scope
+Fähigkeiten müssen einfach verständlich bleiben und dürfen den Spieler nicht überflüssig machen.
 
-- One head found and restored.
-- One basic body.
-- One locomotion module.
-- One cosmetic accessory.
-- One useful tool module.
-- Basic follow behavior.
-- A small set of contextual dialogue lines.
-- Simple slot-based customization UI.
+## 7. Reaktionen und Dialoge
 
-## 10. Design rule
+Scrappy kann kontextbezogen reagieren auf:
 
-Scrappy may become more capable, but must never lose his charm. His personality matters more than his stats.
+- Neue Teile und ungewöhnliche Kombinationen.
+- Seltene Entdeckungen.
+- Den ersten Mitarbeiter und neue Maschinen.
+- Maschinenpannen.
+- Meilensteine des Spielers.
+- Die Rückkehr zum Schrottplatz.
+- Orte und Gegenstände, die Erinnerungen an Walt auslösen.
+
+### Erinnerungen an Walt
+
+Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch Orte, Werkzeuge, Maschinen und bestimmte Gegenstände ausgelöst werden.
+
+- Erinnerungen erzählen kleine Geschichten statt langer Lore-Monologe.
+- Sie können humorvoll, herzlich oder gelegentlich nachdenklich sein.
+- Scrappy darf Details verwechseln oder seine eigene Rolle überhöhen.
+- Widersprüche müssen als beschädigte Erinnerung oder Charakterzug erkennbar bleiben.
+- Erinnerungen ergänzen Walts Charakter, statt ihn nachträglich zu verändern.
+- Optionale Erinnerungen dürfen keine grundlegenden Spielfunktionen blockieren.
+
+### Dialogregeln
+
+- Dialoge sind kontextbezogen, abwechslungsreich und möglichst überspringbar.
+- Wiederholungen werden durch Varianten und Wiederholungsabstände begrenzt.
+- Nicht jede Aktion benötigt einen Kommentar.
+- Emotionale Momente dürfen ohne Pointe stehen bleiben.
+- Deutsch und Englisch sollen denselben Charakter und dieselbe Wirkung transportieren; Wortspiele dürfen lokal angepasst werden.
+
+## 8. Visuelles Design
+
+- Klobige, gut lesbare Silhouette.
+- Wiederverwendete Schrottmaterialien und nicht zusammenpassende Komponenten.
+- Ausdrucksstarke Augen beziehungsweise Gesichtselemente.
+- Leicht unbeholfene Bewegung und mechanische Eigenheiten.
+- Gute Erkennbarkeit aus der isometrischen Kameradistanz.
+- Der modulare Aufbau soll sichtbar und charmant wirken, nicht wie ein beliebiger Roboter-Baukasten.
+
+## 9. Umfang des ersten Prototyps
+
+- Ein Kopf, der gefunden und wiederhergestellt wird.
+- Ein einfacher Grundkörper.
+- Ein Fortbewegungsmodul.
+- Ein kosmetisches Accessoire.
+- Ein nützliches Werkzeugmodul.
+- Einfaches Folgen des Spielers.
+- Eine kleine Auswahl kontextbezogener Dialoge.
+- Einfache, slotbasierte Anpassungsoberfläche.
+- Erste Reaktionen auf mindestens einen Ort oder Gegenstand aus Walts Vergangenheit.
+
+## 10. Designregel
+
+Scrappy darf immer leistungsfähiger werden, aber niemals seinen Charme verlieren. Seine Persönlichkeit ist wichtiger als seine Werte.
+
+**Scrappy ist kein Werkzeug mit Dialogen. Er ist eine Figur, die zufällig aus Schrott besteht.**
