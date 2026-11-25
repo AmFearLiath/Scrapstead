@@ -312,3 +312,24 @@ Die räumliche Struktur ist ein Konzeptvorschlag. Finale Geometrie, Maße, Stra�
 - Der Kernabschluss muss mit einer überschaubaren Zahl an Systemen und Standorten erreichbar bleiben.
 
 Die verbindlichen Umfangsgrenzen und Prüffragen stehen in [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
+
+
+## 25. Regionale Betriebe und Dienstleistungen
+
+**Beschluss:** Die Kernregion erhält eine kleine Zahl klar unterscheidbarer regionaler Anlaufstellen. Der erste Kernentwurf umfasst fünf dauerhafte Funktionen:
+
+1. General Store – Grundversorgung und einfache Werkzeuge.
+2. Repair Workshop – Reparaturen und technische Hilfe.
+3. Materials & Salvage Dealer – ausgewählter Materialhandel und Abnahme.
+4. Farm & Supply – Naturmaterialien und ländliche Lieferaufträge.
+5. Freight Office – Fracht, Abholung und größere Lieferungen.
+
+Die Community Hall dient als öffentlicher Treffpunkt; temporäre Marktstände ergänzen einzelne Ereignisse.
+
+- Betriebe bieten nur die für ihre Funktion notwendigen Waren, Dienstleistungen, Aufträge und Informationen.
+- Fremde Betriebe erhalten keine vollständige Personal-, Lager-, Produktions- oder Buchhaltungssimulation.
+- Funktionen können bei Bedarf zusammengelegt werden.
+- Der erste Welt-Prototyp benötigt nur Laden, Mechaniker, Materialabnehmer und öffentlichen Aushang.
+- Die konkrete Besetzung ist ein Content-Entwurf und darf im Prototyp reduziert werden.
+
+Spezifikation: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
