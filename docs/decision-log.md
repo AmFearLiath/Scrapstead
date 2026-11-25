@@ -375,3 +375,20 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Er blockiert keine Wege, Maschinenzugänge oder Arbeitsbereiche dauerhaft.
 - Eigenständige Tätigkeiten sind unterbrechbar und werden bei höher priorisierten Spielerinteraktionen oder Notfällen kontrolliert beendet.
 - Begründung: Scrappys Eigenleben soll charmant und überraschend sein, aber niemals zum Verlust von Ressourcen, Kontrolle oder Spielfortschritt führen.
+
+
+## 25.11.2026 — Scrappys Energieversorgung ohne Wartungsdruck
+
+**Beschluss:** Scrappy besitzt einen internen Energiespeicher und kann selbstständig aufladen. Energieversorgung ist kein Pflicht- oder Bestrafungssystem.
+
+- Energie wird hauptsächlich für optionale Werkzeuge, besondere Fähigkeiten und aufwendige Assistenzfunktionen benötigt.
+- Folgen, Kommunikation, grundlegende Bewegung und normale Interaktionen bleiben auch bei niedrigem Energiestand verfügbar.
+- Scrappy kann bei niedrigem Energiestand selbstständig eine erreichbare Ladestation aufsuchen.
+- Eine einfache Lademöglichkeit ist früh verfügbar. Spätere Ladestationen können Komfort und Ladegeschwindigkeit verbessern.
+- Wenn keine Ladestation verfügbar ist, kann Scrappy an einer sicheren Ruheposition in einen sparsamen Zustand wechseln und langsam Energie zurückgewinnen.
+- Aufladen geschieht automatisch. Der Spieler muss den Vorgang weder starten noch überwachen.
+- Energiemangel darf Scrappy nicht dauerhaft deaktivieren, aus dem Spiel entfernen oder den Spielfortschritt blockieren.
+- Energieintensive Module können mehr verbrauchen; Effizienz, Kapazität und Ladegeschwindigkeit können durch Upgrades verbessert werden. Konkrete Werte werden im Prototyp getestet.
+- Der Energiestand wird nicht als dauerhaft präsente Pflichtanzeige inszeniert. Hinweise bleiben selten und kontextbezogen.
+- Humor entsteht durch Scrappys übertriebene technische Selbsteinschätzung, kleine Ladeanimationen, bevorzugte Ladestationen und trockene Kommentare. Ladezeiten oder Ladeprobleme werden nicht künstlich verlängert.
+- Begründung: Energieversorgung verleiht Scrappy technische Glaubwürdigkeit und bietet zusätzliche Charakter- und Humor-Momente, ohne ihn zu einem Tamagotchi oder einer weiteren Verwaltungsaufgabe für den Spieler zu machen.
