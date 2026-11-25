@@ -522,3 +522,12 @@ Der Welt-Prototyp funktioniert, wenn:
 - Umfang der sichtbaren Weltveränderungen.
 
 Diese Punkte werden in separaten Charakter-, Karten-, Quest- und Content-Spezifikationen ausgearbeitet. Sie sind keine Voraussetzung, um den Welt-Prototyp zu beginnen.
+
+
+## Ergänzung: Aufträge und Ereignisse
+
+Die in diesem Dokument beschriebenen Bewohner, Unternehmen, Erkundungsorte und Gemeinschaftsprojekte werden über ein gemeinsames Quest- und Ereignissystem miteinander verbunden. Aufträge entstehen aus konkreten Situationen und können Beschaffung, Bergung, Transport, Handel, Verarbeitung, Reparatur, Erkundung und Wiederherstellung kombinieren.
+
+Regionale Ereignisse wie Märkte, Sonderlieferungen, Engpässe oder Gemeinschaftstage bieten zeitweise Chancen, ohne tägliche Pflichten zu erzeugen. Handgefertigte Entdeckungen und wichtige Storyfunde bleiben geschützt und zuverlässig auffindbar.
+
+Details zu Auftragsarten, Voraussetzungen, Fristen, Variationen, Belohnungen, Ereignisregeln und technischer Struktur stehen in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
