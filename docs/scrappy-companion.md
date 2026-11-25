@@ -99,6 +99,17 @@ Scrappy wächst im Laufe des Spiels mit dem Spieler. Seine Entwicklung besteht n
 - Erinnerungen an Walt können Scrappys Verständnis seiner eigenen Vergangenheit und seiner Rolle auf dem Schrottplatz vertiefen.
 - Nicht jede Entwicklung muss ausdrücklich erklärt oder als Belohnung angezeigt werden. Manche Veränderungen werden allein durch Verhalten, Animationen oder Dialogvarianten sichtbar.
 
+### Bindung zum Spieler
+
+**Die Beziehung zwischen Scrappy und dem Spieler entwickelt sich organisch und wird nicht durch ein ausdrücklich benanntes Freundschafts- oder Loyalitätslevel dargestellt.**
+
+- Scrappy bezeichnet den Spieler nicht routinemäßig als seinen besten Freund und benötigt keine formelle Beziehungskategorie.
+- Die wachsende Bindung zeigt sich durch Vertrauen, Vertrautheit, gemeinsame Erinnerungen, wiederkehrende Anspielungen und kleine Verhaltensänderungen.
+- Scrappy kann mit der Zeit selbstverständlicher die Nähe des Spielers suchen, ihn in passenden Momenten unterstützen oder persönliche Gedanken mit ihm teilen.
+- Er darf den Spieler necken, widersprechen und eigene Interessen verfolgen. Eine glaubwürdige Beziehung braucht keine ständige Zustimmung.
+- Besondere Momente sollen aus konkreten gemeinsamen Erlebnissen entstehen. Große emotionale Aussagen bleiben selten und dadurch bedeutsam.
+- Die Bindung wird nicht als Belohnungsanzeige oder Fortschrittsbalken präsentiert. Spieler sollen sie erleben und selbst erkennen.
+
 ### Leitplanken
 
 - Scrappy wächst mit dem Spieler, bleibt aber eine eigenständige Figur mit eigener Persönlichkeit.
