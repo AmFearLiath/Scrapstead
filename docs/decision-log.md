@@ -187,3 +187,18 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Baupläne zum Speichern und Wiederverwenden eigener Konstruktionen sind als spätere Komfort- und Community-Funktion vorgesehen.
 - Komplexe Statik, umfangreiche Materialeigenschaften und Bauplan-Sharing sind nicht Bestandteil des ersten Prototyps.
 - Begründung: Spieler sollen zwischen schnellem, unkompliziertem Bauen und individueller Gestaltung wählen können, ohne dass eine der beiden Spielweisen benachteiligt wird.
+
+
+## 25.11.2026 — Schrittweise Freischaltung der Gebäudegestaltung
+
+**Beschluss:** Umfangreiche Gebäude- und Gestaltungsoptionen werden schrittweise mit dem Wachstum des Betriebs freigeschaltet.
+
+- Der Spielstart konzentriert sich auf Erkunden, Sammeln, Verkaufen, Scrappy und die Nutzung vorhandener Einrichtungen.
+- Zu Beginn wird der Spieler nicht mit einer umfangreichen modularen Bauteilbibliothek oder komplexen Gestaltungsoberfläche konfrontiert.
+- Fertiggebäude und einfache funktionale Erweiterungen werden früher verfügbar als umfangreiche modulare Gestaltung.
+- Modulare Konstruktion, Material- und Farbvarianten, Beleuchtung, Einrichtung und Baupläne werden in späteren Fortschrittsphasen ergänzt.
+- Freischaltungen sollen möglichst organisch über NPCs, Händler, Handwerker, Investitionen oder Scrappy vermittelt werden.
+- Die Freischaltungen dürfen grundlegende Kreativität nicht unnötig blockieren. Sie erweitern die Möglichkeiten, statt einfache notwendige Aktionen künstlich zu sperren.
+- Alle Gebäude und Module sollen langfristig eine gemeinsame, wiederverwendbare Bauteil- und Materialbibliothek nutzen. Das System soll den Entwicklungsaufwand begrenzen und kein separates Gestaltungssystem pro Gebäude erfordern.
+- Konkrete Freischaltzeitpunkte und Voraussetzungen werden im First-Hour- und Progressionsprototyp getestet.
+- Begründung: Der Einstieg muss unmittelbar fesseln und die Kernspielschleife vermitteln. Umfangreiche kreative Systeme sollen später als motivierende Erweiterung und Belohnung hinzukommen, nicht als Einstiegshürde.
