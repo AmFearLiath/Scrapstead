@@ -266,3 +266,12 @@ Die Wirtschaft bleibt bewusst überschaubar. Der Spielerbetrieb erhält die eige
 Credits bleiben die zentrale Währung. Stabile Grundpreise und wenige dynamische Marktchancen sorgen für Verständlichkeit. Außenstandorte erweitern den eigenen Betrieb gezielt, nicht als unbegrenzte Kette eigenständiger Firmen.
 
 Vollständige Leitplanken und Nicht-Ziele: [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
+
+
+## Ergänzung: Regionale Händler und Dienstleistungen
+
+Die regionale Wirtschaft wird über wenige spezialisierte Anlaufstellen vermittelt: Grundversorgung, Reparatur, Materialhandel, Farm-/Naturversorgung und Fracht. Credits bleiben die zentrale Währung. Die Betriebe bieten nur ausgewählte Waren und Dienste; ihre Lager, Mitarbeiter und internen Produktionsabläufe werden nicht vollständig simuliert.
+
+Für den ersten Prototyp genügen ein einfacher Laden, ein Mechaniker, ein Materialabnehmer und ein öffentlicher Aushang. Weitere Anlaufstellen werden erst bei nachgewiesenem Nutzen ergänzt.
+
+Details: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
