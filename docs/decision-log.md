@@ -302,3 +302,15 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Persönliche Entwicklung darf kein Pflicht-, Pflege- oder Mikromanagementsystem werden. Der Spieler muss Scrappy nicht optimieren, um einen vollständigen Begleiter zu erhalten.
 - Manche Entwicklungen werden subtil über Verhalten, Animationen, eigene Projekte oder Dialogvarianten sichtbar, ohne ausdrücklich als Belohnung angekündigt zu werden.
 - Begründung: Scrappy soll nicht nur mit dem Betrieb leistungsfähiger werden, sondern durch die gemeinsame Reise zu einer vertrauten, eigenständigen Figur heranwachsen.
+
+
+## 25.11.2026 — Organische Bindung zwischen Scrappy und dem Spieler
+
+**Beschluss:** Scrappys Beziehung zum Spieler entwickelt sich natürlich durch gemeinsame Erlebnisse und wird nicht als explizites Freundschafts- oder Loyalitätslevel dargestellt.
+
+- Die wachsende Bindung zeigt sich durch Vertrauen, Vertrautheit, gemeinsame Erinnerungen, Running Gags und kleine Verhaltensänderungen.
+- Scrappy muss den Spieler nicht ausdrücklich als besten Freund bezeichnen. Die Beziehung soll durch Handlungen, Dialoge und Situationen spürbar werden.
+- Scrappy bleibt eine eigenständige Figur: Er darf widersprechen, necken, eigene Interessen verfolgen und gelegentlich Abstand halten.
+- Große emotionale Aussagen werden sparsam eingesetzt und an konkrete gemeinsame Erlebnisse gebunden.
+- Die Beziehung wird nicht durch einen sichtbaren Fortschrittsbalken oder eine zu optimierende Kennzahl abgebildet.
+- Begründung: Die Bindung soll sich verdient und glaubwürdig anfühlen. Spieler sollen sie selbst entdecken, statt sie als Systemwert abzulesen.
