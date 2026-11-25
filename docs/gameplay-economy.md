@@ -1,6 +1,6 @@
 # Scrapstead — Gameplay- und Wirtschaftsspezifikation
 
-**Version:** 0.3  
+**Version:** 0.4  
 **Status:** Konzeptstand / vor Prototyp-Validierung
 
 ## 1. Grundentscheidungen
@@ -240,7 +240,13 @@ Zu erfassen sind unter anderem:
 - Verständlichkeit des Nutzens der nächsten Investition.
 - Offline-Ergebnis und Abweichungen zwischen erwarteter und tatsächlicher Simulation.
 
-## 15. Erste Prototyp-Abnahmekriterien
+## 15. Vertiefende Gameplay-Systeme
+
+Die konkreten Regeln für hybride Interaktionen und Zerlegung, Werkzeuge und begrenztes modulares Crafting, automatisierten Fahrzeugbetrieb, Logistik, standortgebundene Lager, Produktionslinien und Energieversorgung stehen in [Interaktion, Transport, Lager, Produktion und Energie](gameplay-interaction-logistics-production.md).
+
+Die dort beschriebenen Systeme folgen denselben wirtschaftlichen Grundsätzen: einfache Tätigkeiten bleiben schnell, komplexere Tätigkeiten müssen zusätzlichen Nutzen bieten, Automatisierung ist optional und Standortgrenzen bzw. Transportzeiten bleiben relevant.
+
+## 16. Erste Prototyp-Abnahmekriterien
 
 - Ein kleiner Gegenstand kann manuell gesammelt werden.
 - Ein großer Gegenstand benötigt sichtbar ein passendes Werkzeug.
