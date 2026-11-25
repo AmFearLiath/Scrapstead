@@ -3,7 +3,7 @@
 **Version:** 0.1  
 **Status:** Vorproduktionsplanung / technische und spielerische Validierung  
 **Geltungsbereich:** Erste spielbare Prototypen bis zum Vertical Slice  
-**Engine:** Engine-neutral geplant; die bestehende Godot-Empfehlung wird dadurch nicht vorweggenommen oder endgültig bestätigt.
+**Engine:** Godot Engine 4.7.2 Stable mit GDScript (beschlossen). Forward+ ist die vorgesehene Startkonfiguration und wird in P0 auf der Zielhardware geprüft.
 
 ---
 
