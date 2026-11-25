@@ -60,3 +60,23 @@ This file records decisions considered canonical for the current design. New dec
 - Complexity comes from combinations of understandable systems.
 - Avoid mandatory micromanagement, complex logistics programming, excessive menus, and unnecessarily large resource taxonomies.
 - Introduce systems gradually.
+
+## 2026-11-25 — First progression sequence
+
+**Decision:** The player's business grows through earned, gradual delegation.
+
+- The player begins by doing nearly all work personally.
+- Basic tool and carrying improvements come first.
+- The first employee is intended to arrive before the first machine, subject to playtest validation.
+- The employee takes over one clear task the player already understands.
+- The first machine then automates a similarly clear task.
+- Exact prices, wages, and timing are deliberately not fixed before the economy prototype.
+- Rationale: each investment should feel like a meaningful step toward a larger business, not an instant jump to automation.
+
+## 2026-11-25 — Hybrid collection and optional processing
+
+- Small loose objects can be picked up directly.
+- Larger or embedded objects require suitable tools or equipment.
+- Ordinary scrap can be sold directly.
+- Selected items can be sorted, dismantled, or processed for better potential value.
+- Processing is optional and must not become a mandatory chore.
