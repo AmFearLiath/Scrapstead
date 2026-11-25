@@ -59,6 +59,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Interaktion, Transport, Lager, Produktion und Energie](docs/gameplay-interaction-logistics-production.md)
 - [Welt, Erkundung und Aktivitäten](docs/world-exploration-activities.md)
 - [Bewohner, Charaktere und Beziehungen](docs/characters-residents-relationships.md)
+- [Quest-, Missions- und Ereignissystem](docs/quest-mission-event-system.md)
 - [Ergänzungsprotokoll: Welt und Unternehmenssimulation](docs/decision-log-world-and-simulation.md)
 - [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
 - [First-Hour-Experience – Spielstart und erste Stunde](docs/first-hour-experience.md)
