@@ -148,7 +148,69 @@ Erste Materialgruppen: Metalle, Kunststoffe, Elektronik, Holz/Naturmaterialien, 
 
 Geplante Gruppen: Zeit, Wirtschaft, Recycling, Unternehmen, Automatisierung, Entdeckungen und Scrappy. Nicht jede Statistik muss in eine Punktzahl einfließen.
 
-## 14. Noch offen
+## 14. Balanced Gameplay und Interaktion
+
+**Beschluss: Balanced Gameplay.** Bergen, Erkunden, Verarbeiten, Bauen und Wirtschaften erhalten eine vergleichbare Bedeutung und unterstützen sich gegenseitig.
+
+**Beschluss: Hybride Interaktion und Zerlegung.**
+- Einfache Tätigkeiten laufen über Kontextaktionen.
+- Interessante und komplexe Objekte können aktive, mehrstufige Interaktionen bieten.
+- Der Anspruch richtet sich nach Größe, Seltenheit, Wert und Komplexität.
+- Sorgfältiges Zerlegen kann sowohl die Materialausbeute als auch den Erhalt wertvoller Komponenten verbessern.
+- Werkzeuge bestimmen, welche Arbeitsschritte möglich sind, und beeinflussen Effizienz und Ergebnis.
+- Werkzeuge können gekauft, hergestellt und verbessert werden.
+- Crafting nutzt Grundrezepte mit begrenzten, vorbereiteten modularen Erweiterungen. Freies, unbegrenztes Kombinieren einzelner Teile ist nicht vorgesehen.
+
+## 15. Transport und Fahrzeuge
+
+**Beschluss: Hybrides Transportsystem.**
+- Kleinteile: persönliches Inventar bzw. Sammelbehälter.
+- Größere Gegenstände: Handtransport, Fahrzeuge und Maschinen.
+- Kleinteile werden abstrakt geladen; mittlere und große Objekte können sichtbar auf Fahrzeugen dargestellt bzw. verladen werden.
+- Fahrzeuge werden nicht direkt vom Spieler gesteuert.
+- Fahrzeugklasse, Beladung, Gewicht, Zustand und Streckenbedingungen beeinflussen Transportleistung; keine vollständige Fahrphysik.
+- Fahrzeuge können autonom, personalgebunden oder situationsabhängig betrieben werden.
+
+## 16. Logistik
+
+**Beschluss: Hybride Logistik.**
+- Einzelaufträge, feste Routen und intelligente Disposition können parallel genutzt werden.
+- Der Spieler definiert Ziele, Regeln und Prioritäten; das System übernimmt die operative Zuordnung.
+- Unkritische Probleme werden automatisch gelöst. Bei wichtigen Entscheidungen oder fehlenden Lösungen wird informiert bzw. eine Freigabe eingeholt.
+- Lagerbestände bleiben standortgebunden.
+- Standortübergreifende Versorgung erfolgt über Transportaufträge und berücksichtigt Bestand, Kapazität und Transportzeit.
+- Materialverteilung berücksichtigt Standortpriorität, Auftragsdringlichkeit, Produktionsbedarf, Verfügbarkeit und Transportaufwand.
+
+## 17. Lagerverwaltung
+
+**Beschluss: Hybride Lagerverwaltung mit lokaler Bestandsführung.**
+- Rohstoffe und große Mengen werden überwiegend abstrakt verwaltet.
+- Wertvolle Funde, Maschinen und besondere Einzelobjekte können sichtbar gelagert werden.
+- Lager besitzen Gesamtkapazitäten, Materialzonen und bei Bedarf Spezialisierungen.
+- Ein- und Auslagerung erfolgen weitgehend automatisch unter Berücksichtigung von Zonen, Kapazitäten und Prioritäten.
+- Es gibt kein globales Inventar; andere Standorte müssen Materialien über die Logistik anfordern.
+
+## 18. Produktion und Maschinen
+
+**Beschluss: Progressive hybride Produktion.**
+- Einzelmaschinen, Produktionsketten und modulare Produktionsanlagen sind möglich.
+- Standardvorlagen geben Orientierung; sie können angepasst, erweitert und als eigene Vorlagen gespeichert werden.
+- Physische Fördertechnik und logische Materialverbindungen können kombiniert werden.
+- Logische Verbindungen umgehen keine Standortgrenzen oder Transportzeiten.
+- Maschinen können im Dauerbetrieb, Auftragsbetrieb, Rezeptbetrieb oder Mischbetrieb arbeiten.
+- Einzelverarbeitung bleibt auch im späten Spiel sinnvoll; komplexe Linien sind eine Option, keine Pflicht.
+
+## 19. Energieversorgung
+
+**Beschluss: Kombination aus externer Versorgung und eigener Energieerzeugung.**
+- Externer Netzbezug bildet die verlässliche Grundversorgung.
+- Eigene Erzeugungsanlagen können Kosten reduzieren und die Versorgung ergänzen.
+- Vollständige Energieautonomie kann ein späteres Ausbauziel sein, ist aber keine Pflicht.
+- Kleine Betriebe verwenden vereinfachte Versorgung; größere Anlagen können ein ausbaubares Stromnetz erhalten.
+- Energiespeicher und einfache Verbraucherprioritäten sind als spätere Erweiterung vorgesehen.
+- Kein verpflichtendes Mikromanagement einzelner Stromkreise und keine Energie-Softlocks.
+
+## 20. Noch offen
 
 - Exakte Regionkarte und Freischaltfolge.
 - Fahrzeugliste und Fahrmodell.
