@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/OldYardTestController.gd" id="1_controller"]
 [ext_resource type="Environment" path="res://assets/environment/yard_environment.tres" id="2_env"]
@@ -25,6 +25,10 @@
 [ext_resource type="Resource" path="res://data/items/scrap_empty_can.tres" id="def_scrap_empty_can"]
 [ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="def_scrap_rusted_bolt"]
 [ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="def_scrap_wire_coil"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/DismantleStation.tscn" id="30_dismantle"]
+[ext_resource type="Resource" path="res://data/items/device_broken_radio.tres" id="def_device_broken_radio"]
+[ext_resource type="Resource" path="res://data/items/mat_copper_wire.tres" id="def_mat_copper_wire"]
+[ext_resource type="Resource" path="res://data/items/mat_electronic_parts.tres" id="def_mat_electronic_parts"]
 
 [node name="OldYardTest" type="Node3D" node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "upgrade_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
 script = ExtResource("1_controller")
@@ -108,6 +112,28 @@ definition = ExtResource("def_scrap_wire_coil")
 [node name="bulk_metal_beam_01" parent="TestObjects" instance=ExtResource("14_salvage")]
 transform = Transform3D(0.978148, 0, 0.207912, 0, 1, 0, -0.207912, 0, 0.978148, 31.5, 0, -25.2)
 object_id = "bulk_metal_beam_01"
+
+[node name="device_broken_radio_01" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 12.0, 0, -30.0)
+object_id = "device_broken_radio_01"
+definition = ExtResource("def_device_broken_radio")
+
+[node name="DismantleStation" parent="TestObjects" instance=ExtResource("30_dismantle") node_paths=PackedStringArray("output_items")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31, 0, -7)
+input_object_id = "device_broken_radio_01"
+output_items = [NodePath("../device_broken_radio_01_copper_wire"), NodePath("../device_broken_radio_01_electronic_parts")]
+
+[node name="device_broken_radio_01_copper_wire" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.5, 0, -6.1)
+object_id = "device_broken_radio_01_copper_wire"
+definition = ExtResource("def_mat_copper_wire")
+starts_pending = true
+
+[node name="device_broken_radio_01_electronic_parts" parent="TestObjects" instance=ExtResource("13_item")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.5, 0, -6.1)
+object_id = "device_broken_radio_01_electronic_parts"
+definition = ExtResource("def_mat_electronic_parts")
+starts_pending = true
 
 [node name="PlayerStart" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -3)

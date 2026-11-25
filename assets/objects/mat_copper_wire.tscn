@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_agtoo"]
+albedo_color = Color(0.78039217, 0.48235294, 0.27058825, 1)
+metallic = 0.9
+roughness = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2upw2"]
+top_radius = 0.13
+bottom_radius = 0.13
+height = 0.2
+radial_segments = 14
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kujk"]
+albedo_color = Color(0.30588236, 0.22745098, 0.15686275, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vutuo"]
+top_radius = 0.18
+bottom_radius = 0.18
+height = 0.03
+radial_segments = 14
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8l4cp"]
+top_radius = 0.18
+bottom_radius = 0.18
+height = 0.03
+radial_segments = 14
+rings = 1
+
+[node name="CopperSpool" type="Node3D" unique_id=1399337502]
+
+[node name="Core" type="MeshInstance3D" parent="." unique_id=1131106624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13, 0)
+material_override = SubResource("StandardMaterial3D_agtoo")
+mesh = SubResource("CylinderMesh_2upw2")
+
+[node name="FlangeBottom" type="MeshInstance3D" parent="." unique_id=1234463230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.015, 0)
+material_override = SubResource("StandardMaterial3D_2kujk")
+mesh = SubResource("CylinderMesh_vutuo")
+
+[node name="FlangeTop" type="MeshInstance3D" parent="." unique_id=1630755448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.245, 0)
+material_override = SubResource("StandardMaterial3D_2kujk")
+mesh = SubResource("CylinderMesh_8l4cp")

@@ -641,3 +641,8 @@ Vor Beginn der P0-Implementierung wird die Systemintegration anhand der [P0-Syst
 ## Ergänzung: P0-Implementierungsvorbereitung
 
 Die konkrete Projektstruktur und Implementierungsreihenfolge sind in der [P0-Implementierungsvorbereitung](p0-implementation-readiness.md) festgelegt. Die Phasen reichen von der Godot-Projektbasis über Menü, Spieler/Kamera und Interaktion bis zu Persistenz und Integrationstests. Jede Phase besitzt eine eigene Abnahme; P1 bleibt bis zur erfolgreichen P0-Freigabe gesperrt.
+
+
+## Ergänzung: Umsetzungsstand P0, P1 und P1b
+
+P0, P1 und eine minimale P1b sind im Repository umgesetzt und automatisiert geprüft. Die konkrete P1-Umsetzung ist in [P1: Erste Gameplay-Schleife](p1-gameplay-loop.md) beschrieben, Testprotokoll, Abnahmestatus und bekannte Einschränkungen in der [Prototyp-Abnahme](prototype-acceptance.md). Die spielerische Freigabe nach Abschnitt 14 erfordert noch menschliche Playtests.

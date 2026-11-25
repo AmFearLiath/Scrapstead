@@ -2,15 +2,19 @@ class_name ScrapItem
 extends Interactable
 ## A collectible piece of scrap placed in the yard (P1). Its type data comes
 ## from an ItemDefinition; this node only owns the world state of this one
-## placement: lying in the yard, carried by the player, or sold.
+## placement: lying in the yard, carried by the player, sold, consumed by
+## processing (P1b), or not yet produced (processing output placeholder).
 
-enum State { IN_WORLD, CARRIED, SOLD }
+enum State { IN_WORLD, CARRIED, SOLD, PROCESSED, PENDING }
 
-const STATE_NAMES: PackedStringArray = ["in_world", "carried", "sold"]
+const STATE_NAMES: PackedStringArray = ["in_world", "carried", "sold", "processed", "pending"]
 
 @export var definition: ItemDefinition
+## Processing outputs start as not-yet-produced placements (P1b).
+@export var starts_pending: bool = false
 
 var _state: State = State.IN_WORLD
+var _initial_state: State = State.IN_WORLD
 ## Set once the object was moved away from its authored placement (dropped).
 var _moved: bool = false
 
@@ -23,6 +27,9 @@ func _ready() -> void:
 			name_key = definition.name_key
 		_ensure_model()
 	super()
+	if starts_pending:
+		_initial_state = State.PENDING
+		set_state(State.PENDING)
 
 
 func get_item_id() -> String:
@@ -87,7 +94,7 @@ func set_state(new_state: State) -> void:
 
 
 func get_save_state() -> Dictionary:
-	if _state == State.IN_WORLD and not _moved:
+	if _state == _initial_state and not _moved:
 		return {}
 	var data: Dictionary = {"state": STATE_NAMES[_state]}
 	if _state == State.IN_WORLD:

@@ -85,6 +85,11 @@ func refresh() -> void:
 	_refresh_selection(true)
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and _enabled:
+		_update_prompt()
+
+
 func _physics_process(delta: float) -> void:
 	if not _enabled or _candidates.is_empty():
 		return

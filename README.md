@@ -6,9 +6,66 @@ Scrapstead ist ein gemütliches, humorvolles isometrisches Cozy Automation Tycoo
 
 ## Projektstatus
 
-Vorproduktion / Spieldesign.
+**Spielbarer Gameplay-Prototyp (P0 + P1 + P1b).** Godot 4.7.2 Stable, GDScript, Forward+, Windows und Linux.
 
-Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Systemspezifikationen und Entwicklungsplanung. Eine konkrete Engine-Implementierung ist noch nicht vorausgesetzt.
+Der Prototyp enthält Hauptmenü mit Kamerafahrt durch den Old Yard, isometrische Steuerung, Sammeln, Bergen, Verkaufen, Credits, ein Tragekorb-Upgrade, eine optionale Zerlegung und Speichern/Fortsetzen. Stand, Testprotokoll und bekannte Einschränkungen: [Prototyp-Abnahme](docs/prototype-acceptance.md).
+
+## Prototyp starten
+
+1. Godot **4.7.2 Stable** (Standard-Build, ohne .NET) installieren bzw. lokal unter `_engine/` ablegen (wird nicht versioniert).
+2. Projekt im Godot-Editor öffnen (`project.godot`) und mit **F5** starten – oder per Kommandozeile:
+
+```bash
+godot --path .
+```
+
+### Steuerung
+
+| Aktion | Taste |
+|---|---|
+| Bewegen | WASD / Pfeiltasten |
+| Interagieren, Bergen/Zerlegen (halten) | E |
+| Zuletzt aufgenommenes Teil ablegen | Q |
+| Pausemenü (Speichern) / Panel schließen | Esc |
+| Zoom | Mausrad |
+| Debug-Overlay / Entwickler-Speichern (nur Debug-Build) | F3 / F5 |
+
+### Ziel der Prototyp-Schleife
+
+Schrott im Hof aufsammeln → den festsitzenden Metallträger bergen → am Annahmetresen verkaufen → an der Werkbank den **Großen Tragekorb** kaufen → mit doppelter Kapazität weitersammeln. Optional: das defekte Radio direkt verkaufen oder am Zerlegetisch in wertvollere Teile zerlegen.
+
+### Tests und Werkzeuge
+
+```bash
+# Unit- und Integrationstests (headless)
+godot --headless --path . --import
+godot --headless --path . -s res://tests/run_tests.gd
+
+# Abnahme über einen echten Neustart (zwei Prozesse)
+godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=play
+godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=continue
+
+# Old-Yard-Blockout und Platzhaltermodelle neu erzeugen
+godot --headless --path . -s res://tools/build_blockout.gd
+
+# Screenshots des laufenden Spiels nach tests/_output/screens
+godot --path . -s res://tools/capture_screens.gd
+```
+
+### Projektstruktur
+
+```text
+assets/        Platzhaltermodelle (generiert), Theme, Umgebung, Icons
+data/          Gegenstände, Upgrades, Verarbeitung, Balancing (Godot-Resources)
+localization/  scrapstead.csv (en/de)
+scenes/        Main, Menü, Old Yard, Spieler, Kamera, Interaktionsobjekte
+scripts/       core (Autoloads), player, camera, interaction, world, economy,
+               inventory, progression, data, ui, menu, debug
+ui/            HUD, Panels, Hauptmenü
+tests/         Headless-Testrunner, Unit-, Integrations- und Neustarttests
+tools/         Blockout-Generator, Screenshot-Werkzeug
+docs/          Konzept, Spezifikationen, Decision Log, Abnahme
+```
 
 ## Design-Leitlinien
 
@@ -57,6 +114,9 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Produktionsumfang und Entwicklungsfahrplan](docs/production-scope-and-roadmap.md)
 - [Core-Gameplay-Matrix](docs/core-gameplay-matrix.md)
 - [MVP- und Prototypenplan](docs/mvp-prototype-plan.md)
+- [P1: Erste Gameplay-Schleife (Umsetzung)](docs/p1-gameplay-loop.md)
+- [Prototyp-Abnahme, Testprotokoll und bekannte Einschränkungen](docs/prototype-acceptance.md)
+- [P0-Implementierungs- und Projektstruktur](docs/p0-implementation-readiness.md)
 - [Welt-, Unternehmens- und Simulationskonzept](docs/world-and-company-simulation.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Regionale Wirtschaft und begrenzter Simulationsumfang](docs/regional-economy-scope.md)

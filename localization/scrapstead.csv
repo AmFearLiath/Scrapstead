@@ -104,3 +104,17 @@ ui.pause.save,Save,Speichern
 ui.pause.save_exit,Save & main menu,Speichern & Hauptmenü
 ui.pause.exit_without_saving,Main menu without saving,Hauptmenü ohne Speichern
 ui.upgrade.effect_owned.carry_capacity,Carry capacity: {current} slots (active),Tragekapazität: {current} Plätze (aktiv)
+item.category.material,Recovered material,Wertstoff
+item.device_broken_radio.name,Broken Radio,Defektes Radio
+item.device_broken_radio.description,"Silent for years. Sell it as it is, or take it apart.","Seit Jahren stumm. Verkauf es so, oder nimm es auseinander."
+item.mat_copper_wire.name,Copper Wire,Kupferdraht
+item.mat_copper_wire.description,"Clean, sorted copper wire.","Sauberer, sortierter Kupferdraht."
+item.mat_electronic_parts.name,Electronic Parts,Elektronikteile
+item.mat_electronic_parts.description,"Tubes and boards, carefully removed.","Röhren und Platinen, sorgfältig ausgebaut."
+station.dismantle_table.name,Dismantling Table,Zerlegetisch
+ui.action.dismantle,Dismantle (hold),Zerlegen (halten)
+ui.dismantle.detail,"{input}: sell as is {direct} Cr, or dismantle ({seconds} s) into {outputs} = {value} Cr","{input}: direkt {direct} Cr, oder zerlegen ({seconds} s) zu {outputs} = {value} Cr"
+ui.dismantle.detail_missing,Needs: {input} · yields {outputs} = {value} Cr (sold as is: {direct} Cr),Benötigt: {input} · ergibt {outputs} = {value} Cr (direkt: {direct} Cr)
+ui.dismantle.missing_input,Bring a {input} to dismantle it here.,"Bring ein {input} mit, um es hier zu zerlegen."
+ui.dismantle.done_already,There is nothing left to take apart here.,Hier gibt es nichts mehr zu zerlegen.
+ui.dismantle.done,Dismantled {input} into {outputs} ({value} Cr).,{input} zerlegt in {outputs} ({value} Cr).

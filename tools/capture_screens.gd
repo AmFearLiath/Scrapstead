@@ -79,6 +79,18 @@ func _extra_shots(scene: Node, player: Node3D) -> void:
 	await _frames(10)
 	await _shot("12_pause_menu")
 	scene._close_pause_menu()
+	var radio: Interactable = scene.get_world_object("device_broken_radio_01")
+	player.place(radio.get_interaction_point() + Vector3(0, 0.1, 0.9), PI)
+	await _frames(40)
+	await _shot("13_radio_prompt")
+	scene.get_node("Player/PlayerInteractor")._execute(radio)
+	var table: Interactable = scene.get_world_object("station_dismantle_table")
+	player.place(table.get_interaction_point() + Vector3(0.2, 0.1, 0.5), PI)
+	await _frames(60)
+	await _shot("14_dismantle_prompt")
+	TranslationServer.set_locale("en")
+	await _frames(30)
+	await _shot("15_dismantle_prompt_en")
 
 
 func _frames(count: int) -> void:

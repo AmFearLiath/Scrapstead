@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCatalog" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="ItemCatalog" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/ItemCatalog.gd" id="1_catalog"]
 [ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
@@ -6,7 +6,10 @@
 [ext_resource type="Resource" path="res://data/items/scrap_empty_can.tres" id="3_scrap_empty_can"]
 [ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="4_scrap_wire_coil"]
 [ext_resource type="Resource" path="res://data/items/bulk_metal_beam.tres" id="5_bulk_metal_beam"]
+[ext_resource type="Resource" path="res://data/items/device_broken_radio.tres" id="6_device_broken_radio"]
+[ext_resource type="Resource" path="res://data/items/mat_copper_wire.tres" id="7_mat_copper_wire"]
+[ext_resource type="Resource" path="res://data/items/mat_electronic_parts.tres" id="8_mat_electronic_parts"]
 
 [resource]
 script = ExtResource("1_catalog")
-items = Array[ExtResource("1_def")]([ExtResource("2_scrap_rusted_bolt"), ExtResource("3_scrap_empty_can"), ExtResource("4_scrap_wire_coil"), ExtResource("5_bulk_metal_beam")])
+items = Array[ExtResource("1_def")]([ExtResource("2_scrap_rusted_bolt"), ExtResource("3_scrap_empty_can"), ExtResource("4_scrap_wire_coil"), ExtResource("5_bulk_metal_beam"), ExtResource("6_device_broken_radio"), ExtResource("7_mat_copper_wire"), ExtResource("8_mat_electronic_parts")])

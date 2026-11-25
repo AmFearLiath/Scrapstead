@@ -38,6 +38,8 @@ func _init() -> void:
 	ok = _save(_build_wire_coil(), "res://assets/objects/scrap_wire_coil.tscn") and ok
 	ok = _save(_build_metal_beam(), "res://assets/objects/bulk_metal_beam.tscn") and ok
 	ok = _save(_build_radio(), "res://assets/objects/device_broken_radio.tscn") and ok
+	ok = _save(_build_copper_spool(), "res://assets/objects/mat_copper_wire.tscn") and ok
+	ok = _save(_build_electronic_parts(), "res://assets/objects/mat_electronic_parts.tscn") and ok
 	ok = _save(_build_sell_counter(), "res://assets/objects/sell_counter.tscn") and ok
 	ok = _save(_build_workbench(), "res://assets/objects/workbench.tscn") and ok
 	ok = _save(_build_dismantle_table(), "res://assets/objects/dismantle_table.tscn") and ok
@@ -466,6 +468,26 @@ func _build_radio() -> Node3D:
 	_cyl(root, "Speaker", Vector3(-0.1, 0.17, 0.13), 0.1, 0.02, "dark", false, 14, Vector3(90, 0, 0))
 	_box(root, "Dial", Vector3(0.15, 0.12, 0.135), Vector3(0.16, 0.1, 0.02), "cream")
 	_cyl(root, "Antenna", Vector3(0.2, 0.34, -0.05), 0.012, 0.45, "steel", false, 6, Vector3(0, 0, -30))
+	return root
+
+
+func _build_copper_spool() -> Node3D:
+	var root := Node3D.new()
+	root.name = "CopperSpool"
+	_cyl(root, "Core", Vector3(0, 0.03, 0), 0.13, 0.2, "copper", false, 14)
+	_cyl(root, "FlangeBottom", Vector3(0, 0, 0), 0.18, 0.03, "wood_dark", false, 14)
+	_cyl(root, "FlangeTop", Vector3(0, 0.23, 0), 0.18, 0.03, "wood_dark", false, 14)
+	return root
+
+
+func _build_electronic_parts() -> Node3D:
+	var root := Node3D.new()
+	root.name = "ElectronicParts"
+	_box(root, "Board", Vector3.ZERO, Vector3(0.36, 0.03, 0.26), "plant", false, 12.0)
+	_box(root, "Chip1", Vector3(-0.06, 0.03, 0.02), Vector3(0.1, 0.03, 0.07), "dark", false, 12.0)
+	_box(root, "Chip2", Vector3(0.09, 0.03, -0.04), Vector3(0.07, 0.04, 0.07), "dark", false, 12.0)
+	_cyl(root, "Capacitor", Vector3(0.1, 0.03, 0.07), 0.025, 0.08, "teal", false, 8)
+	_box(root, "Tube", Vector3(-0.12, 0.0, -0.12), Vector3(0.12, 0.08, 0.1), "glass", false, 30.0)
 	return root
 
 

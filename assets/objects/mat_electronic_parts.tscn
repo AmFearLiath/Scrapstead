@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_be3xp"]
+albedo_color = Color(0.43529412, 0.5411765, 0.2901961, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_hlx7w"]
+size = Vector3(0.36, 0.03, 0.26)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hj8mw"]
+albedo_color = Color(0.16862746, 0.12941177, 0.105882354, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_ot5h8"]
+size = Vector3(0.1, 0.03, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rtktd"]
+size = Vector3(0.07, 0.04, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s71bt"]
+albedo_color = Color(0.24313726, 0.5411765, 0.5254902, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_26h7e"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 0.08
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ewke5"]
+albedo_color = Color(0.7490196, 0.8784314, 0.9019608, 1)
+roughness = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_rfxvj"]
+size = Vector3(0.12, 0.08, 0.1)
+
+[node name="ElectronicParts" type="Node3D" unique_id=1351352801]
+
+[node name="Board" type="MeshInstance3D" parent="." unique_id=543159490]
+transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, 0, 0.015, 0)
+material_override = SubResource("StandardMaterial3D_be3xp")
+mesh = SubResource("BoxMesh_hlx7w")
+
+[node name="Chip1" type="MeshInstance3D" parent="." unique_id=1767603990]
+transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, -0.06, 0.044999998, 0.02)
+material_override = SubResource("StandardMaterial3D_hj8mw")
+mesh = SubResource("BoxMesh_ot5h8")
+
+[node name="Chip2" type="MeshInstance3D" parent="." unique_id=2055399128]
+transform = Transform3D(0.9781476, 0, 0.2079117, 0, 1, 0, -0.2079117, 0, 0.9781476, 0.09, 0.049999997, -0.04)
+material_override = SubResource("StandardMaterial3D_hj8mw")
+mesh = SubResource("BoxMesh_rtktd")
+
+[node name="Capacitor" type="MeshInstance3D" parent="." unique_id=2029153151]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.07, 0.07)
+material_override = SubResource("StandardMaterial3D_s71bt")
+mesh = SubResource("CylinderMesh_26h7e")
+
+[node name="Tube" type="MeshInstance3D" parent="." unique_id=254430165]
+transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -0.12, 0.04, -0.12)
+material_override = SubResource("StandardMaterial3D_ewke5")
+mesh = SubResource("BoxMesh_rfxvj")

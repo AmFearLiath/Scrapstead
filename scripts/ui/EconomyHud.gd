@@ -26,7 +26,6 @@ func setup(wallet: Wallet, inventory: CarryInventory) -> void:
 	_inventory = inventory
 	_wallet.balance_changed.connect(_on_balance_changed)
 	_inventory.changed.connect(_refresh_inventory)
-	_drop_hint.text = tr("ui.hud.drop_hint").format({"key": InputHints.key_name(&"drop_item")})
 	_displayed_credits = _wallet.get_balance()
 	_credits_value.text = _format_credits(_displayed_credits)
 	_refresh_inventory()
@@ -79,6 +78,7 @@ func _refresh_inventory() -> void:
 			"value": definition.sell_value * int(group["count"])})
 		line.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		_carry_list.add_child(line)
+	_drop_hint.text = tr("ui.hud.drop_hint").format({"key": InputHints.key_name(&"drop_item")})
 	_drop_hint.visible = not _inventory.is_empty()
 
 

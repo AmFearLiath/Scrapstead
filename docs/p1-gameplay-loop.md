@@ -157,4 +157,17 @@ Die P1-Laufzeitsysteme sind kleine `RefCounted`-Objekte der Gameplay-Szene. Es g
 
 ## 12. Bewusst nicht umgesetzt
 
-Dynamische Preise, Lager, Regeneration, Werkzeuge, Qualitätsstufen, Scrappy, Story, Mitarbeiter, Maschinen, Baumodus. P1b (optionale Verarbeitung) ist in `prototype-acceptance.md` gesondert bewertet.
+Dynamische Preise, Lager, Regeneration, Werkzeuge, Qualitätsstufen, Scrappy, Story, Mitarbeiter, Maschinen, Baumodus.
+
+## 13. P1b: Optionale Verarbeitung
+
+| Element | Umsetzung |
+|---|---|
+| Eingabe | `device_broken_radio_01` (Defektes Radio, 12 Cr, 2 Plätze), Lagerzone A (Layout 12 / 30) |
+| Station | Zerlegetisch `station_dismantle_table`, Zone D (Layout 31 / 7) |
+| Aufwand | E 3,5 s halten, Radio muss getragen werden |
+| Ausgaben | Kupferdraht (8 Cr) + Elektronikteile (8 Cr), je 1 Platz |
+| Anzeige | Prompt zeigt Direktwert, Dauer, Ausgaben und Ergebniswert |
+| Daten | `ProcessingProfile` in `data/processing/dismantle_broken_radio.tres` |
+
+Direktverkauf des Radios bleibt möglich. Bewertung in der [Prototyp-Abnahme](prototype-acceptance.md), Abschnitt 8.

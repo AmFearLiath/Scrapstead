@@ -188,6 +188,8 @@ func _connect_stations() -> void:
 	for target: Interactable in _objects.values():
 		if target is SellStation:
 			(target as SellStation).sale_completed.connect(_on_sale_completed)
+		elif target is DismantleStation:
+			(target as DismantleStation).set_world_objects(_objects)
 
 
 func _register_world_objects() -> void:

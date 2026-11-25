@@ -712,3 +712,19 @@ Referenz: [P0-Implementierungs- und Projektstruktur](p0-implementation-readiness
 - **Laufzeitsysteme** (`Wallet`, `CarryInventory`, `UpgradeProgress`) sind kleine Objekte der Gameplay-Szene; es entstehen keine weiteren Autoloads, Manager oder Event-Busse.
 
 Referenz: [P1: Erste Gameplay-Schleife](p1-gameplay-loop.md).
+
+
+## 25.11.2026 — P1b: Optionale Zerlegung des defekten Radios
+
+**Beschluss:** P1b wird mit genau einer Verarbeitung umgesetzt und bleibt optional.
+
+- Eingabe: `device_broken_radio` (Direktverkauf 12 Cr, 2 Plätze), Fundort Lagerzone A.
+- Station: Zerlegetisch in der freien Arbeitsfläche D; Aufwand 3,5 s Halten.
+- Ausgaben: `mat_copper_wire` und `mat_electronic_parts` (je 8 Cr, je 1 Platz) – zusammen 16 Cr.
+- Rezept als Resource `ProcessingProfile` (`data/processing/`), höchstens zwei Ausgaben.
+- Die Ausgaben sind vorbereitete Weltplatzierungen mit stabilen IDs (Zustand `pending`), damit Speicherung und Verkauf ohne neues System funktionieren.
+- Direktverkauf bleibt möglich und ist für das Upgrade nicht nötig.
+
+**Begründung:** Die Verarbeitung soll eine verständliche Entscheidung zwischen schnellem Direktverkauf und mehr Ertrag für mehr Aufwand zeigen, ohne Produktionsketten oder Lagerlogistik einzuführen. Die Bewertung des Mehrwerts erfolgt im Playtest.
+
+Referenz: [Prototyp-Abnahme](prototype-acceptance.md).

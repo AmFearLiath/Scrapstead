@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://assets/objects/mat_electronic_parts.tscn" id="2_model"]
+
+[resource]
+script = ExtResource("1_def")
+id = "mat_electronic_parts"
+name_key = "item.mat_electronic_parts.name"
+description_key = "item.mat_electronic_parts.description"
+category = "material"
+handling_class = 0
+sell_value = 8
+carry_size = 1
+model = ExtResource("2_model")

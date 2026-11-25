@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ProcessingProfile" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ProcessingProfile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="Resource" path="res://data/items/device_broken_radio.tres" id="2_radio"]
+[ext_resource type="Resource" path="res://data/items/mat_copper_wire.tres" id="3_wire"]
+[ext_resource type="Resource" path="res://data/items/mat_electronic_parts.tres" id="4_parts"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "dismantle_broken_radio"
+input_item = ExtResource("2_radio")
+outputs = Array[ExtResource("1_def")]([ExtResource("3_wire"), ExtResource("4_parts")])
+seconds = 3.5

@@ -69,49 +69,49 @@ height = 0.04
 radial_segments = 16
 rings = 1
 
-[node name="SellCounter" type="Node3D" unique_id=338944692]
+[node name="SellCounter" type="Node3D" unique_id=7676592]
 
-[node name="Counter" type="MeshInstance3D" parent="." unique_id=144474387]
+[node name="Counter" type="MeshInstance3D" parent="." unique_id=1113932043]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = SubResource("StandardMaterial3D_6mu28")
 mesh = SubResource("BoxMesh_125al")
 
-[node name="CounterTop" type="MeshInstance3D" parent="." unique_id=23802453]
+[node name="CounterTop" type="MeshInstance3D" parent="." unique_id=1997070074]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04, 0)
 material_override = SubResource("StandardMaterial3D_mdj2e")
 mesh = SubResource("BoxMesh_22sip")
 
-[node name="ScalePlate" type="MeshInstance3D" parent="." unique_id=1641375950]
+[node name="ScalePlate" type="MeshInstance3D" parent="." unique_id=160665858]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 1.105, 0.05)
 material_override = SubResource("StandardMaterial3D_2dyym")
 mesh = SubResource("BoxMesh_1dcya")
 
-[node name="ScaleDial" type="MeshInstance3D" parent="." unique_id=301481596]
+[node name="ScaleDial" type="MeshInstance3D" parent="." unique_id=941184904]
 transform = Transform3D(1, 0, 0, 0, 0.34202015, -0.9396926, 0, 0.9396926, 0.34202015, -0.55, 1.16, -0.3)
 material_override = SubResource("StandardMaterial3D_3jxnp")
 mesh = SubResource("CylinderMesh_tarfa")
 
-[node name="CoinTray" type="MeshInstance3D" parent="." unique_id=1696435010]
+[node name="CoinTray" type="MeshInstance3D" parent="." unique_id=1539295507]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.105, 0.1)
 material_override = SubResource("StandardMaterial3D_ddgnr")
 mesh = SubResource("CylinderMesh_4megi")
 
-[node name="SignPostL" type="MeshInstance3D" parent="." unique_id=1255070752]
+[node name="SignPostL" type="MeshInstance3D" parent="." unique_id=1318080941]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.73, -0.45)
 material_override = SubResource("StandardMaterial3D_2kujk")
 mesh = SubResource("BoxMesh_wdc56")
 
-[node name="SignPostR" type="MeshInstance3D" parent="." unique_id=1499320560]
+[node name="SignPostR" type="MeshInstance3D" parent="." unique_id=403642631]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.73, -0.45)
 material_override = SubResource("StandardMaterial3D_2kujk")
 mesh = SubResource("BoxMesh_nr7os")
 
-[node name="SignBoard" type="MeshInstance3D" parent="." unique_id=2039429435]
+[node name="SignBoard" type="MeshInstance3D" parent="." unique_id=810064320]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -0.45)
 material_override = SubResource("StandardMaterial3D_ddgnr")
 mesh = SubResource("BoxMesh_7t7wi")
 
-[node name="SignCoin" type="MeshInstance3D" parent="." unique_id=105437229]
+[node name="SignCoin" type="MeshInstance3D" parent="." unique_id=1182918880]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2.27, -0.41)
 material_override = SubResource("StandardMaterial3D_trx3l")
 mesh = SubResource("CylinderMesh_skypm")

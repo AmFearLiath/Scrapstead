@@ -55,44 +55,44 @@ roughness = 0.9
 [sub_resource type="BoxMesh" id="BoxMesh_h1s44"]
 size = Vector3(0.5, 0.06, 0.6)
 
-[node name="PlayerModel" type="Node3D" unique_id=1663911375]
+[node name="PlayerModel" type="Node3D" unique_id=215834962]
 
-[node name="Body" type="MeshInstance3D" parent="." unique_id=217620124]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=352951887]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
 material_override = SubResource("StandardMaterial3D_trx3l")
 mesh = SubResource("CapsuleMesh_b2204")
 
-[node name="Belt" type="MeshInstance3D" parent="." unique_id=1024730102]
+[node name="Belt" type="MeshInstance3D" parent="." unique_id=815801428]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.67, 0)
 material_override = SubResource("StandardMaterial3D_hj8mw")
 mesh = SubResource("BoxMesh_am10m")
 
-[node name="Head" type="MeshInstance3D" parent="." unique_id=103719509]
+[node name="Head" type="MeshInstance3D" parent="." unique_id=630625830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42, 0)
 material_override = SubResource("StandardMaterial3D_jatv2")
 mesh = SubResource("SphereMesh_f8fna")
 
-[node name="Cap" type="MeshInstance3D" parent="." unique_id=563574418]
+[node name="Cap" type="MeshInstance3D" parent="." unique_id=1036680447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.565, 0)
 material_override = SubResource("StandardMaterial3D_s71bt")
 mesh = SubResource("CylinderMesh_t0dtk")
 
-[node name="Visor" type="MeshInstance3D" parent="." unique_id=1396126651]
+[node name="Visor" type="MeshInstance3D" parent="." unique_id=529995146]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54, 0.2)
 material_override = SubResource("StandardMaterial3D_s71bt")
 mesh = SubResource("BoxMesh_moajf")
 
-[node name="Nose" type="MeshInstance3D" parent="." unique_id=778171676]
+[node name="Nose" type="MeshInstance3D" parent="." unique_id=541075668]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39, 0.19)
 material_override = SubResource("StandardMaterial3D_jatv2")
 mesh = SubResource("BoxMesh_hry6t")
 
-[node name="Basket" type="MeshInstance3D" parent="." unique_id=1869033504]
+[node name="Basket" type="MeshInstance3D" parent="." unique_id=875251381]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.36)
 material_override = SubResource("StandardMaterial3D_6mu28")
 mesh = SubResource("BoxMesh_t707j")
 
-[node name="BasketStrap" type="MeshInstance3D" parent="." unique_id=1344383228]
+[node name="BasketStrap" type="MeshInstance3D" parent="." unique_id=672735979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97999996, -0.05)
 material_override = SubResource("StandardMaterial3D_2kujk")
 mesh = SubResource("BoxMesh_h1s44")

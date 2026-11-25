@@ -12,7 +12,7 @@ func before_each() -> void:
 
 func test_catalog_data_is_valid() -> void:
 	check(_items.validate().is_empty(), "item catalog valid: %s" % ", ".join(_items.validate()))
-	check_eq(_items.items.size(), 4, "four P1 item definitions")
+	check_eq(_items.items.size(), 7, "four P1 + three P1b item definitions")
 	var loose: int = 0
 	for definition: ItemDefinition in _items.items:
 		check(definition.sell_value > 0, "%s has a value" % definition.id)
