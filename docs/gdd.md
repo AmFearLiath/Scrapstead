@@ -348,3 +348,12 @@ Details und offene Kartenfragen stehen in [Regionalkarte, Gebietsstruktur und We
 Keine vollständige Simulation fremder Unternehmen, keine Konkurrenz- oder Börsensimulation, keine komplexe Buchhaltung, keine unbegrenzten Filialketten und keine Pflichtverwaltung fremder Lieferketten. Außenstandorte erweitern den eigenen Betrieb gezielt und in begrenzter Zahl.
 
 Neue Wirtschaftsfunktionen müssen einen klaren Spielspaß- oder Progressionsnutzen nachweisen und dürfen den erreichbaren Projektumfang nicht gefährden. Details: [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
+
+
+## Ergänzung: Regionale Betriebe und Dienstleistungen
+
+Für die Kernregion wird zunächst mit fünf dauerhaften regionalen Anlaufstellen geplant: General Store, Repair Workshop, Materials & Salvage Dealer, Farm & Supply und Freight Office. Die Community Hall dient als öffentlicher Treffpunkt; temporäre Marktstände ergänzen ausgewählte Ereignisse.
+
+Diese Orte erhalten klar begrenzte Funktionen wie Grundversorgung, Reparatur, Materialhandel, ländliche Beschaffung und Frachtaufträge. Sie besitzen keine vollständige Personal-, Lager-, Produktions- oder Buchhaltungssimulation. Die konkrete Besetzung ist ein Content-Vorschlag und kann im Prototyp reduziert oder zusammengelegt werden.
+
+Details: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
