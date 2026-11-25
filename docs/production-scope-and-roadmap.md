@@ -549,3 +549,9 @@ Der Entwicklungsfahrplan wird vor der vollständigen Produktion durch klar getre
 Jede Stufe besitzt eigene Abnahmekriterien und einen Freigabepunkt. Insbesondere werden Scrappy, Delegation, Maschinen und Region nicht genutzt, um eine noch nicht validierte Kernschleife zu überdecken.
 
 Die konkrete Szenen-/Objektplanung, fachlichen Datenobjekte, Vereinfachungen, Tests und Definition of Done stehen im [MVP- und Prototypenplan](mvp-prototype-plan.md).
+
+## Ergänzung: Hauptmenü als Bestandteil von P0
+
+Der erste Prototyp beginnt bereits mit einem eigenständigen Hauptmenü. Es zeigt das Scrapstead-Logo vor einer ruhigen, vorbereiteten Kamerafahrt durch den Old Yard. Die Kamerafahrt darf den frühen 3D-Blockout verwenden und läuft unabhängig von der Gameplay-Kamera.
+
+Das Menü enthält Neues Spiel, Fortsetzen (nur bei vorhandenem Spielstand), Einstellungen und Beenden. Die Umsetzung bleibt bewusst kompakt: keine aufwendige Logoanimation, keine komplexen Effekte und kein vollständiges Optionsmenü. Details und Abnahmekriterien: [MVP- und Prototypenplan](mvp-prototype-plan.md).
