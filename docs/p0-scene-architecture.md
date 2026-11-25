@@ -347,3 +347,10 @@ Die Gameplay-Kamera verwendet als Ausgangspunkt eine orthografische isometrische
 Die konkrete Erkennung, Bewertung und Auswahl von Interaktionszielen sowie Hervorhebung, HUD-Hinweis und Aktionsausführung sind in der [P0-PlayerInteractor-Spezifikation](p0-interaction-controller.md) festgehalten.
 
 Die bestehende Komponente `PlayerInteractor` ist die Interaktionssteuerung. Ein zweiter paralleler InteractionController wird nicht eingeführt. Der InteractionDetector erkennt Kandidaten; PlayerInteractor bewertet und verwaltet das aktive Ziel. Die Testszene prüft Pickup, Inspect und Use.
+
+
+## 16. P0-Gameplay-Blockout
+
+Der räumliche Testaufbau, die drei Interaktionstestobjekte, Hindernisvolumen und reproduzierbaren Testabläufe sind in der [P0-Gameplay-Blockout-Spezifikation](p0-gameplay-blockout.md) beschrieben.
+
+Der Blockout verwendet die bestehenden 48 × 36 m und die fünf Funktionszonen des Startgrundstücksentwurfs als vorläufige Grundlage. Er ergänzt keine Wirtschaft, Story oder späteren Gameplay-Systeme.
