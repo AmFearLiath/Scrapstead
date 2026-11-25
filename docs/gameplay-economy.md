@@ -257,3 +257,12 @@ Die dort beschriebenen Systeme folgen denselben wirtschaftlichen Grundsätzen: e
 - Ein Mitarbeiter übernimmt eine einfache, sichtbare Aufgabe.
 - Eine Maschine besitzt eine klare Funktion.
 - Der Spieler wird nie durch eine verpflichtende Verarbeitungskette vom Geldverdienen ausgeschlossen.
+
+
+## Ergänzung: Umfangsgrenze der Wirtschaft
+
+Die Wirtschaft bleibt bewusst überschaubar. Der Spielerbetrieb erhält die eigentliche Systemtiefe; regionale Unternehmen und Märkte werden vereinfacht dargestellt. Fremde Betriebe benötigen keine vollständige Personal-, Lager-, Produktions- oder Buchhaltungssimulation. Lieferbeziehungen zwischen NPC-Unternehmen werden nur dann konkret simuliert, wenn daraus direktes Gameplay oder eine sichtbare Weltwirkung entsteht.
+
+Credits bleiben die zentrale Währung. Stabile Grundpreise und wenige dynamische Marktchancen sorgen für Verständlichkeit. Außenstandorte erweitern den eigenen Betrieb gezielt, nicht als unbegrenzte Kette eigenständiger Firmen.
+
+Vollständige Leitplanken und Nicht-Ziele: [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
