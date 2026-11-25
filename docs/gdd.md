@@ -357,3 +357,14 @@ Für die Kernregion wird zunächst mit fünf dauerhaften regionalen Anlaufstelle
 Diese Orte erhalten klar begrenzte Funktionen wie Grundversorgung, Reparatur, Materialhandel, ländliche Beschaffung und Frachtaufträge. Sie besitzen keine vollständige Personal-, Lager-, Produktions- oder Buchhaltungssimulation. Die konkrete Besetzung ist ein Content-Vorschlag und kann im Prototyp reduziert oder zusammengelegt werden.
 
 Details: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
+
+
+## Ergänzung: Produktionsumfang und Entwicklungsfahrplan
+
+Die erste vollständige Spielversion konzentriert sich auf einen ausgebauten Old Yard, eine kompakte Hauptregion, wenige regionale Anlaufstellen und wiederkehrende Figuren, Scrappy, eine begrenzte Auswahl an Mitarbeitern und Maschinen sowie einen klaren Hauptabschluss.
+
+Bisherige Systemspezifikationen beschreiben mögliche Funktionen und sind nicht automatisch Release-Verpflichtungen. Optionale Erweiterungen werden erst nach Stabilisierung des Kerns freigegeben. Vollständige Wirtschaftssimulationen, unbegrenzte Standortketten, komplexe NPC-Unternehmen und umfangreiche Pflichtlogistik gehören nicht zum Kernumfang.
+
+Die vorläufige Zielspielzeit des Hauptdurchlaufs bleibt 30–40 Stunden und wird durch spielbare Tests validiert.
+
+Vollständige Produktionsleitplanke, Content-Rahmen, Entwicklungsphasen, Abnahmekriterien und Streichreihenfolge: [Produktionsumfang und Entwicklungsfahrplan](production-scope-and-roadmap.md).
