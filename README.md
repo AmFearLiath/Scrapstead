@@ -18,6 +18,7 @@ The repository is currently used to collect the game's design documentation, dec
 4. **Meaningful automation.** Machines have clear, understandable jobs.
 5. **Cozy personality.** Warm diorama visuals, humor, charming machines, and Scrappy.
 6. **Player freedom.** Multiple ways to collect, process, sell, build, and customize.
+7. **Fully multilingual from day one.** All player-facing content is localization-key driven and designed for internationalization from the beginning.
 
 ## Canonical decisions
 
@@ -30,6 +31,8 @@ The repository is currently used to collect the game's design documentation, dec
 - Progression: player performs the work first, then hires help, buys initial machines, and gradually builds an automated operation.
 - Companion: Scrappy, a modular robot whose head is found under a scrap pile and restored using a special component from the red toolbox.
 - Scrappy customization: player builds him from salvaged parts; combinations can be useful, absurd, or purely cosmetic.
+- Localization: fully multilingual development from the first production asset; no hard-coded player-facing strings; stable IDs and localization keys.
+- Initial reference locales: English and German; further locales must be addable without gameplay-code changes.
 - Core design rule: **Simple Core, Endless Possibilities.**
 
 ## Documentation map
@@ -37,6 +40,8 @@ The repository is currently used to collect the game's design documentation, dec
 - [Game Design Document](docs/gdd.md)
 - [Gameplay & Economy Specification](docs/gameplay-economy.md)
 - [Progression & Business Growth](docs/progression-business-growth.md)
+- [Starting Yard Item Catalog](docs/starting-yard-item-catalog.md)
+- [Localization & Internationalization Standard](docs/localization.md)
 - [Scrappy Companion Specification](docs/scrappy-companion.md)
 - [Machines & Automation Specification](docs/machines-automation.md)
 - [World & Asset Design](docs/world-art-assets.md)
