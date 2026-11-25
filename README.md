@@ -39,6 +39,10 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - Zeit: Kontinuierliche Simulation mit Tag-Nacht-Rhythmus und täglichen Wirtschaftsereignissen.
 - Offline-Fortschritt: Bevorzugt begrenzt, maximal 24 Stunden.
 - Ressourcen: Vier Ebenen aus Gegenständen, Rohmaterialien, Komponenten und Erzeugnissen.
+- Gameplay: Ausgewogene Aktivitäten, hybride Zerlegung, begrenztes modulares Crafting und automatisierte Logistik.
+- Fahrzeuge: Keine direkte Steuerung; Transport über Aufträge, Routen und intelligente Disposition.
+- Lager und Produktion: Standortgebundene Bestände, hybride Lagerverwaltung, physische und logische Produktionsverbindungen.
+- Energie: Externer Netzbezug plus optionale Eigenproduktion; vollständige Autonomie ist kein Pflichtziel.
 - Zerlegung: Hybrid – einfache Zerlegung für gewöhnliche Gegenstände, detaillierte Komponenten für besondere Objekte.
 - Spielabschluss: Echtes Hauptende, optionaler Meisterabschluss und freies Weiterspielen danach.
 - Statistik: Erfassung relevanter Ereignisse ab Spielbeginn.
@@ -51,6 +55,7 @@ Dieses Repository sammelt Designdokumentation, verbindliche Entscheidungen, Syst
 - [Spieldesign-Dokument](docs/gdd.md)
 - [Welt-, Unternehmens- und Simulationskonzept](docs/world-and-company-simulation.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
+- [Interaktion, Transport, Lager, Produktion und Energie](docs/gameplay-interaction-logistics-production.md)
 - [Ergänzungsprotokoll: Welt und Unternehmenssimulation](docs/decision-log-world-and-simulation.md)
 - [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
 - [First-Hour-Experience – Spielstart und erste Stunde](docs/first-hour-experience.md)
