@@ -333,3 +333,10 @@ Diese offenen Punkte sind bewusste Testparameter und keine Lücken in der Archit
 Die konkrete Bewegungslogik, Eingabeaktionen, Physikverantwortung und Abnahmekriterien des Spielers sind in der [P0-PlayerController-Spezifikation](p0-player-controller.md) festgehalten.
 
 Der Controller verwendet kamerabezogene Bewegung, normalisierte diagonale Eingaben und eine getrennte visuelle Ausrichtung. Sprinten, Springen und weitere Bewegungsaktionen gehören nicht zum P0-Umfang.
+
+
+## 14. GameplayCameraController
+
+Die konkrete Perspektive, Follow-Logik, Zoomsteuerung und die P0-Abnahmekriterien der Gameplay-Kamera sind in der [P0-GameplayCameraController-Spezifikation](p0-gameplay-camera-controller.md) festgehalten.
+
+Die Gameplay-Kamera verwendet als Ausgangspunkt eine orthografische isometrische Perspektive, folgt einem definierten Kamera-Anker am Spieler und bietet einen begrenzten, stufenlosen Mausrad-Zoom. Freie Rotation, automatische Hindernisvermeidung und dynamische Gebäudetransparenz gehören nicht zum P0-Umfang.
