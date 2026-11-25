@@ -113,17 +113,67 @@ Mögliche Funktionen:
 
 Die Innenraumdarstellung und Kameraübergänge müssen so gestaltet werden, dass der Spieler die Übersicht behält. Die konkrete technische Lösung – beispielsweise Ausblenden von Dachteilen oder ein transparenter Schnitt – bleibt offen.
 
-## 6. Fortschritt und Freischaltungen
+## 6. Fortschritt, Einstieg und Freischaltungen
 
-Das Gebäudesystem wächst mit dem Betrieb.
+Das Gebäudesystem wächst mit dem Betrieb. Die umfangreichen Gestaltungsoptionen sind bewusst nicht alle von Beginn an verfügbar.
 
-1. **Start:** Vorhandene einfache Werkstatt und kleine Unterstände.
-2. **Erste Erweiterung:** Zusätzliche Räume, Lager und Überdachungen.
-3. **Ausbau:** Mehr Wand-, Dach- und Fundamentvarianten.
-4. **Professionalisierung:** Größere Hallen, spezialisierte Gebäude und bessere Materialien.
-5. **Später Betrieb:** Große, individuell gestaltete Produktionsgebäude und weitläufige Anlagen.
+**Designregel: Erst den Spieler ins Spiel ziehen, dann nach und nach mehr kreative Möglichkeiten eröffnen.**
 
-Freischaltungen sollen neue Möglichkeiten eröffnen, nicht grundlegende Kreativität künstlich blockieren. Einfache Umbauten und grundlegende Module sollen nicht hinter unnötig hohen Levelanforderungen versteckt werden.
+Der Spielstart konzentriert sich auf die unmittelbare Kernschleife:
+
+- das Grundstück erkunden
+- Schrott sammeln und verkaufen
+- erste Werkzeuge und Arbeitsabläufe kennenlernen
+- Scrappy entdecken und wiederherstellen
+- die vorhandene Werkstatt und vorhandene Einrichtungen nutzen
+- erste sichtbare Verbesserungen am Betrieb erreichen
+
+Zu Beginn soll der Spieler keine umfangreiche Bauteilbibliothek, Materialverwaltung oder komplexe Gestaltungsoberfläche vor sich haben.
+
+### Vorgeschlagene Freischaltungsfolge
+
+| Fortschrittsphase | Neue Möglichkeiten |
+|---|---|
+| Spielstart | Vorhandene Gebäude nutzen, einfache Objekte und fertige Einrichtungen platzieren |
+| Erste Betriebserweiterung | Weitere Fertiggebäude, einfache Überdachungen und funktionale Anbauten |
+| Ausbau | Erste modulare Fundamente, Böden, Wände und Dachsegmente |
+| Etablierter Betrieb | Mehr Bauteilvarianten, Türen, Fenster und größere Raumaufteilungen |
+| Fortgeschrittener Betrieb | Material- und Farbvarianten, Fassaden und Beleuchtung |
+| Später Betrieb | Umfangreiche Einrichtung, Dekoration, Baupläne und individuelle Gestaltung |
+
+Die Reihenfolge ist ein Progressionsvorschlag. Konkrete Freischaltzeitpunkte, Preise und Voraussetzungen werden anhand des First-Hour-Prototyps und späterer Spieltests festgelegt.
+
+### Freischaltungen in der Spielwelt vermitteln
+
+Neue Möglichkeiten sollen möglichst organisch in der Welt auftauchen:
+
+- Ein Handwerker oder Händler bietet eine neue Gebäudeerweiterung an.
+- Ein NPC stellt ein neues Modul oder eine neue Bauteilgruppe vor.
+- Scrappy weist gelegentlich auf eine neu verfügbare Möglichkeit hin.
+- Eine Investition oder ein sichtbarer Fortschritt eröffnet eine passende Erweiterung.
+
+Die Hinweise sollen hilfreich sein, aber den Spielfluss nicht mit dauernden Pop-ups unterbrechen.
+
+### Keine künstlichen Kreativitätsbarrieren
+
+Die schrittweise Freischaltung dient dem Lern- und Belohnungsrhythmus, nicht dazu, grundlegende Aktionen unnötig zu sperren.
+
+- Der Spieler kann früh sinnvolle funktionale Erweiterungen vornehmen.
+- Freigeschaltete Grundfunktionen bleiben dauerhaft verfügbar.
+- Neue Inhalte erweitern die Auswahl, statt bereits gebaute Dinge zu entwerten.
+- Der Spieler soll nicht erst zahlreiche Level aufsteigen müssen, um eine einfache Tür oder einen zweckmäßigen Anbau zu bauen.
+
+### Gemeinsame Bauteilbibliothek mit begrenztem Aufwand
+
+Alle modularen Gebäudeteile verwenden ein gemeinsames Bau- und Verbindungssystem.
+
+- Bauteile werden in wiederverwendbaren Kategorien und Varianten organisiert.
+- Fertiggebäude und modulare Konstruktionen nutzen möglichst dieselben Bauteile und Materialdefinitionen.
+- Farben und Materialoberflächen sollen nach Möglichkeit über gemeinsame Materialvarianten statt über individuelle Gebäudesysteme gesteuert werden.
+- Funktionen und Gestaltung bleiben getrennt.
+- Neue Varianten sollen sich in die bestehende Bibliothek einfügen, ohne für jedes Gebäude ein eigenes Anpassungssystem zu benötigen.
+
+Die gemeinsame Bibliothek ist eine technische und gestalterische Grundlage. Sie muss dem Spieler nicht bereits zu Spielbeginn vollständig offengelegt werden.
 
 ## 7. Baupläne und Wiederverwendung
 
