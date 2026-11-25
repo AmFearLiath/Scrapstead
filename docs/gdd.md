@@ -39,6 +39,8 @@ Erkunden → Beschaffen → Sammeln → Verkaufen oder Verarbeiten → Verdienen
 
 Beschaffung und Verarbeitung bieten mehrere gleichberechtigte Wege. Gewöhnliche Gegenstände können direkt verkauft werden. Ausgewählte Gegenstände lassen sich sortieren, zerlegen, aufbereiten oder als Komponenten wiederverwenden. Verarbeitung ist eine Chance auf zusätzliche Wertschöpfung, keine Pflicht für jedes Objekt.
 
+Die zentralen Gameplay-Aktivitäten – Bergen, Erkunden, Verarbeiten, Bauen und Wirtschaften – erhalten eine ausgewogene Bedeutung. Der Spieler kann eigene Schwerpunkte setzen; keine einzelne Aktivität wird zur Pflicht für alle Spielstile.
+
 ## 4. Spielverlauf und Progression
 
 Die Entwicklung soll sich verdient und schrittweise anfühlen:
@@ -168,6 +170,7 @@ Das Bausystem ist hybrid:
 - Ein Raster dient als Orientierung und Präzisionshilfe, nicht als universelle Einschränkung.
 - Funktionale Regeln prüfen Zugänge, Arbeitsbereiche, Kollisionen, Ein- und Ausgabepunkte sowie Transportverbindungen.
 - Produktionsanlagen können physische Fördertechnik und logische Materialverbindungen kombinieren. Einzelmaschinen bleiben ebenso sinnvoll wie komplexe Produktionslinien.
+- Die Energieversorgung kombiniert externen Netzbezug mit optionaler Eigenproduktion. Kleine Betriebe nutzen eine vereinfachte Versorgung; größere Anlagen können ein ausbaubares Stromnetz erhalten. Vollständige Energieautonomie ist ein mögliches spätes Ausbauziel, aber keine Pflicht.
 - Maschinenverbindungen sollen einfach angelegt werden können; die Routenplanung wird soweit möglich vom Spiel unterstützt.
 - Komplexe manuelle Logistikprogrammierung ist kein Pflichtsystem.
 
