@@ -330,3 +330,12 @@ Aufgaben gliedern sich in Hauptmissionen, persönliche und regionale Geschichten
 - Questfortschritt wird ereignisbasiert geprüft und zuverlässig gespeichert.
 
 Die vollständige Spezifikation steht in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
+
+
+## Ergänzung: Regionalkarte und Weltfreischaltung
+
+Die räumliche Planung konkretisiert die sechs Gebiete als kompakte Industrietal-Region. Die Kernkarte verbindet Old Yard, Scrapstead Town, Industrial Quarter, Railway District und Greenbelt. Quarry & Extraction wird zunächst als Spezialstandort behandelt. Hauptachsen, Landmarken, Zonen und nachvollziehbare Zugangsbedingungen strukturieren die Welt.
+
+Gebiete werden nicht über willkürliche Levelgrenzen freigeschaltet. Erkundung, Infrastrukturprojekte, Reparaturen, Vereinbarungen und Investitionen können neue Bereiche nutzbar machen. Die Welt reagiert mit dauerhaft sichtbaren Zustandsänderungen.
+
+Details und offene Kartenfragen stehen in [Regionalkarte, Gebietsstruktur und Weltfreischaltung](regional-map-and-world-progression.md).
