@@ -611,3 +611,8 @@ Der erste echte Erfolg ist nicht eine große Welt oder eine beeindruckende Autom
 ## Ergänzung: P0-Szenenarchitektur
 
 Die Szenen- und Systemverantwortlichkeiten für P0 sind in der [P0-Szenenarchitektur](p0-scene-architecture.md) als Bauplan beschrieben. Sie konkretisiert den bestehenden P0-Umfang, erweitert ihn aber nicht um zusätzliche Gameplay-Systeme.
+
+
+## Ergänzung: P0-Spielersteuerung
+
+Die Spielerbewegung wird gemäß der [P0-PlayerController-Spezifikation](p0-player-controller.md) kamerabezogen umgesetzt. Die Spezifikation konkretisiert den bestehenden P0-Nachweis für Bewegung und Kollision, ohne Sprinten, Springen oder weitere Bewegungsmechaniken in den Prototyp aufzunehmen.
