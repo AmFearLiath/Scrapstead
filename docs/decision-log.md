@@ -237,9 +237,9 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Walt ist ein freundlicher, eigenwilliger Bastler und früherer Betreiber des Schrottplatzes.
 - Seine Erfindungen sind kreativ, improvisiert und gelegentlich fragwürdig, werden aber innerhalb der Spielwelt ernsthaft behandelt.
 - Scrappy wurde als praktischer Schrottplatzhelfer gebaut und entwickelte sich zu Walts Begleiter und Gesprächspartner.
-- Während eines Sturms wurde ein Lagerbereich beschädigt. Scrappy wurde schwer beschädigt und sein Kopf unter Schrott begraben.
-- Walt barg den Kopf, sicherte die Kernkomponente im roten Werkzeugkasten und wollte Scrappy später reparieren.
-- Walt verstarb, bevor die Reparatur abgeschlossen werden konnte.
+- Walt kam bei einem Unfall mit seiner letzten großen Erfindung, der „The Everything-O-Matic 3000“, ums Leben.
+- Scrappy wurde beim Versuch, Walt zu erreichen, schwer beschädigt; sein Kopf landete unter einem Schrotthaufen.
+- Walt hatte Scrappys Kernkomponente vor dem Testlauf ausgebaut und im roten Werkzeugkasten gesichert. Sie blieb dadurch erhalten.
 - Der Spieler erbt den Schrottplatz und erhält Nachlassunterlagen, Schlüssel und einen persönlichen Brief von Walt.
 - Die genaue Beziehung zwischen Walt und dem Spieler bleibt offen.
 - Scrappys Speicher ist beschädigt. Erinnerungen an Walt werden schrittweise durch Orte, Gegenstände und Maschinen ausgelöst.
@@ -270,3 +270,20 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Der Humor entsteht aus Walts Erfindung, seiner fragwürdigen Dokumentation und trockenen Betriebsnotizen – nicht aus einer Verspottung seines Todes.
 - Die Maschine bleibt zunächst stillgelegt als erzählerisches Relikt auf dem Grundstück. Eine spätere Reparatur oder Nutzung ist noch offen.
 - Begründung: Walts Leidenschaft wird auf tragikomische, zur Welt passende Weise Teil seiner Geschichte. Der Unfall verbindet Scrappys Beschädigung, den roten Werkzeugkasten und die Vergangenheit des Schrottplatzes logisch miteinander.
+
+
+## 25.11.2026 — Scrappys Persönlichkeit, Eigeninitiative und Timing
+
+**Beschluss:** Scrappy wird als eigenständiger, aktiver Begleiter mit einer Mischung aus trockenem Humor, Frechheit und emotionaler Tiefe ausgearbeitet.
+
+- Im Normalfall ist Scrappy trocken, sachlich, sarkastisch und gelegentlich besserwisserisch.
+- In passenden Situationen kann er überraschend frech, bissig oder überschwänglich reagieren. Diese Ausbrüche sollen durch Kontrast und Timing wirken, nicht durch permanente Lautstärke.
+- Scrappy ist selbstbewusst bis zur Selbstüberschätzung und hält seine technische Kompetenz gelegentlich für größer, als sie tatsächlich ist.
+- Er bleibt loyal, neugierig, hilfsbereit und hinter seiner frechen Fassade herzlich und verletzlich.
+- Scrappy besitzt Eigeninitiative: Er darf interessante Dinge untersuchen, auf Fundstücke oder Auffälligkeiten hinweisen und gelegentlich kleine eigene Tätigkeiten oder Projekte verfolgen.
+- Seine Eigeninitiative bleibt unterstützend. Sie darf dem Spieler keine wichtigen Entdeckungen, Entscheidungen oder Aufgaben abnehmen.
+- Seine Kommunikation wird in situative Kommentare, selbst initiierte Kommentare und besondere Erinnerungsmomente gegliedert.
+- Scrappy reagiert auf Erlebnisse und wiederkehrende Situationen, sodass sich gemeinsame Running Gags und eine persönliche Geschichte mit dem Spieler entwickeln können.
+- Er kommentiert nicht jede Aktion. Stille und emotionale Momente ohne Pointe sind ausdrücklich erwünscht.
+- Er darf den Spieler necken, aber niemals herabsetzen oder dauerhaft aufdringlich sein.
+- Begründung: Scrappy soll sich wie eine eigenständige Figur anfühlen, die auch dann eine Persönlichkeit besitzt, wenn der Spieler gerade nicht mit ihm interagiert. Sein Humor und seine Initiative sollen die Welt bereichern, ohne den Spielfluss oder die Spielerfreiheit zu beeinträchtigen.
