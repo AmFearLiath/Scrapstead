@@ -1,0 +1,70 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqpg6"]
+albedo_color = Color(0.627451, 0.6039216, 0.54901963, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_uajp0"]
+size = Vector3(0.6, 0.2, 0.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vhho"]
+albedo_color = Color(0.29803923, 0.3254902, 0.34117648, 1)
+metallic = 0.6
+roughness = 0.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0ovs3"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 3.4
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ddgnr"]
+albedo_color = Color(0.8784314, 0.6627451, 0.23137255, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_fnba3"]
+size = Vector3(0.22, 0.3, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y7u3g"]
+size = Vector3(0.6, 0.35, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i24gg"]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.9529412, 0.76862746, 1)
+emission_enabled = true
+emission = Color(1, 0.9137255, 0.65882355, 1)
+emission_energy_multiplier = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwcwc"]
+size = Vector3(0.5, 0.25, 0.02)
+
+[node name="Floodlight" type="Node3D" unique_id=1307083354]
+
+[node name="Foot" type="MeshInstance3D" parent="." unique_id=1007855327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_kqpg6")
+mesh = SubResource("BoxMesh_uajp0")
+
+[node name="Pole" type="MeshInstance3D" parent="." unique_id=114752670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9000001, 0)
+material_override = SubResource("StandardMaterial3D_4vhho")
+mesh = SubResource("CylinderMesh_0ovs3")
+
+[node name="SwitchBox" type="MeshInstance3D" parent="." unique_id=1324011799]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0.1)
+material_override = SubResource("StandardMaterial3D_ddgnr")
+mesh = SubResource("BoxMesh_fnba3")
+
+[node name="Head" type="Node3D" parent="." unique_id=118716359]
+transform = Transform3D(1, 0, 0, 0, 0.81915206, -0.57357645, 0, 0.57357645, 0.81915206, 0, 3.55, 0.2)
+
+[node name="Housing" type="MeshInstance3D" parent="Head" unique_id=227562643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175, 0)
+material_override = SubResource("StandardMaterial3D_4vhho")
+mesh = SubResource("BoxMesh_y7u3g")
+
+[node name="Lens" type="MeshInstance3D" parent="Head" unique_id=1180317606]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.175, 0.16)
+material_override = SubResource("StandardMaterial3D_i24gg")
+mesh = SubResource("BoxMesh_uwcwc")

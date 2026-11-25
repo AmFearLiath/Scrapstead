@@ -1,0 +1,14 @@
+# Godot 4
+.godot/
+/android/
+*.translation
+
+# Local engine provisioning (see docs/p0-implementation-readiness.md)
+/_engine/
+
+# Test output
+/tests/_output/
+
+# OS
+.DS_Store
+Thumbs.db

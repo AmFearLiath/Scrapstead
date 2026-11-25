@@ -673,3 +673,24 @@ Referenz: [P0-Systemintegration und Ablauf](p0-system-integration.md).
 **Begründung:** Die Einzelspezifikationen sind nun ausreichend konkret, um eine reproduzierbare Projektstruktur und einen kontrollierten Implementierungsablauf festzulegen. Die phasenweise Umsetzung verhindert, dass Fehler aus mehreren gleichzeitig entstehenden Systemen schwer zuzuordnen sind.
 
 Referenz: [P0-Implementierungs- und Projektstruktur](p0-implementation-readiness.md).
+
+
+## 25.11.2026 — P0-Umsetzung: technische Implementierungsentscheidungen
+
+**Kontext:** Bei der Umsetzung von P0 mussten einzelne, in den Spezifikationen bewusst offen gelassene Implementierungsdetails festgelegt werden. Es handelt sich um technische Ergänzungen, nicht um Änderungen an beschlossenen Spielmechaniken.
+
+- **Weltkoordinaten:** Die Layoutkoordinaten der Blockout-Dokumente (X = Ost, Z = Nord) werden in Godot als `Welt-X = Layout-X`, `Welt-Z = −Layout-Z` abgebildet. Godot ist rechtshändig mit −Z als Vorwärtsrichtung; eine 1:1-Übernahme hätte das Grundstück gespiegelt (Osten links von Norden). Norden ist damit −Z, wie in Godots Draufsicht. Die Dokumentkoordinaten bleiben unverändert gültig.
+- **Kamera-Yaw:** Der Startwert „45°“ wird als −45° umgesetzt (Blick nach Nordosten über das Grundstück, Einfahrt unten im Bild). Pitch −35°, Orthographic Size 14, Zoom 9–19, Follow 8,0 und Zoom-Glättung 10,0 entsprechen den Startwerten.
+- **Physik-Backend:** Das Projekt verwendet explizit das in Godot integrierte Backend „Jolt Physics“ mit `areas_detect_static_bodies = true`. Mit dem Standard-Backend meldete `Area3D` im Test keine `StaticBody3D`-Ziele; die Spezifikation sieht StaticBody3D-Interaktionsziele und einen Area3D-Detector vor. Es wird keine externe Abhängigkeit eingeführt.
+- **Kollisionslayer:** 1 = `world` (Levelgeometrie, Stationen), 2 = `player`, 3 = `interactable`. Spieler: Layer 2, Maske 1. InteractionDetector: Layer 0, Maske 3. Große Interaktionsobjekte liegen zusätzlich auf Layer 1.
+- **Physik-Interpolation** ist aktiviert; Spieler und Kamera-Rig bewegen sich im Physik-Update, die Darstellung wird interpoliert.
+- **Interaktionsvertrag:** `Interactable` ist eine kleine Basisklasse (`class_name`) auf `StaticBody3D`. Abhängigkeiten für Aktionen erhält das Ziel über ein explizites `InteractionContext`-Objekt statt über globale Node-Suche.
+- **Hervorhebung:** Ein pulsierender, unbeleuchteter Bodenring am Interaktionspunkt; Materialien der Objekte werden nicht verändert.
+- **Einstellungen:** Implementiert sind nur Sprache (Deutsch/English) und Anzeigemodus (Fenster/Vollbild). Sie sind spielstandübergreifend und werden von SaveService in einer separaten Datei `user://settings.json` gespeichert, nicht im Spielstand. Grund: Einstellungen müssen bereits im Hauptmenü ohne Spielstand gelten.
+- **Lokalisierung:** Godot-CSV-Übersetzung `localization/scrapstead.csv` (en/de, Fallback en). Controls verwenden Lokalisierungsschlüssel als Text. Ausnahme: Das DebugOverlay ist entwicklerseitig und nicht lokalisiert.
+- **Logo:** Temporärer Schriftzug (lokalisierter Label-Schlüssel) mit Zahnrad-Icon statt einer Logo-Bilddatei.
+- **Debug-Eingaben:** Zusätzlich zu `debug_save` (F5) gibt es `debug_toggle_overlay` (F3), da das Overlay laut Integrationsspezifikation zur Laufzeit ein-/ausblendbar sein soll. Beide wirken nur in Debug-Builds.
+- **Blockout-Erzeugung:** Die Old-Yard-Geometrie und die Platzhaltermodelle werden reproduzierbar durch das Entwicklungswerkzeug `tools/build_blockout.gd` erzeugt. Die erzeugten Szenen werden versioniert, aber nicht von Hand bearbeitet.
+- **Tests:** Ein schlanker eigener Headless-Testrunner (`tests/run_tests.gd`) ohne externe Abhängigkeiten führt Unit- und Integrationstests aus.
+
+**Begründung:** Die Festlegungen schließen offene Implementierungsdetails, ohne Verantwortlichkeiten, Szenenarchitektur oder Spielmechaniken zu verändern.

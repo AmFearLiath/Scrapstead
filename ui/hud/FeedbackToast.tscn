@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/FeedbackToast.gd" id="1_toast"]
+
+[node name="FeedbackToast" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 150.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("1_toast")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Message" type="Label" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1

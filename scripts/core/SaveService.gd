@@ -1,0 +1,189 @@
+extends Node
+## Persistence service (autoload "SaveService").
+##
+## Sole owner of file I/O. Reads and writes the versioned JSON save game and the
+## separate settings file in the Godot user data directory. It validates the
+## save schema but makes no gameplay decisions, loads no scenes and never calls
+## GameSession back (see docs/p0-system-integration.md, section 4.2).
+##
+## All public methods return structured result dictionaries:
+## { "ok": bool, "error": ErrorCode, "message_key": String, "data": Dictionary }
+
+## Current save schema version. Other versions are rejected, never silently migrated.
+const SAVE_VERSION: int = 1
+const SAVE_FILE_NAME: String = "slot_0.json"
+const SETTINGS_FILE_NAME: String = "settings.json"
+const DEFAULT_SAVE_DIRECTORY: String = "user://saves"
+const DEFAULT_SETTINGS_DIRECTORY: String = "user://"
+
+enum ErrorCode {
+	NONE,
+	NOT_FOUND,
+	READ_FAILED,
+	CORRUPT,
+	UNSUPPORTED_VERSION,
+	INVALID_DATA,
+	WRITE_FAILED,
+}
+
+const _MESSAGE_KEYS: Dictionary = {
+	ErrorCode.NONE: "ui.save.ok",
+	ErrorCode.NOT_FOUND: "ui.save.error.not_found",
+	ErrorCode.READ_FAILED: "ui.save.error.read_failed",
+	ErrorCode.CORRUPT: "ui.save.error.corrupt",
+	ErrorCode.UNSUPPORTED_VERSION: "ui.save.error.unsupported_version",
+	ErrorCode.INVALID_DATA: "ui.save.error.invalid_data",
+	ErrorCode.WRITE_FAILED: "ui.save.error.write_failed",
+}
+
+## Directory of the save slot. Only changed by automated tests.
+var save_directory: String = DEFAULT_SAVE_DIRECTORY
+## Directory of the settings file. Only changed by automated tests.
+var settings_directory: String = DEFAULT_SETTINGS_DIRECTORY
+
+
+## Returns true only if a save file exists, parses and validates for this version.
+func has_valid_save() -> bool:
+	return load_game()["ok"]
+
+
+## Reads, parses and validates the save game.
+func load_game() -> Dictionary:
+	var path: String = get_save_path()
+	if not FileAccess.file_exists(path):
+		return _result(ErrorCode.NOT_FOUND)
+	var text: String = FileAccess.get_file_as_string(path)
+	if text.is_empty() and FileAccess.get_open_error() != OK:
+		return _result(ErrorCode.READ_FAILED)
+	var json := JSON.new()
+	if json.parse(text) != OK or typeof(json.data) != TYPE_DICTIONARY:
+		return _result(ErrorCode.CORRUPT)
+	var data: Dictionary = json.data
+	var version_error: ErrorCode = _check_version(data)
+	if version_error != ErrorCode.NONE:
+		return _result(version_error)
+	if not validate_save_data(data):
+		return _result(ErrorCode.INVALID_DATA)
+	return _result(ErrorCode.NONE, _normalize(data))
+
+
+## Validates and writes the given save data. Writes to a temporary file first
+## and replaces the previous save only after a complete write.
+func save_game(data: Dictionary) -> Dictionary:
+	if int(data.get("save_version", -1)) != SAVE_VERSION or not validate_save_data(data):
+		return _result(ErrorCode.INVALID_DATA)
+	var dir_error: Error = DirAccess.make_dir_recursive_absolute(save_directory)
+	if dir_error != OK and not DirAccess.dir_exists_absolute(save_directory):
+		return _result(ErrorCode.WRITE_FAILED)
+	var final_path: String = get_save_path()
+	var temp_path: String = final_path + ".tmp"
+	var file := FileAccess.open(temp_path, FileAccess.WRITE)
+	if file == null:
+		return _result(ErrorCode.WRITE_FAILED)
+	var stored: bool = file.store_string(JSON.stringify(data, "\t"))
+	file.close()
+	if not stored:
+		DirAccess.remove_absolute(temp_path)
+		return _result(ErrorCode.WRITE_FAILED)
+	if FileAccess.file_exists(final_path) and DirAccess.remove_absolute(final_path) != OK:
+		DirAccess.remove_absolute(temp_path)
+		return _result(ErrorCode.WRITE_FAILED)
+	if DirAccess.rename_absolute(temp_path, final_path) != OK:
+		return _result(ErrorCode.WRITE_FAILED)
+	return _result(ErrorCode.NONE)
+
+
+## Schema check for required fields and basic types. Gameplay consistency
+## (e.g. whether an object ID exists in a scene) is not judged here.
+func validate_save_data(data: Dictionary) -> bool:
+	if typeof(data.get("scene_id")) != TYPE_STRING or String(data["scene_id"]).is_empty():
+		return false
+	if typeof(data.get("player")) != TYPE_DICTIONARY:
+		return false
+	var player: Dictionary = data["player"]
+	if player.has("position") and not _is_vector3_array(player["position"]):
+		return false
+	if player.has("facing") and not _is_number(player["facing"]):
+		return false
+	if typeof(data.get("world_objects")) != TYPE_DICTIONARY:
+		return false
+	for object_id: Variant in data["world_objects"]:
+		if typeof(object_id) != TYPE_STRING or typeof(data["world_objects"][object_id]) != TYPE_DICTIONARY:
+			return false
+	return true
+
+
+## Absolute path of the active save slot.
+func get_save_path() -> String:
+	return save_directory.path_join(SAVE_FILE_NAME)
+
+
+## Removes the save slot. Used by automated tests only.
+func delete_save() -> void:
+	if FileAccess.file_exists(get_save_path()):
+		DirAccess.remove_absolute(get_save_path())
+
+
+## Loads the player settings. Missing or broken files yield an empty dictionary.
+func load_settings() -> Dictionary:
+	var path: String = settings_directory.path_join(SETTINGS_FILE_NAME)
+	if not FileAccess.file_exists(path):
+		return {}
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_warning("SaveService: settings file is unreadable and will be ignored.")
+		return {}
+	return parsed
+
+
+## Persists the player settings.
+func save_settings(settings: Dictionary) -> Dictionary:
+	DirAccess.make_dir_recursive_absolute(settings_directory)
+	var file := FileAccess.open(settings_directory.path_join(SETTINGS_FILE_NAME), FileAccess.WRITE)
+	if file == null:
+		return _result(ErrorCode.WRITE_FAILED)
+	file.store_string(JSON.stringify(settings, "\t"))
+	file.close()
+	return _result(ErrorCode.NONE)
+
+
+## Localization key describing an error code.
+func get_message_key(code: ErrorCode) -> String:
+	return _MESSAGE_KEYS.get(code, "ui.save.error.invalid_data")
+
+
+func _check_version(data: Dictionary) -> ErrorCode:
+	if not _is_number(data.get("save_version")):
+		return ErrorCode.INVALID_DATA
+	if int(data["save_version"]) != SAVE_VERSION:
+		return ErrorCode.UNSUPPORTED_VERSION
+	return ErrorCode.NONE
+
+
+## JSON numbers arrive as floats; whole-number fields are converted back.
+func _normalize(data: Dictionary) -> Dictionary:
+	var normalized: Dictionary = data.duplicate(true)
+	normalized["save_version"] = int(normalized["save_version"])
+	return normalized
+
+
+func _result(code: ErrorCode, data: Dictionary = {}) -> Dictionary:
+	return {
+		"ok": code == ErrorCode.NONE,
+		"error": code,
+		"message_key": get_message_key(code),
+		"data": data,
+	}
+
+
+func _is_number(value: Variant) -> bool:
+	return typeof(value) == TYPE_FLOAT or typeof(value) == TYPE_INT
+
+
+func _is_vector3_array(value: Variant) -> bool:
+	if typeof(value) != TYPE_ARRAY or value.size() != 3:
+		return false
+	for component: Variant in value:
+		if not _is_number(component):
+			return false
+	return true

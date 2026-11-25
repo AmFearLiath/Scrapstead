@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu/MenuBackdrop.gd" id="1_backdrop"]
+[ext_resource type="Environment" path="res://assets/environment/yard_environment.tres" id="2_env"]
+[ext_resource type="PackedScene" path="res://scenes/world/YardBlockout.tscn" id="3_yard"]
+[ext_resource type="PackedScene" path="res://assets/objects/sell_counter.tscn" id="4_counter"]
+[ext_resource type="PackedScene" path="res://assets/objects/workbench.tscn" id="5_bench"]
+
+[sub_resource type="Curve3D" id="camera_curve"]
+_data = {
+"points": PackedVector3Array(-2.633, 0.000, -3.648, 2.633, 0.000, 3.648, -1.981, 16.732, -5.000, -4.561, 0.000, -2.106, 4.561, 0.000, 2.106, 9.000, 16.732, 3.785, -5.266, 0.000, -0.000, 5.266, 0.000, 0.000, 24.000, 15.000, 7.000, -4.561, 0.000, 2.106, 4.561, 0.000, -2.106, 39.000, 13.268, 3.785, -2.633, 0.000, 3.648, 2.633, 0.000, -3.648, 49.981, 13.268, -5.000, -0.000, 0.000, 4.213, 0.000, 0.000, -4.213, 54.000, 15.000, -17.000, 2.633, 0.000, 3.648, -2.633, 0.000, -3.648, 49.981, 16.732, -29.000, 4.561, 0.000, 2.106, -4.561, 0.000, -2.106, 39.000, 16.732, -37.785, 5.266, 0.000, 0.000, -5.266, 0.000, -0.000, 24.000, 15.000, -41.000, 4.561, 0.000, -2.106, -4.561, 0.000, 2.106, 9.000, 13.268, -37.785, 2.633, 0.000, -3.648, -2.633, 0.000, 3.648, -1.981, 13.268, -29.000, 0.000, 0.000, -4.213, -0.000, 0.000, 4.213, -6.000, 15.000, -17.000, -2.633, 0.000, -3.648, 2.633, 0.000, 3.648, -1.981, 16.732, -5.000),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="Animation" id="flythrough"]
+resource_name = "flythrough"
+length = 120.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CameraPath/CameraPathFollow:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 120),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="menu_library"]
+_data = {
+&"flythrough": SubResource("flythrough")
+}
+
+[node name="MenuBackdrop" type="Node3D"]
+script = ExtResource("1_backdrop")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 20, -18)
+rotation = Vector3(-0.96, -1.05, 0)
+light_color = Color(1, 0.93, 0.82, 1)
+light_energy = 1.25
+shadow_enabled = true
+directional_shadow_max_distance = 120.0
+
+[node name="YardBlockout" parent="." instance=ExtResource("3_yard")]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="SellCounter" parent="Props" instance=ExtResource("4_counter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6, 0, -6)
+rotation = Vector3(0, -1.5708, 0)
+
+[node name="Workbench" parent="Props" instance=ExtResource("5_bench")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, -14.4)
+
+[node name="CameraPath" type="Path3D" parent="."]
+curve = SubResource("camera_curve")
+
+[node name="CameraPathFollow" type="PathFollow3D" parent="CameraPath"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.981, 16.732, -5)
+rotation_mode = 0
+loop = true
+
+[node name="MenuCamera" type="Camera3D" parent="CameraPath/CameraPathFollow"]
+fov = 42.0
+far = 300.0
+
+[node name="CameraAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("menu_library")
+}
+autoplay = &"flythrough"

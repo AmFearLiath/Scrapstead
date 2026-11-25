@@ -1,0 +1,38 @@
+keys,en,de
+ui.menu.title,SCRAPSTEAD,SCRAPSTEAD
+ui.menu.tagline,Every Scrap Has a Story.,Every Scrap Has a Story.
+ui.menu.new_game,New Game,Neues Spiel
+ui.menu.continue,Continue,Fortsetzen
+ui.menu.settings,Settings,Einstellungen
+ui.menu.quit,Quit,Beenden
+ui.menu.continue_unavailable,No valid save game found.,Kein gültiger Spielstand vorhanden.
+ui.menu.prototype_label,Gameplay prototype,Gameplay-Prototyp
+ui.settings.title,Settings,Einstellungen
+ui.settings.language,Language,Sprache
+ui.settings.window_mode,Display,Anzeige
+ui.settings.window_mode.windowed,Windowed,Fenster
+ui.settings.window_mode.fullscreen,Fullscreen,Vollbild
+ui.settings.back,Back,Zurück
+ui.settings.locale.de,Deutsch,Deutsch
+ui.settings.locale.en,English,English
+ui.save.ok,Game saved.,Spiel gespeichert.
+ui.save.error.not_found,No save game found.,Kein Spielstand gefunden.
+ui.save.error.read_failed,The save game could not be read.,Der Spielstand konnte nicht gelesen werden.
+ui.save.error.corrupt,The save game is damaged and cannot be loaded.,Der Spielstand ist beschädigt und kann nicht geladen werden.
+ui.save.error.unsupported_version,The save game was created with an incompatible version.,Der Spielstand stammt aus einer inkompatiblen Version.
+ui.save.error.invalid_data,The save game contains invalid data.,Der Spielstand enthält ungültige Daten.
+ui.save.error.write_failed,Saving failed. Your progress was not saved.,Speichern fehlgeschlagen. Der Fortschritt wurde nicht gesichert.
+ui.session.error.scene_load_failed,The yard could not be loaded.,Der Schrottplatz konnte nicht geladen werden.
+ui.action.pick_up,Pick up,Aufheben
+ui.action.inspect,Inspect,Untersuchen
+ui.action.use,Use,Benutzen
+ui.prompt.key_hint,[{key}],[{key}]
+ui.panel.close,Close,Schließen
+ui.interaction.picked_up,Picked up: {name},Aufgehoben: {name}
+ui.interaction.unavailable,That is no longer available.,Das ist nicht mehr verfügbar.
+object.inspect_test.name,Old Notice Board,Altes Hinweisbrett
+object.inspect_test.text,"Faded letters, half covered in rust: ""Wren's Scrap & Salvage – Every scrap has a story. Bring it to the counter.""","Verblasste Buchstaben, halb von Rost bedeckt: „Wren's Schrott & Bergung – Jedes Stück hat eine Geschichte. Bring es zum Tresen.“"
+object.pickup_test.name,Rusty Bolt,Verrostete Schraube
+object.use_test.name,Yard Floodlight,Hofstrahler
+object.use_test.on,The floodlight hums to life.,Der Strahler springt brummend an.
+object.use_test.off,The floodlight goes dark.,Der Strahler geht aus.

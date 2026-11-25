@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o017c"]
+albedo_color = Color(0.6039216, 0.2901961, 0.13333334, 1)
+metallic = 0.3
+roughness = 0.85
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h7hy6"]
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.36
+radial_segments = 8
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trx3l"]
+albedo_color = Color(0.78431374, 0.39215687, 0.1764706, 1)
+metallic = 0.3
+roughness = 0.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0krw1"]
+top_radius = 0.11
+bottom_radius = 0.11
+height = 0.07
+radial_segments = 6
+rings = 1
+
+[node name="RustedBolt" type="Node3D" unique_id=1372579369]
+
+[node name="Shaft" type="MeshInstance3D" parent="." unique_id=927281716]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.23, -0.18)
+material_override = SubResource("StandardMaterial3D_o017c")
+mesh = SubResource("CylinderMesh_h7hy6")
+
+[node name="Head" type="MeshInstance3D" parent="." unique_id=1690856963]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.085, 0.12)
+material_override = SubResource("StandardMaterial3D_trx3l")
+mesh = SubResource("CylinderMesh_0krw1")

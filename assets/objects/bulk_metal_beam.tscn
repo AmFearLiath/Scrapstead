@@ -1,0 +1,85 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o017c"]
+albedo_color = Color(0.6039216, 0.2901961, 0.13333334, 1)
+metallic = 0.3
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_ksk7e"]
+size = Vector3(2.6, 0.26, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trx3l"]
+albedo_color = Color(0.78431374, 0.39215687, 0.1764706, 1)
+metallic = 0.3
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_48l7y"]
+size = Vector3(2.6, 0.05, 0.26)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ijhup"]
+size = Vector3(2.6, 0.05, 0.26)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ctyks"]
+albedo_color = Color(0.49803922, 0.54901963, 0.56078434, 1)
+metallic = 0.6
+roughness = 0.55
+
+[sub_resource type="BoxMesh" id="BoxMesh_0esqf"]
+size = Vector3(1.1, 0.08, 0.9)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4vhho"]
+albedo_color = Color(0.29803923, 0.3254902, 0.34117648, 1)
+metallic = 0.6
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_77hg3"]
+size = Vector3(0.5, 0.35, 0.45)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2dyym"]
+albedo_color = Color(0.5411765, 0.56078434, 0.57254905, 1)
+metallic = 0.7
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2mevc"]
+top_radius = 0.07
+bottom_radius = 0.07
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[node name="MetalBeam" type="Node3D" unique_id=1462270895]
+
+[node name="Beam" type="Node3D" parent="." unique_id=459437904]
+transform = Transform3D(0.95652544, 0.1344309, 0.25881904, -0.1391731, 0.99026805, 0, -0.25630024, -0.03602065, 0.9659258, 0, 0.12, 0)
+
+[node name="Web" type="MeshInstance3D" parent="Beam" unique_id=1627360208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16999999, 0)
+material_override = SubResource("StandardMaterial3D_o017c")
+mesh = SubResource("BoxMesh_ksk7e")
+
+[node name="FlangeTop" type="MeshInstance3D" parent="Beam" unique_id=2015255686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32500002, 0)
+material_override = SubResource("StandardMaterial3D_trx3l")
+mesh = SubResource("BoxMesh_48l7y")
+
+[node name="FlangeBottom" type="MeshInstance3D" parent="Beam" unique_id=1586266663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+material_override = SubResource("StandardMaterial3D_trx3l")
+mesh = SubResource("BoxMesh_ijhup")
+
+[node name="Debris" type="Node3D" parent="." unique_id=1821241766]
+
+[node name="Plate" type="MeshInstance3D" parent="Debris" unique_id=1468787595]
+transform = Transform3D(0.8437929, 0.20185395, 0.49726096, -0.17269692, 0.97941285, -0.104528464, -0.5081232, 0.0023249388, 0.8612812, 0.6, 0.42, 0.1)
+material_override = SubResource("StandardMaterial3D_ctyks")
+mesh = SubResource("BoxMesh_0esqf")
+
+[node name="Chunk" type="MeshInstance3D" parent="Debris" unique_id=1880059454]
+transform = Transform3D(0.94909245, -0.23663533, 0.2079117, 0.2419219, 0.9702957, 0, -0.20173584, 0.050298393, 0.9781476, 0.9, 0.615, -0.2)
+material_override = SubResource("StandardMaterial3D_4vhho")
+mesh = SubResource("BoxMesh_77hg3")
+
+[node name="Pipe" type="MeshInstance3D" parent="Debris" unique_id=954019944]
+transform = Transform3D(0.8660254, 0.49240386, 0.08682411, 0, 0.17364822, -0.9848077, -0.5, 0.8528685, 0.15038377, 0.2, 1, 0.35)
+material_override = SubResource("StandardMaterial3D_2dyym")
+mesh = SubResource("CylinderMesh_2mevc")

@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2kujk"]
+albedo_color = Color(0.30588236, 0.22745098, 0.15686275, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_w6u7x"]
+size = Vector3(0.1, 1.9, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wfxej"]
+size = Vector3(0.1, 1.9, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6mu28"]
+albedo_color = Color(0.47843137, 0.3529412, 0.23529412, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xiih"]
+size = Vector3(1.5, 0.95, 0.06)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jxnp"]
+albedo_color = Color(0.9490196, 0.9019608, 0.8117647, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_2eung"]
+size = Vector3(0.45, 0.55, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qb6g4"]
+size = Vector3(0.5, 0.4, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trx3l"]
+albedo_color = Color(0.78431374, 0.39215687, 0.1764706, 1)
+metallic = 0.3
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_iskvk"]
+size = Vector3(1.7, 0.08, 0.35)
+
+[node name="NoticeBoard" type="Node3D" unique_id=1304679376]
+
+[node name="PostL" type="MeshInstance3D" parent="." unique_id=1760026504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0.95, 0)
+material_override = SubResource("StandardMaterial3D_2kujk")
+mesh = SubResource("BoxMesh_w6u7x")
+
+[node name="PostR" type="MeshInstance3D" parent="." unique_id=103734621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0.95, 0)
+material_override = SubResource("StandardMaterial3D_2kujk")
+mesh = SubResource("BoxMesh_wfxej")
+
+[node name="Board" type="MeshInstance3D" parent="." unique_id=647152137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.375, 0.02)
+material_override = SubResource("StandardMaterial3D_6mu28")
+mesh = SubResource("BoxMesh_7xiih")
+
+[node name="Paper1" type="MeshInstance3D" parent="." unique_id=1563070176]
+transform = Transform3D(0.9975641, -0.06975647, 0, 0.06975647, 0.9975641, 0, 0, 0, 1, -0.35, 1.3249999, 0.06)
+material_override = SubResource("StandardMaterial3D_3jxnp")
+mesh = SubResource("BoxMesh_2eung")
+
+[node name="Paper2" type="MeshInstance3D" parent="." unique_id=327504631]
+transform = Transform3D(0.9945219, 0.104528464, 0, -0.104528464, 0.9945219, 0, 0, 0, 1, 0.3, 1.2, 0.06)
+material_override = SubResource("StandardMaterial3D_3jxnp")
+mesh = SubResource("BoxMesh_qb6g4")
+
+[node name="RoofBoard" type="MeshInstance3D" parent="." unique_id=512256867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9399999, 0)
+material_override = SubResource("StandardMaterial3D_trx3l")
+mesh = SubResource("BoxMesh_iskvk")

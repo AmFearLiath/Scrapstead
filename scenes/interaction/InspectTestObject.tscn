@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/interaction/InspectTestObject.gd" id="1_inspect"]
+[ext_resource type="PackedScene" path="res://assets/objects/notice_board.tscn" id="2_model"]
+
+[sub_resource type="BoxShape3D" id="shape"]
+size = Vector3(1.6, 2.0, 0.3)
+
+[node name="InspectTestObject" type="StaticBody3D"]
+collision_layer = 5
+collision_mask = 0
+script = ExtResource("1_inspect")
+object_id = "p0_inspect_board_01"
+name_key = "object.inspect_test.name"
+action_key = "ui.action.inspect"
+highlight_radius = 0.9
+text_key = "object.inspect_test.text"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="PlaceholderModel" parent="VisualRoot" instance=ExtResource("2_model")]
+
+[node name="InteractionPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.7)
