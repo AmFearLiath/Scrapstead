@@ -6,7 +6,7 @@ Die ersten 30 bis 60 Minuten sollen den Spieler emotional und spielerisch an Scr
 
 **Leitgedanke: Der Spieler lernt Scrapstead, indem er Scrapstead spielt.**
 
-Der Spieler übernimmt einen heruntergekommenen Schrottplatz. Er beginnt mit einfachen Tätigkeiten, entdeckt den Wert der herumliegenden Gegenstände, verdient seine ersten Credits, begegnet Scrappy und erlebt eine erste sichtbare Verbesserung seines Betriebs.
+Der Spieler erbt einen heruntergekommenen Schrottplatz. Die Identität des früheren Besitzers und die genauen Umstände der Erbschaft bleiben zunächst offen. Er beginnt mit einfachen Tätigkeiten, entdeckt den Wert der herumliegenden Gegenstände, verdient seine ersten Credits, begegnet Scrappy und erlebt eine erste sichtbare Verbesserung seines Betriebs.
 
 Die Zeitangaben sind dramaturgische Richtwerte, keine verbindlichen Timer. Spieler dürfen erkunden, experimentieren und Aufgaben in ihrem eigenen Tempo erledigen.
 
@@ -52,7 +52,7 @@ Der Spieler soll sich orientieren und einen ersten Eindruck vom Grundstück erha
 
 Der Spieler erhält einen knappen Anlass, sich umzusehen und herauszufinden, womit er anfangen kann.
 
-Die konkrete erzählerische Übergabe – beispielsweise Brief, Nachricht, Schlüsselübergabe oder kurze Begegnung – ist noch offen. Ebenso ist noch nicht festgelegt, warum der Schrottplatz dem Spieler gehört.
+Die Erbschaft ist der festgelegte Grund, warum der Schrottplatz dem Spieler gehört. Die konkrete erzählerische Übergabe – beispielsweise Brief, Nachlassunterlagen, Schlüssel und eine persönliche Nachricht – ist noch offen. Auch die Identität des früheren Besitzers und seine Beziehung zum Spieler werden später festgelegt.
 
 Der Spieler darf sich sofort frei bewegen. Ein kurzer Hinweis auf grundlegende Interaktionen ist möglich, aber kein langes Einführungstutorial.
 
@@ -189,13 +189,13 @@ Diese Systeme bleiben Teil der langfristigen Spieltiefe. Ihre schrittweise Einf�
 
 Folgende Fragen müssen vor einer endgültigen Ausarbeitung des Einstiegs geklärt werden:
 
-- Warum gehört dem Spieler der Schrottplatz? Kauf, Erbe, Übernahme oder eine andere Vorgeschichte?
+- Wer hat dem Spieler den Schrottplatz vererbt und in welcher Beziehung stand diese Person zu ihm?
 - Gibt es zu Beginn einen Auftraggeber oder startet der Spieler vollständig eigenständig?
 - Wie viel Vorgeschichte wird vor dem ersten steuerbaren Moment erzählt?
 - Ist Scrappys Fundort von Beginn an sichtbar oder wird er erst beim Aufräumen entdeckt?
 - Wie werden die ersten Aufgaben angestoßen, ohne eine starre Tutorialkette zu erzwingen?
 
-Als vorläufige Richtung gilt: Die Vorgeschichte bleibt kurz. Die eigentliche Geschichte beginnt auf dem Schrottplatz und wird durch Gegenstände, Fundstücke, Scrappy und später auftauchende Figuren erzählt.
+Als vorläufige Richtung gilt: Die Vorgeschichte bleibt kurz. Der Spieler erhält die Nachricht von der Erbschaft und gelangt dadurch auf das Grundstück. Die eigentliche Geschichte beginnt dort und wird durch Gegenstände, Fundstücke, Scrappy und später auftauchende Figuren erzählt.
 
 ## 12. Prototyp-Prüfkriterien
 
