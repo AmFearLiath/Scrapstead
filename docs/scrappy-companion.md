@@ -204,3 +204,76 @@ Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch
 - Scrappy soll durch wiederkehrende Erlebnisse, Erinnerungen und Running Gags eine glaubwürdige gemeinsame Geschichte mit dem Spieler entwickeln.
 
 **Scrappy ist kein Werkzeug mit Dialogen. Er ist eine Figur, die zufällig aus Schrott besteht – und gelegentlich vergisst, dass sie selbst auch aus Schrott besteht.**
+
+
+## 12. Erinnerungs- und Gedächtnissystem
+
+Scrappy erhält ein persistentes, ereignisbasiertes Gedächtnis. Es soll ihm ermöglichen, auf gemeinsame Erlebnisse zurückzukommen, persönliche Vorlieben zu entwickeln und eine eigene Vergangenheit aufzubauen. Das System benötigt kein dauerhaft laufendes Sprachmodell und keine permanente Analyse der Spielwelt.
+
+### Grundprinzip
+
+- Das Spiel erzeugt Ereignisse, wenn relevante Aktionen oder Situationen eintreten, beispielsweise eine gemeinsam reparierte Maschine, eine besondere Entdeckung, ein abgeschlossenes Projekt oder eine Begegnung mit einem NPC.
+- Scrappys Gedächtnissystem verarbeitet diese Ereignisse anhand einfacher Regeln und entscheidet, ob und in welcher Form sie gespeichert werden.
+- Nicht jedes Ereignis wird dauerhaft gespeichert. Bedeutung, Kontext, Wiederholung und persönliche Relevanz bestimmen, ob eine Erinnerung entsteht.
+- Erinnerungen können miteinander verknüpft werden, etwa ein Ort mit einer Person, ein Gegenstand mit einem früheren Erlebnis oder ein Projekt mit mehreren gemeinsamen Ereignissen.
+- Das Gedächtnis wird zusammen mit dem Spielstand gespeichert und nach dem Laden wiederhergestellt.
+
+### Erinnerungsebenen
+
+- **Kurzzeitgedächtnis:** Aktuelle Situationen, Gespräche, unterbrochene Tätigkeiten und kürzlich beobachtete Ereignisse. Flüchtige Einträge dürfen nach einer angemessenen Zeit oder bei Platzbedarf verfallen.
+- **Langzeitgedächtnis:** Besondere gemeinsame Erlebnisse, abgeschlossene Projekte, wichtige Entdeckungen und wiederkehrende Situationen. Relevante Einträge bleiben über längere Zeit oder dauerhaft erhalten.
+- **Persönliches Gedächtnis:** Scrappys eigene Projekte, Interessen, Vorlieben, Gewohnheiten, NPC-Beziehungen und persönliche Erfahrungen. Diese Einträge prägen sein eigenständiges Verhalten.
+- **Bedeutsame Erinnerungen:** Besonders wichtige Ereignisse, etwa Erlebnisse mit Walt oder emotionale Wendepunkte. Sie werden geschützt und nicht durch gewöhnliche Speicherbereinigung entfernt.
+
+### Bedeutung und Erinnerungsbildung
+
+- Ereignisse können eine einfache Relevanz- oder Wichtigkeitsstufe erhalten.
+- Wiederholte Ereignisse können eine Gewohnheit, Vorliebe oder einen Running Gag entstehen lassen.
+- Gemeinsame Aktivitäten können als persönliche Erinnerungen gespeichert werden, wenn Scrappy daran beteiligt war oder sie bewusst beobachtet hat.
+- Erinnerungen können durch passende Orte, Gegenstände, Personen oder Situationen erneut aktiviert werden.
+- Erinnerungen dürfen mit der Zeit an Details verlieren oder durch neue Erfahrungen eine andere persönliche Bedeutung erhalten. Wesentliche Fakten der Spielwelt dürfen dadurch nicht beliebig verfälscht werden.
+- Scrappy darf sich bei unwichtigen Details humorvoll irren oder seine eigene Rolle überhöhen. Solche Ungenauigkeiten sind Charakterdarstellung und keine Veränderung der zugrunde liegenden Spielhistorie.
+
+### Nutzung der Erinnerungen
+
+- Das Dialogsystem kann passende Erinnerungen als Kontext für spätere Kommentare verwenden.
+- Erinnerungen können Scrappys Aktivitäten, Interessen und Kontaktaufnahme beeinflussen.
+- Frühere Erlebnisse können Running Gags und wiederkehrende Gesprächsfäden entstehen lassen.
+- Erinnerungen an Walt werden mit Orten, Gegenständen, Maschinen und anderen passenden Auslösern verknüpft.
+- Eine Erinnerung muss nicht immer einen Dialog auslösen. Manchmal genügt eine kurze Pause, eine Animation oder eine stille Reaktion.
+
+### Technische Leitplanken
+
+- Das Gedächtnis ist ereignisbasiert und wird nur bei relevanten Spielereignissen aktualisiert.
+- Einträge verwenden stabile, sprachunabhängige IDs und strukturierte Daten. Anzeigetexte und Dialoge werden über Lokalisierungsschlüssel referenziert.
+- Speicherumfang und Lebensdauer der einzelnen Erinnerungsklassen sind begrenzt und konfigurierbar.
+- Kurzzeitdaten können bereinigt werden; bedeutsame und persönliche Langzeiterinnerungen werden geschützt.
+- Das System verwendet Regeln, Tags, Gewichtungen und vorbereitete Dialogvarianten. Ein externes oder lokales LLM ist keine Voraussetzung.
+- Die Erinnerungslogik bleibt unabhängig von Bewegungs-, Animations- und Dialogsystem, damit diese Bereiche separat erweitert und getestet werden können.
+- Neue Ereignistypen und Erinnerungskategorien müssen später ergänzt werden können, ohne das Grundsystem neu zu entwickeln.
+
+## 13. Situationsabhängige Kontaktaufnahme
+
+Scrappy darf den Spieler gelegentlich von sich aus ansprechen. Die Kontaktaufnahme muss einen nachvollziehbaren Anlass haben und den aktuellen Spielkontext berücksichtigen.
+
+Mögliche Auslöser:
+
+- Scrappy hat etwas Interessantes entdeckt oder möchte etwas zeigen.
+- Ihm ist eine Idee für ein eigenes Projekt gekommen.
+- Er möchte auf ein früheres Erlebnis zurückkommen.
+- Eine aktuelle Situation erinnert ihn an Walt oder an einen anderen wichtigen Moment.
+- Er möchte aus eigenem Antrieb ein Gespräch beginnen, ohne dass ein Gameplay-Hinweis notwendig ist.
+
+### Timing und Reaktion
+
+- Ist der Spieler offensichtlich beschäftigt, wartet Scrappy normalerweise oder verschiebt seine Mitteilung.
+- In der Nähe des Spielers kann Scrappy gelegentlich direkt Kontakt aufnehmen.
+- Bei wichtigen oder dringenden Beobachtungen darf er den Spieler auch während einer Beschäftigung unterbrechen.
+- Der Spieler kann reagieren, das Gespräch vertagen oder es ignorieren.
+- Scrappy berücksichtigt wiederholte Reaktionen: Wenn der Spieler häufig nicht auf bestimmte Kontaktversuche eingeht, wird er zurückhaltender oder wählt passendere Momente.
+- Ignorieren darf keine Bestrafung, keinen Beziehungsverlust und keinen Gameplay-Nachteil verursachen.
+- Kontaktaufnahmen erhalten Wiederholungsabstände und Prioritäten, damit Scrappy nicht aufdringlich wird.
+
+### Gestaltungsregel
+
+Scrappy spricht den Spieler an, weil er etwas mitteilen möchte – nicht, weil ein Dialogtimer abgelaufen ist. Seine Kontaktaufnahme soll wie eine natürliche Handlung einer eigenständigen Figur wirken.
