@@ -377,3 +377,9 @@ Die Core-Gameplay-Matrix konkretisiert die Kernschleife in einzelne Spielerhandl
 Sie dient als Produktionsfilter und verhindert, dass optionale Detailkonzepte automatisch zu Release-Anforderungen werden.
 
 Details: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
+
+## Ergänzung: MVP- und Prototypenplanung
+
+Die Umsetzung wird stufenweise über technische und spielerische Prototypen validiert: P0 (Bewegung, Kamera, Interaktion und Persistenz), P1 (Sammeln, Bergen, Direktverkauf, Credits und erstes Upgrade), P1b (optionale Verwertung), P2 (erste Stunde und Scrappy), P3 (ein Mitarbeiter und der kleine Magnetsammler) sowie P4 (Vertical Slice des Old Yard).
+
+Der Kernloop wird zunächst ohne Scrappy, Mitarbeiter, Maschinen, regionale Simulation oder vollständigen Baumodus geprüft. Diese Systeme werden erst nach bestandenen Freigabepunkten ergänzt. Der vollständige Ablauf, Datenumfang, Testplan und die Abnahmekriterien stehen im [MVP- und Prototypenplan](mvp-prototype-plan.md).
