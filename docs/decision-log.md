@@ -314,3 +314,33 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Große emotionale Aussagen werden sparsam eingesetzt und an konkrete gemeinsame Erlebnisse gebunden.
 - Die Beziehung wird nicht durch einen sichtbaren Fortschrittsbalken oder eine zu optimierende Kennzahl abgebildet.
 - Begründung: Die Bindung soll sich verdient und glaubwürdig anfühlen. Spieler sollen sie selbst entdecken, statt sie als Systemwert abzulesen.
+
+
+## 25.11.2026 — Scrappys ereignisbasiertes Gedächtnis
+
+**Beschluss:** Scrappy erhält ein persistentes, ereignisbasiertes Gedächtnissystem mit mehreren Erinnerungsebenen. Die Umsetzung erfolgt regelbasiert und benötigt kein dauerhaft laufendes Sprachmodell.
+
+- Das Spiel erzeugt strukturierte Ereignisse für relevante Aktionen und Situationen. Scrappys Gedächtnis verarbeitet diese Ereignisse und entscheidet anhand von Kontext, Wiederholung und Bedeutung, ob eine Erinnerung gespeichert wird.
+- Das Gedächtnis umfasst Kurzzeit-, Langzeit-, persönliche und besonders bedeutsame Erinnerungen.
+- Kurzzeitdaten dürfen verfallen. Wichtige gemeinsame Erlebnisse, persönliche Erfahrungen und Erinnerungen an Walt bleiben langfristig erhalten.
+- Erinnerungen können miteinander verknüpft und später durch passende Orte, Gegenstände, Personen oder Situationen aktiviert werden.
+- Wiederkehrende Erlebnisse können Vorlieben, Gewohnheiten und Running Gags prägen.
+- Scrappy darf unwichtige Details humorvoll falsch erinnern oder seine eigene Rolle überhöhen. Die tatsächliche Spielhistorie und wichtige Fakten bleiben davon unberührt.
+- Das Gedächtnis wird mit dem Spielstand gespeichert und verwendet stabile, sprachunabhängige IDs sowie lokalisierte Dialogreferenzen.
+- Die Verarbeitung erfolgt ereignisbasiert und nicht durch permanente Analyse der Spielwelt.
+- Das Grundsystem verwendet Regeln, Tags, Gewichtungen und vorbereitete Dialogvarianten. Ein externes oder lokales LLM ist optional und keine technische Voraussetzung.
+- Das Gedächtnis bleibt modular und unabhängig von Bewegungs-, Animations- und Dialogsystem.
+- Begründung: Scrappy soll eine glaubwürdige gemeinsame Vergangenheit und eigene Lebenserfahrung entwickeln können, ohne dass dafür ein aufwendiger KI-Agent oder permanente Sprachmodell-Inferenz notwendig ist.
+
+## 25.11.2026 — Situationsabhängige Kontaktaufnahme durch Scrappy
+
+**Beschluss:** Scrappy darf den Spieler eigenständig und situationsabhängig ansprechen.
+
+- Kontaktaufnahmen entstehen aus nachvollziehbaren Anlässen, etwa einer Entdeckung, einer eigenen Idee, einer Erinnerung oder dem Wunsch, etwas mitzuteilen.
+- Scrappy berücksichtigt die aktuelle Beschäftigung des Spielers und wartet normalerweise bei ungünstigem Timing.
+- Interessante oder wichtige Beobachtungen dürfen eine gelegentliche Unterbrechung rechtfertigen.
+- Der Spieler kann reagieren, das Gespräch vertagen oder es ignorieren.
+- Scrappy kann aus wiederholten Reaktionen lernen und Häufigkeit sowie Zeitpunkt seiner Kontaktversuche anpassen.
+- Ignorieren verursacht weder Beziehungsverlust noch Gameplay-Nachteile.
+- Wiederholungsabstände und Prioritäten verhindern aufdringliche oder ständig wiederkehrende Kontaktversuche.
+- Begründung: Scrappy soll wie eine eigenständige Figur wirken, die aus eigenem Antrieb etwas mitteilen möchte, dabei aber die Aufmerksamkeit und Handlungsfreiheit des Spielers respektiert.
