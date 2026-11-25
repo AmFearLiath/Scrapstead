@@ -540,3 +540,10 @@ Die räumliche Struktur der Hauptregion wird als kompakte Industrietal-Region ko
 Die Gebiete werden über wenige klare Hauptachsen, Nebenstraßen, Feldwege und Landmarken verbunden. Freischaltungen erfolgen nachvollziehbar über Erkundung, Reparaturen, Projekte, Vereinbarungen oder Investitionen – nicht über willkürliche Levelgrenzen. Weltzustände wie Wiedereröffnung, Reparatur und Freiräumung bleiben sichtbar und dauerhaft.
 
 Die räumliche Spezifikation mit Zonen, Verkehrsnetz, Zugängen, Karten-UX und Blockout-Abnahmekriterien steht in [Regionalkarte, Gebietsstruktur und Weltfreischaltung](regional-map-and-world-progression.md).
+
+
+## Ergänzung: Regionale Anlaufstellen
+
+Die Welt erhält eine kleine Zahl klar unterscheidbarer regionaler Betriebe. Vorgesehen sind Grundversorgung, Reparatur, Materialhandel, ein ländlicher Lieferant und eine Frachtstelle. Diese Anlaufstellen bieten ausgewählte Waren, Dienstleistungen, Aufträge und Informationen. Sie werden nicht als vollständige Unternehmen simuliert.
+
+Der erste Welt-Prototyp benötigt nur General Store, Mechaniker, Materialabnehmer und einen öffentlichen Aushang. Weitere Orte können später ergänzt werden. Vollständige Ausarbeitung: [Regionale Betriebe und Dienstleistungen](regional-businesses-and-services.md).
