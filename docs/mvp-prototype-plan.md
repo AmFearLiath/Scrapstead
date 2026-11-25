@@ -51,47 +51,77 @@ Die Stufen sind Qualitäts- und Lernschritte, keine starren Kalenderphasen. Eine
 
 ### Ziel
 
-Ein kleiner technischer Testraum beweist, dass die grundlegende Darstellung und Bedienung für Scrapstead geeignet sind. Noch gibt es keine Wirtschaft, keine Aufgabenfolge und keine vollständige Spielwelt.
+P0 baut nicht nur einen technischen Testraum, sondern bereits den ersten erkennbaren Einstieg in Scrapstead. Beim Start sieht der Spieler ein Hauptmenü mit dem Scrapstead-Logo und einer animierten Kamerafahrt durch den Old Yard. Von dort gelangt er in die technische Testszene.
 
-### Benötigte Szene und Objekte
+Damit werden zwei Dinge parallel geprüft: die technische Grundlage des Spiels und der erste Eindruck, den das Spiel vermitteln soll. Der Menüauftritt bleibt bewusst kompakt und darf die Entwicklung der Kernmechaniken nicht verzögern.
 
+### Benötigte Szenen und Objekte
+
+**A. Hauptmenü / Startbildschirm**
+- Ein eigener Menübildschirm mit dem Scrapstead-Logo.
+- Eine Hintergrundszene des Old Yard als frühes 3D-Blockout.
+- Eine animierte, ruhige Kamerafahrt entlang einer vorbereiteten Kameraroute durch den Hof.
+- Eine klare Menüfläche mit den Funktionen „Neues Spiel“, „Fortsetzen“, „Einstellungen“ und „Beenden“.
+- „Fortsetzen“ ist deaktiviert bzw. nicht verfügbar, solange kein gültiger Spielstand existiert.
+- Ein einfacher Übergang vom Menü in die Gameplay-Szene.
+
+**B. Technische Testszene**
 - Eine einfache Testfläche mit klaren Kanten und wenigen Höhenunterschieden.
 - Ein Spielerobjekt mit Platzhaltermodell.
-- Eine isometrische Kamera.
+- Eine isometrische Gameplay-Kamera.
 - Drei Testobjekte: ein aufnehmbares Kleinteil, ein untersuchbares Objekt und eine benutzbare Einrichtung.
 - Eine einfache Interaktionsanzeige.
 - Ein minimaler Debug-/Statusbereich, der bei Bedarf Position, Zielobjekt und Interaktionszustand sichtbar macht.
 
 ### Tatsächlich benötigte Funktionen
 
-1. Spielerbewegung in der vorgesehenen isometrischen Ansicht.
-2. Kamera folgt dem Spieler und erlaubt die vorgesehenen Zoom-/Bewegungsoptionen.
-3. Kollision mit Boden und Hindernissen.
-4. Erkennen erreichbarer Interaktionsziele.
-5. Eindeutige Hervorhebung des aktuell ausgewählten bzw. erreichbaren Ziels.
-6. Kontextabhängige Interaktion mit den Testobjekten.
-7. Ein einfacher Spielzustand, der beim Speichern und Laden erhalten bleibt.
-8. Saubere Trennung zwischen Gameplay-Zustand und visueller Darstellung.
+1. Starten des Spiels in das Hauptmenü.
+2. Darstellung des Scrapstead-Logos in einer gut lesbaren, ausreichend freien Bildzone.
+3. Eine vorbereitete Kamerafahrt, die als Hintergrund kontinuierlich und ohne sichtbaren Sprung wiederholt werden kann. Sie darf nicht mit der steuerbaren Gameplay-Kamera gekoppelt sein.
+4. Menübedienung mit Maus und Tastatur.
+5. „Neues Spiel“ lädt die P0-Testszene bzw. startet einen frischen Prototypzustand.
+6. „Fortsetzen“ lädt einen vorhandenen Prototyp-Spielstand und ist andernfalls deaktiviert.
+7. „Einstellungen“ öffnet zunächst nur die tatsächlich vorhandenen Basisoptionen; nicht implementierte Optionen werden nicht vorgetäuscht.
+8. „Beenden“ schließt das Spiel kontrolliert.
+9. Ein klarer Übergang vom Menü in die Gameplay-Szene.
+10. Spielerbewegung in der vorgesehenen isometrischen Ansicht.
+11. Die Gameplay-Kamera folgt dem Spieler und erlaubt die vorgesehenen Zoom-/Bewegungsoptionen.
+12. Kollision mit Boden und Hindernissen.
+13. Erkennen erreichbarer Interaktionsziele.
+14. Eindeutige Hervorhebung des aktuell ausgewählten bzw. erreichbaren Ziels.
+15. Kontextabhängige Interaktion mit den Testobjekten.
+16. Ein einfacher Spielzustand, der beim Speichern und Laden erhalten bleibt.
+17. Saubere Trennung zwischen Menü-Kamerafahrt, Gameplay-Kamera, Gameplay-Zustand und visueller Darstellung.
 
 ### Vereinfachungen
 
-- Platzhaltermodelle und einfache Materialien.
-- Keine finalen Animationen.
+- Der Hintergrund des Hauptmenüs verwendet denselben Old-Yard-Blockout oder eine kleine, eigens dafür arrangierte Teilansicht.
+- Die Kamerafahrt besteht aus wenigen vorbereiteten Wegpunkten und benötigt noch keine dynamische Kameralogik.
+- Logo zunächst als fertige Bilddatei bzw. temporärer sauberer Schriftzug; finale Logoanimation und aufwendige Effekte sind nicht erforderlich.
+- Einfache Menüanimationen und Übergänge; keine komplexen Partikeleffekte.
+- Platzhaltermodelle und einfache Materialien in der Hintergrundszene.
 - Keine vollständige Eingabe-Neubelegung.
+- Keine umfangreiche Einstellungsseite; zunächst nur tatsächlich verfügbare Optionen.
 - Kein komplexes Inventar.
 - Kein Quest- oder Dialogsystem.
 - Keine Mitarbeiter- oder Scrappy-Navigation.
 
 ### Abnahmekriterien
 
-- Bewegung fühlt sich aus der isometrischen Kamera präzise und kontrollierbar an.
-- Die Kamera verdeckt keine wichtigen Interaktionsobjekte dauerhaft.
+- Das Spiel startet zuverlässig im Hauptmenü.
+- Scrapstead-Logo und Menüoptionen sind klar lesbar und überlagern die Kamerafahrt nicht ungünstig.
+- Die Hintergrundkamera bewegt sich ruhig, ohne sichtbare Sprünge oder störende Durchdringungen.
+- Die Kamerafahrt läuft unabhängig von der Gameplay-Kamera.
+- Neues Spiel, Fortsetzen (bei vorhandenem Spielstand), Einstellungen und Beenden verhalten sich entsprechend ihrem sichtbaren Zustand.
+- Der Übergang vom Menü in die Gameplay-Szene funktioniert zuverlässig.
+- Bewegung fühlt sich aus der isometrischen Gameplay-Kamera präzise und kontrollierbar an.
+- Die Gameplay-Kamera verdeckt keine wichtigen Interaktionsobjekte dauerhaft.
 - Interaktionen werden zuverlässig dem beabsichtigten Objekt zugeordnet.
 - Hindernisse und Reichweiten sind nachvollziehbar.
 - Speichern und Laden erzeugen keinen widersprüchlichen Grundzustand.
 - Die technische Basis erlaubt weitere Testmechaniken, ohne bereits eine große Architektur vorauszusetzen.
 
-**Stop-Kriterium:** Wenn Bewegung, Kamera oder Interaktion nicht zuverlässig funktionieren, wird kein Wirtschaftssystem darauf aufgebaut.
+**Stop-Kriterium:** Wenn Menüstart, Szenenübergang, Bewegung, Kamera oder Interaktion nicht zuverlässig funktionieren, wird kein Wirtschaftssystem darauf aufgebaut.
 
 ---
 
