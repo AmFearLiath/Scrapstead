@@ -144,6 +144,8 @@ Erste konzeptionelle Bereiche:
 
 Die Gebietsliste und konkrete Karte sind noch nicht final.
 
+Die konkreten Erkundungsräume, Landmarken, Fundorte, Bewohner, Aufträge, Ereignisse und regionalen Aktivitäten sind in [Welt, Erkundung und Aktivitäten](world-exploration-activities.md) ausgearbeitet.
+
 ## 10. Fortbewegung, Transport und Logistik
 
 Der Spieler bewegt sich zu Fuß für Erkundung, Sammeln, Interaktionen und kleinere Arbeiten. Fahrzeuge dienen größeren Distanzen, schweren Gegenständen und Materialtransporten.
