@@ -293,3 +293,22 @@ Die vollständige Spezifikation einschließlich Datenstruktur, Zustandsmodell, A
 - Die Karte zeigt nur entdeckte Orte und relevante Informationen; Marker bleiben sparsam und optional.
 
 Die räumliche Struktur ist ein Konzeptvorschlag. Finale Geometrie, Maße, Straßentrassen, Grundstücke und Zugangsbedingungen werden im Blockout validiert. Vollständige Spezifikation: [Regionalkarte, Gebietsstruktur und Weltfreischaltung](regional-map-and-world-progression.md).
+
+
+## 24. Begrenzter wirtschaftlicher Simulationsumfang
+
+**Beschluss:** Scrapstead soll keine umfassende Tycoon- oder Unternehmenssimulation werden. Die wirtschaftliche Tiefe konzentriert sich auf den eigenen Schrottplatz und eine kleine, glaubwürdige regionale Wirtschaft.
+
+- Der eigene Schrottplatz ist der zentrale und am stärksten simulierte Betrieb.
+- Regionale Unternehmen werden über vereinfachte Zustände, Betreiber, Waren/Dienstleistungen und ausgewählte Aufträge abgebildet.
+- Fremde Betriebe erhalten keine vollständige Personal-, Lager-, Produktions- oder Buchhaltungssimulation.
+- Der regionale Markt nutzt stabile Grundpreise und wenige dynamische Nachfrage- oder Angebotsereignisse.
+- Credits bleiben die zentrale Währung.
+- Keine Konkurrenz-, Aktien-, Übernahme- oder Marktanteilssimulation.
+- Keine komplexe Buchhaltung, Steuer-, Kredit- oder Bilanzverwaltung.
+- Lieferketten zwischen NPC-Unternehmen werden nicht vollständig simuliert.
+- Außenstandorte erweitern den eigenen Betrieb gezielt und in begrenzter Zahl.
+- Neue Wirtschaftsfunktionen benötigen einen klaren Spielspaß- oder Progressionsnutzen und müssen zum erreichbaren Produktionsumfang passen.
+- Der Kernabschluss muss mit einer überschaubaren Zahl an Systemen und Standorten erreichbar bleiben.
+
+Die verbindlichen Umfangsgrenzen und Prüffragen stehen in [Regionale Wirtschaft und begrenzter Simulationsumfang](regional-economy-scope.md).
