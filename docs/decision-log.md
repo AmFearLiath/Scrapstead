@@ -139,3 +139,20 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Für die erste Maschine wird ein Stellplatz von bis zu 5 × 4 Metern zuzüglich Bedien- und Ablageflächen reserviert.
 - Diese Werte sind Testannahmen und werden anhand von Kamera, Laufwegen, Handwagen und Interaktionen überprüft.
 - Begründung: Ein gemeinsamer Maßstab macht Grundstücksplanung, Assetgrößen und Gameplay-Abstände nachvollziehbar und früh testbar.
+
+
+## 25.11.2026 — Freies Bauen und funktionale Maschinenverbindungen
+
+**Beschluss:** Scrapstead verwendet ein freies Bausystem mit nachvollziehbaren funktionalen Einschränkungen.
+
+- Innerhalb der Grundstücksgrenzen gibt es keine fest zugewiesenen Bauplätze für Gebäude oder Maschinen.
+- Die bisherigen Zonen des Startgrundstücks dienen als Orientierung für Leveldesign und Entdeckungsdramaturgie, nicht als verbindliche Bauzonen.
+- Gebäude, Maschinen, Lager, Wege, Zäune und Dekorationen sollen grundsätzlich frei platzierbar sein.
+- Funktionale Anforderungen wie Grundfläche, Bedienzugang, Arbeitsradius, Ein- und Ausgabepunkte sowie erforderliche Abstände werden objektabhängig geprüft.
+- Maschinen können definierte Ein- und Ausgabepunkte besitzen.
+- Der Spieler kann kompatible Maschinen durch eine einfache Aktion verbinden. Das Spiel erstellt automatisch eine passende Route, sofern ein freier und gültiger Weg existiert.
+- Blockierte oder ungültige Routen werden verständlich erklärt.
+- Direkte Übergabe, automatische Transportstrecke und manueller Transport sind gleichberechtigte Möglichkeiten.
+- Komplexe manuelle Förderbandplanung und verpflichtendes Logistik-Mikromanagement gehören nicht zum Ziel des ersten Prototyps.
+- Rastergröße, Routenführung und konkrete Maschinenanforderungen bleiben bis zum Prototyp-Test offen.
+- Begründung: Der Spieler soll seinen Betrieb selbst gestalten können. Das Spiel stellt sicher, dass die Gestaltung funktional bleibt, ohne die kreative Freiheit durch starre Bauplätze oder komplizierte Logistik zu beschneiden.
