@@ -36,6 +36,7 @@ The repository is currently used to collect the game's design documentation, dec
 
 - [Game Design Document](docs/gdd.md)
 - [Gameplay & Economy Specification](docs/gameplay-economy.md)
+- [Progression & Business Growth](docs/progression-business-growth.md)
 - [Scrappy Companion Specification](docs/scrappy-companion.md)
 - [Machines & Automation Specification](docs/machines-automation.md)
 - [World & Asset Design](docs/world-art-assets.md)
