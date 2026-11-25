@@ -521,3 +521,23 @@ Referenzen: [MVP- und Prototypenplan](mvp-prototype-plan.md), [UI- und UX-Spezif
 - Engine-Version und Skriptsprache sind festgelegt. Rendering-Feinabstimmung und konkrete Bewegungsparameter werden im P0-Prototyp validiert.
 
 **Begründung:** Godot bietet für den geplanten PC-Fokus, die 3D-Szenenstruktur, isometrische Darstellung, Interaktionen und UI eine schlanke integrierte Entwicklungsbasis. GDScript hält die Umsetzung eng an Godot und vermeidet eine zusätzliche .NET-Abhängigkeit.
+
+
+## 25.11.2026 — P0-Szenenarchitektur und Verantwortlichkeiten
+
+**Beschluss:** Der erste technische Aufbau wird in klar getrennte Szenen und wenige globale Dienste gegliedert.
+
+- `Main.tscn` ist der Einstiegspunkt und übergibt an das Hauptmenü.
+- `MainMenu.tscn` enthält die Menüoberfläche und bindet eine eigenständige Hintergrundszene ein.
+- `MenuBackdrop.tscn` stellt den Old-Yard-Blockout und die unabhängige Menü-Kamerafahrt dar.
+- `OldYardTest.tscn` enthält Testgeometrie, Spieler, Gameplay-Kamera, drei Interaktionsobjekte und HUD.
+- `Player.tscn` verwendet `CharacterBody3D`; Modell, Kollision und Interaktionserkennung bleiben getrennt.
+- Die Gameplay-Kamera ist eine eigene Szene und bleibt unabhängig von der Menü-Kamera.
+- Globale Dienste werden in P0 auf GameSession und SaveService begrenzt. Ein eigener globaler SceneManager wird zunächst nicht eingeführt.
+- Interaktionen sind im ersten Prototyp reichweitenbasiert. Das System wählt ein gültiges Ziel in der Nähe; das Zielobjekt führt die konkrete Aktion aus.
+- Spielstände enthalten versionierte Daten und stabile Objekt-IDs, keine serialisierten Szenen- oder Node-Strukturen.
+- Die lokale Engine-Bereitstellung liegt unter `_engine/` und wird nicht in das Git-Repository aufgenommen.
+
+**Begründung:** Eine klare Trennung der Verantwortlichkeiten erleichtert Tests und spätere Erweiterungen, ohne für P0 bereits ein großes Framework oder zukünftige Gameplay-Systeme vorwegzunehmen.
+
+Referenz: [P0-Szenenarchitektur](p0-scene-architecture.md).
