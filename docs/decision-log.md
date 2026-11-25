@@ -228,3 +228,32 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Auch die konkrete Übergabe – etwa durch Nachlassunterlagen, Schlüssel und eine persönliche Nachricht – bleibt offen.
 - Die Vorgeschichte soll kurz bleiben. Die eigentliche Geschichte entfaltet sich auf dem Grundstück durch Gegenstände, Fundstücke, Scrappy und später auftauchende Figuren.
 - Begründung: Eine Erbschaft schafft einen glaubwürdigen Einstieg, gibt dem Grundstück eine Vergangenheit und ermöglicht erzählerische Entdeckungen, ohne den Spielstart mit umfangreicher Vorgeschichte aufzuhalten.
+
+
+## 25.11.2026 — Hintergrundgeschichte: Walter Wren und Scrappy
+
+**Beschluss:** Der frühere Besitzer des Startgrundstücks ist Walter „Walt“ Wren. Scrappy wurde von ihm gebaut und war sein wichtigstes Projekt.
+
+- Walt ist ein freundlicher, eigenwilliger Bastler und früherer Betreiber des Schrottplatzes.
+- Seine Erfindungen sind kreativ, improvisiert und gelegentlich fragwürdig, werden aber innerhalb der Spielwelt ernsthaft behandelt.
+- Scrappy wurde als praktischer Schrottplatzhelfer gebaut und entwickelte sich zu Walts Begleiter und Gesprächspartner.
+- Während eines Sturms wurde ein Lagerbereich beschädigt. Scrappy wurde schwer beschädigt und sein Kopf unter Schrott begraben.
+- Walt barg den Kopf, sicherte die Kernkomponente im roten Werkzeugkasten und wollte Scrappy später reparieren.
+- Walt verstarb, bevor die Reparatur abgeschlossen werden konnte.
+- Der Spieler erbt den Schrottplatz und erhält Nachlassunterlagen, Schlüssel und einen persönlichen Brief von Walt.
+- Die genaue Beziehung zwischen Walt und dem Spieler bleibt offen.
+- Scrappys Speicher ist beschädigt. Erinnerungen an Walt werden schrittweise durch Orte, Gegenstände und Maschinen ausgelöst.
+- Begründung: Die Geschichte verbindet Erbschaft, Startgrundstück, Scrappy und Umgebungs-Erzählung. Sie schafft emotionale Tiefe, ohne einen langen oder düsteren Prolog zu benötigen.
+
+## 25.11.2026 — Humoridentität von Scrapstead
+
+**Beschluss:** Scrapstead erhält einen warmen, leicht überzogenen Humor mit trockenem Timing und liebenswerter Absurdität.
+
+- Humor entsteht aus vier Säulen: erfinderischer Unsinn, trockener Charakterhumor, Umgebungs- und Fundstückgeschichten sowie liebenswerte Absurdität im Alltag.
+- Walt und seine Erfindungen prägen den visuellen und erzählerischen Humor des Grundstücks.
+- Scrappy ist selbstbewusst, loyal, gelegentlich besserwisserisch und kommentiert Situationen kontextbezogen.
+- NPCs und Mitarbeiter dürfen Eigenheiten besitzen, sind aber glaubwürdige Figuren und keine dauerhaften Witzmaschinen.
+- Nicht jede Interaktion braucht einen Witz. Dialoge bleiben kurz und werden nicht auf Kosten des Spielflusses wiederholt.
+- Emotionale Momente dürfen ohne Pointe stehen bleiben.
+- Deutsche und englische Texte müssen denselben Charakter und dieselbe Wirkung transportieren; Wortspiele dürfen lokal angepasst werden.
+- Begründung: Der Humor soll Scrapstead wiedererkennbar machen, ohne gekünstelt, aufdringlich oder beliebig zu wirken.
