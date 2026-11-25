@@ -79,7 +79,35 @@ Scrappy erhält Fähigkeiten, wenn der Spieler passende Teile findet und Fortsch
 
 Fähigkeiten müssen einfach verständlich bleiben und dürfen den Spieler nicht überflüssig machen.
 
-## 7. Reaktionen, Eigeninitiative und Dialoge
+## 7. Persönliche Entwicklung
+
+Scrappy wächst im Laufe des Spiels mit dem Spieler. Seine Entwicklung besteht nicht nur aus besseren Modulen und zusätzlichen Fähigkeiten, sondern auch aus persönlichen, sozialen und emotionalen Veränderungen, die aus gemeinsamen Erlebnissen entstehen.
+
+### Entwicklungsdimensionen
+
+- **Technische Entwicklung:** Neue Module, Werkzeuge, Sensoren und Fähigkeiten erweitern Scrappys Möglichkeiten. Technische Upgrades verändern seine Funktion, nicht seine grundlegende Persönlichkeit.
+- **Persönliche Entwicklung:** Erlebnisse können neue Interessen, Vorlieben, Marotten, kleine Gewohnheiten und eigene Projekte entstehen lassen. Scrappy darf seine Meinung ändern, dazulernen oder an ungewöhnlichen Überzeugungen festhalten.
+- **Soziale Entwicklung:** Wiederholte Begegnungen prägen seine Beziehungen zu Mitarbeitern und NPCs. Er kann Sympathien, Rivalitäten oder kleine Freundschaften entwickeln, ohne dass daraus ein komplexes Beziehungspflichtsystem wird.
+- **Emotionale Entwicklung:** Gemeinsame Erfolge, Rückschläge und Erinnerungen an Walt beeinflussen, wie Scrappy über sich selbst, den Schrottplatz und den Spieler spricht.
+
+### Entwicklung durch Erlebnisse
+
+- Veränderungen sollen aus tatsächlich erlebten Situationen entstehen und nicht ausschließlich durch abstrakte Level oder Werte ausgelöst werden.
+- Scrappy kann wiederkehrende Tätigkeiten, Vorlieben und Running Gags entwickeln.
+- Seine kleinen Eigenprojekte können sich verändern, weiterentwickeln oder gelegentlich auf komische Weise scheitern.
+- Beziehungen zu NPCs entstehen durch wiederholte Begegnungen und konkrete Situationen.
+- Erinnerungen an Walt können Scrappys Verständnis seiner eigenen Vergangenheit und seiner Rolle auf dem Schrottplatz vertiefen.
+- Nicht jede Entwicklung muss ausdrücklich erklärt oder als Belohnung angezeigt werden. Manche Veränderungen werden allein durch Verhalten, Animationen oder Dialogvarianten sichtbar.
+
+### Leitplanken
+
+- Scrappy wächst mit dem Spieler, bleibt aber eine eigenständige Figur mit eigener Persönlichkeit.
+- Entwicklung darf nicht zu einem Pflicht-, Pflege- oder Mikromanagementsystem werden.
+- Der Spieler muss Scrappys Persönlichkeit nicht optimieren oder bestimmte Verhaltensweisen freischalten, um einen vollständigen Begleiter zu erhalten.
+- Technische Leistungsfähigkeit und persönliche Entwicklung sind miteinander vereinbar, aber nicht voneinander abhängig.
+- Wichtige Veränderungen müssen nachvollziehbar aus der Spielwelt und gemeinsamen Erlebnissen hervorgehen.
+
+## 8. Reaktionen, Eigeninitiative und Dialoge
 
 ### Eigenständigkeit und Initiative
 
@@ -134,7 +162,7 @@ Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch
 - Emotionale Momente dürfen ohne Pointe stehen bleiben.
 - Deutsch und Englisch sollen denselben Charakter und dieselbe Wirkung transportieren; Wortspiele dürfen lokal angepasst werden.
 
-## 8. Visuelles Design
+## 9. Visuelles Design
 
 - Klobige, gut lesbare Silhouette.
 - Wiederverwendete Schrottmaterialien und nicht zusammenpassende Komponenten.
@@ -143,7 +171,7 @@ Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch
 - Gute Erkennbarkeit aus der isometrischen Kameradistanz.
 - Der modulare Aufbau soll sichtbar und charmant wirken, nicht wie ein beliebiger Roboter-Baukasten.
 
-## 9. Umfang des ersten Prototyps
+## 10. Umfang des ersten Prototyps
 
 - Ein Kopf, der gefunden und wiederhergestellt wird.
 - Ein einfacher Grundkörper.
@@ -155,7 +183,7 @@ Scrappys Speicher ist nach dem Unfall unvollständig. Erinnerungen können durch
 - Einfache, slotbasierte Anpassungsoberfläche.
 - Erste Reaktionen auf mindestens einen Ort oder Gegenstand aus Walts Vergangenheit.
 
-## 10. Designregeln
+## 11. Designregeln
 
 - Scrappy darf immer leistungsfähiger werden, aber niemals seinen Charme verlieren. Seine Persönlichkeit ist wichtiger als seine Werte.
 - Eigeninitiative macht ihn lebendig, darf aber niemals die Handlungsfreiheit des Spielers einschränken.
