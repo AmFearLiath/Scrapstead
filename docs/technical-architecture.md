@@ -138,3 +138,14 @@ Die konkrete Aufteilung der Einstiegsszene, des Hauptmenüs, des Menü-Hintergru
 Für P0 werden globale Dienste bewusst auf GameSession und SaveService begrenzt. Ein eigener globaler SceneManager ist zunächst nicht erforderlich. Die Menü-Kamerafahrt bleibt eine Präsentationsszene und ist vollständig von der Gameplay-Kamera getrennt.
 
 Die Interaktion wird im ersten Prototyp reichweitenbasiert umgesetzt. Das System erkennt gültige Ziele in Spielnähe; das Zielobjekt selbst führt seine jeweilige Aktion aus.
+
+
+## 12. Zentrale Entwicklungswerkstatt und Admin-Tooling
+
+Scrapstead erhält eine zentrale Entwicklungswerkstatt für Konfiguration, Balancing, Texte, Quests, NPCs, Gebäude, Flächen und Karten. Sie wird bevorzugt mit Godot-nativen Mitteln aufgebaut: Resources, Szenen, EditorPlugins, Editor-Docks, Inspector-Erweiterungen und Tool-Skripte.
+
+Die Werkstatt ist ein zentraler Zugang zu spezialisierten Werkzeugen, kein zwingend monolithischer Eigeneditor. Spiel und Werkzeuge verwenden dieselben versionierten Datenquellen und stabilen IDs. Validierung, Referenzprüfung und Aktualität der Werkzeuge gehören zur Architektur.
+
+Die Entwicklungswerkstatt muss nicht im fertigen Spiel enthalten sein. Das Spiel muss mit den freigegebenen Daten ohne Editor-Plugins oder Admin-Oberfläche lauffähig sein. Ein Laufzeit-Adminsystem oder Web-Backend wird dadurch nicht vorausgesetzt.
+
+Details: [Zentrale Entwicklungswerkstatt und Admin-Tooling](development-workbench-and-admin-tooling.md).
