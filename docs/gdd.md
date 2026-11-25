@@ -316,3 +316,17 @@ Bewohner werden als wiederkehrende, individuell erkennbare Figuren mit eigenen R
 Lokale Unternehmen verbinden Charaktere mit Handel, Dienstleistungen, Lieferketten und regionaler Entwicklung. Optionale soziale Inhalte dürfen den Kernfortschritt nicht blockieren. Eine vollständige Lebenssimulation ist ausdrücklich nicht vorgesehen.
 
 Die detaillierte Konzeption steht in [Bewohner, Charaktere und Beziehungen](characters-residents-relationships.md).
+
+
+## Ergänzung: Quest-, Missions- und Ereignissystem
+
+Aufgaben gliedern sich in Hauptmissionen, persönliche und regionale Geschichten sowie wiederkehrende Aufträge. Ergänzend beleben zeitlich begrenzte regionale Ereignisse die Welt. Aufgaben entstehen aus Bewohnern, Unternehmen, Entdeckungen und wirtschaftlichen Situationen und verbinden bestehende Gameplay-Systeme.
+
+- Alternative Lösungswege sind möglich, wenn sie zum Auftrag passen.
+- Fristen werden sparsam eingesetzt; Hauptmissionen und persönliche Geschichten erhalten keine harten Fristen.
+- Wiederkehrende Aufträge verwenden kontrollierte Variationen statt monoton steigender Mengen.
+- Gemeinschaftsprojekte erzeugen sichtbare regionale Veränderungen.
+- Optionale Aufgaben und Ereignisse blockieren keine Kernprogression.
+- Questfortschritt wird ereignisbasiert geprüft und zuverlässig gespeichert.
+
+Die vollständige Spezifikation steht in [Quest-, Missions- und Ereignissystem](quest-mission-event-system.md).
