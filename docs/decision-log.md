@@ -505,3 +505,19 @@ Referenz: [MVP- und Prototypenplan](mvp-prototype-plan.md).
 **Begründung:** Der erste Prototyp soll nicht nur eine technische Testumgebung sein, sondern bereits einen erkennbaren ersten Eindruck von Scrapstead vermitteln. Der Aufwand bleibt durch eine vorbereitete Kameraroute und den wiederverwendeten Blockout begrenzt.
 
 Referenzen: [MVP- und Prototypenplan](mvp-prototype-plan.md), [UI- und UX-Spezifikation](ui-ux.md).
+
+
+## 25.11.2026 — Technische Basis: Godot 4.7.2 Stable und GDScript
+
+**Beschluss:** Scrapstead wird mit Godot Engine 4.7.2 Stable und GDScript entwickelt.
+
+- Das Projekt wird als 3D-Spiel mit isometrischer Kamera aufgebaut.
+- Zielplattform zum Einstieg ist PC, zunächst Windows und Linux.
+- Forward+ wird als anfängliche Rendering-Konfiguration verwendet und in P0 auf Performance und Hardwarekompatibilität geprüft.
+- Godot 3D Physics bildet die Grundlage für Bewegung und Kollision.
+- Die Benutzeroberfläche wird mit Godot Control Nodes umgesetzt.
+- Godot Resources und strukturierte, versionierte Spieldaten dienen der Datenhaltung; Spielstände werden nicht als gespeicherte Szenen- oder Node-Strukturen behandelt.
+- Git wird für die Versionsverwaltung eingesetzt.
+- Engine-Version und Skriptsprache sind festgelegt. Rendering-Feinabstimmung und konkrete Bewegungsparameter werden im P0-Prototyp validiert.
+
+**Begründung:** Godot bietet für den geplanten PC-Fokus, die 3D-Szenenstruktur, isometrische Darstellung, Interaktionen und UI eine schlanke integrierte Entwicklungsbasis. GDScript hält die Umsetzung eng an Godot und vermeidet eine zusätzliche .NET-Abhängigkeit.
