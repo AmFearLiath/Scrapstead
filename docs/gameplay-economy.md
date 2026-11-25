@@ -1,125 +1,253 @@
-# Gameplay & Economy Specification
+# Scrapstead — Gameplay- und Wirtschaftsspezifikation
 
-**Version:** 0.2  
-**Status:** Initial system specification
+**Version:** 0.3  
+**Status:** Konzeptstand / vor Prototyp-Validierung
 
-## 1. Core decisions
+## 1. Grundentscheidungen
 
-- Collection uses a hybrid approach: directly pick up small loose objects; larger or embedded objects require tools or equipment.
-- Scrap can be sold directly. Sorting and processing are optional value paths, not mandatory steps for every object.
-- Progression starts with the player doing the work. Helpers and machines are purchased gradually as the business becomes affordable.
-- Keep controls and rules simple; create depth through choices and combinations.
+- Kleine, lose Gegenstände können direkt aufgehoben werden; größere oder feststeckende Objekte benötigen Werkzeuge oder Ausrüstung.
+- Gewöhnlicher Schrott kann direkt verkauft werden.
+- Sortierung, Demontage, Aufbereitung und Wiederverwendung sind optionale Wege zur zusätzlichen Wertschöpfung.
+- Der Spieler beginnt mit manueller Arbeit. Mitarbeiter, Maschinen und automatisierte Logistik kommen schrittweise hinzu.
+- Die Grundwirtschaft bleibt verständlich und relativ stabil. Nachfrage, Sonderaufträge und ausgewählte Preise können dynamisch reagieren.
+- Komplexität entsteht durch die Kombination einfacher Systeme, nicht durch Pflicht-Mikromanagement.
 
-## 2. Collection interactions
+## 2. Gegenstände und Ressourcen
 
-### 2.1 Small objects
-A short interaction picks up a loose object and adds it to the carried inventory or nearby collection container, according to the eventual inventory design.
+Gegenstände werden datengetrieben über stabile IDs definiert. Ein Eintrag kann unter anderem enthalten:
 
-### 2.2 Large objects
-Large objects use contextual actions such as pry, cut, dismantle, or lift. The game should clearly indicate the required tool or equipment.
+- Sprachunabhängige ID.
+- Lokalisierte Namens- und Beschreibungsschlüssel.
+- Kategorie und Materialzusammensetzung.
+- Größe und Handhabungsklasse.
+- Direkter Basisverkaufswert bzw. Wertstufe.
+- Mögliche Zerlegungs- und Verarbeitungsergebnisse.
+- Benötigte Werkzeuge oder Stationen.
+- Seltenheits- und Entdeckungstags.
+- Visuelle Asset-Referenz.
+- Sammel-, Quest- und Schutzkennzeichnungen.
 
-### 2.3 Collection feedback
-Provide:
-- Clear highlight on selectable objects.
-- Short pickup or tool animation.
-- Small sound and visual feedback.
-- Obvious feedback when capacity is reached or a tool is missing.
+### 2.1 Vier Ressourcenebenen
 
-## 3. Sell or process
+1. Fundstücke und Gegenstände.
+2. Rohmaterialien.
+3. Wiederverwendbare Komponenten.
+4. Aufbereitete Produkte und Erzeugnisse.
 
-Every object should communicate a simple choice where applicable:
+### 2.2 Erste Materialgruppen
 
-- **Sell now:** quick, predictable income.
-- **Process:** invest effort or machine capacity for a potentially better return.
-- **Keep:** retain a collectible, quest item, robot component, or useful resource.
+- Metalle: Eisen, Stahl, Aluminium, Kupfer und weitere Metalle.
+- Kunststoffe: verschiedene Kunststoffarten und Verbundstoffe.
+- Elektronik: Platinen, Kabel, Chips, Sensoren und Bauteile.
+- Holz und Naturmaterialien: Holz, Papier und Karton.
+- Mineralische Stoffe: Glas, Beton, Keramik und Gestein.
+- Besondere Fundstücke: seltene Komponenten, Sammlerstücke und ungewöhnliche Objekte.
 
-The value path must not be universally superior after accounting for its time, investment, and opportunity cost. Direct sale remains useful throughout the game.
+Die Liste ist eine konzeptionelle Taxonomie, keine verbindliche Startmenge. Der erste Contentumfang bleibt klein.
 
-## 4. Resource and item data
+## 3. Zerlegung und Verarbeitung
 
-A scrap item should be data-defined. Initial conceptual fields:
+**Beschluss: Hybridmodell.**
 
-- Stable ID.
-- Display name and description.
-- Category and material.
-- Size / handling class.
-- Base direct-sale value.
-- Possible processing outputs.
-- Tool or station requirements, if any.
-- Rarity / discovery tags.
-- Visual asset reference.
-- Collectible or quest flags.
+- Gewöhnliche Gegenstände werden in wenige verständliche Materialgruppen zerlegt.
+- Komplexe, seltene oder wertvolle Gegenstände können detaillierte Komponenten enthalten.
+- Ein Gegenstand kann direkt verkauft, sortiert, demontiert, aufbereitet oder als Fundstück behalten werden.
+- Nicht jeder Gegenstand benötigt alle Verarbeitungsschritte.
+- Komplexe Zerlegung muss einen nachvollziehbaren Mehrwert bieten und darf nicht zum Pflichtweg werden.
 
-Exact resource categories, weights, values, and recipes are not finalized yet. Avoid creating dozens of resource types before the first prototype proves the loop.
+Mögliche Verarbeitungsarten:
 
-## 5. Economy
+- Sortierung: Trennung gemischter Materialien.
+- Demontage: Zerlegung in Rohmaterialien und Komponenten.
+- Aufbereitung: Verbesserung der Materialqualität oder Herstellung standardisierter Zwischenprodukte.
+- Wiederverwendung: Reparatur oder erneuter Einsatz brauchbarer Komponenten.
 
-Credits are the primary currency.
+### 3.1 Qualitätsstufen
 
-### 5.1 Revenue sources
-- Direct sale of mixed scrap or individual objects.
-- Sale of sorted materials.
-- Sale of processed outputs.
-- Special orders.
-- Rare finds and collectibles, where appropriate.
+Als einfache erste Abstufung sind vorgesehen:
 
-### 5.2 Expenditure
-- Tools and tool upgrades.
-- Inventory or transport improvements.
-- Employee hiring.
-- Machines and machine upgrades.
-- Storage and work-area improvements.
-- Plot expansion.
+- Unsortiert: gemischt oder verunreinigt.
+- Sortiert: sauber getrennt und verwertbar.
+- Aufbereitet: weiterverarbeitet und für anspruchsvollere Anwendungen geeignet.
 
-### 5.3 Balance principles
-- Purchases should be attainable through understandable play sessions.
-- Each purchase must solve a visible problem or unlock a meaningful option.
-- Avoid exponential prices that force monotonous grinding.
-- Do not make processing compulsory.
-- Communicate estimated output and value before confirming a processing choice.
-- Test the economy with actual play sessions; do not treat placeholder figures as final balance.
+Nicht jede Materialart muss alle Qualitätsstufen verwenden.
 
-## 6. Progression ladder
+## 4. Sammeln und Handhabung
 
-1. Manual collection and direct sale.
-2. Basic tool upgrade.
-3. Better carrying / transport capacity.
-4. First helper, assigned to one simple task.
-5. First affordable machine.
-6. Basic processing or sorting station.
-7. Additional helper or machine specialization.
-8. Expanded work area and new object types.
-9. More advanced automation and optional optimization.
+### 4.1 Kleine Gegenstände
+Kurze Interaktion zum Aufheben. Aufnahme in ein noch festzulegendes Trageinventar oder einen geeigneten Sammelbehälter.
 
-The order can be tuned during prototyping, but the feeling of earning each step is mandatory.
+### 4.2 Große Gegenstände
+Kontextaktionen wie Hebeln, Schneiden, Demontieren oder Anheben. Erforderliche Werkzeuge und Ausrüstung müssen klar erkennbar sein.
 
-## 7. Employees
+### 4.3 Feedback
+- Verständliche Hervorhebung interaktiver Objekte.
+- Kurze Animation und Audio-/visuelles Feedback.
+- Klare Rückmeldung bei fehlendem Werkzeug oder erreichter Kapazität.
 
-Employees should have simple, legible roles. Initial candidate roles:
-- Collector: gathers designated nearby small scrap.
-- Carrier: moves collected items to a defined drop-off point.
-- Station helper: operates one compatible station.
+## 5. Wirtschaft
 
-For the first prototype, implement only one employee role. The player should assign the role in one or two interactions. Avoid complex schedules and needs.
+Credits sind die primäre Währung.
 
-## 8. Progression pacing
+### 5.1 Einnahmequellen
+- Direktverkauf von gemischtem Schrott oder Einzelobjekten.
+- Verkauf sortierter Materialien.
+- Verkauf verarbeiteter Produkte.
+- Sonderaufträge.
+- Seltene Funde und Sammlerstücke, sofern passend.
 
-The intended early investment order is:
-1. Basic tool improvement.
-2. Carrying / transport improvement.
-3. First employee, preferably before the first machine.
-4. First machine.
-5. First optional processing station or further specialization.
+### 5.2 Ausgaben
+- Werkzeuge und Verbesserungen.
+- Trage- und Transportkapazität.
+- Mitarbeiter und Schichtbetrieb.
+- Maschinen und Maschinenverbesserungen.
+- Lager, Gebäude und Arbeitsbereiche.
+- Fahrzeuge und Transport.
+- Grundstücke und neue Standorte.
+- Betriebskosten, soweit sie nachvollziehbar und fair sind.
 
-The first employee should take over one task the player already understands. The first machine should automate one similarly clear task. Exact prices, wages, sale values, and time targets remain open until a playable economy prototype can be tested.
+### 5.3 Dynamische Nachfrage
+- Grundpreise bilden ein verlässliches wirtschaftliches Sicherheitsnetz.
+- Nachfrageereignisse und Sonderaufträge können zeitweise bessere Erlöse bieten.
+- Marktschwankungen sind eine Gelegenheit, keine Pflicht zur ständigen Beobachtung.
+- Keine dauerhaften Preisabstürze, die den Spielfortschritt blockieren.
+- Lagerung kann strategische Entscheidungen ermöglichen, ohne den Spieler zum Spekulieren zu zwingen.
 
-## 9. Early prototype acceptance tests
+## 6. Beschaffung
 
-- A small object can be collected manually.
-- A large object visibly requires an appropriate tool.
-- The player can sell an item directly.
-- A selected item can be processed for a different, understandable outcome.
-- Sale and processing update credits / resources correctly.
-- The player can buy a basic upgrade.
-- A later progression goal clearly communicates the first helper or machine purchase.
-- The player is never blocked from earning money due to a mandatory processing chain.
+Vier Quellen ergänzen sich:
+
+1. Eigene Grundstücke und wiederkehrender Schrottnachschub.
+2. Lieferungen von Privatpersonen und Unternehmen.
+3. Aktive Beschaffung und Erkundung durch den Spieler.
+4. Einkauf, Lieferverträge und eigene Transportnetzwerke.
+
+Die Gewichtung verschiebt sich im Verlauf: Anfangs ist der Spieler stark selbst beteiligt; später übernehmen Mitarbeiter, Lieferanten, Scrappy und automatisierte Logistik einen wachsenden Anteil.
+
+### 6.1 Scrappy in der Beschaffung
+Scrappys Beitrag hängt von installierter Hardware, Fähigkeiten und Erfahrung ab. Mögliche Aufgaben sind Erkundung, Materialanalyse, Bergung kleiner Gegenstände, Transportassistenz, Lieferprüfung und Beschaffungshinweise.
+
+Scrappy darf keine geschützten Ressourcen verbrauchen oder wichtige Beschaffungsentscheidungen ohne Freigabe treffen. Seine Aktivitäten bleiben sichtbar, nachvollziehbar und unterbrechbar.
+
+## 7. Mitarbeiter und Arbeitsorganisation
+
+Mitarbeiter sind individuelle Figuren mit funktionalen Eigenschaften. Sie besitzen Persönlichkeit, Eigenheiten und Vorlieben, aber keine komplexe Bedürfnis- oder Lebenssimulation.
+
+Fähigkeiten entwickeln sich durch tatsächliche Arbeit. Mitarbeiter können sich beispielsweise auf Sammlung, Transport, Sortierung, Verarbeitung, Maschinenbedienung oder Logistik spezialisieren.
+
+### 7.1 Rekrutierung
+- Bewerbungen.
+- Persönliche Begegnungen in der Region.
+- Empfehlungen durch Mitarbeiter, Geschäftspartner und Bewohner.
+- Besondere Ereignisse.
+
+### 7.2 Arbeitsbereiche
+Der Spieler weist Mitarbeiter Arbeitsbereichen zu und steuert die Organisation über wenige verständliche Vorgaben:
+
+- Personalzuordnung bzw. Personalstärke.
+- Priorität des Arbeitsbereichs.
+- Allgemeine Arbeitsweise oder bevorzugte Aufgaben.
+
+Mitarbeiter wählen innerhalb dieser Grenzen geeignete verfügbare Aufgaben selbst. Das System berücksichtigt Fähigkeiten, Erfahrung, Verfügbarkeit, Wege, Maschinenkompatibilität und Prioritäten.
+
+Keine komplexen Dienstpläne oder permanente Einzelzuweisung jeder Aufgabe.
+
+## 8. Schichtsystem
+
+Mit ausreichender Personalstärke kann der Spieler einzelne Betriebsbereiche im Schichtbetrieb führen.
+
+- Optionale Zwei- und Dreischichtmodelle.
+- Einfache Konfiguration pro Betriebsbereich.
+- Automatische Zuordnung geeigneter Mitarbeiter.
+- Ruhezeiten und Verfügbarkeit werden berücksichtigt.
+- Personalengpässe werden verständlich angezeigt.
+- Automatisierte Maschinen können auch ohne dauerhaft besetzte Schicht laufen.
+- Nachtbetrieb kann zusätzliche Personal- und Betriebskosten verursachen.
+
+Konkrete Schichtlängen, Zuschläge und Personalwerte sind offen und werden später balanciert.
+
+## 9. Welt, Standorte und Transport
+
+Die Hauptregion ist zusammenhängend und frei erkundbar. Große Spezialstandorte können eigene Karten erhalten. Alle Standorte sind über ein gemeinsames Wirtschafts- und Logistiksystem verbunden.
+
+Der Spieler bewegt sich zu Fuß und nutzt Fahrzeuge für größere Entfernungen und Transporte. Später können eigene Fahrzeuge und Transportwege automatisiert werden.
+
+Das Bausystem ist hybrid: Raster und definierte Bauflächen unterstützen Gebäude und große Anlagen; Maschinen, Lagerbereiche, Wege und Dekorationen bieten innerhalb funktionaler Grenzen mehr Freiheit.
+
+## 10. Zeit und Offline-Fortschritt
+
+Die Simulation läuft kontinuierlich mit Tag-Nacht-Rhythmus und täglichen wirtschaftlichen Ereignissen.
+
+Der bevorzugte Offline-Standard für die weitere Konzeption ist:
+
+- Begrenzter Offline-Fortschritt.
+- Maximale Offline-Zeit: 24 Stunden.
+- Freigegebene Produktion, Lagerbewegungen, geplante Lieferungen, Schichtarbeit und ausgewählte Scrappy-Aktivitäten können simuliert werden.
+- Neue Aufträge, wichtige Storyereignisse und Entscheidungen mit Spielerfreigabe pausieren.
+- Beim nächsten Start wird ein Abwesenheitsbericht angezeigt.
+- Die Offline-Simulation wird aus der vergangenen Zeit berechnet, nicht durch eine laufende Spielinstanz.
+
+Die Einstellung soll später um alternative Modi ergänzt werden können. Schutz vor ungewollten Verlusten und irreversiblen Ereignissen ist unabhängig vom Modus erforderlich.
+
+## 11. Fortschrittsleiter
+
+1. Manuelles Sammeln und Direktverkauf.
+2. Erste Werkzeugverbesserung.
+3. Bessere Trage- und Transportkapazität.
+4. Erster Mitarbeiter mit einer einfachen Aufgabe.
+5. Erste Maschine.
+6. Erste Sortier- oder Verarbeitungsstation.
+7. Weitere Mitarbeiter und Spezialisierungen.
+8. Größere Arbeitsbereiche und neue Gegenstandstypen.
+9. Fahrzeuge, Lieferungen und zusätzliche Standorte.
+10. Vernetzte Produktion und fortgeschrittene Automatisierung.
+
+Die genaue Reihenfolge kann im Prototyp angepasst werden. Das Gefühl, jeden Fortschritt selbst verdient zu haben, bleibt verbindlich.
+
+## 12. Spielende und Auswertung
+
+Das Hauptspiel endet mit dem Aufbau eines regionalen Recycling-Netzwerks und einer finalen Herausforderung, die das Zusammenspiel der Standorte prüft.
+
+Zielgröße für einen normalen Durchlauf: vorläufig 30–40 Stunden. Diese Zeit ist ein Balancing-Ziel, keine künstliche Wartezeit.
+
+Nach dem Hauptabschluss bleibt freies Weiterspielen möglich. Ein optionaler Meisterabschluss bewertet Wirtschaft, Recycling, Automatisierung, Infrastruktur, Personal und Entdeckungen. Bronze, Silber und Gold bilden die vorgesehenen Leistungsstufen. Konkrete Anforderungen werden später durch Tests festgelegt.
+
+Das Statistiksystem erfasst relevante Ereignisse vom Spielbeginn an: Spielzeit, Spieltage, Umsatz, Gewinn, Ausgaben, Materialmengen, Gegenstände, Mitarbeiter, Maschinen, Produktionslinien, Standorte, Automatisierung, Aufträge und Entdeckungen.
+
+## 13. Balancing-Grundsätze
+
+- Käufe sollen in verständlichen Spielsitzungen erreichbar sein.
+- Jede Investition löst ein sichtbares Problem oder eröffnet eine sinnvolle Option.
+- Keine exponentiellen Preise, die monotonen Grind erzwingen.
+- Verarbeitung ist nicht verpflichtend.
+- Vor einer Verarbeitung werden erwartete Ausgaben und Ergebnisse verständlich gezeigt.
+- Direkter Verkauf bleibt während des gesamten Spiels brauchbar.
+- Mitarbeiter- und Betriebskosten dürfen keine verdeckten finanziellen Fallen erzeugen.
+- Werte werden in spielbaren Tests ermittelt, nicht vorab als endgültig angenommen.
+
+## 14. Telemetrie und Prototyp-Tests
+
+Zu erfassen sind unter anderem:
+
+- Zeit bis zum ersten Verkauf.
+- Zeit bis zu Werkzeug- und Transportverbesserungen.
+- Zeit bis zum ersten Mitarbeiter und zur ersten Maschine.
+- Kontostand und Geldfluss im Zeitverlauf.
+- Verhältnis Direktverkauf zu Verarbeitung.
+- Zeit für Laufwege, Transport, Sammeln und Entdecken.
+- Auslastung von Mitarbeitern und Maschinen.
+- Engpässe in Arbeitsbereichen und Lieferketten.
+- Verständlichkeit des Nutzens der nächsten Investition.
+- Offline-Ergebnis und Abweichungen zwischen erwarteter und tatsächlicher Simulation.
+
+## 15. Erste Prototyp-Abnahmekriterien
+
+- Ein kleiner Gegenstand kann manuell gesammelt werden.
+- Ein großer Gegenstand benötigt sichtbar ein passendes Werkzeug.
+- Ein Gegenstand kann direkt verkauft werden.
+- Ein ausgewählter Gegenstand kann optional zerlegt oder verarbeitet werden.
+- Verkauf und Verarbeitung aktualisieren Credits und Ressourcen korrekt.
+- Eine grundlegende Verbesserung kann gekauft werden.
+- Ein Mitarbeiter übernimmt eine einfache, sichtbare Aufgabe.
+- Eine Maschine besitzt eine klare Funktion.
+- Der Spieler wird nie durch eine verpflichtende Verarbeitungskette vom Geldverdienen ausgeschlossen.
