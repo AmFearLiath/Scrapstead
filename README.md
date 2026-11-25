@@ -41,6 +41,7 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 - [Spieldesign-Dokument](docs/gdd.md)
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
+- [First-Hour-Experience – Spielstart und erste Stunde](docs/first-hour-experience.md)
 - [Gegenstandskatalog des Startgrundstücks](docs/starting-yard-item-catalog.md)
 - [Lage- und Entdeckungsplan des Startgrundstücks](docs/starting-yard-layout-discovery.md)
 - [Grundstücksgeometrie und Blockout-Spezifikation](docs/starting-yard-blockout.md)
