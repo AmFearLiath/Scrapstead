@@ -18,8 +18,9 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 4. **Sinnvolle Automatisierung.** Maschinen haben klare, verständliche Aufgaben.
 5. **Gemütlicher Charakter.** Warme Diorama-Optik, Humor, charmante Maschinen und Scrappy.
 6. **Freiheit für den Spieler.** Verschiedene Wege zum Sammeln, Verarbeiten, Verkaufen, Bauen und Anpassen.
-8. **Komplexität im richtigen Moment.** Neue Bau- und Gestaltungsmöglichkeiten werden schrittweise freigeschaltet, wenn der Spieler mit den Grundlagen vertraut ist.
 7. **Von Anfang an vollständig mehrsprachig.** Alle spielerseitigen Inhalte sind über Lokalisierungsschlüssel eingebunden und von Beginn an internationalisierbar.
+8. **Komplexität im richtigen Moment.** Neue Bau- und Gestaltungsmöglichkeiten werden schrittweise freigeschaltet, wenn der Spieler mit den Grundlagen vertraut ist.
+9. **Humor mit Charakter.** Trockener Witz, erfinderischer Unsinn und liebenswerte Absurdität – mit Gefühl für Timing und Dosierung.
 
 ## Grundsatzentscheidungen
 
@@ -30,7 +31,9 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 - Sammeln: Kleine Gegenstände direkt aufheben; größere Objekte benötigen Werkzeuge oder Ausrüstung.
 - Schrottwirtschaft: Gewöhnlicher Schrott kann direkt verkauft werden; Sortierung und Verarbeitung sind optionale Wege zu besseren Erträgen.
 - Fortschritt: Der Spieler erledigt die Arbeit zunächst selbst, stellt später Mitarbeiter ein, kauft Maschinen und baut schrittweise einen automatisierten Betrieb auf.
-- Begleiter: Scrappy, ein modularer Roboter. Sein Kopf wird unter einem Schrotthaufen gefunden und mit einer besonderen Komponente aus dem roten Werkzeugkasten wiederhergestellt.
+- Begleiter: Scrappy, ein modularer Roboter. Er wurde von Walt Wren gebaut; sein Kopf wird unter einem Schrotthaufen gefunden und mit einer besonderen Komponente aus dem roten Werkzeugkasten wiederhergestellt.
+- Hintergrundgeschichte: Der Spieler erbt den Schrottplatz von Walter „Walt“ Wren und entdeckt dessen Vergangenheit schrittweise.
+- Humor: Trockener Charakterwitz, erfinderischer Unsinn und liebenswerte Absurdität mit bewusster Dosierung.
 - Scrappy-Anpassung: Der Spieler baut ihn aus gefundenen Teilen zusammen. Kombinationen können nützlich, absurd oder rein kosmetisch sein.
 - Mehrsprachigkeit: Vollständig mehrsprachige Entwicklung ab dem ersten Produktionsinhalt. Keine fest codierten Anzeigetexte; stabile IDs und Lokalisierungsschlüssel.
 - Erste Referenzsprachen: Deutsch und Englisch. Weitere Sprachen müssen ohne Änderungen an der Spiellogik ergänzt werden können.
@@ -42,6 +45,7 @@ Dieses Repository sammelt die Designdokumentation, Entscheidungen, Spezifikation
 - [Gameplay- und Wirtschaftsspezifikation](docs/gameplay-economy.md)
 - [Spielfortschritt und Unternehmensentwicklung](docs/progression-business-growth.md)
 - [First-Hour-Experience – Spielstart und erste Stunde](docs/first-hour-experience.md)
+- [Walt Wren und die Geschichte hinter dem Schrottplatz](docs/lore-walt-wren.md)
 - [Gegenstandskatalog des Startgrundstücks](docs/starting-yard-item-catalog.md)
 - [Lage- und Entdeckungsplan des Startgrundstücks](docs/starting-yard-layout-discovery.md)
 - [Grundstücksgeometrie und Blockout-Spezifikation](docs/starting-yard-blockout.md)
