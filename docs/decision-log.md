@@ -462,3 +462,12 @@ Die bisherigen Systemspezifikationen sind ein Ideen- und Detailpool, keine autom
 Die Hauptspielzeit von 30–40 Stunden bleibt ein vorläufiges Balancing-Ziel. Sie darf nicht durch künstliche Wartezeiten oder Pflicht-Mikromanagement erzeugt werden.
 
 Verbindliche Produktionsleitplanke: [Produktionsumfang und Entwicklungsfahrplan](production-scope-and-roadmap.md).
+
+
+## Ergänzung: Core-Gameplay-Matrix
+
+**Leitentscheidung:** Jede Kernmechanik erhält eine klar begrenzte minimale vollständige Umsetzung, definierte Abhängigkeiten, eine Entwicklungsphase und einen MVP-Nachweis. Optionale Erweiterungen sind keine Release-Verpflichtungen.
+
+Der erste aussagekräftige Prototyp prüft Bewegung, Interaktion, Sammeln, eine größere Bergungsaktion, Direktverkauf, Credits, ein Upgrade und optional eine einfache Verarbeitung. Erst nach erfolgreicher Validierung werden Scrappy, Delegation, Maschinen und Region schrittweise ergänzt.
+
+Referenz: [Core-Gameplay-Matrix](core-gameplay-matrix.md).
