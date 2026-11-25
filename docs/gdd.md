@@ -1,6 +1,6 @@
 # Scrapstead — Game Design Document
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Status:** Pre-production  
 **Genre:** Cozy Automation Tycoon / Incremental Simulation  
 **Platform target:** PC first  
@@ -49,7 +49,7 @@ Processing is an opportunity, not a mandatory chore for every item.
 
 ### 3.3 Business growth
 
-The player's growth should feel earned and gradual:
+The player's growth should feel earned and gradual. The intended early sequence is manual work, practical tool improvements, a first helper, then a first machine. This is a pacing direction to validate in the prototype:
 
 1. The player performs nearly all work personally.
 2. The player improves basic tools and transport capacity.
@@ -63,6 +63,8 @@ The player's growth should feel earned and gradual:
 Hiring and machines are meaningful investments. They should not be granted automatically or arrive so early that manual play becomes irrelevant.
 
 ## 4. Early, mid, and late game
+
+The first employee and first machine are separate milestones. The employee demonstrates delegation; the first machine demonstrates mechanical automation. The player should experience both transitions and understand the benefit of each.
 
 ### Early game — One-person yard
 
