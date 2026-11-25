@@ -9,8 +9,10 @@ extends Node
 ## All public methods return structured result dictionaries:
 ## { "ok": bool, "error": ErrorCode, "message_key": String, "data": Dictionary }
 
-## Current save schema version. Other versions are rejected, never silently migrated.
-const SAVE_VERSION: int = 1
+## Current save schema version. Other versions are rejected, never silently
+## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
+## upgrades (P1).
+const SAVE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
 const SETTINGS_FILE_NAME: String = "settings.json"
 const DEFAULT_SAVE_DIRECTORY: String = "user://saves"
@@ -110,6 +112,17 @@ func validate_save_data(data: Dictionary) -> bool:
 	for object_id: Variant in data["world_objects"]:
 		if typeof(object_id) != TYPE_STRING or typeof(data["world_objects"][object_id]) != TYPE_DICTIONARY:
 			return false
+	if typeof(data.get("wallet")) != TYPE_DICTIONARY:
+		return false
+	var wallet: Dictionary = data["wallet"]
+	if wallet.has("balance") and (not _is_number(wallet["balance"]) or float(wallet["balance"]) < 0.0):
+		return false
+	if wallet.has("sequence") and (not _is_number(wallet["sequence"]) or float(wallet["sequence"]) < 0.0):
+		return false
+	if wallet.has("ledger") and typeof(wallet["ledger"]) != TYPE_ARRAY:
+		return false
+	if not _is_string_array(data.get("inventory")) or not _is_string_array(data.get("upgrades")):
+		return false
 	return true
 
 
@@ -164,6 +177,10 @@ func _check_version(data: Dictionary) -> ErrorCode:
 func _normalize(data: Dictionary) -> Dictionary:
 	var normalized: Dictionary = data.duplicate(true)
 	normalized["save_version"] = int(normalized["save_version"])
+	var wallet: Dictionary = normalized["wallet"]
+	for key: String in ["balance", "sequence"]:
+		if wallet.has(key):
+			wallet[key] = int(wallet[key])
 	return normalized
 
 
@@ -185,5 +202,14 @@ func _is_vector3_array(value: Variant) -> bool:
 		return false
 	for component: Variant in value:
 		if not _is_number(component):
+			return false
+	return true
+
+
+func _is_string_array(value: Variant) -> bool:
+	if typeof(value) != TYPE_ARRAY:
+		return false
+	for entry: Variant in value:
+		if typeof(entry) != TYPE_STRING:
 			return false
 	return true

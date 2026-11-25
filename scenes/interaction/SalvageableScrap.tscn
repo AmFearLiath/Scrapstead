@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/SalvageableScrap.gd" id="1_salvage"]
+[ext_resource type="Resource" path="res://data/items/bulk_metal_beam.tres" id="2_definition"]
+[ext_resource type="PackedScene" path="res://assets/objects/bulk_metal_beam.tscn" id="3_model"]
+
+[sub_resource type="BoxShape3D" id="shape"]
+size = Vector3(2.6, 0.6, 1.0)
+
+[node name="SalvageableScrap" type="StaticBody3D" node_paths=PackedStringArray("debris", "shake_target")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_salvage")
+action_key = "ui.action.pick_up"
+highlight_radius = 1.3
+definition = ExtResource("2_definition")
+salvage_seconds = 2.5
+debris = NodePath("VisualRoot/PlaceholderModel/Debris")
+shake_target = NodePath("VisualRoot/PlaceholderModel/Beam")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="PlaceholderModel" parent="VisualRoot" instance=ExtResource("3_model")]
+
+[node name="InteractionPoint" type="Marker3D" parent="."]

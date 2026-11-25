@@ -246,7 +246,9 @@ func _finish(target: Interactable, result: Dictionary) -> void:
 	var target_id: String = target.object_id if is_instance_valid(target) else "-"
 	_last_result_text = "%s: %s" % [target_id, "ok" if result.get("success", false) else "rejected"]
 	interaction_finished.emit(target_id, result)
-	_refresh_selection(true)
+	# A listener may have opened a modal panel and disabled interaction.
+	if _enabled:
+		_refresh_selection(true)
 
 
 func _is_target_usable(target: Interactable) -> bool:
@@ -261,9 +263,4 @@ func _distance_to(target: Interactable) -> float:
 
 
 func _input_hint() -> String:
-	for event: InputEvent in InputMap.action_get_events("interact"):
-		if event is InputEventKey:
-			var key_event := event as InputEventKey
-			var keycode: Key = key_event.physical_keycode if key_event.physical_keycode != KEY_NONE else key_event.keycode
-			return tr("ui.prompt.key_hint").format({"key": OS.get_keycode_string(keycode)})
-	return ""
+	return tr("ui.prompt.key_hint").format({"key": InputHints.key_name(&"interact")})

@@ -6,3 +6,11 @@ extends RefCounted
 
 ## The interacting player body.
 var player: Node3D
+## Items the player carries.
+var inventory: CarryInventory
+## The session's credit account.
+var wallet: Wallet
+## Item definitions used in this scene.
+var item_catalog: ItemCatalog
+## Owned upgrades.
+var upgrades: UpgradeProgress

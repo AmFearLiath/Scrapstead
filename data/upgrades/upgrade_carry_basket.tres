@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/UpgradeDefinition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = "upgrade_carry_basket"
+name_key = "upgrade.upgrade_carry_basket.name"
+description_key = "upgrade.upgrade_carry_basket.description"
+price = 30
+stat = "carry_capacity"
+bonus = 4

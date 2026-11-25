@@ -1,7 +1,7 @@
 # Scrapstead — P0-Implementierungs- und Projektstruktur
 
 **Version:** 0.1  
-**Status:** Implementierungsvorbereitung; noch keine Implementierungsfreigabe  
+**Status:** Umgesetzt (P0) und durch P1 erweitert; Umsetzungsstand siehe Abschnitt 11  
 **Engine:** Godot 4.7.2 Stable / GDScript
 
 ---
@@ -437,3 +437,25 @@ Diese Verifikationen sind Implementierungsdetails. Sie rechtfertigen keine zusä
 ---
 
 **Leitgedanke:** Die Projektstruktur soll die P0-Umsetzung beschleunigen und verständlich halten. Sie ist kein Selbstzweck und wird nur dort erweitert, wo ein konkreter P0-Baustein sie benötigt.
+
+
+## 11. Umsetzungsstand und Abweichungen
+
+P0 ist im Repository umgesetzt und durch automatisierte Tests abgesichert (siehe [Prototyp-Abnahme](prototype-acceptance.md)). Gegenüber der Zielstruktur aus Abschnitt 2 gelten folgende, im Decision Log begründete Ergänzungen:
+
+| Bereich | Ergänzung | Grund |
+|---|---|---|
+| `scripts/menu/` | `MainMenuUI.gd`, `MenuBackdrop.gd` | UI-Signale bzw. Ausrichtung der Menükamera; keine Gameplay-Logik |
+| `scripts/interaction/` | `InteractionContext.gd`, `InspectTestObject.gd`, `UseTestObject.gd` | Explizite Abhängigkeiten für Zielaktionen; konkrete Testaktionen |
+| `scripts/ui/` | `InteractionPrompt.gd`, `FeedbackToast.gd`, `InspectPanel.gd`, `InputHints.gd` | Darstellung von Prompt, Rückmeldung und Untersuchungstext |
+| `ui/hud/`, `ui/interaction/` | `FeedbackToast.tscn`, `InspectPanel.tscn` | Rückmeldung „was ist passiert“ und schließbare Inspect-Anzeige |
+| `scenes/world/` | `YardBlockout.tscn` | Gemeinsamer Blockout für Menü-Hintergrund und Spielszene |
+| `assets/` | Platzhaltermodelle, Theme, Umgebung | Lesbare Low-Poly-Platzhalter |
+| `localization/` | `scrapstead.csv` (en/de) | Verbindliche Mehrsprachigkeit |
+| `tools/` | `build_blockout.gd`, `capture_screens.gd` | Reproduzierbarer Blockout, visuelle Kontrolle |
+| `tests/` | Headless-Testrunner und Testsuiten | Automatisierte Abnahme |
+| Input Map | `debug_toggle_overlay` (F3) | Overlay laut Integrationsspezifikation ein-/ausblendbar |
+
+`p0_defaults.gd` wurde nicht angelegt, da kein Startwert an mehreren Stellen benötigt wurde (Abschnitt 2.1). Ein `MainController.gd` existiert, weil Main den Wechsel ins Menü verzögert auslösen muss.
+
+Mit P1 wurde `PickupTestObject` durch das allgemeine `ScrapItem` ersetzt, und die Input Map um `drop_item` (Q) und `pause_menu` (Esc) erweitert. Details: [P1: Erste Gameplay-Schleife](p1-gameplay-loop.md).

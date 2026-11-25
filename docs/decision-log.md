@@ -694,3 +694,21 @@ Referenz: [P0-Implementierungs- und Projektstruktur](p0-implementation-readiness
 - **Tests:** Ein schlanker eigener Headless-Testrunner (`tests/run_tests.gd`) ohne externe Abhängigkeiten führt Unit- und Integrationstests aus.
 
 **Begründung:** Die Festlegungen schließen offene Implementierungsdetails, ohne Verantwortlichkeiten, Szenenarchitektur oder Spielmechaniken zu verändern.
+
+
+## 25.11.2026 — P1-Umsetzung: erste Gameplay-Schleife
+
+**Kontext:** P0 ist umgesetzt und getestet. P1 ergänzt Sammeln, Bergen, Verkauf, Credits, ein Upgrade und spielerseitiges Speichern. Die folgenden Punkte sind minimale Implementierungsentscheidungen innerhalb des freigegebenen P1-Umfangs; sie ersetzen keine bestehenden Designentscheidungen.
+
+- **Objektauswahl:** Lose Kleinteile `scrap_rusted_bolt`, `scrap_empty_can`, `scrap_wire_coil` (je 2 Instanzen) und der Metallträger `bulk_metal_beam` als Bergungsobjekt – alle aus der Prioritätsliste des Startkatalogs.
+- **Prototypwerte:** 3 / 2 / 7 / 20 Credits, Grundkapazität 4 Plätze, Träger 3 Plätze, Großer Tragekorb 30 Credits für +4 Plätze. Die Werte liegen ausschließlich in Resources unter `data/` und gelten als Playtest-Startwerte, nicht als Balancing.
+- **Tragekapazität in Plätzen** statt Gewicht: einfachste verständliche Regel; größere Objekte belegen mehrere Plätze.
+- **Bergung als Halte-Aktion** (2,5 s) mit sichtbarer Voraussetzung (freie Plätze) statt eines Werkzeugs. Ein Werkzeugsystem bleibt späteren Stufen vorbehalten.
+- **Verkauf der gesamten Ladung** pro Vorgang; doppelte Buchungen werden über Transaktions-IDs, Inventar-Revision und gesperrte Bestätigung verhindert.
+- **Ablegen (Q)** des zuletzt aufgenommenen Teils als minimale Inventarverwaltung; die Position wird gespeichert.
+- **Spielerseitiges Speichern** über ein Pausemenü (Esc). F5 bleibt Entwickleraktion. Automatisches Speichern wird weiterhin nicht eingeführt.
+- **Spielstandschema Version 2** mit `wallet`, `inventory`, `upgrades`. Version-1-Stände werden als inkompatibel abgelehnt (keine stille Migration; es existieren keine Spielerstände aus P0).
+- **P0-Pickup-Testobjekt** wurde durch das allgemeine `ScrapItem` ersetzt (die Schraube an derselben Stelle). Hinweisbrett (Inspect) und Hofstrahler (Use) bleiben als P0-Interaktionen erhalten.
+- **Laufzeitsysteme** (`Wallet`, `CarryInventory`, `UpgradeProgress`) sind kleine Objekte der Gameplay-Szene; es entstehen keine weiteren Autoloads, Manager oder Event-Busse.
+
+Referenz: [P1: Erste Gameplay-Schleife](p1-gameplay-loop.md).

@@ -111,6 +111,9 @@ func create_initial_state() -> Dictionary:
 		"scene_id": GAMEPLAY_SCENE_ID,
 		"player": {},
 		"world_objects": {},
+		"wallet": {},
+		"inventory": [],
+		"upgrades": [],
 	}
 
 

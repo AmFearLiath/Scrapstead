@@ -1,0 +1,37 @@
+extends Control
+## In-game menu (Esc): resume, save, save and return to the main menu, or
+## return without saving. Only forwards the choice; the scene controller and
+## GameSession perform it.
+
+signal resume_requested
+signal save_requested
+signal save_and_exit_requested
+signal exit_without_saving_requested
+
+@onready var _resume_button: Button = %ResumeButton
+@onready var _save_button: Button = %SaveButton
+@onready var _save_exit_button: Button = %SaveExitButton
+@onready var _exit_button: Button = %ExitButton
+
+
+func _ready() -> void:
+	hide()
+	_resume_button.pressed.connect(func() -> void: resume_requested.emit())
+	_save_button.pressed.connect(func() -> void: save_requested.emit())
+	_save_exit_button.pressed.connect(func() -> void: save_and_exit_requested.emit())
+	_exit_button.pressed.connect(func() -> void: exit_without_saving_requested.emit())
+
+
+func open() -> void:
+	show()
+	_resume_button.grab_focus()
+
+
+func close() -> void:
+	hide()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("pause_menu"):
+		get_viewport().set_input_as_handled()
+		resume_requested.emit()

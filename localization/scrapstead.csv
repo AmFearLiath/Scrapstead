@@ -32,7 +32,75 @@ ui.interaction.picked_up,Picked up: {name},Aufgehoben: {name}
 ui.interaction.unavailable,That is no longer available.,Das ist nicht mehr verfügbar.
 object.inspect_test.name,Old Notice Board,Altes Hinweisbrett
 object.inspect_test.text,"Faded letters, half covered in rust: ""Wren's Scrap & Salvage – Every scrap has a story. Bring it to the counter.""","Verblasste Buchstaben, halb von Rost bedeckt: „Wren's Schrott & Bergung – Jedes Stück hat eine Geschichte. Bring es zum Tresen.“"
-object.pickup_test.name,Rusty Bolt,Verrostete Schraube
 object.use_test.name,Yard Floodlight,Hofstrahler
 object.use_test.on,The floodlight hums to life.,Der Strahler springt brummend an.
 object.use_test.off,The floodlight goes dark.,Der Strahler geht aus.
+ui.panel.cancel,Cancel,Abbrechen
+ui.credits_amount,{credits} Cr,{credits} Cr
+ui.action.salvage,Salvage (hold),Bergen (halten)
+ui.action.sell,Sell scrap,Schrott verkaufen
+ui.action.open_workbench,Use workbench,Werkbank benutzen
+ui.item.detail,{category} · {value} Cr · {size} slot(s),{category} · {value} Cr · {size} Platz/Plätze
+item.category.loose_scrap,Loose scrap,Loser Schrott
+item.category.bulk_scrap,Bulky scrap,Sperriger Schrott
+item.category.device,Old device,Altgerät
+item.scrap_rusted_bolt.name,Rusty Bolt,Verrostete Schraube
+item.scrap_rusted_bolt.description,A bolt that has seen better decades.,"Eine Schraube, die schon bessere Jahrzehnte gesehen hat."
+item.scrap_empty_can.name,Empty Can,Leere Dose
+item.scrap_empty_can.description,"Aluminium. Light, dented, still worth a little.","Aluminium. Leicht, verbeult, aber ein paar Credits wert."
+item.scrap_wire_coil.name,Wire Coil,Kabelknäuel
+item.scrap_wire_coil.description,A tangle of copper wire. Copper always sells.,Ein Gewirr aus Kupferdraht. Kupfer geht immer.
+item.bulk_metal_beam.name,Metal Beam,Metallträger
+item.bulk_metal_beam.description,"A heavy steel beam, half buried under junk.","Ein schwerer Stahlträger, halb unter Gerümpel begraben."
+ui.inventory.full_short,Basket full,Korb voll
+ui.inventory.no_space,"No room for {name}: {free} free slot(s), {size} needed.","Kein Platz für {name}: {free} Platz/Plätze frei, {size} benötigt."
+ui.inventory.nothing_to_drop,You are not carrying anything.,Du trägst nichts bei dir.
+ui.inventory.dropped,Put down: {name},Abgelegt: {name}
+ui.salvage.requirement,Stuck under debris · needs {size} free slots · {value} Cr,Steckt unter Gerümpel fest · braucht {size} freie Plätze · {value} Cr
+ui.salvage.no_space,You need {size} free slots to haul this out ({free} free). Sell or drop something first.,Zum Bergen brauchst du {size} freie Plätze ({free} frei). Verkaufe oder lege erst etwas ab.
+ui.salvage.done,Salvaged: {name} ({value} Cr),Geborgen: {name} ({value} Cr)
+station.sell_counter.name,Scrap Counter,Annahmetresen
+ui.sell.detail,{count} item(s) · {total} Cr,{count} Teil(e) · {total} Cr
+ui.sell.nothing_short,Nothing to sell,Nichts zu verkaufen
+ui.sell.nothing,You have nothing to sell. Collect scrap in the yard first.,Du hast nichts zu verkaufen. Sammle zuerst Schrott auf dem Hof.
+ui.sell.title,Scrap Counter,Annahmetresen
+ui.sell.subtitle,Fixed prices. Everything you carry is sold together.,"Feste Preise. Alles, was du trägst, wird zusammen verkauft."
+ui.sell.line_count,{count} × {unit} Cr,{count} × {unit} Cr
+ui.sell.total,Total,Gesamt
+ui.sell.confirm,Sell for {credits} Cr,Für {credits} Cr verkaufen
+ui.sell.done,Sold {count} item(s) for {total} Cr.,{count} Teil(e) für {total} Cr verkauft.
+ui.sell.stale,Your load changed. Please check the offer again.,Deine Ladung hat sich geändert. Bitte prüfe das Angebot erneut.
+ui.sell.already_booked,This sale was already booked.,Dieser Verkauf wurde bereits gebucht.
+ui.sell.failed,The sale could not be completed.,Der Verkauf konnte nicht abgeschlossen werden.
+ui.ledger.sale,Sale,Verkauf
+ui.ledger.upgrade,Upgrade,Upgrade
+station.workbench.name,Workbench,Werkbank
+ui.upgrade.detail_available,An upgrade is affordable,Ein Upgrade ist bezahlbar
+ui.upgrade.detail_none,Upgrades and prices,Upgrades und Preise
+ui.upgrade.title,Workbench,Werkbank
+ui.upgrade.subtitle,Invest your credits to work more efficiently.,"Investiere deine Credits, um effizienter zu arbeiten."
+ui.upgrade.effect.carry_capacity,Carry capacity: {current} → {after} slots,Tragekapazität: {current} → {after} Plätze
+ui.upgrade.price,Price: {credits} Cr,Preis: {credits} Cr
+ui.upgrade.status.available,Buy,Kaufen
+ui.upgrade.status.owned,Owned,Gekauft
+ui.upgrade.status.insufficient_funds,Not enough credits,Zu wenig Credits
+ui.upgrade.status.locked,Locked,Gesperrt
+ui.upgrade.bought,Built: {name}. Your basket is bigger now!,Gebaut: {name}. Dein Korb ist jetzt größer!
+ui.upgrade.insufficient_funds,Not enough credits ({price} Cr needed).,Nicht genug Credits ({price} Cr benötigt).
+ui.upgrade.already_owned,You already own this upgrade.,Dieses Upgrade besitzt du bereits.
+ui.upgrade.locked,This upgrade is not available yet.,Dieses Upgrade ist noch nicht verfügbar.
+ui.upgrade.failed,The upgrade could not be bought.,Das Upgrade konnte nicht gekauft werden.
+upgrade.upgrade_carry_basket.name,Big Carry Basket,Großer Tragekorb
+upgrade.upgrade_carry_basket.description,"A sturdy wicker basket with leather straps, patched together from yard finds. Carry twice as much per trip.","Ein stabiler Weidenkorb mit Lederriemen, aus Fundstücken zusammengeflickt. Du trägst doppelt so viel pro Gang."
+ui.hud.carry_title,Basket,Tragekorb
+ui.hud.carry_value,{used} / {capacity},{used} / {capacity}
+ui.hud.carry_line,{name} ×{count} · {value} Cr,{name} ×{count} · {value} Cr
+ui.hud.credits_value,{credits} Cr,{credits} Cr
+ui.hud.drop_hint,[{key}] Put down last item,[{key}] Letztes Teil ablegen
+ui.hud.controls,{move} Move · {interact} Interact · {drop} Put down · {menu} Menu · Mouse wheel Zoom,{move} Bewegen · {interact} Interagieren · {drop} Ablegen · {menu} Menü · Mausrad Zoom
+ui.pause.title,Paused,Pause
+ui.pause.resume,Resume,Weiterspielen
+ui.pause.save,Save,Speichern
+ui.pause.save_exit,Save & main menu,Speichern & Hauptmenü
+ui.pause.exit_without_saving,Main menu without saving,Hauptmenü ohne Speichern
+ui.upgrade.effect_owned.carry_capacity,Carry capacity: {current} slots (active),Tragekapazität: {current} Plätze (aktiv)

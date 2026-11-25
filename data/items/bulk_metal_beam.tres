@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://assets/objects/bulk_metal_beam.tscn" id="2_model"]
+
+[resource]
+script = ExtResource("1_def")
+id = "bulk_metal_beam"
+name_key = "item.bulk_metal_beam.name"
+description_key = "item.bulk_metal_beam.description"
+category = "bulk_scrap"
+handling_class = 1
+sell_value = 20
+carry_size = 3
+model = ExtResource("2_model")

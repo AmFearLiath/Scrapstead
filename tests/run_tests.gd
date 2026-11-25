@@ -7,9 +7,27 @@ extends SceneTree
 const SUITE_DIRECTORIES: PackedStringArray = ["res://tests/unit", "res://tests/integration"]
 
 var _filter: String = ""
+var _error_logger := ScriptErrorLogger.new()
+
+
+## Counts script errors (not engine errors that tests provoke on purpose).
+class ScriptErrorLogger extends Logger:
+	var script_errors: PackedStringArray = []
+	var _mutex := Mutex.new()
+
+	func _log_error(function: String, file: String, line: int, _code: String, rationale: String,
+			_editor_notify: bool, error_type: int, _script_backtraces: Array[ScriptBacktrace]) -> void:
+		if error_type == Logger.ERROR_TYPE_SCRIPT:
+			_mutex.lock()
+			script_errors.append("%s (%s:%d %s)" % [rationale, file.get_file(), line, function])
+			_mutex.unlock()
+
+	func _log_message(_message: String, _error: bool) -> void:
+		pass
 
 
 func _initialize() -> void:
+	OS.add_logger(_error_logger)
 	for argument: String in OS.get_cmdline_user_args():
 		if argument.begins_with("--filter="):
 			_filter = argument.trim_prefix("--filter=")
@@ -37,10 +55,13 @@ func _run() -> void:
 					continue
 				total += 1
 				var failures_before: int = suite.failures.size()
+				_error_logger.script_errors.clear()
 				suite._current_test = label
 				await suite.before_each()
 				await suite.call(method_name)
 				await suite.after_each()
+				for script_error: String in _error_logger.script_errors:
+					suite.failures.append("%s: script error: %s" % [label, script_error])
 				var passed: bool = suite.failures.size() == failures_before
 				if not passed:
 					failed += 1

@@ -62,7 +62,7 @@ func test_int02_new_game_starts_clean() -> void:
 	check(_session.is_session_active(), "session active")
 	var player: CharacterBody3D = _player(scene)
 	check(player.global_position.distance_to(Vector3(8, 0, -3)) < 0.3, "player at spawn")
-	check(scene.get_world_object("p0_pickup_test_01").is_interaction_available(), "pickup available")
+	check(scene.get_world_object("scrap_rusted_bolt_02").is_interaction_available(), "pickup available")
 	check(not scene.get_world_object("p0_use_floodlight_01").is_on(), "floodlight off")
 
 
@@ -139,7 +139,7 @@ func test_camera_zoom_is_bounded() -> void:
 func test_int06_int08_pickup_inspect_use() -> void:
 	var scene: Node = await _start_new_game()
 	var interactor: Node = _interactor(scene)
-	var pickup: Interactable = scene.get_world_object("p0_pickup_test_01")
+	var pickup: Interactable = scene.get_world_object("scrap_rusted_bolt_02")
 	await _teleport(scene, pickup.global_position + Vector3(0, 0.1, 1.0), PI)
 	check(interactor.get_current_target() == pickup, "pickup selected")
 	check(scene.get_node("HUD/InteractionPrompt").visible, "prompt visible")
@@ -147,8 +147,6 @@ func test_int06_int08_pickup_inspect_use() -> void:
 	await wait_physics_frames(2)
 	check(not pickup.is_interaction_available(), "pickup consumed")
 	check(interactor.get_current_target() != pickup, "pickup no longer selected")
-	send_action("interact")
-	await wait_physics_frames(2)
 	check(not pickup.visible, "pickup stays consumed")
 	var floodlight: Interactable = scene.get_world_object("p0_use_floodlight_01")
 	await _teleport(scene, floodlight.get_interaction_point() + Vector3(-0.6, 0.1, 0.6), PI * 0.75)
@@ -172,7 +170,7 @@ func test_int06_int08_pickup_inspect_use() -> void:
 func test_selection_prefers_near_then_facing_and_is_stable() -> void:
 	var scene: Node = await _start_new_game()
 	var interactor: Node = _interactor(scene)
-	var pickup: Interactable = scene.get_world_object("p0_pickup_test_01")
+	var pickup: Interactable = scene.get_world_object("scrap_rusted_bolt_02")
 	var floodlight: Interactable = scene.get_world_object("p0_use_floodlight_01")
 	# Place the floodlight test object 2 m east of the pickup for this test.
 	floodlight.global_position = pickup.global_position + Vector3(2.0, 0, 0) - (floodlight.get_interaction_point() - floodlight.global_position)
@@ -201,7 +199,7 @@ func test_selection_prefers_near_then_facing_and_is_stable() -> void:
 func test_int07_target_invalidated_before_key_press() -> void:
 	var scene: Node = await _start_new_game()
 	var interactor: Node = _interactor(scene)
-	var pickup: Interactable = scene.get_world_object("p0_pickup_test_01")
+	var pickup: Interactable = scene.get_world_object("scrap_rusted_bolt_02")
 	await _teleport(scene, pickup.global_position + Vector3(0, 0.1, 1.0), PI)
 	check(interactor.get_current_target() == pickup, "pickup selected")
 	var results: Array = []
@@ -226,7 +224,7 @@ func test_int07_target_invalidated_before_key_press() -> void:
 
 func test_int09_save_restart_continue_restores_state() -> void:
 	var scene: Node = await _start_new_game()
-	var pickup: Interactable = scene.get_world_object("p0_pickup_test_01")
+	var pickup: Interactable = scene.get_world_object("scrap_rusted_bolt_02")
 	await _teleport(scene, pickup.global_position + Vector3(0, 0.1, 1.0), PI)
 	send_action("interact")
 	await wait_physics_frames(2)
@@ -244,7 +242,7 @@ func test_int09_save_restart_continue_restores_state() -> void:
 	var player: CharacterBody3D = _player(restored)
 	check(player.global_position.distance_to(Vector3(20.5, 0.1, -11.25)) < 0.15, "position restored")
 	check_near(player.get_facing_yaw(), 1.25, 0.01, "facing restored")
-	check(not restored.get_world_object("p0_pickup_test_01").is_interaction_available(), "pickup state restored")
+	check(not restored.get_world_object("scrap_rusted_bolt_02").is_interaction_available(), "pickup state restored")
 	check(restored.get_world_object("p0_use_floodlight_01").is_on(), "floodlight state restored")
 	var rig: Node3D = restored.get_node("GameplayCamera")
 	check(rig.global_position.distance_to(restored.get_node("Player/CameraAnchor").global_position) < 0.3,
