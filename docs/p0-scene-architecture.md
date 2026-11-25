@@ -1,6 +1,6 @@
 # Scrapstead — P0-Szenenarchitektur
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Status:** Technischer Bauplan für P0; vor der Implementierung zu validieren  
 **Engine:** Godot 4.7.2 Stable / GDScript
 
@@ -326,3 +326,10 @@ Erst durch den P0-Prototyp werden festgelegt:
 - Ob zusätzliche Optionen wie Vollbild oder Lautstärke bereits im ersten Menü enthalten sind.
 
 Diese offenen Punkte sind bewusste Testparameter und keine Lücken in der Architektur.
+
+
+## 13. PlayerController
+
+Die konkrete Bewegungslogik, Eingabeaktionen, Physikverantwortung und Abnahmekriterien des Spielers sind in der [P0-PlayerController-Spezifikation](p0-player-controller.md) festgehalten.
+
+Der Controller verwendet kamerabezogene Bewegung, normalisierte diagonale Eingaben und eine getrennte visuelle Ausrichtung. Sprinten, Springen und weitere Bewegungsaktionen gehören nicht zum P0-Umfang.
