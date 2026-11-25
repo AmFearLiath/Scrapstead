@@ -1,6 +1,6 @@
 # Scrapstead — MVP- und Prototypenplan
 
-**Version:** 0.1  
+**Version:** 0.2  
 **Status:** Vorproduktionsplanung / technische und spielerische Validierung  
 **Geltungsbereich:** Erste spielbare Prototypen bis zum Vertical Slice  
 **Engine:** Godot Engine 4.7.2 Stable mit GDScript (beschlossen). Forward+ ist die vorgesehene Startkonfiguration und wird in P0 auf der Zielhardware geprüft.
@@ -606,3 +606,8 @@ Scrapstead wird nicht als Gesamtpaket gebaut. Wir beweisen zuerst Bewegung und I
 Der erste echte Erfolg ist nicht eine große Welt oder eine beeindruckende Automatisierungsanlage. Es ist ein kleiner Schrottplatz, auf dem es bereits Spaß macht, ein paar Dinge aufzuheben, sie sinnvoll zu verwerten und den eigenen Betrieb ein kleines Stück besser zu machen.
 
 **Erst den Kern spielenswert machen. Dann Scrapstead wachsen lassen.**
+
+
+## Ergänzung: P0-Szenenarchitektur
+
+Die Szenen- und Systemverantwortlichkeiten für P0 sind in der [P0-Szenenarchitektur](p0-scene-architecture.md) als Bauplan beschrieben. Sie konkretisiert den bestehenden P0-Umfang, erweitert ihn aber nicht um zusätzliche Gameplay-Systeme.
