@@ -126,3 +126,16 @@ Dieses Dokument hält die derzeit verbindlichen Designentscheidungen fest. Neue 
 - Die Spielinhalte selbst bleiben vollständig mehrsprachig.
 - Bestehende englische Dokumente werden bei ihrer Überarbeitung schrittweise auf Deutsch umgestellt.
 - Begründung: Die gemeinsame Konzeptions- und Entwicklungsarbeit soll sprachlich einheitlich und gut lesbar bleiben, ohne die internationale Ausrichtung des Spiels zu beeinträchtigen.
+
+## 25.11.2026 — Grundstücksgeometrie und erster Blockout
+
+**Beschluss:** Der erste maßstäbliche Layout-Test verwendet vorläufig ein rechteckiges Grundstück von 48 × 36 Metern.
+
+- Die Fläche umfasst 1.728 m².
+- Das Blockout-Raster beträgt zunächst 1 × 1 Meter.
+- Ein Layout-Meter entspricht zunächst einer Welt-Einheit von einem Meter.
+- Die Funktionsbereiche erhalten feste ungefähre Koordinatenbereiche, bleiben aber offen miteinander verbunden.
+- Der Hauptweg ist zunächst mit 3 Metern Breite geplant; Nebenwege mit 2 Metern.
+- Für die erste Maschine wird ein Stellplatz von bis zu 5 × 4 Metern zuzüglich Bedien- und Ablageflächen reserviert.
+- Diese Werte sind Testannahmen und werden anhand von Kamera, Laufwegen, Handwagen und Interaktionen überprüft.
+- Begründung: Ein gemeinsamer Maßstab macht Grundstücksplanung, Assetgrößen und Gameplay-Abstände nachvollziehbar und früh testbar.
