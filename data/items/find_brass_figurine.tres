@@ -12,4 +12,5 @@ category = "collectible"
 handling_class = 0
 sell_value = 15
 carry_size = 1
+pickup_sound = "brass"
 model = ExtResource("2_model")

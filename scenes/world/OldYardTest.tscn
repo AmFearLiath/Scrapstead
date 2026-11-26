@@ -43,7 +43,13 @@
 [ext_resource type="Resource" path="res://data/items/find_brass_figurine.tres" id="def_find_brass_figurine"]
 [ext_resource type="PackedScene" path="res://ui/post/DioramaPost.tscn" id="90_post"]
 [ext_resource type="Script" path="res://scripts/fx/WorldFx.gd" id="91_fx"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx")]
+[ext_resource type="Script" path="res://scripts/audio/SoundFx.gd" id="92_sfx"]
+[ext_resource type="Resource" path="res://data/audio/sound_library.tres" id="93_library"]
+[ext_resource type="Script" path="res://scripts/audio/UiSounds.gd" id="94_ui_sounds"]
+[ext_resource type="Script" path="res://scripts/audio/MusicPlayer.gd" id="95_music"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/old_yard_shuffle.wav" id="96_music_stream"]
+[ext_resource type="AudioStream" path="res://assets/audio/ambience/yard_ambience.wav" id="97_ambience_stream"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -59,6 +65,7 @@ economy_hud = NodePath("HUD/EconomyHud")
 controls_hint = NodePath("HUD/ControlsHint")
 debug_overlay = NodePath("HUD/DebugOverlay")
 fx = NodePath("Fx")
+sound_fx = NodePath("SoundFx")
 item_catalog = ExtResource("21_items")
 upgrade_catalog = ExtResource("22_upgrades")
 balance = ExtResource("23_balance")
@@ -282,6 +289,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4.6)
 
 [node name="Fx" type="Node3D" parent="."]
 script = ExtResource("91_fx")
+
+[node name="SoundFx" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("92_sfx")
+library = ExtResource("93_library")
+
+[node name="UiSounds" type="Node" parent="." node_paths=PackedStringArray("sound_fx")]
+process_mode = 3
+script = ExtResource("94_ui_sounds")
+sound_fx = NodePath("../SoundFx")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("96_music_stream")
+bus = &"Music"
+script = ExtResource("95_music")
+target_volume_db = -8.0
+fade_in_seconds = 3.0
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("97_ambience_stream")
+bus = &"SFX"
+script = ExtResource("95_music")
+target_volume_db = -12.0
+fade_in_seconds = 4.0
 
 [node name="DioramaPost" parent="." instance=ExtResource("90_post")]
 

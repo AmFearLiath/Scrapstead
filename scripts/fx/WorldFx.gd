@@ -66,9 +66,10 @@ func fly_to(visual: Node3D, target: Callable, on_arrival: Callable = Callable())
 	copy.visible = true
 	var tween: Tween = copy.create_tween()
 	tween.tween_method(_fly_step.bind(copy, copy.global_position, copy.scale, target), 0.0, 1.0, 0.42) 		.set_ease(Tween.EASE_IN_OUT)
-	tween.tween_callback(copy.queue_free)
+	# Arrival first: the tween belongs to the copy and dies with it.
 	if on_arrival.is_valid():
 		tween.tween_callback(on_arrival)
+	tween.tween_callback(copy.queue_free)
 
 
 func _fly_step(t: float, copy: Node3D, start: Vector3, start_scale: Vector3, target: Callable) -> void:

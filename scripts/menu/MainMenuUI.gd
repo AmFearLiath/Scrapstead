@@ -6,7 +6,7 @@ extends CanvasLayer
 signal new_game_requested
 signal continue_requested
 signal quit_requested
-signal setting_changed(key: String, value: String)
+signal setting_changed(key: String, value: Variant)
 
 const LOCALE_OPTIONS: PackedStringArray = ["de", "en"]
 const WINDOW_MODE_OPTIONS: PackedStringArray = ["windowed", "fullscreen"]
@@ -19,6 +19,8 @@ const WINDOW_MODE_OPTIONS: PackedStringArray = ["windowed", "fullscreen"]
 @onready var _settings_panel: PanelContainer = %SettingsPanel
 @onready var _language_option: OptionButton = %LanguageOption
 @onready var _window_mode_option: OptionButton = %WindowModeOption
+@onready var _music_slider: HSlider = %MusicSlider
+@onready var _sfx_slider: HSlider = %SfxSlider
 @onready var _settings_back_button: Button = %SettingsBackButton
 @onready var _status_message: Label = %StatusMessage
 @onready var _fade: ColorRect = %Fade
@@ -34,6 +36,8 @@ func _ready() -> void:
 		func(index: int) -> void: setting_changed.emit("locale", LOCALE_OPTIONS[index]))
 	_window_mode_option.item_selected.connect(
 		func(index: int) -> void: setting_changed.emit("window_mode", WINDOW_MODE_OPTIONS[index]))
+	_music_slider.value_changed.connect(func(value: float) -> void: setting_changed.emit("music_volume", value))
+	_sfx_slider.value_changed.connect(func(value: float) -> void: setting_changed.emit("sfx_volume", value))
 	_settings_panel.hide()
 	_status_message.text = ""
 	_fade.color.a = 1.0
@@ -59,9 +63,11 @@ func show_status(message_key: String) -> void:
 
 
 ## Reflects the current setting values in the settings panel.
-func show_settings(locale: String, window_mode: String) -> void:
+func show_settings(locale: String, window_mode: String, music_volume: float, sfx_volume: float) -> void:
 	_language_option.select(maxi(0, LOCALE_OPTIONS.find(locale)))
 	_window_mode_option.select(maxi(0, WINDOW_MODE_OPTIONS.find(window_mode)))
+	_music_slider.set_value_no_signal(music_volume)
+	_sfx_slider.set_value_no_signal(sfx_volume)
 
 
 ## Locks the menu and fades to black; awaitable.

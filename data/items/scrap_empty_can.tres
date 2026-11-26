@@ -12,4 +12,5 @@ category = "loose_scrap"
 handling_class = 0
 sell_value = 2
 carry_size = 1
+pickup_sound = "tin"
 model = ExtResource("2_model")

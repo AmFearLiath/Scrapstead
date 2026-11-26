@@ -16,6 +16,8 @@ enum HandlingClass { HAND, CARRY, TOOL }
 @export_range(0, 100000) var sell_value: int = 1
 ## Carry slots the item occupies.
 @export_range(1, 16) var carry_size: int = 1
+## Sound played when picked up (name in data/audio/sound_library.tres).
+@export var pickup_sound: String = "clink"
 ## Visual placeholder scene, independent of localized text.
 @export var model: PackedScene
 

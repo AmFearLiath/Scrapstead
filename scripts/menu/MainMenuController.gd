@@ -14,8 +14,7 @@ func _ready() -> void:
 	_ui.quit_requested.connect(_on_quit_requested)
 	_ui.setting_changed.connect(_on_setting_changed)
 	GameSession.session_error.connect(_on_session_error)
-	_ui.show_settings(GameSession.get_setting(GameSession.SETTING_LOCALE),
-		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE))
+	_show_settings()
 	_refresh_continue_state()
 
 
@@ -52,14 +51,20 @@ func _on_session_error(message_key: String) -> void:
 	_refresh_continue_state()
 
 
-func _on_setting_changed(key: String, value: String) -> void:
+func _on_setting_changed(key: String, value: Variant) -> void:
 	if not GameSession.set_setting(key, value):
 		push_warning("MainMenu: setting %s=%s was rejected." % [key, value])
-	_ui.show_settings(GameSession.get_setting(GameSession.SETTING_LOCALE),
-		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE))
+	_show_settings()
 
 
 func _on_quit_requested() -> void:
 	if _busy:
 		return
 	get_tree().quit()
+
+
+func _show_settings() -> void:
+	_ui.show_settings(GameSession.get_setting(GameSession.SETTING_LOCALE),
+		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
+		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))

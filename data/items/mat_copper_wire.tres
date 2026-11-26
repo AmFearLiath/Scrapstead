@@ -12,4 +12,5 @@ category = "material"
 handling_class = 0
 sell_value = 8
 carry_size = 1
+pickup_sound = "wire"
 model = ExtResource("2_model")

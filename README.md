@@ -52,6 +52,9 @@ godot --headless --path . --import
 godot --headless --path . -s res://tools/configure_model_imports.gd
 godot --headless --path . --import
 
+# Geräusche und Musik synthetisieren (Python mit numpy und scipy)
+python tools/audio/synth_audio.py
+
 # Old-Yard-Blockout und Platzhaltermodelle neu erzeugen
 godot --headless --path . -s res://tools/build_blockout.gd
 
@@ -62,8 +65,8 @@ godot --path . -s res://tools/capture_screens.gd
 ### Projektstruktur
 
 ```text
-assets/        Blender-Modelle (models/), Shader, Materialien, Platzhalter, Theme, Icons
-data/          Gegenstände, Upgrades, Verarbeitung, Balancing (Godot-Resources)
+assets/        Blender-Modelle (models/), Audio (audio/), Shader, Materialien, Theme, Icons
+data/          Gegenstände, Upgrades, Verarbeitung, Balancing, Klangbibliothek (Godot-Resources)
 localization/  scrapstead.csv (en/de)
 scenes/        Main, Menü, Old Yard, Spieler, Kamera, Interaktionsobjekte
 scripts/       core (Autoloads), player, camera, interaction, world, economy,

@@ -12,4 +12,5 @@ category = "device"
 handling_class = 1
 sell_value = 12
 carry_size = 2
+pickup_sound = "box"
 model = ExtResource("2_model")

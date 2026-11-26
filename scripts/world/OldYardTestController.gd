@@ -25,6 +25,8 @@ extends Node3D
 @export_group("Presentation")
 ## World effects (dust, flying items, coins); optional.
 @export var fx: Node3D
+## Scene sound effects (scripts/audio/SoundFx.gd); optional.
+@export var sound_fx: Node
 @export_group("Data")
 @export var item_catalog: ItemCatalog
 @export var upgrade_catalog: UpgradeCatalog
@@ -32,6 +34,7 @@ extends Node3D
 
 var _interactor: Node
 var _animator: Node
+var _hold_loop: AudioStreamPlayer
 var _context := InteractionContext.new()
 var _wallet: Wallet
 var _inventory: CarryInventory
@@ -147,6 +150,7 @@ func drop_last_item() -> bool:
 		return false
 	item.drop_at(_free_drop_position(), player.get_facing_yaw())
 	_dust(item.global_position, 5, 0.12)
+	_sound("thud", -4.0)
 	feedback_toast.show_message(tr("ui.inventory.dropped").format({"name": item.get_display_name()}))
 	return true
 
@@ -283,6 +287,9 @@ func _show_result(result: Dictionary) -> void:
 
 
 func _on_sale_completed(object_ids: Array, total: int) -> void:
+	_sound("kaching")
+	if sound_fx != null:
+		sound_fx.play_burst("coins", 2, 0.25, -4.0)
 	if fx != null:
 		var counter: Interactable = _first_of_type("SellStation")
 		if counter != null:
@@ -359,11 +366,18 @@ func _debug_extra_lines() -> String:
 # --- Presentation (animation and effects; no gameplay rules) -----------------
 
 func _setup_presentation() -> void:
+	_interactor.hold_started.connect(_on_hold_started)
+	_interactor.hold_ended.connect(_on_hold_ended)
 	if _animator != null:
 		_animator.setup(player, _interactor, player.get_node("VisualRoot/PlaceholderModel"))
-		_animator.footstep.connect(func(at: Vector3) -> void: _dust(at, 2, 0.07))
+		_animator.footstep.connect(_on_footstep)
 		_inventory.changed.connect(_update_basket_load)
 		_update_basket_load()
+
+
+func _on_footstep(at: Vector3) -> void:
+	_dust(at, 2, 0.07)
+	_sound("step", -9.0)
 
 
 func _update_basket_load() -> void:
@@ -372,28 +386,91 @@ func _update_basket_load() -> void:
 
 
 func _present_interaction(target_id: String, result: Dictionary) -> void:
-	if not result.get("success", false) or result.has("panel"):
-		return
 	var target: Interactable = _objects.get(target_id)
+	if not result.get("success", false):
+		if not str(result.get("message_key", "")).is_empty():
+			_sound("nope", -4.0)
+		return
+	match result.get("panel", ""):
+		"sell":
+			_sound("bell")
+			return
+		"catalog":
+			_sound("page")
+			return
+		"inspect":
+			_sound("paper")
+			return
 	if target == null:
 		return
 	if target is ScrapItem and (target as ScrapItem).get_state() == ScrapItem.State.CARRIED:
+		_sound((target as ScrapItem).definition.pickup_sound)
 		if _animator != null:
 			_animator.play_pickup()
 		if fx != null:
-			var arrival: Callable = _animator.bump_basket if _animator != null else Callable()
 			var basket: Callable = _animator.get_basket_position if _animator != null else player.get_global_position
-			fx.fly_to(target.get_node("VisualRoot"), basket, arrival)
+			fx.fly_to(target.get_node("VisualRoot"), basket, _on_item_arrived)
 		if target is SalvageableScrap:
 			_dust(target.global_position, 12, 0.3)
-	elif target is SearchSource or target is DismantleStation:
+			_sound("creak")
+	elif target is SearchSource:
 		_dust(target.get_interaction_point(), 8, 0.2)
+		if sound_fx != null:
+			sound_fx.play_burst("pop", (target as SearchSource).contents.size(), 0.09)
+	elif target is DismantleStation:
+		_dust(target.get_interaction_point(), 8, 0.2)
+		_sound("clink")
+		if sound_fx != null:
+			sound_fx.play_burst("pop", 2, 0.12)
+	elif target.has_method("is_on"):
+		_sound("switch")
+
+
+func _on_item_arrived() -> void:
+	if _animator != null:
+		_animator.bump_basket()
+	_sound("basket", -3.0)
 
 
 func _on_ware_bought(definition: UpgradeDefinition) -> void:
-	var delivery: Node3D = get_node_or_null("DeliveryArea/" + definition.id)
+	_sound("phone")
+	get_tree().create_timer(0.9).timeout.connect(_deliver.bind(definition.id))
+
+
+func _deliver(ware_id: String) -> void:
+	_sound("jingle")
+	var delivery: Node3D = get_node_or_null("DeliveryArea/" + ware_id)
 	if delivery != null:
 		_dust(delivery.global_position, 10, 0.22)
+		_sound("delivery")
+
+
+func _on_hold_started(target: Interactable) -> void:
+	_stop_hold_loop()
+	var loop_name: String = ""
+	if target is SearchSource:
+		loop_name = "rummage"
+	elif target is SalvageableScrap:
+		loop_name = "hoist"
+	elif target is DismantleStation:
+		loop_name = "screw"
+	if sound_fx != null and not loop_name.is_empty():
+		_hold_loop = sound_fx.start_loop(loop_name, -2.0)
+
+
+func _on_hold_ended(_target: Interactable) -> void:
+	_stop_hold_loop()
+
+
+func _stop_hold_loop() -> void:
+	if sound_fx != null and _hold_loop != null:
+		sound_fx.stop_loop(_hold_loop)
+	_hold_loop = null
+
+
+func _sound(sound_name: String, volume_db: float = 0.0) -> void:
+	if sound_fx != null:
+		sound_fx.play(sound_name, volume_db)
 
 
 func _dust(at: Vector3, amount: int, size: float) -> void:

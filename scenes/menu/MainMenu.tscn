@@ -5,6 +5,11 @@
 [ext_resource type="PackedScene" path="res://ui/main_menu/MainMenuUI.tscn" id="3_ui"]
 
 [ext_resource type="PackedScene" path="res://ui/post/DioramaPost.tscn" id="90_post"]
+[ext_resource type="Script" path="res://scripts/audio/SoundFx.gd" id="92_sfx"]
+[ext_resource type="Resource" path="res://data/audio/sound_library.tres" id="93_library"]
+[ext_resource type="Script" path="res://scripts/audio/UiSounds.gd" id="94_ui_sounds"]
+[ext_resource type="Script" path="res://scripts/audio/MusicPlayer.gd" id="95_music"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/every_scrap_has_a_story.wav" id="96_music_stream"]
 [node name="MainMenu" type="Node"]
 script = ExtResource("1_controller")
 
@@ -13,3 +18,18 @@ script = ExtResource("1_controller")
 [node name="DioramaPost" parent="." instance=ExtResource("90_post")]
 
 [node name="MenuUI" parent="." instance=ExtResource("3_ui")]
+
+[node name="SoundFx" type="Node" parent="."]
+script = ExtResource("92_sfx")
+library = ExtResource("93_library")
+
+[node name="UiSounds" type="Node" parent="." node_paths=PackedStringArray("sound_fx")]
+script = ExtResource("94_ui_sounds")
+sound_fx = NodePath("../SoundFx")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("96_music_stream")
+bus = &"Music"
+script = ExtResource("95_music")
+target_volume_db = -6.0
+fade_in_seconds = 2.5

@@ -19,6 +19,8 @@ const GAMEPLAY_SCENE_ID: String = "old_yard_test"
 
 const SETTING_LOCALE: String = "locale"
 const SETTING_WINDOW_MODE: String = "window_mode"
+const SETTING_MUSIC_VOLUME: String = "music_volume"
+const SETTING_SFX_VOLUME: String = "sfx_volume"
 const SUPPORTED_LOCALES: PackedStringArray = ["de", "en"]
 const WINDOW_MODES: PackedStringArray = ["windowed", "fullscreen"]
 
@@ -127,7 +129,11 @@ func set_setting(key: String, value: Variant) -> bool:
 	var candidate: Dictionary = _settings.duplicate()
 	candidate[key] = value
 	candidate = _sanitize_settings(candidate)
-	if candidate.get(key) != value:
+	var accepted: Variant = candidate.get(key)
+	if typeof(accepted) == TYPE_FLOAT and typeof(value) in [TYPE_FLOAT, TYPE_INT]:
+		if not is_equal_approx(accepted, float(value)):
+			return false
+	elif accepted != value:
 		return false
 	_settings = candidate
 	_apply_settings()
@@ -156,11 +162,24 @@ func _sanitize_settings(raw: Dictionary) -> Dictionary:
 	var window_mode: String = str(raw.get(SETTING_WINDOW_MODE, "windowed"))
 	if not WINDOW_MODES.has(window_mode):
 		window_mode = "windowed"
-	return {SETTING_LOCALE: locale, SETTING_WINDOW_MODE: window_mode}
+	return {
+		SETTING_LOCALE: locale,
+		SETTING_WINDOW_MODE: window_mode,
+		SETTING_MUSIC_VOLUME: _sanitize_volume(raw.get(SETTING_MUSIC_VOLUME, 0.8)),
+		SETTING_SFX_VOLUME: _sanitize_volume(raw.get(SETTING_SFX_VOLUME, 0.8)),
+	}
+
+
+func _sanitize_volume(value: Variant) -> float:
+	if typeof(value) != TYPE_FLOAT and typeof(value) != TYPE_INT:
+		return 0.8
+	return clampf(float(value), 0.0, 1.0)
 
 
 func _apply_settings() -> void:
 	TranslationServer.set_locale(_settings[SETTING_LOCALE])
+	_apply_bus_volume(&"Music", _settings[SETTING_MUSIC_VOLUME])
+	_apply_bus_volume(&"SFX", _settings[SETTING_SFX_VOLUME])
 	if DisplayServer.get_name() == "headless":
 		return
 	var mode: DisplayServer.WindowMode = DisplayServer.WINDOW_MODE_WINDOWED
@@ -168,3 +187,11 @@ func _apply_settings() -> void:
 		mode = DisplayServer.WINDOW_MODE_FULLSCREEN
 	if DisplayServer.window_get_mode() != mode:
 		DisplayServer.window_set_mode(mode)
+
+
+func _apply_bus_volume(bus_name: StringName, linear: float) -> void:
+	var bus: int = AudioServer.get_bus_index(bus_name)
+	if bus == -1:
+		return
+	AudioServer.set_bus_mute(bus, linear <= 0.001)
+	AudioServer.set_bus_volume_db(bus, linear_to_db(maxf(linear, 0.001)))

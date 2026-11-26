@@ -789,3 +789,17 @@ Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).
 - Ein späteres, von Artists erstelltes Rig mit Animationen kann den Animator ersetzen, ohne Spielsysteme zu ändern.
 
 Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).
+
+
+## 26.11.2026 — Klang und Musik
+
+**Beschluss (Projektleitung):** Scrapstead erhält Geräusche und Musik.
+
+- Erster Schritt ohne Downloads: Alle Klänge und beide Musikstücke werden per Klangsynthese aus einem versionierten Skript erzeugt. Freie Bibliotheken (z. B. CC0) werden nur nach ausdrücklicher Zustimmung zu einer konkreten Quelle eingebunden.
+- Kein Audio-Autoload (P0-Regel): Wiedergabe über szenenlokale Knoten (`SoundFx`, `MusicPlayer`, `UiSounds`) und die Busse Music und SFX.
+- Neue echte Einstellungen: Musik- und Geräuschlautstärke (0–1, gespeichert in `settings.json`, 0 schaltet stumm).
+- Aufnahmeklänge sind Teil der Gegenstandsdaten (`ItemDefinition.pickup_sound`).
+- Halte-Aktionen haben eigene Loops; Ablehnungen haben einen freundlichen „Bonk“.
+
+Referenz: [Art Direction, Abschnitt 11](world-art-assets.md).
+

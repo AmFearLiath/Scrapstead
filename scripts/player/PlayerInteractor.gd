@@ -9,6 +9,9 @@ extends Node
 
 ## Emitted when the active target changed (null = none).
 signal target_changed(target: Interactable)
+## Emitted when a hold action starts / ends (completed or cancelled); presentation only.
+signal hold_started(target: Interactable)
+signal hold_ended(target: Interactable)
 ## Emitted after an action attempt with the target's result dictionary.
 signal interaction_finished(target_id: String, result: Dictionary)
 
@@ -233,6 +236,7 @@ func _start_hold(target: Interactable) -> void:
 		return
 	_hold_target = target
 	_hold_elapsed = 0.0
+	hold_started.emit(target)
 	if target.has_method("on_hold_started"):
 		target.on_hold_started()
 
@@ -249,12 +253,15 @@ func _update_hold(delta: float) -> void:
 		var target: Interactable = _hold_target
 		_hold_target = null
 		_hold_elapsed = 0.0
+		hold_ended.emit(target)
 		_execute(target)
 
 
 func _cancel_hold() -> void:
 	if is_instance_valid(_hold_target) and _hold_target.has_method("on_hold_cancelled"):
 		_hold_target.on_hold_cancelled()
+	if _hold_target != null:
+		hold_ended.emit(_hold_target if is_instance_valid(_hold_target) else null)
 	_hold_target = null
 	_hold_elapsed = 0.0
 	if _prompt != null:

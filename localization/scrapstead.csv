@@ -161,3 +161,5 @@ item.scrap_copper_pipe.description,A bent length of copper pipe. Water last flow
 item.find_brass_figurine.name,Brass Figurine,Messingfigur
 item.find_brass_figurine.description,A small brass man holding an even smaller brass figurine. Probably of himself.,"Ein kleiner Messingmann, der eine noch kleinere Messingfigur hält. Vermutlich von sich selbst."
 ui.catalog.effect_locked.carry_capacity,Carry capacity +{bonus} slots,Tragekapazität +{bonus} Plätze
+ui.settings.music_volume,Music,Musik
+ui.settings.sfx_volume,Sound effects,Geräusche

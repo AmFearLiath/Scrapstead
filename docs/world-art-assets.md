@@ -124,3 +124,24 @@ Vorher/Nachher: `docs/art/before_after.png`, Einzelbilder in `docs/art/before/` 
 ## 10. Abgrenzung zu menschlicher Kunstarbeit
 
 Requisiten, Gebäude, Maschinen, Shader und Licht entstehen im Projekt per Skript. Figuren mit hohem Charakteranspruch (Spielfigur, Scrappy, NPCs), Rigging und Animation, Key Art und das finale Logo sollen später von einer Character- bzw. Illustrationsperson übernommen oder verfeinert werden. Bis dahin werden stilgerechte Platzhalter verwendet.
+
+## 11. Klang und Musik
+
+**Richtung:** warm, hölzern, ein wenig schief – wie der Hof selbst. Musik ist entspannt und verschmitzt, Geräusche sind kurz, weich und nie schrill. Humor entsteht auch akustisch aus Objekten (die geklebte Klingel am Tresen, das Wählscheibentelefon im Büro, ein seltenes „Klonk“ im Takt der Hofmusik).
+
+| Bereich | Umsetzung |
+|---|---|
+| Hofmusik „Old Yard Shuffle“ | 96 BPM Swing in F-Dur, 32 Takte (80 s Loop): Marimba-Melodie, Ukulele-Offbeats, Kontrabass, Besen, Holzblock, alle 8 Takte ein Schrott-„Klonk“, Flächenklang im B-Teil |
+| Menüthema „Every Scrap Has a Story“ | 72 BPM, 16 Takte (53 s Loop): dasselbe Motiv auf einer Spieluhr über Flächenklang und gezupftem Bass |
+| Hof-Atmosphäre | 38-s-Loop aus leisem Wind, entfernten Vögeln und gelegentlichem Knarzen |
+| Geräusche | 25 Klangarten mit bis zu 4 Varianten: Schritte, Aufnahmeklang je Fundstück (in den Itemdaten festgelegt), Korb, Ablegen, Ablehnung, Tresenklingel, Kasse, Münzen, Katalogseite, Papier, Wählscheibe, Lieferung, Kauf-Jingle, Schalter, Fund-„Plopp“, Klick, Halte-Loops (Wühlen, Flaschenzug, Schraubenzieher), Knarzen |
+
+**Technik:**
+
+- Alle Klänge entstehen per Klangsynthese aus `tools/audio/synth_audio.py` (numpy/scipy), reproduzierbar, ohne Samples und ohne Fremdlizenzen. Ausgabe: WAV 32 kHz mono unter `assets/audio/`, Bibliothek `data/audio/sound_library.tres`.
+- Loops sind nahtlos (Nachklang wird zirkulär berechnet); Pegelprüfung: keine Übersteuerung, Spitzen −1 bis −10 dBFS je nach Rolle.
+- Wiedergabe ohne Autoload, szenenlokal: `SoundFx` (Player-Pool, Varianten, leichte Tonhöhenvariation, Halte-Loops), `MusicPlayer` (Einblenden, Loop), `UiSounds` (Klick für jede Schaltfläche). Busse: Master, Music, SFX (mit dezentem Hall).
+- Lautstärke für Musik und Geräusche ist in den Einstellungen regelbar und wird gespeichert.
+
+**Grenzen:** Synthesizer-Klang erreicht kein Studio-Niveau echter Aufnahmen. Für eine Veröffentlichung sollten Musik und zentrale Geräusche von einer Sound-Designerin bzw. einem Sound-Designer überarbeitet oder ersetzt werden; die Bibliothek erlaubt den Austausch ohne Codeänderung.
+

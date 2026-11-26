@@ -105,7 +105,7 @@ layout_mode = 0
 offset_left = 110.0
 offset_top = 380.0
 offset_right = 560.0
-offset_bottom = 640.0
+offset_bottom = 730.0
 
 [node name="Content" type="VBoxContainer" parent="Root/SettingsPanel"]
 layout_mode = 2
@@ -152,6 +152,34 @@ popup/item_0/text = "ui.settings.window_mode.windowed"
 popup/item_0/id = 0
 popup/item_1/text = "ui.settings.window_mode.fullscreen"
 popup/item_1/id = 1
+
+[node name="MusicLabel" type="Label" parent="Root/SettingsPanel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui.settings.music_volume"
+
+[node name="MusicSlider" type="HSlider" parent="Root/SettingsPanel/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 28)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="SfxLabel" type="Label" parent="Root/SettingsPanel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui.settings.sfx_volume"
+
+[node name="SfxSlider" type="HSlider" parent="Root/SettingsPanel/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 28)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.8
 
 [node name="SettingsBackButton" type="Button" parent="Root/SettingsPanel/Content"]
 unique_name_in_owner = true
