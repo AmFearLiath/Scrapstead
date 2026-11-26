@@ -604,6 +604,10 @@ ASSETS.update(props_machines.ASSETS)
 ASSETS.update(props_style2.ASSETS)
 
 
+# Humans get fabric clothes and clean skin in art style 2 (docs/art-style-2.md).
+CHARACTERS = ("player_model", "juri_model")
+
+
 def main():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     out_dir = argv[argv.index("--out") + 1] if "--out" in argv else "assets/models"
@@ -614,6 +618,9 @@ def main():
         if only and name not in only.split(","):
             continue
         kit.reset_scene()
+        if kit.STYLE == 2:
+            import style2
+            style2.CHARACTER = name in CHARACTERS
         root = builder()
         kit.merge_parts(root)
         if kit.STYLE == 2:

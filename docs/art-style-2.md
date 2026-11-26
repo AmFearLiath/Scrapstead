@@ -1,8 +1,10 @@
-# Art style 2 – sun-baked junkyard (style sample)
+# Art style 2 – sun-baked junkyard
 
-Status: **style sample on branch `art-style-2`**, waiting for feedback before
-the full conversion. Style 1 (flat toon colours with ink outline) is still the
-default of the Blender tools; style 2 is opt-in via `SCRAP_STYLE=2`.
+Status: **the game's permanent art style** (approved 26.11.2026). Style 1
+(flat toon colours with ink outline) is retired: the toon and outline shaders
+and `tools/configure_model_imports.gd` were removed. `SCRAP_STYLE=1` still
+builds flat-coloured models for quick geometry checks, but they are not used
+in the game.
 
 ![Before and after](images/art_style_2_before_after.jpg)
 
@@ -68,9 +70,25 @@ along the inside of it) into `scenes/world/OutsideScenery.tscn`. The models
 have no collisions, so navigation, the build grid and placement are not
 affected.
 
-## Open for the full conversion
+## Characters
 
-- Characters (player, Juri, Scrappy) still need a pass for skin and fabric.
-- The toon shader and outline material are still used by blockout walls and a
-  few runtime meshes; they need style-2 replacements.
-- Graphics quality settings (SSAO/SSIL/shadow quality) for weaker machines.
+The player and Juri (`CHARACTERS` in `tools/blender/build_props.py`) are
+baked with `style2.CHARACTER` set: clothes become fabric with a fine weave and
+soft folds, skin stays clean with a faint blush, metal parts do not rust and
+the texture density is doubled. Scrappy is a scrap robot and keeps his rust.
+
+## Paths
+
+Paths use the sand shader with darker, compacted colours and
+`pebble_density` 0.55 (gravel), so they read clearly without hard edges.
+
+## Graphics quality
+
+`scripts/core/GraphicsQuality.gd`, stored by GameSession as
+`graphics_quality` (main menu and pause menu settings):
+
+| Level | SSAO | SSIL | Glow, fog | Anti-aliasing | Shadows |
+|---|---|---|---|---|---|
+| High (default) | on | on | on | MSAA 2x | 4096, soft high, 70 m |
+| Medium | on | off | on | FXAA | 2048, soft low, 50 m |
+| Low | off | off | off | FXAA | 1024, hard, 35 m |

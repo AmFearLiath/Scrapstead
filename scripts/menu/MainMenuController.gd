@@ -67,4 +67,6 @@ func _show_settings() -> void:
 	_ui.show_settings(GameSession.get_setting(GameSession.SETTING_LOCALE),
 		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
 		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
-		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))
+	GraphicsQuality.apply(self, GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))

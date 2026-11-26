@@ -153,6 +153,23 @@ popup/item_0/id = 0
 popup/item_1/text = "ui.settings.window_mode.fullscreen"
 popup/item_1/id = 1
 
+[node name="QualityLabel" type="Label" parent="Root/SettingsPanel/Content/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui.settings.graphics_quality"
+
+[node name="QualityOption" type="OptionButton" parent="Root/SettingsPanel/Content/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "ui.settings.graphics_quality.low"
+popup/item_0/id = 0
+popup/item_1/text = "ui.settings.graphics_quality.medium"
+popup/item_1/id = 1
+popup/item_2/text = "ui.settings.graphics_quality.high"
+popup/item_2/id = 2
+
 [node name="MusicLabel" type="Label" parent="Root/SettingsPanel/Content/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3

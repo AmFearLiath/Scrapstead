@@ -141,6 +141,7 @@ func _ready() -> void:
 	debug_overlay.setup(player, camera_rig, _interactor, _debug_extra_lines)
 	GameSession.save_completed.connect(_on_save_completed)
 	_setup_build_mode()
+	GraphicsQuality.apply(self, GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))
 	_update_controls_hint()
 	# Step 10: release input once physics has seen the restored positions.
 	await get_tree().physics_frame
@@ -1291,7 +1292,8 @@ func _on_settings_requested() -> void:
 	settings_panel.open(GameSession.get_setting(GameSession.SETTING_LOCALE),
 		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
 		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
-		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))
 
 
 func _on_setting_changed(key: String, value: Variant) -> void:
@@ -1300,7 +1302,9 @@ func _on_setting_changed(key: String, value: Variant) -> void:
 	settings_panel.show_values(GameSession.get_setting(GameSession.SETTING_LOCALE),
 		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
 		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
-		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))
+	GraphicsQuality.apply(self, GameSession.get_setting(GameSession.SETTING_GRAPHICS_QUALITY))
 	if key == "sfx_volume":
 		_sound("clink")
 

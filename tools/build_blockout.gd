@@ -19,12 +19,7 @@ const PLOT_W: float = 48.0
 const PLOT_D: float = 36.0
 const LAYER_WORLD: int = 1
 
-## Flat ground surfaces get no ink outline.
-const NO_OUTLINE: PackedStringArray = ["ground", "ground_outside", "gravel", "concrete", "paint_line"]
-
 var _materials: Dictionary = {}
-var _toon_shader: Shader = load("res://assets/shaders/toon.gdshader")
-var _outline_material: Material = load("res://assets/materials/outline.tres")
 var _rng := RandomNumberGenerator.new()
 ## True while building the yard: layout coordinates are mirrored to world Z.
 var _mirror_z: bool = false
@@ -79,13 +74,13 @@ func _build_materials() -> void:
 	_materials["concrete"] = load("res://assets/materials/ground_concrete.tres")
 
 
-func _mat(key: String, color: Color, _roughness: float = 0.9, _metallic: float = 0.0) -> void:
-	# All blockout geometry uses the shared toon shader (docs/world-art-assets.md).
-	var material := ShaderMaterial.new()
-	material.shader = _toon_shader
-	material.set_shader_parameter("albedo", color)
-	if not NO_OUTLINE.has(key):
-		material.next_pass = _outline_material
+func _mat(key: String, color: Color, roughness: float = 0.9, metallic: float = 0.0) -> void:
+	# Plain lit material in art style 2 (docs/art-style-2.md); models carry
+	# their own baked textures, blockout geometry is only posts and helpers.
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color
+	material.roughness = roughness
+	material.metallic = metallic
 	_materials[key] = material
 
 
@@ -232,18 +227,8 @@ func _build_ground(ground: Node3D, markings: Node3D) -> void:
 	# Side paths 2 m to storage zone A and scrap yard B.
 	_box(markings, "SidePathStorage", Vector3(19, 0, 18.5), Vector3(2, 0.021, 13), "gravel")
 	_box(markings, "SidePathNorth", Vector3(26, 0, 24), Vector3(16, 0.021, 2), "gravel")
-	# Reserved machine pad in zone D (later magnet collector, P3b).
-	_pad_outline(markings, Vector3(36, 0, 12.5), Vector2(5, 4))
 	# Concrete apron in front of the sales counter.
 	_box(markings, "SalesApron", Vector3(11.5, 0, 5.5), Vector3(6, 0.025, 5), "concrete")
-
-
-func _pad_outline(parent: Node3D, center: Vector3, size: Vector2) -> void:
-	var t: float = 0.12
-	_box(parent, "PadN", center + Vector3(0, 0, size.y * 0.5), Vector3(size.x, 0.03, t), "paint_line")
-	_box(parent, "PadS", center - Vector3(0, 0, size.y * 0.5), Vector3(size.x, 0.03, t), "paint_line")
-	_box(parent, "PadE", center + Vector3(size.x * 0.5, 0, 0), Vector3(t, 0.03, size.y), "paint_line")
-	_box(parent, "PadW", center - Vector3(size.x * 0.5, 0, 0), Vector3(t, 0.03, size.y), "paint_line")
 
 
 func _build_boundaries(boundaries: Node3D) -> void:

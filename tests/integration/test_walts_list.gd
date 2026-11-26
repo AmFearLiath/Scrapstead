@@ -131,3 +131,25 @@ func test_settings_can_be_changed_during_play() -> void:
 	check(pause_menu.visible, "back in the pause menu")
 	scene._close_pause_menu()
 	_session.set_setting(_session.SETTING_MUSIC_VOLUME, previous)
+
+
+func test_graphics_quality_setting() -> void:
+	var scene: Node = await _new_game()
+	var previous: String = _session.get_setting(_session.SETTING_GRAPHICS_QUALITY)
+	var environment: Environment = scene.get_node("WorldEnvironment").environment
+	scene._open_pause_menu()
+	scene.get_node("HUD/PauseMenu").get_node("%SettingsButton").pressed.emit()
+	await wait_process_frames(2)
+	var panel: Control = scene.get_node("HUD/SettingsPanel")
+	var option: OptionButton = panel.get_node("%QualityOption")
+	option.select(0)
+	option.item_selected.emit(0)
+	check_eq(_session.get_setting(_session.SETTING_GRAPHICS_QUALITY), "low", "quality stored")
+	check(not environment.ssao_enabled and not environment.ssil_enabled, "low: no SSAO/SSIL")
+	option.select(2)
+	option.item_selected.emit(2)
+	check(environment.ssao_enabled and environment.ssil_enabled, "high: SSAO and SSIL back")
+	check(not _session.set_setting(_session.SETTING_GRAPHICS_QUALITY, "ultra"), "unknown level rejected")
+	panel.close()
+	scene._close_pause_menu()
+	_session.set_setting(_session.SETTING_GRAPHICS_QUALITY, previous)

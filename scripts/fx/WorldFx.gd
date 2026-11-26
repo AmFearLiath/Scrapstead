@@ -7,8 +7,8 @@ const DUST_COLOR: Color = Color("c8b38c")
 const COIN_COLOR: Color = Color("e0a93b")
 const SPARK_COLOR: Color = Color("ffd36b")
 
-var _dust_material: ShaderMaterial
-var _coin_material: ShaderMaterial
+var _dust_material: StandardMaterial3D
+var _coin_material: StandardMaterial3D
 var _spark_material: StandardMaterial3D
 var _dust_mesh: SphereMesh
 var _coin_mesh: CylinderMesh
@@ -16,14 +16,13 @@ var _rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
-	var toon: Shader = load("res://assets/shaders/toon.gdshader")
-	_dust_material = ShaderMaterial.new()
-	_dust_material.shader = toon
-	_dust_material.set_shader_parameter("albedo", DUST_COLOR)
-	_coin_material = ShaderMaterial.new()
-	_coin_material.shader = toon
-	_coin_material.set_shader_parameter("albedo", COIN_COLOR)
-	_coin_material.next_pass = load("res://assets/materials/outline.tres")
+	_dust_material = StandardMaterial3D.new()
+	_dust_material.albedo_color = DUST_COLOR
+	_dust_material.roughness = 1.0
+	_coin_material = StandardMaterial3D.new()
+	_coin_material.albedo_color = COIN_COLOR
+	_coin_material.metallic = 0.85
+	_coin_material.roughness = 0.35
 	_spark_material = StandardMaterial3D.new()
 	_spark_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	_spark_material.albedo_color = SPARK_COLOR

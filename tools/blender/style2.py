@@ -32,6 +32,10 @@ DIRT = (0.42, 0.33, 0.24, 1.0)
 DUST = (0.86, 0.62, 0.45, 1.0)
 TEXELS_PER_METRE = 160
 _materials = {}
+# Set while a character (player, Juri) is built: clothes become fabric, skin
+# stays clean, metal parts keep their colour but do not rust.
+CHARACTER = False
+CHARACTER_TEXELS_PER_METRE = 320
 
 
 def _linear(hex_value):
@@ -152,15 +156,18 @@ def _weather(tree, colour, rust=0.35, streaks=0.3, dirt=0.5, dust=0.35, variatio
 
 def material_for(colour_name):
     """Procedural material for a palette colour name (shared per name)."""
-    if colour_name in _materials:
+    key = ("char:" if CHARACTER else "") + colour_name
+    if key in _materials:
         try:
-            _materials[colour_name].name  # noqa: B018 - removed by a scene reset?
-            return _materials[colour_name]
+            _materials[key].name  # noqa: B018 - removed by a scene reset?
+            return _materials[key]
         except ReferenceError:
             _materials.clear()
     kind, hex_value = PALETTE.get(colour_name, ("paint", "999999"))
+    if CHARACTER:
+        kind = {"skin": "skin", "glass": "glass", "rubber": "rubber", "metal": "clean_metal"}.get(kind, "fabric")
     base = _linear(hex_value)
-    material = bpy.data.materials.new(f"S2_{colour_name}")
+    material = bpy.data.materials.new(f"S2_{key}")
     material.use_nodes = True
     bsdf = material.node_tree.nodes["Principled BSDF"]
     tree = _Tree(material)
@@ -204,14 +211,31 @@ def material_for(colour_name):
     elif kind == "plant":
         colour = _weather(tree, base, rust=0.0, streaks=0.0, dirt=0.2, dust=0.25, variation=0.25, seed=seed)
         roughness = 0.9
-    else:  # fabric, paper, skin
-        colour = _weather(tree, base, rust=0.0, streaks=0.15, dirt=0.25 if kind != "skin" else 0.0,
-                          dust=0.15 if kind != "skin" else 0.0, variation=0.08, seed=seed)
+    elif kind == "clean_metal":
+        colour = _weather(tree, base, rust=0.0, streaks=0.0, dirt=0.0, dust=0.1, variation=0.06, seed=seed)
+        roughness = 0.45
+    elif kind == "skin":
+        # Soft, clean skin with a faint warm blush variation.
+        blush = tree.ramp(tree.noise(3.0, 2.0, 0.4, offset=seed), 0.35, 0.75,
+                          (1.0, 0.97, 0.95, 1.0), (1.04, 0.95, 0.92, 1.0))
+        colour = tree.mix(1.0, base, blush, "MULTIPLY")
+        roughness = 0.6
+    elif kind == "fabric" and CHARACTER:
+        # Work clothes: fine weave, softly darker folds, a little dust at the boots.
+        weave = tree.ramp(tree.noise(60.0, 2.0, 0.5, stretch=(1.0, 1.0, 3.0), offset=seed), 0.3, 0.7,
+                          (0.93, 0.93, 0.93, 1.0), (1.03, 1.03, 1.03, 1.0))
+        folds = tree.ramp(tree.noise(4.0, 2.0, 0.5, stretch=(1.0, 1.0, 0.4), offset=seed + 1.0), 0.3, 0.7,
+                          (0.9, 0.9, 0.9, 1.0), (1.02, 1.02, 1.02, 1.0))
+        cloth = tree.mix(1.0, tree.mix(1.0, base, weave, "MULTIPLY"), folds, "MULTIPLY")
+        colour = _weather(tree, cloth, rust=0.0, streaks=0.0, dirt=0.3, dust=0.12, variation=0.05, seed=seed)
+        roughness = 0.9
+    else:  # fabric, paper
+        colour = _weather(tree, base, rust=0.0, streaks=0.15, dirt=0.25, dust=0.15, variation=0.08, seed=seed)
         roughness = 0.85
     tree.link(colour, bsdf.inputs["Base Color"])
     bsdf.inputs["Roughness"].default_value = roughness
     material["s2_roughness"] = roughness
-    _materials[colour_name] = material
+    _materials[key] = material
     return material
 
 
@@ -240,7 +264,7 @@ def _surface_area(obj):
 
 
 def _resolution(area):
-    size = math.sqrt(max(area, 0.01)) * TEXELS_PER_METRE
+    size = math.sqrt(max(area, 0.01)) * (CHARACTER_TEXELS_PER_METRE if CHARACTER else TEXELS_PER_METRE)
     for candidate in (256, 512, 1024, 2048):
         if size <= candidate:
             return candidate

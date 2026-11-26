@@ -4,11 +4,9 @@
 [ext_resource type="Material" path="res://assets/materials/ground_outer.tres" id="g2_outer"]
 [ext_resource type="Material" path="res://assets/materials/ground_path.tres" id="g2_path"]
 [ext_resource type="Material" path="res://assets/materials/ground_concrete.tres" id="g2_concrete"]
-[ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="1_yopi7"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_tall_a.glb" id="2_j6r7a"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_tall_b.glb" id="3_jfrso"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_tall_c.glb" id="4_eli8f"]
-[ext_resource type="Material" path="res://assets/materials/outline.tres" id="5_imb85"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_low_a.glb" id="6_cr434"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_low_b.glb" id="7_1vele"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_low_c.glb" id="8_xod7o"]
@@ -34,45 +32,18 @@
 [ext_resource type="PackedScene" path="res://assets/models/weed_b.glb" id="28_tqe61"]
 [ext_resource type="PackedScene" path="res://assets/models/weed_c.glb" id="29_bnqh7"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8h3s"]
-render_priority = 0
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.54901963, 0.47843137, 0.35686275, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
-
 [sub_resource type="BoxMesh" id="BoxMesh_h8qq8"]
 size = Vector3(48, 0.3, 36)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ct2k"]
 size = Vector3(48, 0.3, 36)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_26xb1"]
-render_priority = 0
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.43137255, 0.39215687, 0.28235295, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
-
 [sub_resource type="BoxMesh" id="BoxMesh_5sjri"]
 size = Vector3(108, 0.3, 96)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjaju"]
-render_priority = 0
-next_pass = ExtResource("5_imb85")
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.30588236, 0.22745098, 0.15686275, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
+[sub_resource type="StandardMaterial3D" id="ShaderMaterial_jjaju"]
+albedo_color = Color(0.36, 0.26, 0.18, 1)
+roughness = 0.9
 
 [sub_resource type="BoxMesh" id="BoxMesh_awxql"]
 size = Vector3(0.14, 2.1, 0.14)
@@ -170,16 +141,6 @@ size = Vector3(2, 1, 0.9)
 [sub_resource type="BoxShape3D" id="BoxShape3D_trx3l"]
 size = Vector3(1.5, 0.75, 0.8)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2k0wn"]
-render_priority = 0
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.70980394, 0.63529414, 0.4862745, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
-
 [sub_resource type="BoxMesh" id="BoxMesh_lae63"]
 size = Vector3(3, 0.02, 12.5)
 
@@ -191,38 +152,6 @@ size = Vector3(2, 0.021, 13)
 
 [sub_resource type="BoxMesh" id="BoxMesh_emgw2"]
 size = Vector3(16, 0.021, 2)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a7you"]
-render_priority = 0
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.8784314, 0.6627451, 0.23137255, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
-
-[sub_resource type="BoxMesh" id="BoxMesh_1ln1h"]
-size = Vector3(5, 0.03, 0.12)
-
-[sub_resource type="BoxMesh" id="BoxMesh_nbegg"]
-size = Vector3(5, 0.03, 0.12)
-
-[sub_resource type="BoxMesh" id="BoxMesh_fyexq"]
-size = Vector3(0.12, 0.03, 4)
-
-[sub_resource type="BoxMesh" id="BoxMesh_kwnra"]
-size = Vector3(0.12, 0.03, 4)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrxct"]
-render_priority = 0
-shader = ExtResource("1_yopi7")
-shader_parameter/albedo = Color(0.627451, 0.6039216, 0.54901963, 1)
-shader_parameter/use_vertex_color = null
-shader_parameter/mid_step = null
-shader_parameter/step_softness = null
-shader_parameter/rim_color = null
-shader_parameter/rim_strength = null
 
 [sub_resource type="BoxMesh" id="BoxMesh_0a8kv"]
 size = Vector3(6, 0.025, 5)
@@ -1462,26 +1391,6 @@ mesh = SubResource("BoxMesh_q31hl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.0105, -24)
 material_override = ExtResource("g2_path")
 mesh = SubResource("BoxMesh_emgw2")
-
-[node name="PadN" type="MeshInstance3D" parent="Markings" unique_id=640181106]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.015, -14.5)
-material_override = SubResource("ShaderMaterial_a7you")
-mesh = SubResource("BoxMesh_1ln1h")
-
-[node name="PadS" type="MeshInstance3D" parent="Markings" unique_id=232474123]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0.015, -10.5)
-material_override = SubResource("ShaderMaterial_a7you")
-mesh = SubResource("BoxMesh_nbegg")
-
-[node name="PadE" type="MeshInstance3D" parent="Markings" unique_id=5944785]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, 0.015, -12.5)
-material_override = SubResource("ShaderMaterial_a7you")
-mesh = SubResource("BoxMesh_fyexq")
-
-[node name="PadW" type="MeshInstance3D" parent="Markings" unique_id=641266164]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.5, 0.015, -12.5)
-material_override = SubResource("ShaderMaterial_a7you")
-mesh = SubResource("BoxMesh_kwnra")
 
 [node name="SalesApron" type="MeshInstance3D" parent="Markings" unique_id=1986686415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.0125, -5.5)

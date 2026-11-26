@@ -16,6 +16,8 @@ uniform float detail_scale = 0.35;
 uniform float ripple_strength : hint_range(0.0, 1.0) = 0.35;
 uniform float compacted_amount : hint_range(0.0, 1.0) = 0.45;
 uniform float brightness : hint_range(0.5, 1.5) = 1.0;
+// 0 = a few pebbles; 1 = gravel (paths).
+uniform float pebble_density : hint_range(0.0, 1.0) = 0.0;
 
 varying vec3 world_position;
 
@@ -40,8 +42,9 @@ void fragment() {
 	float pressed = smoothstep(0.62, 0.78, texture(large_noise, p * drift_scale * 1.6 + vec2(0.7, 0.1)).r) * compacted_amount;
 	colour = mix(colour, compacted.rgb * (0.92 + 0.16 * detail), pressed);
 	// Pebbles.
-	float stones = smoothstep(0.78, 0.82, texture(detail_noise, p * 1.3 + vec2(0.13, 0.91)).r);
-	colour = mix(colour, pebble.rgb, stones * 0.7);
+	float threshold = 0.78 - pebble_density * 0.22;
+	float stones = smoothstep(threshold, threshold + 0.04, texture(detail_noise, p * (1.3 + pebble_density * 2.2) + vec2(0.13, 0.91)).r);
+	colour = mix(colour, pebble.rgb * (0.9 + 0.25 * grain), stones * 0.75);
 	ALBEDO = colour * brightness;
 	ROUGHNESS = 0.97;
 	SPECULAR = 0.2;

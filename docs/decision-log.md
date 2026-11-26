@@ -898,3 +898,9 @@ Referenz: [Bausystem](building-system.md).
 - Zuerst eine Stilprobe auf dem Branch `art-style-2`; die komplette Umstellung (Figuren, Toon-Reste, Grafikoptionen) erst nach Freigabe.
 
 Referenz: [Grafikstil 2](art-style-2.md).
+
+## 26.11.2026 — Grafikstil 2 wird dauerhaft
+
+**Beschluss (Freigabe der Stilprobe):** Stil 2 ist der feste Look des Spiels. Toon-Shader, Umriss und das Import-Werkzeug für das Toon-Material entfallen. Spieler und Juri bekommen Stoffkleidung und saubere Haut statt Lackverwitterung. Die Wege sind dunkler und kiesig. Die gelbe Umrandung der Maschinenfläche entfällt, seit der Magnetsammler frei platzierbar ist. Neu ist die Einstellung „Grafik“ (Niedrig/Mittel/Hoch) im Haupt- und Pausenmenü.
+
+Referenz: [Grafikstil 2](art-style-2.md).
