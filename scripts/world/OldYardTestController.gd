@@ -544,6 +544,10 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 				scrappy.apply_save_state({"state": "active", "follow": scrappy_state.get("follow", true)})
 		else:
 			scrappy.set_dormant()
+	for target: Interactable in _objects.values():
+		if target is ScrappyHeadSite:
+			(target as ScrappyHeadSite).set_listener(player)
+			(target as ScrappyHeadSite).beeped.connect(func(volume_db: float) -> void: _sound("head_beep", volume_db))
 	if story_director != null:
 		story_director.setup(_story, scrappy, speech_bubble, task_notes, sound_fx, _upgrades, player)
 	if letter_panel != null:

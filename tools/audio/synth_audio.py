@@ -573,6 +573,15 @@ def sfx_scrappy_chirp(variant):
     return finish(reverb(lowpass(out, 5000), 0.3, 0.1), peak_db=-9)
 
 
+def sfx_head_beep(variant):
+    """Dormant Scrappy in the heap: a weak, stuttering beep with a dying fall."""
+    out = np.zeros(int(0.6 * SR))
+    mix_into(out, _beep(1180 - variant * 60, 1120 - variant * 60, 0.06), 0.0, 0.5)
+    mix_into(out, _beep(1180 - variant * 60, 1180 - variant * 60, 0.03), 0.09, 0.3)
+    mix_into(out, _beep(1100, 640, 0.22), 0.16, 0.35)
+    return finish(reverb(bandpass(out, 500, 3500), 0.4, 0.15), peak_db=-10)
+
+
 def sfx_scrappy_wake(_variant):
     """Power-up: a rising hum, a stutter, then a pleased little chirp."""
     out = np.zeros(int(1.9 * SR))
@@ -609,7 +618,7 @@ SFX = {
     "delivery": (sfx_delivery, 1), "jingle": (sfx_jingle, 1), "switch": (sfx_switch, 1), "pop": (sfx_pop, 3),
     "click": (sfx_click, 1), "rummage": (sfx_rummage, 1), "hoist": (sfx_hoist, 1), "screw": (sfx_screw, 1),
     "creak": (sfx_creak, 1), "scrappy_chirp": (sfx_scrappy_chirp, 4), "scrappy_wake": (sfx_scrappy_wake, 1),
-    "spark": (sfx_spark, 2),
+    "spark": (sfx_spark, 2), "head_beep": (sfx_head_beep, 2),
 }
 LOOPS = {"rummage", "hoist", "screw"}
 

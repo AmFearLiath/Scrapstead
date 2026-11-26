@@ -172,7 +172,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 3. Fundstücke regenerieren nicht. Mit den Suchquellen (0.2) gibt es rund 115 Cr Gesamterlös bei 107 Cr Katalogkosten; danach endet die Schleife inhaltlich (Regeneration laut Matrix erst Phase 4–5).
 4. Die Verarbeitung ist an genau eine Radio-Platzierung gebunden (vorbereitete Ausgabeplätze); mehrere Verarbeitungsobjekte erfordern später eine Erzeugung von Ausgaben zur Laufzeit.
 5. Ablegen nimmt immer das zuletzt aufgenommene Teil; es gibt keine Auswahl einzelner Teile.
-6. Zahlenformatierung ist nicht vollständig gebietsschemaabhängig (z. B. „3.5 s“ statt „3,5 s“ im Deutschen).
+6. Dezimalzahlen sind gebietsschemaabhängig (`NumberFormat`, „3,5 s“ im Deutschen). Credit-Beträge werden noch ohne Tausendertrennzeichen angezeigt (im Prototyp stets unter 1000).
 7. Sprache lässt sich nur im Hauptmenü umstellen; Tastenbelegung ist nicht änderbar (kein Rebinding in P0/P1).
 12. Die Werkbank dient bisher nur der einmaligen Wiederherstellung Scrappys; Crafting folgt.
 14. Grafik: Boden und Wege sind bewusst flache Geometrie; die Spielfigur ist prozedural animiert (kein Skelett-Rig, keine Mimik). Audio ist synthetisiert (kein Studio-Niveau) und wurde nur technisch geprüft (Pegel, Loops, Auslösung), nicht durch Hören. Für Modelländerungen wird Blender 4.2 benötigt.
@@ -187,6 +187,6 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 1. **Menschlicher Playtest** mit 3–5 Personen nach MVP-Plan 11.3; Bewegung, Kamera und Prompt-Lesbarkeit zuerst.
 2. **Balancing** der P1-Werte anhand der Playtests (Kapazität, Preise, Upgrade-Preis, Zerlege-Mehrwert).
 3. Entscheidung über **Regeneration oder Nachschub** (z. B. Schrotthaufen als Suchquelle), damit die Schleife länger trägt – als bewusste Designentscheidung vor P2.
-4. **Gebietsschemaabhängige Zahlenformatierung** und automatischer Lokalisierungscheck in der Testpipeline erweitern.
-5. **CI** für Headless-Tests (Windows und Linux) einrichten.
+4. Erledigt: gebietsschemaabhängige Dezimalzahlen und Platzhalterprüfung aller Übersetzungen in den Tests.
+5. Erledigt (Linux): `.github/workflows/tests.yml` führt bei jedem Push Unit-, Integrations- und E2E-Tests headless aus. Ein Windows-Lauf in CI fehlt noch.
 6. P2 ist umgesetzt (siehe [P2-Spezifikation](p2-arrival-and-scrappy.md)); als Nächstes Playtest der Einstiegsstunde.

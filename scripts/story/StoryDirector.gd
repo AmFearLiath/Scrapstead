@@ -90,6 +90,8 @@ func compute_note_keys() -> PackedStringArray:
 			keys.append("note.need_core")
 		elif core:
 			keys.append("note.core_where")
+		elif _story.has_flag(FLAG_FIRST_SALE):
+			keys.append("note.heap_beep")
 	if not _story.has_flag(FLAG_FIRST_PICKUP):
 		keys.append("note.look_around")
 	elif not _story.has_flag(FLAG_FIRST_SALE):

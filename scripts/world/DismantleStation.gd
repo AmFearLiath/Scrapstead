@@ -30,7 +30,7 @@ func get_prompt_detail(context: InteractionContext) -> String:
 		"direct": profile.input_item.sell_value,
 		"outputs": _output_names(),
 		"value": profile.get_output_value(),
-		"seconds": snappedf(profile.seconds, 0.1),
+		"seconds": NumberFormat.decimal(profile.seconds, 1),
 	}
 	if not _carries_input(context):
 		return tr("ui.dismantle.detail_missing").format(args)

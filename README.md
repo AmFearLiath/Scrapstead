@@ -39,7 +39,7 @@ Schrott im Hof aufsammeln und am Annahmetresen verkaufen → im Büro aus dem **
 ### Tests und Werkzeuge
 
 ```bash
-# Unit- und Integrationstests (headless)
+# Unit- und Integrationstests (headless; laufen auch in GitHub Actions, siehe .github/workflows/tests.yml)
 godot --headless --path . --import
 godot --headless --path . -s res://tests/run_tests.gd
 

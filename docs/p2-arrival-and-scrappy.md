@@ -88,4 +88,6 @@ Die folgenden Punkte waren im Konzept offen und werden für den Prototyp so fest
 
 **Tests:** `tests/integration/test_p2_story.gd` (12 Fälle), Migration v2 → v3 in `tests/unit/test_save_service.gd`, Brief und Wiederherstellung über einen echten Neustart in `tests/e2e_restart.gd`.
 
-**Offen:** Lesbarkeit des Fundorts (der Kopf ist bewusst unauffällig – Playtest muss zeigen, ob Spieler ihn ohne Hilfe finden), Tonalität und Häufigkeit der Sprüche im echten Spiel, Modulwechsel für Scrappy (spätere Stufe).
+**Auffindbarkeit (Nachtrag):** Ohne Leuchten und Marker: Der ruhende Kopf piept leise und stockend, wenn der Spieler näher als 11 m ist; nach dem ersten Verkauf fragt der Notizzettel „Hat der große Schrotthaufen eben gepiept?“.
+
+**Offen:** Ob das als Hinweis reicht, muss der Playtest zeigen, Tonalität und Häufigkeit der Sprüche im echten Spiel, Modulwechsel für Scrappy (spätere Stufe).

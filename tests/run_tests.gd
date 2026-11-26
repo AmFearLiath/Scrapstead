@@ -45,7 +45,15 @@ func _run() -> void:
 	var report: PackedStringArray = []
 	for directory: String in SUITE_DIRECTORIES:
 		for file_name: String in _list_suites(directory):
-			var suite: TestSuite = load(directory.path_join(file_name)).new()
+			var script: GDScript = load(directory.path_join(file_name)) as GDScript
+			if script == null or not script.can_instantiate():
+				# A suite that does not compile must fail the run, not hang it.
+				total += 1
+				failed += 1
+				report.append("%s: suite does not compile" % file_name)
+				print("[FAIL] %s (does not compile)" % file_name)
+				continue
+			var suite: TestSuite = script.new()
 			suite.tree = self
 			for method: Dictionary in suite.get_method_list():
 				var method_name: String = method["name"]

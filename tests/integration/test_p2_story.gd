@@ -81,10 +81,12 @@ func test_notes_follow_the_story_and_stay_at_two() -> void:
 	check_eq(director.compute_note_keys(), PackedStringArray(["note.look_around"]), "start: look around")
 	story.set_flag("first_pickup")
 	check_eq(director.compute_note_keys(), PackedStringArray(["note.sell"]), "after a pickup: sell")
-	story.add_key_item(StoryState.KEY_SCRAPPY_HEAD)
-	check_eq(director.compute_note_keys(), PackedStringArray(["note.need_core", "note.sell"]), "head: needs core")
-	story.add_key_item(StoryState.KEY_SCRAPPY_CORE)
 	story.set_flag("first_sale")
+	check_eq(director.compute_note_keys(), PackedStringArray(["note.heap_beep", "note.catalog"]),
+		"after the first sale the heap beeps")
+	story.add_key_item(StoryState.KEY_SCRAPPY_HEAD)
+	check_eq(director.compute_note_keys(), PackedStringArray(["note.need_core", "note.catalog"]), "head: needs core")
+	story.add_key_item(StoryState.KEY_SCRAPPY_CORE)
 	story.set_flag("first_purchase")
 	check_eq(director.compute_note_keys(), PackedStringArray(["note.repair_scrappy"]), "both parts: repair")
 	var notes: Control = scene.get_node("HUD/TaskNotes")
@@ -241,7 +243,7 @@ func test_lines_and_story_texts_exist_in_all_locales() -> void:
 			keys.append("scrappy.%s.%d" % [event, index])
 	for memory: Dictionary in lines.memories:
 		keys.append(memory["line"])
-	for note: String in ["note.look_around", "note.sell", "note.catalog", "note.need_core", "note.core_where",
+	for note: String in ["note.heap_beep", "note.look_around", "note.sell", "note.catalog", "note.need_core", "note.core_where",
 			"note.repair_scrappy", "note.entrance", "story.letter.body", "key_item.scrappy_head.name",
 			"key_item.scrappy_core.name"]:
 		keys.append(note)
@@ -254,3 +256,22 @@ func test_lines_and_story_texts_exist_in_all_locales() -> void:
 				missing.append(key)
 		check(missing.is_empty(), "%s: missing %s" % [locale, ", ".join(missing)])
 	TranslationServer.set_locale(previous)
+
+
+func test_buried_head_beeps_only_nearby_and_until_found() -> void:
+	var scene: Node = await _new_game()
+	var site: ScrappyHeadSite = scene.get_world_object("story_scrappy_head")
+	var beeps: Array = []
+	site.beeped.connect(func(volume_db: float) -> void: beeps.append(volume_db))
+	site.beep_interval = 0.2
+	scene.get_node("Player").place(Vector3(8, 0.1, -4.6), PI)
+	await tree.create_timer(0.6).timeout
+	check(beeps.is_empty(), "silent from far away")
+	await _approach(scene, "story_scrappy_head")
+	await tree.create_timer(2.6).timeout
+	check(not beeps.is_empty(), "audible nearby")
+	await _hold(2.4)
+	scene.get_node("HUD/InspectPanel").close()
+	var count: int = beeps.size()
+	await tree.create_timer(1.0).timeout
+	check_eq(beeps.size(), count, "silent once the head is found")

@@ -8,7 +8,37 @@ extends Interactable
 ## Visual removed once the head is taken.
 @export var buried_visual: Node3D
 
+@export_group("Beeping")
+## Distance within which the dormant head can be heard beeping.
+@export var beep_range: float = 11.0
+## Seconds between two beeps (with a little randomness).
+@export var beep_interval: float = 7.0
+
+## Emitted when the head beeps; volume_db already accounts for the distance.
+## The scene plays the sound (no audio in gameplay objects).
+signal beeped(volume_db: float)
+
 var _taken: bool = false
+var _listener: Node3D
+var _beep_timer: float = 3.0
+
+
+## The node whose distance decides whether the beep is audible (the player).
+func set_listener(listener: Node3D) -> void:
+	_listener = listener
+
+
+func _process(delta: float) -> void:
+	if _taken or _listener == null:
+		return
+	var distance: float = _listener.global_position.distance_to(global_position)
+	if distance > beep_range:
+		_beep_timer = minf(_beep_timer, 2.0)
+		return
+	_beep_timer -= delta
+	if _beep_timer <= 0.0:
+		_beep_timer = beep_interval + randf_range(-1.5, 1.5)
+		beeped.emit(lerpf(-4.0, -24.0, distance / beep_range))
 
 
 func is_taken() -> bool:
