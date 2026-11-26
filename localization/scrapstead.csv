@@ -363,7 +363,7 @@ upgrade.upgrade_strong_magnet.description,"Double-wound coil from an old scrapya
 upgrade.upgrade_strong_magnet.effect,Magnetic collector: every 12 s instead of every 20 s,Magnetsammler: alle 12 s statt alle 20 s
 upgrade.upgrade_strong_magnet.bought,New coil fitted. The collector hums half an octave higher.,Neue Spule eingebaut. Der Sammler brummt jetzt eine halbe Oktave höher.
 machine.magnet_collector.name,Magnetic collector,Magnetsammler
-machine.magnet_collector.description,Swings its magnet over Walt's nail heap and drops what sticks into the crate next to it. Takes loose bolts and cans lying near the heap first. Empty the crate yourself.,"Schwenkt seinen Magneten über Walts Nagelhaufen und lässt fallen, was hängen bleibt, in die Kiste daneben. Nimmt lose Schrauben und Dosen in der Nähe des Haufens zuerst. Die Kiste leerst du selbst."
+machine.magnet_collector.description,Swings its magnet over Walt's nail heap and drops what sticks into the crate next to it. Takes loose bolts and cans lying near the heap first. Empty the crate yourself - or connect it to the press.,"Schwenkt seinen Magneten über Walts Nagelhaufen und lässt fallen, was hängen bleibt, in die Kiste daneben. Nimmt lose Schrauben und Dosen in der Nähe des Haufens zuerst. Die Kiste leerst du selbst - oder du verbindest sie mit der Presse."
 machine.reserved_sign,"RESERVED
 for something with an engine","RESERVIERT
 für etwas mit Motor"
@@ -617,3 +617,39 @@ ui.stash.result.container.3,"It's dark, it's warm and there are {count} piece(s)
 ui.stash.result.pallets.1,Splinters are free. The wood costs nothing either.,Splitter gibt's gratis. Das Holz übrigens auch.
 ui.stash.result.pallets.2,A loose board comes away. Then another one. Oops.,Ein loses Brett löst sich. Dann noch eins. Hoppla.
 ui.stash.result.pallets.3,"Pallets: the furniture of the future, says Juri. Walt sold them.","Paletten: die Möbel der Zukunft, sagt Juri. Walt hat sie verkauft."
+machine.scrap_press.name,Scrap press,Schrottpresse
+machine.scrap_press.hopper,Press hopper,Einfülltrichter der Presse
+machine.scrap_press.description,"Squeezes bolts and cans into steel bales. A bale is worth more than its pieces and takes far less room in the basket. Feed it by hand at the hopper, or connect it to the magnetic collector with a conveyor.",Presst Schrauben und Dosen zu Stahlballen. Ein Ballen ist mehr wert als seine Einzelteile und braucht viel weniger Platz im Korb. Füttere sie von Hand am Trichter oder verbinde sie per Förderband mit dem Magnetsammler.
+placeable.scrap_press.description,"Presses bolts and cans into steel bales (6 pieces, 22 Cr). Hopper at the back, bales come out in front.","Presst Schrauben und Dosen zu Stahlballen (6 Teile, 22 Cr). Trichter hinten, Ballen kommen vorne raus."
+upgrade.machine_scrap_press.name,Scrap press,Schrottpresse
+upgrade.machine_scrap_press.description,From a bankrupt can factory. The sign on it says 'Keep fingers out'. The sign is right.,Aus einer pleitegegangenen Dosenfabrik. Auf dem Schild steht „Finger weg“. Das Schild hat recht.
+upgrade.machine_scrap_press.effect,"6 bolts or cans become one steel bale (22 Cr, size 2) · 8 s per bale","6 Schrauben oder Dosen werden ein Stahlballen (22 Cr, Größe 2) · 8 s pro Ballen"
+item.bale_steel.name,Steel bale,Stahlballen
+item.bale_steel.description,"Bolts and cans, pressed and strapped. Looks like modern art, sells like scrap. Good scrap.","Schrauben und Dosen, gepresst und verschnürt. Sieht aus wie moderne Kunst, verkauft sich wie Schrott. Guter Schrott."
+ui.action.feed,Feed (hold),Einfüllen (halten)
+ui.press.detail,{status} · hopper {hopper}/{capacity} ({per_bale} per bale) · bales {tray}/{tray_capacity},{status} · Trichter {hopper}/{capacity} ({per_bale} pro Ballen) · Ballen {tray}/{tray_capacity}
+ui.press.status.working,pressing,presst
+ui.press.status.waiting,waiting for scrap,wartet auf Schrott
+ui.press.status.tray_full,tray full,Ablage voll
+ui.press.status.off,switched off,ausgeschaltet
+ui.press.rules,Takes bolts and cans. {per_bale} pieces make one bale; one bale takes {seconds} s.,Nimmt Schrauben und Dosen. {per_bale} Teile ergeben einen Ballen; ein Ballen dauert {seconds} s.
+ui.press.hopper_full,The hopper is full. Let the press do its thing.,Der Trichter ist voll. Lass die Presse erst mal arbeiten.
+ui.press.nothing_to_feed,Nothing in your basket the press would eat. It only likes bolts and cans.,"Nichts im Korb, was die Presse fressen würde. Sie mag nur Schrauben und Dosen."
+ui.press.fed,{count} piece(s) into the hopper ({hopper} waiting).,{count} Teil(e) in den Trichter ({hopper} warten).
+build.problem.press_not_empty,Empty hopper and tray first.,Erst Trichter und Ablage leeren.
+build.tool.connect,Connect,Verbinden
+build.info.connect_pick,Click a machine whose output should go somewhere (e.g. the magnetic collector).,"Klick auf eine Maschine, deren Ausgabe weiter soll (z. B. den Magnetsammler)."
+build.info.connect_target,From {name}: click the machine that should get it. Right click cancels.,"Von {name}: Klick auf die Maschine, die es bekommen soll. Rechtsklick bricht ab."
+build.info.connect_ok,Conveyor from {from} to {to}: {cells} m. Left click builds it (free).,Förderband von {from} zu {to}: {cells} m. Linksklick baut es (kostenlos).
+build.info.remove_link,Left click removes the conveyor from {from} to {to}.,Linksklick entfernt das Förderband von {from} zu {to}.
+build.linked,Conveyor from {from} to {to} is running.,Förderband von {from} zu {to} läuft.
+build.unlinked,Conveyor from {from} to {to} removed.,Förderband von {from} zu {to} entfernt.
+build.link_blocked,A conveyor has no way through any more. Make room in build mode and it reconnects by itself.,"Ein Förderband kommt nicht mehr durch. Schaff im Baumodus Platz, dann verbindet es sich von selbst."
+build.link_free,The conveyor found its way again.,Das Förderband hat wieder einen Weg gefunden.
+build.problem.link_same,"A machine can't feed itself. Philosophically interesting, though.",Eine Maschine kann sich nicht selbst füttern. Philosophisch aber interessant.
+build.problem.link_no_output,This has no output to connect.,Das hat keinen Ausgang zum Verbinden.
+build.problem.link_no_input,This can't take anything from a conveyor.,Das kann nichts von einem Förderband annehmen.
+build.problem.link_output_used,Its output is already connected. Remove that conveyor first.,Der Ausgang ist schon verbunden. Entferne erst das Förderband.
+build.problem.link_input_used,Its input is already fed by a conveyor.,Der Eingang wird schon von einem Förderband beliefert.
+build.problem.link_incompatible,That machine doesn't want what this one makes.,"Die Maschine will nicht, was diese herstellt."
+build.problem.link_no_route,There's no free way for a conveyor between the two. Move something or make room.,Zwischen den beiden gibt es keinen freien Weg für ein Förderband. Verschieb etwas oder schaff Platz.

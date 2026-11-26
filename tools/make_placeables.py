@@ -236,6 +236,30 @@ height = 1.4
 ports = Array[Dictionary]([{"cell": Vector2i(1, 6), "kind": "out"}])
 ''')
     ids.insert(0, "magnet_collector")
+    # The scrap press (docs/scrap-press.md): hopper at the back (input port), tray
+    # in front (output port); operators reach the controls and hopper from the right.
+    write("data/placeables/scrap_press.tres", '''[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/machines/ScrapPress.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "scrap_press"
+name_key = "machine.scrap_press.name"
+description_key = "placeable.scrap_press.description"
+category = "machines"
+price = 140
+unlock_ware = "machine_scrap_press"
+max_count = 1
+scene = ExtResource("2_scene")
+size = Vector2i(4, 6)
+clearance = Array[Rect2i]([Rect2i(0, 6, 4, 1), Rect2i(4, 0, 1, 4)])
+solid = true
+height = 2.1
+ports = Array[Dictionary]([{"cell": Vector2i(1, 0), "kind": "in"}, {"cell": Vector2i(2, 0), "kind": "in"}, {"cell": Vector2i(1, 5), "kind": "out"}, {"cell": Vector2i(2, 5), "kind": "out"}])
+''')
+    ids.insert(1, "scrap_press")
     entries = ", ".join(f'ExtResource("{i + 2}")' for i in range(len(ids)))
     ext = "\n".join(f'[ext_resource type="Resource" path="res://data/placeables/{pid}.tres" id="{i + 2}"]'
                     for i, pid in enumerate(ids))

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="UpgradeDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/UpgradeDefinition.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = "machine_scrap_press"
+name_key = "upgrade.machine_scrap_press.name"
+description_key = "upgrade.machine_scrap_press.description"
+price = 140
+stat = ""
+bonus = 0
+grants_tool = ""
+requires = ""
+effect_key = "upgrade.machine_scrap_press.effect"
+hidden_in_catalog = true

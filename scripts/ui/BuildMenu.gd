@@ -10,7 +10,8 @@ signal done_requested
 const CATEGORY_KEYS: Dictionary = {"machines": "build.category.machines", "storage": "build.category.storage",
 	"paths": "build.category.paths", "decor": "build.category.decor"}
 const TOOLS: Array = [["catalog", "build.tool.build", "build_catalog"], ["move", "build.tool.move", "build_tool_move"],
-	["remove", "build.tool.remove", "build_tool_remove"], ["look", "build.tool.look", "build_tool_look"]]
+	["remove", "build.tool.remove", "build_tool_remove"], ["connect", "build.tool.connect", "build_tool_connect"],
+	["look", "build.tool.look", "build_tool_look"]]
 const INK_BAD := Color(1.0, 0.55, 0.45)
 const INK := Color(0.949, 0.902, 0.812)
 const GOLD := Color(0.878, 0.663, 0.231)
@@ -166,6 +167,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("build_tool_look"):
 		get_viewport().set_input_as_handled()
 		_use_tool("look")
+	elif event.is_action_pressed("build_tool_connect"):
+		get_viewport().set_input_as_handled()
+		_use_tool("connect")
 
 
 # --- Layout ---------------------------------------------------------------------
@@ -177,8 +181,8 @@ func _build_toolbar() -> void:
 	_toolbar.anchor_bottom = 0.5
 	_toolbar.offset_left = 16
 	_toolbar.offset_right = 196
-	_toolbar.offset_top = -190
-	_toolbar.offset_bottom = 190
+	_toolbar.offset_top = -215
+	_toolbar.offset_bottom = 215
 	_toolbar.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_toolbar)
 	var column := VBoxContainer.new()
@@ -423,8 +427,24 @@ func _refresh_info() -> void:
 				text = tr("build.info.pick_up").format({"name": hover_name}) if not hover_name.is_empty() \
 					else tr("build.info.choose_move")
 		"remove":
-			text = tr("build.info.remove").format({"name": hover_name}) if not hover_name.is_empty() \
-				else tr("build.info.choose_remove")
+			var link: Dictionary = _placed.links.get_link(_mode.get_hover_link())
+			if not link.is_empty():
+				text = tr("build.info.remove_link").format({"from": _uid_name(link["from"]), "to": _uid_name(link["to"])})
+			else:
+				text = tr("build.info.remove").format({"name": hover_name}) if not hover_name.is_empty() \
+					else tr("build.info.choose_remove")
+		"connect":
+			var from_uid: String = _mode.get_link_from()
+			if from_uid.is_empty():
+				text = tr("build.info.connect_pick")
+			elif check.is_empty():
+				text = tr("build.info.connect_target").format({"name": _uid_name(from_uid)})
+			elif not check.get("ok", false):
+				ok = false
+				text = PlacementValidator.describe({"problems": check.get("problems", [])})
+			else:
+				text = tr("build.info.connect_ok").format({"from": _uid_name(from_uid), "to": hover_name,
+					"cells": _format_m((check.get("cells", []) as Array).size() * BuildGrid.CELL)})
 		"look":
 			if not hover_name.is_empty():
 				var entry: Dictionary = _hover_entry()
@@ -477,6 +497,14 @@ func _hover_entry() -> Dictionary:
 		if entry["uid"] == _mode.get_hover_uid():
 			return entry
 	return {}
+
+
+func _uid_name(uid: String) -> String:
+	var node: Node3D = _placed.get_node_for(uid)
+	for entry: Dictionary in _placed.get_entries():
+		if entry["node"] == node:
+			return tr((entry["def"] as PlaceableDefinition).name_key)
+	return uid
 
 
 func _hover_name() -> String:

@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ScrapPress.gd" id="1_machine"]
+[ext_resource type="Resource" path="res://data/machines/scrap_press.tres" id="2_profile"]
+[ext_resource type="Resource" path="res://data/items/item_catalog.tres" id="3_items"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/ScrapItem.tscn" id="4_item"]
+[ext_resource type="PackedScene" path="res://assets/models/scrap_press.glb" id="5_model"]
+[ext_resource type="PackedScene" path="res://assets/models/press_tray.glb" id="6_tray"]
+[ext_resource type="Script" path="res://scripts/world/PressControls.gd" id="7_controls"]
+[ext_resource type="Script" path="res://scripts/world/ScrapPressAnimator.gd" id="8_animator"]
+
+[sub_resource type="BoxShape3D" id="body_shape"]
+size = Vector3(1.55, 2.1, 1.8)
+
+[sub_resource type="BoxShape3D" id="controls_shape"]
+size = Vector3(0.32, 0.55, 0.4)
+
+[sub_resource type="BoxShape3D" id="hopper_shape"]
+size = Vector3(0.85, 0.5, 0.55)
+
+[sub_resource type="SphereMesh" id="lamp_mesh"]
+radius = 0.055
+height = 0.11
+radial_segments = 12
+rings = 6
+
+[node name="ScrapPress" type="Node3D" node_paths=PackedStringArray("tray", "hopper_point")]
+script = ExtResource("1_machine")
+profile = ExtResource("2_profile")
+item_catalog = ExtResource("3_items")
+item_scene = ExtResource("4_item")
+tray = NodePath("Tray")
+hopper_point = NodePath("Machine/HopperPoint")
+
+[node name="Machine" type="Node3D" parent="."]
+
+[node name="Model" parent="Machine" instance=ExtResource("5_model")]
+
+[node name="Body" type="StaticBody3D" parent="Machine"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine/Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, -0.05)
+shape = SubResource("body_shape")
+
+[node name="Controls" type="StaticBody3D" parent="Machine" node_paths=PackedStringArray("machine")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("7_controls")
+machine = NodePath("../..")
+object_id = "machine_press_controls"
+name_key = "machine.scrap_press.name"
+action_key = "ui.action.machine_off"
+description_key = "machine.scrap_press.description"
+highlight_radius = 0.45
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine/Controls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.75, 0.4)
+shape = SubResource("controls_shape")
+
+[node name="InteractionPoint" type="Marker3D" parent="Machine/Controls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 0.4)
+
+[node name="Hopper" type="StaticBody3D" parent="Machine" node_paths=PackedStringArray("machine")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("7_controls")
+machine = NodePath("../..")
+role = 1
+object_id = "machine_press_hopper"
+name_key = "machine.scrap_press.hopper"
+action_key = "ui.action.feed"
+description_key = "machine.scrap_press.description"
+highlight_radius = 0.45
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Machine/Hopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.65)
+shape = SubResource("hopper_shape")
+
+[node name="InteractionPoint" type="Marker3D" parent="Machine/Hopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, -0.7)
+
+[node name="HopperPoint" type="Marker3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, -0.62)
+
+[node name="StatusLamp" type="MeshInstance3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.68, 1.03, 0.4)
+mesh = SubResource("lamp_mesh")
+
+[node name="Tray" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.35)
+
+[node name="Model" parent="Tray" instance=ExtResource("6_tray")]
+
+[node name="Slot0" type="Marker3D" parent="Tray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36, 0.12, 0)
+
+[node name="Slot1" type="Marker3D" parent="Tray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="Slot2" type="Marker3D" parent="Tray"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36, 0.12, 0)
+
+[node name="Animator" type="Node" parent="." node_paths=PackedStringArray("machine", "lamp")]
+script = ExtResource("8_animator")
+machine = NodePath("..")
+lamp = NodePath("../Machine/StatusLamp")

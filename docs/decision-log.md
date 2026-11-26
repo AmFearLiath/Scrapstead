@@ -910,3 +910,9 @@ Referenz: [Grafikstil 2](art-style-2.md).
 **Beschluss (Wunsch: „Alle füllen sich langsam wieder auf“):** Zwölf Hof-Objekte (Reifen, Autowrack, Regal, zwei Kistenstapel, Fässer, kleiner Schrotthaufen, zwei Schrotthaufen, Motorblock, Container, Paletten) sind beliebig oft durchsuchbar. Jede hat eine kleine Zahl Ladungen, die sich in Spielzeit einzeln wieder auffüllen. Autowrack, vernagelte Kisten und Container brauchen die Brechstange, der Motorblock den Flaschenzug. Die Funde sind gewichtete Zufallsteile aus bestehenden Gegenständen, keine Story- oder Schlüsselgegenstände. Ältere Spielstände bleiben gültig.
 
 Referenz: [Durchsuchbare Hof-Requisiten](yard-stashes.md).
+
+## 26.11.2026 — Zweite Maschine: Schrottpresse mit Förderbändern
+
+**Beschluss (Wunsch: „Beide nacheinander“, erst Presse, dann Sortierstation):** Die Schrottpresse presst 6 Schrauben oder Dosen zu einem Stahlballen (22 Cr, Größe 2). Mit ihr kommt das Verbinden-Werkzeug: Ausgang anklicken, Eingang anklicken, die Route sucht das Spiel. Bänder sind begehbar, blockieren nur das Bauen, folgen verschobenen Maschinen und werden bei fehlendem Weg „blockiert“ statt gelöscht. Der Transport wird logisch sofort entschieden, das fahrende Teil ist nur Darstellung. Die Sortierstation folgt als dritte Maschine mit derselben Schnittstelle.
+
+Referenz: [Schrottpresse](scrap-press.md), [Maschinenverbindungen](machine-links.md).

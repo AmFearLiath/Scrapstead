@@ -309,6 +309,56 @@ func _build_shots(scene: Node, player: Node3D) -> void:
 	scene.exit_build_mode()
 	await _wait_for(func() -> bool: return false, 0.6)
 	await _shot("57_car_wreck_moved")
+	await _press_shots(scene, player, placed, mode)
+
+
+## The scrap press and a conveyor from the magnet (docs/scrap-press.md, machine-links.md).
+func _press_shots(scene: Node, player: Node3D, placed: PlacedObjects, mode: BuildMode) -> void:
+	var magnet_uid: String = ""
+	for entry: Dictionary in placed.get_entries():
+		if entry["node"] is MagnetCollector:
+			magnet_uid = entry["uid"]
+	if magnet_uid.is_empty():
+		return
+	var definition: PlaceableDefinition = placed.catalog.get_definition("scrap_press")
+	scene.get_wallet().credit(500, "capture-press", "test")
+	var press_uid: String = ""
+	for anchor: Vector2i in [Vector2i(62, -27), Vector2i(62, -22), Vector2i(76, -27), Vector2i(69, -36), Vector2i(62, -18)]:
+		if placed.check_placement(definition, anchor, 1)["ok"]:
+			press_uid = placed.place("scrap_press", anchor, 1).get("uid", "")
+			if not press_uid.is_empty():
+				break
+	if press_uid.is_empty():
+		print("capture: no place for the press")
+		return
+	var press: ScrapPress = placed.get_node_for(press_uid) as ScrapPress
+	player.place(press.global_position + Vector3(2.5, 0.1, 2.5), 2.4)
+	await _wait_for(func() -> bool: return false, 0.4)
+	scene.enter_build_mode()
+	mode.set_tool(BuildMode.TOOL_CONNECT)
+	mode.aim_at(placed.get_node_for(magnet_uid).global_position)
+	mode.confirm()
+	mode.aim_at(press.global_position)
+	await _frames(10)
+	await _shot("58_build_connect_preview")
+	mode.confirm()
+	scene.exit_build_mode()
+	var magnet: MagnetCollector = placed.get_node_for(magnet_uid) as MagnetCollector
+	for index: int in magnet.profile.bin_capacity:
+		magnet.collect_once()
+	var link_id: int = placed.links.find_link(magnet_uid, press_uid)
+	for index: int in 6:
+		placed.links.send_once(link_id)
+	press.press_once()
+	for index: int in 3:
+		magnet.collect_once()
+	placed.links.send_once(link_id)
+	await _wait_for(func() -> bool: return false, 0.8)
+	await _shot("59_press_conveyor")
+	var controls: Interactable = press.get_node("Machine/Controls")
+	player.place(controls.get_interaction_point() + Vector3(0.3, 0.1, 0.0), -PI * 0.5)
+	await _wait_for(func() -> bool: return false, 0.5)
+	await _shot("60_press_controls")
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.

@@ -5,7 +5,9 @@ extends Node3D
 ## While active the player stands still, the camera follows a build cursor
 ## moved with WASD and the mouse aims at the grid. Tools: build (place the
 ## selected object, repeatedly), move (pick up and set down), remove (back to
-## storage) and look (what is this?). Every action can be undone and redone.
+## storage, or a conveyor), connect (output of one machine to the input of
+## another, docs/machine-links.md) and look (what is this?). Every action can
+## be undone and redone.
 ##
 ## The preview shows exactly what will happen: a see-through model, the cells
 ## it takes (green/red), the space in front that must stay free (blue), the
@@ -23,6 +25,7 @@ const TOOL_BUILD := "build"
 const TOOL_MOVE := "move"
 const TOOL_REMOVE := "remove"
 const TOOL_LOOK := "look"
+const TOOL_CONNECT := "connect"
 const HISTORY_LIMIT := 50
 const PAN_SPEED := 9.0
 const NEARBY_RADIUS := 4.5
@@ -55,6 +58,10 @@ var _ring: MeshInstance3D
 var _hover_box: MeshInstance3D
 var _mouse_position: Vector2 = Vector2.ZERO
 var _has_mouse: bool = false
+## Connect tool: the machine whose output is being connected, or "".
+var _link_from: String = ""
+## Conveyor under the cursor (remove tool), or -1.
+var _hover_link: int = -1
 
 
 func _ready() -> void:
@@ -116,6 +123,14 @@ func get_moving_uid() -> String:
 	return _moving_uid
 
 
+func get_link_from() -> String:
+	return _link_from
+
+
+func get_hover_link() -> int:
+	return _hover_link
+
+
 func can_undo() -> bool:
 	return not _undo.is_empty()
 
@@ -149,6 +164,7 @@ func exit(follow: Node3D) -> void:
 
 func set_tool(tool: String) -> void:
 	_cancel_move()
+	_link_from = ""
 	_tool = tool
 	if tool != TOOL_BUILD:
 		_selected = null
@@ -178,6 +194,7 @@ func aim_at(point: Vector3) -> void:
 	else:
 		_anchor = BuildGrid.world_to_cell(point)
 	_hover_uid = placed.get_uid_at(BuildGrid.world_to_cell(point)) if _moving_uid.is_empty() else ""
+	_hover_link = placed.links.get_link_at(BuildGrid.world_to_cell(point)) if _hover_uid.is_empty() else -1
 	_refresh()
 
 
@@ -211,12 +228,21 @@ func confirm() -> Dictionary:
 					_end_move()
 		TOOL_REMOVE:
 			result = remove_hovered()
+		TOOL_CONNECT:
+			result = _connect_click()
 	_refresh()
 	action_result.emit(result)
 	return result
 
 
 func remove_hovered() -> Dictionary:
+	if _hover_uid.is_empty() and _hover_link >= 0:
+		var link: Dictionary = placed.links.get_link(_hover_link)
+		var unlinked: Dictionary = placed.links.unlink(_hover_link)
+		if unlinked["ok"]:
+			_push({"op": "unlink", "id": link["id"], "from": link["from"], "to": link["to"]})
+			_hover_link = -1
+		return unlinked
 	if _hover_uid.is_empty():
 		return {"ok": false, "message_key": "", "message_args": {}}
 	var entry: Dictionary = _entry(_hover_uid)
@@ -231,6 +257,10 @@ func remove_hovered() -> Dictionary:
 
 ## Right click / Esc: drop the current operation. Returns false if there was none.
 func cancel() -> bool:
+	if not _link_from.is_empty():
+		_link_from = ""
+		_refresh()
+		return true
 	if not _moving_uid.is_empty():
 		_cancel_move()
 		_refresh()
@@ -373,6 +403,12 @@ func _step(from: Array[Dictionary], to: Array[Dictionary], undoing: bool) -> Dic
 		"move":
 			result = placed.move(step["uid"], step["from"] if undoing else step["to"],
 				step["from_rot"] if undoing else step["to_rot"])
+		"link":
+			result = placed.links.unlink(placed.links.find_link(step["from"], step["to"])) if undoing else \
+				placed.links.link(step["from"], step["to"], step["id"])
+		"unlink":
+			result = placed.links.link(step["from"], step["to"], step["id"]) if undoing else \
+				placed.links.unlink(placed.links.find_link(step["from"], step["to"]))
 	if result.get("ok", false):
 		to.append(step)
 		result["message_key"] = "build.undone" if undoing else "build.redone"
@@ -382,6 +418,45 @@ func _step(from: Array[Dictionary], to: Array[Dictionary], undoing: bool) -> Dic
 	_hover_uid = ""
 	_refresh()
 	return result
+
+
+# --- Connecting ----------------------------------------------------------------------
+
+## First click picks the output machine, the second one the input machine.
+func _connect_click() -> Dictionary:
+	var result: Dictionary = {"ok": false, "message_key": "", "message_args": {}}
+	if _hover_uid.is_empty():
+		return result
+	if _link_from.is_empty():
+		if not placed.links.has_output(_hover_uid):
+			return {"ok": false, "message_key": "build.problem.link_no_output", "message_args": {}}
+		_link_from = _hover_uid
+		return {"ok": true, "message_key": "", "message_args": {}}
+	result = placed.links.link(_link_from, _hover_uid)
+	if result["ok"]:
+		_push({"op": "link", "id": result["link_id"], "from": _link_from, "to": _hover_uid})
+		_link_from = ""
+	return result
+
+
+func _refresh_connect() -> void:
+	_cells.visible = false
+	_ring.visible = false
+	_free_ghost()
+	_show_hover()
+	if _link_from.is_empty() or _hover_uid.is_empty() or _hover_uid == _link_from:
+		_last_check = {}
+		preview_changed.emit()
+		return
+	var check: Dictionary = placed.links.check_link(_link_from, _hover_uid)
+	var cells: Array = check["cells"]
+	_last_check = {"ok": check["ok"], "problems": [] if check["ok"] else [{"key": check["key"], "cells": []}],
+		"cells": cells, "hints": PackedStringArray()}
+	var entries: Array = []
+	for cell: Vector2i in cells:
+		entries.append([cell, COLOR_OK])
+	_fill(_cells, entries, 0.04)
+	preview_changed.emit()
 
 
 # --- Preview -----------------------------------------------------------------------
@@ -403,6 +478,9 @@ func _entry(uid: String) -> Dictionary:
 
 func _refresh() -> void:
 	if not _active:
+		return
+	if _tool == TOOL_CONNECT:
+		_refresh_connect()
 		return
 	var definition: PlaceableDefinition = _current_definition()
 	if definition == null:
@@ -539,6 +617,8 @@ func _show_hover() -> void:
 	box.size = Vector3(size.x * BuildGrid.CELL + 0.1, 0.06, size.y * BuildGrid.CELL + 0.1)
 	_hover_box.mesh = box
 	var color: Color = COLOR_BAD if _tool == TOOL_REMOVE else Color(0.88, 0.66, 0.23, 0.55)
+	if _tool == TOOL_CONNECT and not _link_from.is_empty() and _hover_uid != _link_from:
+		color = COLOR_CLEAR
 	_hover_box.material_override = _flat_material(color)
 	_hover_box.global_position = BuildGrid.object_center(definition, entry["anchor"], entry["rot"]) + Vector3(0, 0.03, 0)
 	_hover_box.visible = true

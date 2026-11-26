@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://assets/models/bale_steel.glb" id="2_model"]
+
+[resource]
+script = ExtResource("1_def")
+id = "bale_steel"
+name_key = "item.bale_steel.name"
+description_key = "item.bale_steel.description"
+category = "bulk_scrap"
+handling_class = 0
+sell_value = 22
+carry_size = 2
+pickup_sound = "thud"
+model = ExtResource("2_model")

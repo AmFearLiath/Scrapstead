@@ -48,6 +48,8 @@ var access_origin: Vector3 = Vector3.ZERO
 ## Cells blocked by things PlacedObjects does not manage (fences, gate posts).
 var _static_solid: Dictionary = {}
 const PATH_SPEED_FACTOR := 1.25
+## Conveyor links between machines (docs/machine-links.md).
+var links: MachineLinks
 
 
 ## Speed factor for someone standing on this cell (gravel paths are faster).
@@ -81,6 +83,11 @@ func _ready() -> void:
 		Vector2i(roundi(buildable_area.size.x / BuildGrid.CELL), roundi(buildable_area.size.y / BuildGrid.CELL)))
 	validator.static_blocked = _static_blocked
 	navigation = YardNavigation.new(validator.plot)
+	links = MachineLinks.new()
+	links.name = "Links"
+	links.placed = self
+	add_child(links)
+	changed.connect(links.refresh)
 
 
 func setup(upgrades: UpgradeProgress, wallet: Wallet, story: StoryState = null) -> void:
@@ -97,6 +104,16 @@ func set_static_protected(cells: Dictionary, owners: Dictionary = {}) -> void:
 
 
 # --- Queries ------------------------------------------------------------------
+
+## Cells blocked by the static yard (fences, gate posts, adopted props' gaps).
+func get_static_solid() -> Dictionary:
+	return _static_solid
+
+
+## Fills the validator's maps (also used by link routing).
+func refresh_validator_for_links() -> void:
+	_refresh_validator("")
+
 
 func get_entries() -> Array[Dictionary]:
 	var list: Array[Dictionary] = []
@@ -295,7 +312,7 @@ func get_save_state() -> Dictionary:
 			saved["state"] = stateful.get_placed_state()
 		objects.append(saved)
 	return {"counter": _counter, "objects": objects, "stored": _stored.duplicate(),
-		"stored_states": _stored_states.duplicate(true), "yard": yard}
+		"stored_states": _stored_states.duplicate(true), "yard": yard, "links": links.get_save_state()}
 
 
 ## Recreates placed objects. Unknown definitions are skipped and reported.
@@ -514,6 +531,13 @@ func _refresh_validator(ignore_uid: String) -> void:
 			occupied[cell] = uid
 		for cell: Vector2i in BuildGrid.clearance_cells(entry["def"], entry["anchor"], entry["rot"]):
 			reserved[cell] = uid
+	# Belts: nothing can be built on them, except the machines they serve
+	# (moving one re-routes its belt).
+	if links != null:
+		var belts: Dictionary = links.get_belt_cells()
+		for cell: Vector2i in belts:
+			if not occupied.has(cell):
+				occupied[cell] = ignore_uid if links.involves(belts[cell], ignore_uid) else "link_%d" % belts[cell]
 	validator.occupied = occupied
 	validator.reserved = reserved
 	var protected: Dictionary = _static_protected.duplicate()

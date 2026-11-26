@@ -967,7 +967,15 @@ func _setup_placed(saved: Dictionary) -> void:
 	placed.rebuild_navigation()
 	_after_layout_change()
 	placed.changed.connect(_after_layout_change)
+	var saved_links: Variant = saved.get("links", [])
+	for note: String in placed.links.apply_save_state(saved_links if typeof(saved_links) == TYPE_ARRAY else []):
+		_note(note)
+	placed.links.link_blocked.connect(_on_link_blocked)
 	_update_reserved_sign()
+
+
+func _on_link_blocked(_link_id: int, blocked: bool) -> void:
+	feedback_toast.show_message(tr("build.link_blocked" if blocked else "build.link_free"), not blocked)
 
 
 ## Everything built into the yard becomes movable in build mode
@@ -1078,6 +1086,8 @@ func _access_points() -> Array:
 func _on_object_placed(uid: String, node: Node3D) -> void:
 	if node is MagnetCollector:
 		_setup_magnet(node as MagnetCollector)
+	elif node is ScrapPress:
+		_setup_press(node as ScrapPress)
 	for storage: Node in node.find_children("*", "PlacedStorage", true, false):
 		(storage as PlacedStorage).objects = _objects
 		(storage as PlacedStorage).context = _context
@@ -1151,6 +1161,17 @@ func _setup_magnet(machine: MagnetCollector) -> void:
 	if story_director != null and story_director.has_method("bind_magnet") and not _restoring:
 		story_director.bind_magnet(magnet)
 		story_director.on_machine_installed()
+
+
+## The scrap press (docs/scrap-press.md): bales join the registry.
+func _setup_press(press: ScrapPress) -> void:
+	press.item_spawned.connect(_on_runtime_item_spawned)
+	press.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
+	press.setup(_objects)
+	press.bale_pressed.connect(func(bale: ScrapItem) -> void:
+		_dust(bale.global_position, 10, 0.18)
+		_sound("thud", -4.0))
+	press.piece_fed.connect(func(_item_id: String) -> void: _sound("clink", -14.0))
 
 
 func _on_magnet_item_spawned(item: ScrapItem) -> void:

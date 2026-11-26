@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradeCatalog" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="UpgradeCatalog" load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/UpgradeCatalog.gd" id="1_catalog"]
 [ext_resource type="Script" path="res://scripts/data/UpgradeDefinition.gd" id="1_def"]
@@ -9,7 +9,8 @@
 [ext_resource type="Resource" path="res://data/upgrades/yard_entrance.tres" id="6_yard_entrance"]
 [ext_resource type="Resource" path="res://data/upgrades/machine_magnet_collector.tres" id="7_magnet"]
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_strong_magnet.tres" id="8_strong_magnet"]
+[ext_resource type="Resource" path="res://data/upgrades/machine_scrap_press.tres" id="20_press"]
 
 [resource]
 script = ExtResource("1_catalog")
-upgrades = Array[ExtResource("1_def")]([ExtResource("2_tool_crowbar"), ExtResource("3_upgrade_carry_basket"), ExtResource("4_tool_hoist"), ExtResource("5_upgrade_handcart"), ExtResource("6_yard_entrance"), ExtResource("7_magnet"), ExtResource("8_strong_magnet")])
+upgrades = Array[ExtResource("1_def")]([ExtResource("2_tool_crowbar"), ExtResource("3_upgrade_carry_basket"), ExtResource("4_tool_hoist"), ExtResource("5_upgrade_handcart"), ExtResource("6_yard_entrance"), ExtResource("7_magnet"), ExtResource("8_strong_magnet"), ExtResource("20_press")])

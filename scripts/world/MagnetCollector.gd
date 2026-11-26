@@ -105,6 +105,21 @@ func get_lift_point() -> Vector3:
 	return get_work_center() + global_basis.x * 2.0
 
 
+# --- Machine ports (MachineLinks, docs/machine-links.md) ---------------------------
+
+## The crate is the output: everything lying in it can leave over a belt.
+func get_output_items() -> Array[ScrapItem]:
+	return _items_in_bin()
+
+
+func get_output_item_ids() -> PackedStringArray:
+	return profile.magnetic_items if profile != null else PackedStringArray()
+
+
+func get_port_position(_kind: String) -> Vector3:
+	return bin.global_position if bin != null else global_position
+
+
 # --- Build mode (PlacedObjects) ---------------------------------------------------
 
 func get_scene_offset() -> Vector3:

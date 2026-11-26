@@ -179,6 +179,13 @@ func _is_valid_placed(value: Variant) -> bool:
 		for count: Variant in placed["stored"].values():
 			if not _is_number(count):
 				return false
+	# Conveyor links between machines: [{"id", "from", "to"}] (docs/machine-links.md).
+	if placed.has("links"):
+		if typeof(placed["links"]) != TYPE_ARRAY:
+			return false
+		for entry: Variant in placed["links"]:
+			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("from")) != TYPE_STRING 					or typeof(entry.get("to")) != TYPE_STRING or not _is_number(entry.get("id", 0)):
+				return false
 	return true
 
 
@@ -195,6 +202,12 @@ func _is_valid_machines(value: Variant) -> bool:
 				return false
 		if machine.has("on") and typeof(machine["on"]) != TYPE_BOOL:
 			return false
+		if machine.has("hopper"):
+			if typeof(machine["hopper"]) != TYPE_ARRAY:
+				return false
+			for item_id: Variant in machine["hopper"]:
+				if typeof(item_id) != TYPE_STRING:
+					return false
 		if machine.has("items"):
 			if typeof(machine["items"]) != TYPE_ARRAY:
 				return false

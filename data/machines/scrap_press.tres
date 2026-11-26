@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PressProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/PressProfile.gd" id="1_profile"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "scrap_press"
+name_key = "machine.scrap_press.name"
+description_key = "machine.scrap_press.description"
+required_upgrade = "machine_scrap_press"
+accepted_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can")
+pieces_per_bale = 6
+bale_item = "bale_steel"
+cycle_seconds = 8.0
+hopper_capacity = 12
+tray_capacity = 3

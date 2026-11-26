@@ -1,6 +1,6 @@
 # Scrapstead — Bausystem (Phase 4, Block B)
 
-**Status:** Platzieren, Verschieben, Drehen, Entfernen, Lager, Rückgängig/Wiederholen umgesetzt (26.11.2026); Verbinden folgt mit der zweiten Maschine
+**Status:** Platzieren, Verschieben, Drehen, Entfernen, Lager, Rückgängig/Wiederholen umgesetzt (26.11.2026); Verbinden mit der zweiten Maschine (Schrottpresse) umgesetzt, siehe [Maschinenverbindungen](machine-links.md)
 **Bezug:** [Bauen und Maschinenverbindungen](building-and-logistics.md), [Baumodus und Bauinteraktionen](build-mode-and-interactions.md), [Kernmatrix 4.6](core-gameplay-matrix.md), [Entscheidungslog 25.11.2026](decision-log.md), [Produktionsfahrplan Phase 4](production-scope-and-roadmap.md)
 
 ## 1. Ziel
