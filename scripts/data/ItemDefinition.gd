@@ -20,6 +20,11 @@ enum HandlingClass { HAND, CARRY, TOOL }
 @export var pickup_sound: String = "clink"
 ## Visual placeholder scene, independent of localized text.
 @export var model: PackedScene
+## Tool that opens this item where it lies (e.g. "crowbar" for nailed crates);
+## empty for ordinary items. Opening consumes it and releases `contents`.
+@export var open_tool: String = ""
+@export var contents: Array[ItemDefinition] = []
+@export_range(0.5, 10.0) var open_seconds: float = 1.6
 
 
 ## Localization key of the category label.

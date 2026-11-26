@@ -391,3 +391,19 @@ note.staff_needs_cart,Juri needs a handcart for the heavy piece on the pallet.,J
 staff.juri.needs_cart.1,That beam? With these arms? Get me a handcart and we'll talk.,"Der Träger? Mit diesen Armen? Besorg mir einen Handkarren, dann reden wir."
 staff.juri.takes_cart.1,Heavy one. I'll get the cart.,Schweres Teil. Ich hol den Karren.
 staff.juri.takes_cart.2,Cart time! Beep beep.,Karrenzeit! Piep piep.
+item.device_broken_toaster.name,Broken toaster,Kaputter Toaster
+item.device_broken_toaster.description,"Still holds a slice of toast from roughly 1994. Dismantled, it gives copper wire and a bolt.",Enthält noch eine Scheibe Toast von etwa 1994. Zerlegt gibt er Kupferdraht und eine Schraube her.
+item.category.sealed,Nailed shut,Vernagelt
+item.sealed_crate.name,Nailed crate,Vernagelte Kiste
+item.sealed_crate.description,Someone used about forty nails on it. Rattles promisingly. Opens with a crowbar right where it lies.,Jemand hat etwa vierzig Nägel verbraucht. Klappert vielversprechend. Lässt sich mit der Brechstange direkt vor Ort öffnen.
+ui.action.pry_open,Pry open (hold),Aufhebeln (halten)
+ui.item.open_detail,Inside: {contents},Darin: {contents}
+ui.item.needs_tool_detail,Sells for {value} Cr as it is · opens with a {tool},Als Ganzes {value} Cr · lässt sich mit {tool} öffnen
+ui.item.pried_open,{name} pried open. Nails everywhere.,{name} aufgehebelt. Überall Nägel.
+delivery.note.krull_4,Found this in the barn. Didn't open it. Thought you'd want the fun. — Benno,"Lag in der Scheune. Hab sie nicht aufgemacht, wollte dir den Spaß lassen. — Benno"
+delivery.note.lotte_3,It doesn't toast anymore. It only smokes. Mum says it's yours now.,"Er toastet nicht mehr. Er raucht nur noch. Mama sagt, der gehört jetzt dir."
+delivery.note.anonymous_3,Nails included. Don't ask.,Nägel inklusive. Nicht fragen.
+note.staff_needs_crowbar,Juri needs a crowbar for the nailed crate on the pallet.,Juri braucht eine Brechstange für die vernagelte Kiste auf der Palette.
+staff.juri.needs_crowbar.1,Forty nails. Bare hands. No.,Vierzig Nägel. Bloße Hände. Nein.
+staff.juri.takes_crowbar.1,"Crowbar time. Stand back, everyone.",Brechstangenzeit. Alle zurücktreten.
+staff.juri.takes_crowbar.2,"I'll get the crowbar. Nails, you've been warned.","Ich hol die Brechstange. Nägel, ihr seid gewarnt."

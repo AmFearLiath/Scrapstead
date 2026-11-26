@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" path="res://assets/models/dismantle_table.glb" id="2_model"]
 [ext_resource type="Resource" path="res://data/processing/dismantle_broken_radio.tres" id="3_profile"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/ScrapItem.tscn" id="4_item"]
+[ext_resource type="Resource" path="res://data/processing/dismantle_broken_toaster.tres" id="5_toaster"]
+[ext_resource type="Script" path="res://scripts/data/ProcessingProfile.gd" id="6_profile_script"]
 
 [sub_resource type="BoxShape3D" id="shape"]
 size = Vector3(3.0, 0.95, 1.1)
@@ -18,6 +20,7 @@ action_key = "ui.action.dismantle"
 highlight_radius = 0.8
 profile = ExtResource("3_profile")
 item_scene = ExtResource("4_item")
+extra_profiles = Array[ExtResource("6_profile_script")]([ExtResource("5_toaster")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475, 0)

@@ -189,6 +189,25 @@ func _staff_tool_shots(scene: Node, player: Node3D) -> void:
 	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
 	await _frames(20)
 	await _shot("44_staff_dismantling")
+	if not upgrades.is_owned("tool_crowbar"):
+		scene.get_wallet().credit(upgrades.get_catalog().get_definition("tool_crowbar").price, "capture", "capture")
+		upgrades.purchase("tool_crowbar", scene.get_wallet())
+	(scene.get_world_object("station_order_desk") as OrderDesk).refresh_deliveries(upgrades)
+	await _wait_for(func() -> bool: return worker.get_carried_items().is_empty() and worker.get_tool().is_empty(), 60.0)
+	deliveries._next_entry = 10
+	deliveries.deliver_next()
+	await _wait_for(func() -> bool: return worker._task == YardWorker.Task.PRYING, 60.0)
+	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
+	await _wait_for(func() -> bool: return false, 0.5)
+	await _shot("45_staff_crowbar")
+	await _wait_for(func() -> bool: return worker.get_tool().is_empty(), 60.0)
+	deliveries._next_entry = 8
+	deliveries.deliver_next()
+	await _wait_for(func() -> bool: return worker.has_cart(), 60.0)
+	await _wait_for(func() -> bool: return false, 1.2)
+	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
+	await _wait_for(func() -> bool: return false, 0.5)
+	await _shot("46_staff_handcart_grip")
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.

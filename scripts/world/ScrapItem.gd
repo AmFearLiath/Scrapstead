@@ -5,6 +5,10 @@ extends Interactable
 ## placement: lying in the yard, carried by the player, sold, consumed by
 ## processing (P1b), or not yet produced (processing output placeholder).
 
+## An openable item was pried open where it lay; its owner releases the
+## contents, then the item itself is consumed.
+signal opened(item: ScrapItem)
+
 enum State { IN_WORLD, CARRIED, SOLD, PROCESSED, PENDING }
 
 const STATE_NAMES: PackedStringArray = ["in_world", "carried", "sold", "processed", "pending"]
@@ -17,6 +21,8 @@ var _state: State = State.IN_WORLD
 var _initial_state: State = State.IN_WORLD
 ## Set once the object was moved away from its authored placement (dropped).
 var _moved: bool = false
+## Tools owned by the yard, for items that open with one (set by the spawner).
+var tool_source: UpgradeProgress
 
 
 func _ready() -> void:
@@ -44,7 +50,41 @@ func is_interaction_available() -> bool:
 	return super() and _state == State.IN_WORLD and definition != null
 
 
+## True if this item opens with a tool and the yard owns that tool.
+func can_be_opened() -> bool:
+	return is_openable() and tool_source != null and tool_source.has_tool(definition.open_tool)
+
+
+func is_openable() -> bool:
+	return definition != null and not definition.open_tool.is_empty() and not definition.contents.is_empty()
+
+
+func get_action_key() -> String:
+	return "ui.action.pry_open" if can_be_opened() else super()
+
+
+func get_hold_duration() -> float:
+	return definition.open_seconds if can_be_opened() else 0.0
+
+
+## Opens the item where it lies: contents are released by its owner, the
+## item is consumed. Returns false if it cannot be opened (no change).
+func pry_open() -> bool:
+	if _state != State.IN_WORLD or not is_openable():
+		return false
+	opened.emit(self)
+	set_state(State.PROCESSED)
+	return true
+
+
 func get_prompt_detail(context: InteractionContext) -> String:
+	if is_openable():
+		var contents: PackedStringArray = []
+		for content: ItemDefinition in definition.contents:
+			contents.append(tr(content.name_key))
+		var key: String = "ui.item.open_detail" if can_be_opened() else "ui.item.needs_tool_detail"
+		return tr(key).format({"tool": tr(UpgradeProgress.tool_name_key(definition.open_tool)),
+			"value": definition.sell_value, "contents": ", ".join(contents)})
 	var detail: String = tr("ui.item.detail").format({
 		"category": tr(definition.get_category_key()),
 		"value": definition.sell_value,
@@ -56,6 +96,8 @@ func get_prompt_detail(context: InteractionContext) -> String:
 
 
 func check_requirements(context: InteractionContext) -> Dictionary:
+	if can_be_opened():
+		return {"ok": true, "message_key": "", "message_args": {}}
 	if context == null or context.inventory == null:
 		return {"ok": false, "message_key": "ui.interaction.unavailable", "message_args": {}}
 	if not context.inventory.can_add(definition.id):
@@ -68,6 +110,10 @@ func check_requirements(context: InteractionContext) -> Dictionary:
 func interact(context: InteractionContext) -> Dictionary:
 	if not is_interaction_available():
 		return make_result(false, "ui.interaction.unavailable")
+	if can_be_opened():
+		var name: String = get_display_name()
+		pry_open()
+		return make_result(true, "ui.item.pried_open", {"name": name})
 	if not context.inventory.add(object_id, definition.id):
 		return make_result(false, "ui.inventory.no_space", {"name": get_display_name(),
 			"free": context.inventory.get_free_slots(), "size": definition.carry_size})

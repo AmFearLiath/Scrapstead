@@ -867,3 +867,7 @@ Referenz: [Erste Maschine](first-machine.md).
 ## 26.11.2026 — Mitarbeiter nutzen gekaufte Werkzeuge: der Handkarren
 
 **Beschluss (Rückmeldung nach dem ersten Spielen):** Schwere Lieferungen (Stahlträger von Benno) bewegt Juri nur mit dem gekauften Handkarren. Er holt ihn selbst vom Stellplatz beim Büro, schiebt ihn sichtbar und stellt ihn danach zurück. Ohne Karren bleibt das Teil liegen, und eine Notiz nennt den Grund. Brechstange und Flaschenzug für Mitarbeiter sind als nächste Ausbaustufe vorgemerkt.
+
+## 26.11.2026 — Brechstange, vernagelte Kisten, Toaster; Griffposition am Handkarren
+
+**Beschluss (Rückmeldung nach dem Spielen):** Vernagelte Kisten öffnen sich mit der Brechstange direkt vor Ort, durch den Spieler oder Juri. Juri holt die Brechstange selbst und hängt sie zurück, immer nur ein Werkzeug zur Zeit. Der Toaster ist ein zweites zerlegbares Gerät, der Zerlegetisch kennt mehrere Profile. Der Handkarren steht jetzt so vor Juri, dass er den Griff hält. Neue Speicherfelder sind optional (`employee.tool` ersetzt `employee.cart`, alte Stände werden gelesen). Inhalte geöffneter Kisten speichern ihre Position.

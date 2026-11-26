@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://assets/models/sealed_crate.glb" id="2_model"]
+[ext_resource type="Resource" path="res://data/items/scrap_copper_pipe.tres" id="3_pipe"]
+[ext_resource type="Resource" path="res://data/items/scrap_wire_coil.tres" id="4_coil"]
+[ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="5_bolt"]
+
+[resource]
+script = ExtResource("1_def")
+id = "sealed_crate"
+name_key = "item.sealed_crate.name"
+description_key = "item.sealed_crate.description"
+category = "sealed"
+handling_class = 1
+sell_value = 4
+carry_size = 2
+pickup_sound = "box"
+model = ExtResource("2_model")
+open_tool = "crowbar"
+contents = Array[ExtResource("1_def")]([ExtResource("3_pipe"), ExtResource("4_coil"), ExtResource("5_bolt")])
+open_seconds = 1.6

@@ -92,7 +92,50 @@ def build_magnet_bin():
     return root
 
 
+def build_item_toaster():
+    """Broken toaster: chrome-ish box, two slots, a slice of toast stuck
+    in one of them for decades, lever and a frayed cord."""
+    kit.seed(921)
+    root = kit.root("BrokenToaster")
+    body = box("Body", (0, 0, 0.16), (0.42, 0.26, 0.3), "steel_light", parent=root, bevel=0.07, rotation=(0, 3, 0))
+    wonk(body, 2.0)
+    for index, x in enumerate((-0.09, 0.09)):
+        box(f"Slot{index}", (x, 0, 0.315), (0.06, 0.2, 0.02), "ink", parent=root, bevel=0.0)
+    box("Toast", (0.09, 0.0, 0.35), (0.05, 0.16, 0.1), "wood_light", parent=root, rotation=(0, 6, 0), bevel=0.02)
+    box("ToastCrust", (0.09, 0.0, 0.405), (0.055, 0.165, 0.02), "wood_dark", parent=root, rotation=(0, 6, 0),
+        bevel=0.008)
+    box("Lever", (0.23, 0.0, 0.2), (0.05, 0.07, 0.04), "ink", parent=root, bevel=0.01)
+    box("Dial", (0.0, -0.135, 0.1), (0.07, 0.01, 0.07), "red", parent=root, bevel=0.005)
+    patch("Scorch", (-0.08, -0.133, 0.22), (0.12, 0.08), "wood_dark", parent=root, rotation=(90, 0, 0), rivets=0)
+    cylinder("Cord", (-0.28, 0.05, 0.03), 0.012, 0.22, "ink", vertices=6, rotation=(0, 80, 25), parent=root)
+    box("Plug", (-0.4, 0.1, 0.03), (0.05, 0.04, 0.04), "cream", parent=root, bevel=0.01)
+    return root
+
+
+def build_item_sealed_crate():
+    """A crate nailed shut with far too many nails and a stencilled warning
+    nobody can read any more."""
+    kit.seed(931)
+    root = kit.root("SealedCrate")
+    crate = box("Crate", (0, 0, 0.21), (0.62, 0.46, 0.42), "wood", parent=root, bevel=0.03, jitter=0.01)
+    wonk(crate, 1.5)
+    for index in range(3):
+        box(f"Slat{index}", (0, -0.235, 0.08 + index * 0.13), (0.64, 0.02, 0.07), "wood_light", parent=root,
+            bevel=0.01, rotation=(0, kit._rng.uniform(-3, 3), 0))
+    for index in range(4):
+        box(f"Lid{index}", (-0.23 + index * 0.155, 0, 0.43), (0.13, 0.48, 0.03), "wood_light", parent=root,
+            bevel=0.01, rotation=(0, 0, kit._rng.uniform(-4, 4)))
+    for index in range(10):
+        sphere(f"Nail{index}", (kit._rng.uniform(-0.28, 0.28), kit._rng.uniform(-0.2, 0.2), 0.45), 0.018,
+               "steel_light", parent=root)
+    box("Stencil", (0.05, -0.248, 0.22), (0.3, 0.005, 0.08), "ink", parent=root, bevel=0.0)
+    tape("Tape", (-0.2, -0.24, 0.33), 0.18, colour="red", parent=root, rotation=(0, -25, 0), width=0.04)
+    return root
+
+
 ASSETS = {
     "magnet_collector": (build_magnet_collector, {"focus": (0, -0.6, 0.9), "ortho_scale": 4.2}),
     "magnet_bin": (build_magnet_bin, {"focus": (0, 0, 0.2), "ortho_scale": 1.8}),
+    "device_broken_toaster": (build_item_toaster, {"focus": (0, 0, 0.2), "ortho_scale": 0.9}),
+    "sealed_crate": (build_item_sealed_crate, {"focus": (0, 0, 0.25), "ortho_scale": 1.1}),
 }

@@ -769,9 +769,14 @@ func _setup_worker(saved: Dictionary) -> void:
 	worker.remark.connect(_on_worker_remark)
 	worker.presence_changed.connect(_on_worker_presence_changed)
 	worker.dismantled.connect(_on_worker_dismantled)
+	worker.pried_open.connect(func(crate: ScrapItem) -> void:
+		_dust(crate.global_position, 12, 0.25)
+		_sound("creak", -6.0)
+		if sound_fx != null:
+			sound_fx.play_burst("pop", 3, 0.1, -8.0))
 	var animator: Node = worker.get_node_or_null("Animator")
 	if animator != null:
-		animator.setup(worker, null, worker.get_node("VisualRoot/PlaceholderModel"))
+		animator.setup(worker, worker, worker.get_node("VisualRoot/PlaceholderModel"))
 		animator.footstep.connect(func(_at: Vector3) -> void: _sound("step", -16.0))
 		_update_worker_load()
 	if staff_bubble != null:

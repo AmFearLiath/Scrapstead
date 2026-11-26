@@ -49,6 +49,7 @@ func _prepare(scene: Node, with_cart: bool) -> YardWorker:
 	for item: ScrapItem in deliveries.get_live_items():
 		item.set_state(ScrapItem.State.SOLD)
 	deliveries._next_entry = BEAM_ENTRY
+	deliveries._timer = 100000.0
 	var worker: YardWorker = scene.get_worker()
 	worker.hire()
 	return worker

@@ -375,10 +375,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 0, -18.0)
 [node name="CartSpot" type="Marker3D" parent="Staff"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, -19.3)
 
+[node name="CrowbarSpot" type="Marker3D" parent="Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0, 0, -15.0)
+
 [node name="StationSpot" type="Marker3D" parent="Staff"]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 31.5, 0, -5.9)
 
-[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot", "dismantle_station", "station_route_root", "station_spot", "cart_route_root", "cart_spot", "cart_display") instance=ExtResource("70_worker")]
+[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot", "dismantle_station", "station_route_root", "station_spot", "cart_route_root", "cart_spot", "cart_display", "crowbar_spot", "crowbar_display") instance=ExtResource("70_worker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9, 0, -0.9)
 wait_spot = NodePath("../WaitSpot")
 rest_spot = NodePath("../RestSpot")
@@ -391,6 +394,8 @@ cart_route_root = NodePath("../CartRoute")
 cart_spot = NodePath("../CartSpot")
 cart_display = NodePath("../../DeliveryArea/upgrade_handcart")
 cart_scene = ExtResource("73_cart_model")
+crowbar_spot = NodePath("../CrowbarSpot")
+crowbar_display = NodePath("../../DeliveryArea/tool_crowbar")
 
 [node name="MagnetCollector" parent="." instance=ExtResource("72_magnet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ProcessingProfile" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ProcessingProfile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
+[ext_resource type="Resource" path="res://data/items/device_broken_toaster.tres" id="2_toaster"]
+[ext_resource type="Resource" path="res://data/items/mat_copper_wire.tres" id="3_wire"]
+[ext_resource type="Resource" path="res://data/items/scrap_rusted_bolt.tres" id="4_bolt"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "dismantle_broken_toaster"
+input_item = ExtResource("2_toaster")
+outputs = Array[ExtResource("1_def")]([ExtResource("3_wire"), ExtResource("4_bolt")])
+seconds = 3.0

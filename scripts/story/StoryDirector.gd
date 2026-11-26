@@ -138,8 +138,8 @@ func compute_note_keys() -> PackedStringArray:
 	if _worker != null and _worker.get_presence() == YardWorker.Presence.AVAILABLE \
 			and not _story.has_flag(FLAG_FIRST_HIRE):
 		keys.append("note.staff_available")
-	if _worker != null and _worker.is_missing_cart():
-		keys.append("note.staff_needs_cart")
+	if _worker != null and not _worker.get_missing_tool().is_empty():
+		keys.append("note.staff_needs_" + _worker.get_missing_tool())
 	if _deliveries != null and _deliveries.get_waiting_count() > 0 and not staff_on_it:
 		keys.append("note.delivery_waiting")
 	while keys.size() > MAX_NOTES:

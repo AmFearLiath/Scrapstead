@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemCatalog" load_steps=13 format=3]
+[gd_resource type="Resource" script_class="ItemCatalog" load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/ItemCatalog.gd" id="1_catalog"]
 [ext_resource type="Script" path="res://scripts/data/ItemDefinition.gd" id="1_def"]
@@ -12,7 +12,9 @@
 [ext_resource type="Resource" path="res://data/items/scrap_wood_offcut.tres" id="9_scrap_wood_offcut"]
 [ext_resource type="Resource" path="res://data/items/scrap_copper_pipe.tres" id="10_scrap_copper_pipe"]
 [ext_resource type="Resource" path="res://data/items/find_brass_figurine.tres" id="11_find_brass_figurine"]
+[ext_resource type="Resource" path="res://data/items/device_broken_toaster.tres" id="12_toaster"]
+[ext_resource type="Resource" path="res://data/items/sealed_crate.tres" id="13_sealed_crate"]
 
 [resource]
 script = ExtResource("1_catalog")
-items = Array[ExtResource("1_def")]([ExtResource("2_scrap_rusted_bolt"), ExtResource("3_scrap_empty_can"), ExtResource("4_scrap_wire_coil"), ExtResource("5_bulk_metal_beam"), ExtResource("6_device_broken_radio"), ExtResource("7_mat_copper_wire"), ExtResource("8_mat_electronic_parts"), ExtResource("9_scrap_wood_offcut"), ExtResource("10_scrap_copper_pipe"), ExtResource("11_find_brass_figurine")])
+items = Array[ExtResource("1_def")]([ExtResource("2_scrap_rusted_bolt"), ExtResource("3_scrap_empty_can"), ExtResource("4_scrap_wire_coil"), ExtResource("5_bulk_metal_beam"), ExtResource("6_device_broken_radio"), ExtResource("7_mat_copper_wire"), ExtResource("8_mat_electronic_parts"), ExtResource("9_scrap_wood_offcut"), ExtResource("10_scrap_copper_pipe"), ExtResource("11_find_brass_figurine"), ExtResource("12_toaster"), ExtResource("13_sealed_crate")])

@@ -108,7 +108,10 @@ func deliver_next() -> Array[ScrapItem]:
 func get_save_state() -> Dictionary:
 	var items: Array = []
 	for entry: Dictionary in _live:
-		items.append({"id": entry["id"], "item": entry["item"], "slot": entry["slot"]})
+		var saved: Dictionary = {"id": entry["id"], "item": entry["item"], "slot": entry["slot"]}
+		if entry.has("pos"):
+			saved["pos"] = entry["pos"]
+		items.append(saved)
 	return {"timer": snappedf(_timer, 0.01), "next_entry": _next_entry, "counter": _counter,
 		"items": items}
 
@@ -127,7 +130,11 @@ func apply_save_state(state: Dictionary) -> void:
 		if not object_id.begins_with(OBJECT_PREFIX):
 			push_warning("ScrapDeliveries: ignoring foreign object id '%s'." % object_id)
 			continue
-		_spawn(object_id, str(saved.get("item", "")), int(saved.get("slot", 0)))
+		var item: ScrapItem = _spawn(object_id, str(saved.get("item", "")), int(saved.get("slot", 0)))
+		var saved_position: Variant = saved.get("pos")
+		if item != null and typeof(saved_position) == TYPE_ARRAY and saved_position.size() == 3:
+			item.global_position = Vector3(float(saved_position[0]), float(saved_position[1]), float(saved_position[2]))
+			_live[-1]["pos"] = saved_position
 
 
 func _spawn(object_id: String, item_id: String, slot: int) -> ScrapItem:
@@ -143,8 +150,10 @@ func _spawn(object_id: String, item_id: String, slot: int) -> ScrapItem:
 	var marker: Node3D = _slot_marker(slot)
 	item.global_position = marker.global_position if marker != null else global_position
 	item.rotation.y = fposmod(float(_hash_id(object_id)) * 0.7, TAU)
+	item.tool_source = _upgrades
 	_live.append({"id": object_id, "item": item_id, "slot": slot, "node": item})
 	item.interaction_state_changed.connect(_on_item_state_changed)
+	item.opened.connect(_on_item_opened)
 	item_spawned.emit(item)
 	return item
 
@@ -162,6 +171,23 @@ func _on_item_state_changed(target: Interactable) -> void:
 			break
 	item_removed.emit(item.object_id)
 	item.queue_free()
+
+
+## A crate was pried open: its contents spill out around it.
+func _on_item_opened(crate: ScrapItem) -> void:
+	var centre: Vector3 = crate.global_position
+	var count: int = crate.definition.contents.size()
+	for index: int in count:
+		var content: ItemDefinition = crate.definition.contents[index]
+		_counter += 1
+		var item: ScrapItem = _spawn("%s%d" % [OBJECT_PREFIX, _counter], content.id, -1)
+		if item == null:
+			continue
+		var angle: float = TAU * float(index) / float(count) + 0.6
+		var at: Vector3 = centre + Vector3(cos(angle), 0.0, sin(angle)) * 0.42
+		item.global_position = at
+		_live[-1]["pos"] = [snappedf(at.x, 0.001), snappedf(at.y, 0.001), snappedf(at.z, 0.001)]
+		item.reveal()
 
 
 func _slot_count() -> int:

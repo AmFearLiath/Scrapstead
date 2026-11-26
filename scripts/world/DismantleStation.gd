@@ -19,6 +19,8 @@ signal dismantled(input: ScrapItem, outputs: Array)
 const OBJECT_PREFIX := "dismantled_"
 
 @export var profile: ProcessingProfile
+## Further inputs the station handles (e.g. the toaster).
+@export var extra_profiles: Array[ProcessingProfile] = []
 ## Stable ID of the authored input placement with prepared outputs (P1b).
 @export var input_object_id: String = ""
 ## Prepared output placements of that input (pending until produced).
@@ -38,25 +40,49 @@ func set_world_objects(objects: Dictionary) -> void:
 	_inputs = objects
 
 
+var _last_context: InteractionContext
+
+
 func get_hold_duration() -> float:
-	return profile.seconds
+	var input_id: String = _carried_input(_last_context)
+	var input: ScrapItem = _inputs.get(input_id) as ScrapItem
+	return get_seconds_for(input)
+
+
+## Processing profile for an input item, or null.
+func get_profile_for(item_id: String) -> ProcessingProfile:
+	for candidate: ProcessingProfile in [profile] + extra_profiles:
+		if candidate != null and candidate.input_item != null and candidate.input_item.id == item_id:
+			return candidate
+	return null
+
+
+## Seconds this input takes (the default profile if unknown).
+func get_seconds_for(item: ScrapItem) -> float:
+	var found: ProcessingProfile = get_profile_for(item.get_item_id()) if item != null else null
+	return found.seconds if found != null else profile.seconds
 
 
 ## Whether this item can be dismantled here.
 func accepts(item: ScrapItem) -> bool:
-	return item != null and profile != null and item.get_item_id() == profile.input_item.id \
+	return item != null and get_profile_for(item.get_item_id()) != null \
 		and (item.get_state() == ScrapItem.State.CARRIED or item.get_state() == ScrapItem.State.IN_WORLD)
 
 
 func get_prompt_detail(context: InteractionContext) -> String:
+	_last_context = context
+	var input_id: String = _carried_input(context)
+	var shown: ProcessingProfile = profile
+	if not input_id.is_empty() and _inputs.get(input_id) is ScrapItem:
+		shown = get_profile_for((_inputs[input_id] as ScrapItem).get_item_id())
 	var args: Dictionary = {
-		"input": tr(profile.input_item.name_key),
-		"direct": profile.input_item.sell_value,
-		"outputs": _output_names(),
-		"value": profile.get_output_value(),
-		"seconds": NumberFormat.decimal(profile.seconds, 1),
+		"input": tr(shown.input_item.name_key),
+		"direct": shown.input_item.sell_value,
+		"outputs": _output_names(shown),
+		"value": shown.get_output_value(),
+		"seconds": NumberFormat.decimal(shown.seconds, 1),
 	}
-	if _carried_input(context).is_empty():
+	if input_id.is_empty():
 		return tr("ui.dismantle.detail_missing").format(args)
 	return tr("ui.dismantle.detail").format(args)
 
@@ -68,8 +94,9 @@ func check_requirements(context: InteractionContext) -> Dictionary:
 			"message_args": {"input": tr(profile.input_item.name_key)}}
 	if not _can_produce(input_id):
 		return {"ok": false, "message_key": "ui.dismantle.done_already", "message_args": {}}
-	var free_after: int = context.inventory.get_free_slots() + profile.input_item.carry_size
-	if free_after < profile.get_output_size():
+	var input_profile: ProcessingProfile = _profile_of(input_id)
+	var free_after: int = context.inventory.get_free_slots() + input_profile.input_item.carry_size
+	if free_after < input_profile.get_output_size():
 		return {"ok": false, "message_key": "ui.inventory.full_short", "message_args": {}}
 	return {"ok": true, "message_key": "", "message_args": {}}
 
@@ -80,12 +107,15 @@ func interact(context: InteractionContext) -> Dictionary:
 		return make_result(false, requirements["message_key"], requirements["message_args"])
 	var input_id: String = _carried_input(context)
 	var input: ScrapItem = _inputs.get(input_id) as ScrapItem
+	if input == null:
+		return make_result(false, "ui.interaction.unavailable")
 	context.inventory.remove(input_id)
 	for output: ScrapItem in _produce(input):
 		context.inventory.add(output.object_id, output.get_item_id())
 	interaction_state_changed.emit(self)
-	return make_result(true, "ui.dismantle.done", {"input": tr(profile.input_item.name_key),
-		"outputs": _output_names(), "value": profile.get_output_value()})
+	var used: ProcessingProfile = get_profile_for(input.get_item_id())
+	return make_result(true, "ui.dismantle.done", {"input": tr(used.input_item.name_key),
+		"outputs": _output_names(used), "value": used.get_output_value()})
 
 
 ## Dismantles an input a staff member carries (not in the player's basket).
@@ -131,7 +161,7 @@ func _produce(input: ScrapItem) -> Array[ScrapItem]:
 	if input.object_id == input_object_id and _prepared_outputs_ready():
 		outputs.assign(output_items)
 	else:
-		for definition: ItemDefinition in profile.outputs:
+		for definition: ItemDefinition in get_profile_for(input.get_item_id()).outputs:
 			_counter += 1
 			var item: ScrapItem = _spawn("%s%d" % [OBJECT_PREFIX, _counter], definition.id)
 			if item != null:
@@ -155,9 +185,15 @@ func _carried_input(context: InteractionContext) -> String:
 	if context.inventory.contains(input_object_id):
 		return input_object_id
 	for entry: Dictionary in context.inventory.get_entries():
-		if entry["item_id"] == profile.input_item.id:
+		if get_profile_for(entry["item_id"]) != null:
 			return entry["object_id"]
 	return ""
+
+
+func _profile_of(input_id: String) -> ProcessingProfile:
+	var input: ScrapItem = _inputs.get(input_id) as ScrapItem
+	var found: ProcessingProfile = get_profile_for(input.get_item_id()) if input != null else null
+	return found if found != null else profile
 
 
 func _prepared_outputs_ready() -> bool:
@@ -171,9 +207,10 @@ func _prepared_outputs_ready() -> bool:
 
 func _spawn(object_id: String, item_id: String) -> ScrapItem:
 	var definition: ItemDefinition
-	for candidate: ItemDefinition in profile.outputs:
-		if candidate.id == item_id:
-			definition = candidate
+	for known: ProcessingProfile in [profile] + extra_profiles:
+		for candidate: ItemDefinition in known.outputs:
+			if candidate.id == item_id:
+				definition = candidate
 	if definition == null or item_scene == null:
 		push_warning("DismantleStation: cannot create '%s'." % item_id)
 		return null
@@ -201,8 +238,8 @@ func _on_output_state_changed(target: Interactable) -> void:
 	item.queue_free()
 
 
-func _output_names() -> String:
+func _output_names(shown: ProcessingProfile = null) -> String:
 	var names: PackedStringArray = []
-	for output: ItemDefinition in profile.outputs:
+	for output: ItemDefinition in (shown if shown != null else profile).outputs:
 		names.append(tr(output.name_key))
 	return " + ".join(names)

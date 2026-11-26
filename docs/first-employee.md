@@ -58,7 +58,16 @@ Seit der Rückmeldung nach dem ersten Spielen bringen Nachbarn gelegentlich defe
 - **Ohne Handkarren:** Juri lässt schwere Teile (Tragegröße ab 3) liegen. Er sagt einmal „Der Träger? Mit diesen Armen? Besorg mir einen Handkarren, dann reden wir.“, und der Notizzettel zeigt „Juri braucht einen Handkarren für das schwere Teil auf der Palette.“ Anderes erledigt er weiter, und der Spieler kann den Träger jederzeit selbst tragen.
 - **Mit gekauftem Handkarren:** Juri holt den Karren selbst von seinem Stellplatz beim Büro („Karrenzeit! Piep piep.“). Dort verschwindet der abgestellte Karren, und Juri schiebt ihn sichtbar vor sich her, mit dem Träger darauf. Er verkauft den Träger an der Theke (20 Cr, 1 Cr Lohn) und stellt den Karren danach zurück. Schwere Teile transportiert er immer allein.
 - Beim Entlassen stellt er den Karren sofort zurück. Der Karren ist Teil des Spielstands (`employee.cart`).
-- Brechstange und Flaschenzug nutzt er noch nicht. Denkbar wären verschlossene Kisten (Brechstange) oder sperrige Lieferungen, die erst angehoben werden müssen (Flaschenzug).
+- Beim Schieben hält er den Griff (der Karren steht 1,45 m vor ihm) und nimmt die Arbeitshaltung mit vorgestreckten Armen ein.
+
+## 4c. Brechstange, vernagelte Kisten und der Toaster (Erweiterung)
+
+- **Vernagelte Kiste** („Jemand hat etwa vierzig Nägel verbraucht.“), geliefert von Benno und Jemand: Ungeöffnet ist sie 4 Cr wert. Mit der Brechstange lässt sie sich direkt vor Ort aufhebeln (halten, 1,6 s). Darin liegen Kupferrohr, Drahtrolle und Schraube (16 Cr), die neben der Kiste landen.
+- **Spieler:** Ohne Brechstange hebt man die Kiste auf wie jedes Teil; der Hinweis nennt die Brechstange. Mit Brechstange wird die Aktion zu „Aufhebeln (halten)“.
+- **Juri:** Ohne Brechstange lässt er die Kiste liegen („Vierzig Nägel. Bloße Hände. Nein.“), und der Notizzettel bittet um eine Brechstange. Mit Brechstange holt er sie selbst vom Gestell beim Büro („Brechstangenzeit. Alle zurücktreten.“) und hält sie sichtbar in der Hand. Er hebelt die Kiste auf (1,5-mal so lange), verkauft den Inhalt und hängt die Brechstange danach zurück.
+- **Ein Werkzeug zur Zeit:** Braucht das nächste Teil ein anderes Werkzeug, bringt er das alte erst zurück. Die Brechstange darf er beim Tragen behalten, den Karren nicht.
+- **Toaster** („Enthält noch eine Scheibe Toast von etwa 1994.“): ein zweites Gerät für den Zerlegetisch. Direkt verkauft bringt er 6 Cr, zerlegt Kupferdraht und Schraube für 11 Cr. Juri zerlegt ihn wie das Radio. Der Zerlegetisch kennt dafür jetzt mehrere Verarbeitungsprofile.
+- Flaschenzug für Juri ist weiterhin offen.
 
 ## 5. Technik
 
@@ -90,5 +99,6 @@ Screenshots `32_staff_at_gate` bis `36_staff_at_counter`.
 - Playtest: Ob sich Handgeld und Lohn wie eine Entscheidung anfühlen oder wie eine Selbstverständlichkeit, und ob Juris Tempo nervt oder beruhigt.
 - Scrappy beobachtet Juri noch nicht bei der Arbeit (Konzept: Scrappy besucht Mitarbeiter). Das ist ein guter nächster Schritt für die Figurenbeziehungen.
 - Keine Erfahrung oder Entwicklung; das feste Rollenprofil genügt laut Kernmatrix für die Kernversion.
+- Tests der Brechstange: `tests/integration/test_staff_crowbar.gd` (4 Tests: Spieler hebelt auf und Inhalt bleibt über Neustart liegen, Juri ohne und mit Brechstange, Toaster).
 - Tests des Handkarrens: `tests/integration/test_staff_cart.gd` (3 Tests: ohne Karren mit Notiz, Karren holen, transportieren, zurückstellen, Neustart und Entlassen mit Karren).
 - Tests der Erweiterung: `tests/integration/test_staff_dismantling.gd` (4 Tests: Spieler zerlegt ein geliefertes Radio, Juri mit und ohne Regel, Gerät allein und Neustart mitten in der Runde).

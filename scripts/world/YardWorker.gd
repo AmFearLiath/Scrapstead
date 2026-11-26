@@ -17,13 +17,20 @@ signal status_changed(status: String)
 signal picked_up(item: ScrapItem)
 ## A trip was sold at the counter.
 signal sold(count: int, total: int, wage: int)
+## He pried a crate open with the crowbar (presentation).
+signal pried_open(crate: ScrapItem)
 ## He took a device apart at the station (presentation, story).
 signal dismantled(input: ScrapItem, outputs: Array)
 ## A one-liner (localization key) for his speech bubble.
 signal remark(line_key: String)
 
 enum Presence { ABSENT, AVAILABLE, HIRED }
-enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING, TO_CART, TO_CART_RETURN }
+enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING, TO_TOOL, TO_TOOL_RETURN,
+	PRYING }
+
+## Tools he can fetch: the handcart (pushed) and the crowbar (in hand).
+const TOOL_CART := "cart"
+const TOOL_CROWBAR := "crowbar"
 
 const PRESENCE_NAMES: PackedStringArray = ["absent", "available", "hired"]
 const STATUS_WORKING := "working"
@@ -38,7 +45,8 @@ const STATUS_COLORS: Dictionary = {"working": Color(0.62, 0.85, 0.5), "waiting":
 	"blocked": Color(0.95, 0.45, 0.35), "paused": Color(0.88, 0.66, 0.23)}
 ## Event -> number of authored variants ("<line_prefix>.<event>.<n>").
 const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale": 1, "paused": 2,
-	"resumed": 2, "dismissed": 1, "refuses": 1, "dismantles": 2, "needs_cart": 1, "takes_cart": 2}
+	"resumed": 2, "dismissed": 1, "refuses": 1, "dismantles": 2, "needs_cart": 1, "takes_cart": 2,
+	"needs_crowbar": 1, "takes_crowbar": 2}
 
 @export var profile: EmployeeProfile
 ## Where he waits to be hired, by the gate.
@@ -65,6 +73,11 @@ const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale
 @export var cart_display: Node3D
 ## Cart model he pushes (instanced in front of him while in use).
 @export var cart_scene: PackedScene
+@export_group("Crowbar")
+## Where he takes and returns the crowbar.
+@export var crowbar_spot: Marker3D
+## The bought crowbar on its rack (hidden while he uses it).
+@export var crowbar_display: Node3D
 
 ## Read by the presentation-only PlayerAnimator.
 var move_speed: float = 2.4
@@ -74,11 +87,14 @@ var _paused: bool = false
 ## Player's rule: take broken devices to the station before selling them.
 var _dismantle_devices: bool = true
 var _upgrades: UpgradeProgress
-## He is pushing the cart.
-var _has_cart: bool = false
+## Tool in use ("", TOOL_CART or TOOL_CROWBAR); one at a time.
+var _tool: String = ""
+## Tool he is on his way to fetch.
+var _tool_target: String = ""
 var _cart_visual: Node3D
-## A heavy item waits on the pallet but the yard owns no cart.
-var _missing_cart: bool = false
+var _crowbar_visual: Node3D
+## A waiting item needs a tool the yard does not own ("" = nothing missing).
+var _missing_tool: String = ""
 ## Waypoint graph: positions and neighbour lists (built on first use).
 var _nodes: Array[Vector3] = []
 var _edges: Array = []
@@ -94,7 +110,7 @@ var _timer: float = 0.0
 var _stuck_timer: float = 0.0
 var _blocked: bool = false
 var _seen: int = 0
-var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0, "dismantled": 0}
+var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0, "dismantled": 0, "opened": 0}
 var _status: String = ""
 var _idle_timer: float = 0.0
 var _refused: Dictionary = {}
@@ -130,20 +146,56 @@ func set_upgrades(upgrades: UpgradeProgress) -> void:
 
 
 func has_cart() -> bool:
-	return _has_cart
+	return _tool == TOOL_CART
+
+
+## Tool in use: "", "cart" or "crowbar".
+func get_tool() -> String:
+	return _tool
+
+
+## Tool a waiting item needs but the yard does not own ("" if none).
+func get_missing_tool() -> String:
+	return _missing_tool if _presence == Presence.HIRED else ""
 
 
 ## True while a heavy item waits that he could only move with a cart.
 func is_missing_cart() -> bool:
-	return _missing_cart and _presence == Presence.HIRED
+	return get_missing_tool() == TOOL_CART
+
+
+## Presentation: working pose while pushing, prying, picking or dismantling.
+func is_holding() -> bool:
+	return _tool == TOOL_CART or _task in [Task.PICKING, Task.DISMANTLING, Task.PRYING]
+
+
+## Tool an item needs before he can handle it ("" = none).
+func tool_needed_for(item: ScrapItem) -> String:
+	if item != null and item.is_openable():
+		return TOOL_CROWBAR
+	if is_heavy(item):
+		return TOOL_CART
+	return ""
+
+
+func _owns_tool(tool: String) -> bool:
+	if _upgrades == null or _tool_spot(tool) == null:
+		return false
+	if tool == TOOL_CART:
+		return _upgrades.is_owned(profile.cart_upgrade)
+	return _upgrades.has_tool(tool)
+
+
+func _tool_spot(tool: String) -> Marker3D:
+	return cart_spot if tool == TOOL_CART else crowbar_spot if tool == TOOL_CROWBAR else null
+
+
+func _tool_display(tool: String) -> Node3D:
+	return cart_display if tool == TOOL_CART else crowbar_display if tool == TOOL_CROWBAR else null
 
 
 func is_heavy(item: ScrapItem) -> bool:
 	return item != null and item.definition != null and item.definition.carry_size >= profile.heavy_carry_size
-
-
-func _owns_cart() -> bool:
-	return _upgrades != null and _upgrades.is_owned(profile.cart_upgrade) and cart_spot != null
 
 
 func is_hired() -> bool:
@@ -163,7 +215,7 @@ func get_status() -> String:
 	if _blocked:
 		return STATUS_BLOCKED
 	if _task in [Task.TO_ITEM, Task.PICKING, Task.TO_COUNTER, Task.SELLING, Task.TO_STATION, Task.DISMANTLING,
-			Task.TO_CART, Task.TO_CART_RETURN]:
+			Task.TO_TOOL, Task.TO_TOOL_RETURN, Task.PRYING]:
 		return STATUS_WORKING
 	return STATUS_WAITING
 
@@ -250,7 +302,7 @@ func dismiss() -> Dictionary:
 	if _presence != Presence.HIRED:
 		return Interactable.make_result(false, "ui.interaction.unavailable")
 	_return_carried_items()
-	_set_cart(false)
+	_set_tool("")
 	_paused = false
 	_blocked = false
 	_set_presence(Presence.AVAILABLE)
@@ -274,7 +326,7 @@ func on_delivery_arrived() -> void:
 
 func get_save_state() -> Dictionary:
 	var data: Dictionary = {"presence": PRESENCE_NAMES[_presence], "seen": _seen, "paused": _paused,
-		"dismantle": _dismantle_devices, "cart": _has_cart, "stats": _stats.duplicate()}
+		"dismantle": _dismantle_devices, "tool": _tool, "stats": _stats.duplicate()}
 	if _presence != Presence.ABSENT:
 		data["position"] = [snappedf(global_position.x, 0.001), snappedf(global_position.y, 0.001),
 			snappedf(global_position.z, 0.001)]
@@ -303,7 +355,8 @@ func apply_save_state(data: Dictionary) -> void:
 	_presence = presence as Presence
 	_paused = bool(data.get("paused", false)) and _presence == Presence.HIRED
 	_dismantle_devices = bool(data.get("dismantle", true))
-	_set_cart(bool(data.get("cart", false)) and _presence == Presence.HIRED)
+	var saved_tool: String = str(data.get("tool", TOOL_CART if bool(data.get("cart", false)) else ""))
+	_set_tool(saved_tool if _presence == Presence.HIRED and saved_tool in [TOOL_CART, TOOL_CROWBAR] else "")
 	var saved_position: Variant = data.get("position")
 	if typeof(saved_position) == TYPE_ARRAY and saved_position.size() == 3:
 		global_position = Vector3(saved_position[0], saved_position[1], saved_position[2])
@@ -331,7 +384,7 @@ func _physics_process(delta: float) -> void:
 	if _task == Task.TO_REST and _presence == Presence.HIRED and not _paused and _find_item() != null:
 		_next_task()
 	match _task:
-		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION, Task.TO_CART, Task.TO_CART_RETURN:
+		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION, Task.TO_TOOL, Task.TO_TOOL_RETURN:
 			target_velocity = _follow_path(delta)
 			if _path.is_empty():
 				_arrived()
@@ -347,6 +400,10 @@ func _physics_process(delta: float) -> void:
 			_timer -= delta
 			if _timer <= 0.0:
 				_finish_dismantling()
+		Task.PRYING:
+			_timer -= delta
+			if _timer <= 0.0:
+				_finish_prying()
 		Task.IDLE:
 			_idle(delta)
 	var horizontal := Vector3(velocity.x, 0, velocity.z).move_toward(target_velocity, 12.0 * delta)
@@ -355,9 +412,10 @@ func _physics_process(delta: float) -> void:
 	velocity.y = 0.0 if is_on_floor() else velocity.y - _gravity * delta
 	move_and_slide()
 	_face(delta, horizontal)
-	if _has_cart and cart_display != null and cart_display.visible:
-		# The catalog shows bought wares; the cart is with him right now.
-		cart_display.visible = false
+	var display: Node3D = _tool_display(_tool)
+	if display != null and display.visible:
+		# The catalog shows bought wares; this one is with him right now.
+		display.visible = false
 	_update_status()
 
 
@@ -382,15 +440,21 @@ func _next_task() -> void:
 		return
 	if device == null and not _carries_heavy() and _carrying.size() < profile.carry_capacity:
 		var item: ScrapItem = _find_item(not _carrying.is_empty())
-		if item != null and is_heavy(item) and not _has_cart:
+		var needed: String = tool_needed_for(item)
+		if item != null and needed != _tool and (needed != "" or _tool == TOOL_CART):
+			# One tool at a time: park the wrong one, then fetch the right one.
+			if _tool != "":
+				_go_return_tool()
+				return
+			_tool_target = needed
 			_arrive_distance = 0.25
-			_path = _path_to(cart_spot.global_position)
-			_task = Task.TO_CART
-			_say("takes_cart")
+			_path = _path_to(_tool_spot(needed).global_position)
+			_task = Task.TO_TOOL
+			_say("takes_" + needed)
 			return
 		if item != null:
 			_target = item
-			_arrive_distance = 0.55 if not _has_cart else 0.9
+			_arrive_distance = 0.9 if _tool == TOOL_CART else 0.55
 			_path = _path_to(item.global_position)
 			_task = Task.TO_ITEM
 			return
@@ -399,12 +463,16 @@ func _next_task() -> void:
 		_path = _path_to(_marker_position(counter_spot))
 		_task = Task.TO_COUNTER
 		return
-	if _has_cart:
-		_arrive_distance = 0.25
-		_path = _path_to(cart_spot.global_position)
-		_task = Task.TO_CART_RETURN
+	if _tool != "":
+		_go_return_tool()
 		return
 	_walk_to(_marker_position(rest_spot), Task.TO_REST)
+
+
+func _go_return_tool() -> void:
+	_arrive_distance = 0.25
+	_path = _path_to(_tool_spot(_tool).global_position)
+	_task = Task.TO_TOOL_RETURN
 
 
 func _walk_to(point: Vector3, task: Task) -> void:
@@ -416,7 +484,10 @@ func _walk_to(point: Vector3, task: Task) -> void:
 func _arrived() -> void:
 	match _task:
 		Task.TO_ITEM:
-			if _is_workable(_target):
+			if _is_workable(_target) and _target.is_openable():
+				_task = Task.PRYING
+				_timer = _target.definition.open_seconds * profile.tool_time_factor
+			elif _is_workable(_target):
 				_task = Task.PICKING
 				_timer = profile.pick_seconds
 			else:
@@ -424,15 +495,16 @@ func _arrived() -> void:
 		Task.TO_COUNTER:
 			_task = Task.SELLING
 			_timer = profile.sell_seconds
-		Task.TO_CART:
-			_set_cart(true)
+		Task.TO_TOOL:
+			_set_tool(_tool_target)
 			_next_task()
-		Task.TO_CART_RETURN:
-			_set_cart(false)
+		Task.TO_TOOL_RETURN:
+			_set_tool("")
 			_next_task()
 		Task.TO_STATION:
 			_task = Task.DISMANTLING
-			_timer = dismantle_station.profile.seconds * profile.tool_time_factor
+			var device: ScrapItem = _carried_device()
+			_timer = dismantle_station.get_seconds_for(device) * profile.tool_time_factor
 			_say("dismantles")
 		Task.TO_REST:
 			_task = Task.IDLE
@@ -462,12 +534,21 @@ func _finish_dismantling() -> void:
 	_next_task()
 
 
-func _set_missing_cart(missing: bool) -> void:
-	if missing == _missing_cart:
+## Opens the crate he stands at; its contents land on the pallet.
+func _finish_prying() -> void:
+	if _is_workable(_target) and _target.is_openable() and _tool == TOOL_CROWBAR:
+		_target.pry_open()
+		_stats["opened"] += 1
+		pried_open.emit(_target)
+	_next_task()
+
+
+func _set_missing_tool(missing: String) -> void:
+	if missing == _missing_tool:
 		return
-	_missing_cart = missing
-	if missing:
-		_say("needs_cart")
+	_missing_tool = missing
+	if not missing.is_empty():
+		_say("needs_" + missing)
 	status_changed.emit(_status)
 
 
@@ -478,20 +559,52 @@ func _carries_heavy() -> bool:
 	return false
 
 
-## Takes or parks the cart (state and the visible model).
-func _set_cart(with_cart: bool) -> void:
-	_has_cart = with_cart
-	if cart_display != null:
-		cart_display.visible = not with_cart and _owns_cart()
-	if with_cart and _cart_visual == null and cart_scene != null:
+## Takes or parks a tool (state and the visible models).
+func _set_tool(tool: String) -> void:
+	_tool = tool
+	for other: String in [TOOL_CART, TOOL_CROWBAR]:
+		var display: Node3D = _tool_display(other)
+		if display != null:
+			display.visible = other != tool and _owns_tool(other)
+	if tool == TOOL_CART and _cart_visual == null and cart_scene != null:
 		_cart_visual = cart_scene.instantiate()
 		_cart_visual.name = "PushedCart"
 		_visual_root.add_child(_cart_visual)
-		_cart_visual.position = Vector3(0, 0, 0.85)
+		# The handle sits 1.1 m behind the cart's centre: put it in his hands.
+		_cart_visual.position = Vector3(0, 0, 1.45)
 		_cart_visual.rotation.y = PI
 	if _cart_visual != null:
-		_cart_visual.visible = with_cart
+		_cart_visual.visible = tool == TOOL_CART
+	if tool == TOOL_CROWBAR and _crowbar_visual == null:
+		_crowbar_visual = _make_crowbar_visual()
+	if _crowbar_visual != null:
+		_crowbar_visual.visible = tool == TOOL_CROWBAR
 	_update_cart_load()
+
+
+## A red crowbar in his right glove (presentation only).
+func _make_crowbar_visual() -> Node3D:
+	var hand: Node3D = get_node_or_null("VisualRoot/PlaceholderModel/Torso/ArmR") as Node3D
+	var parent: Node3D = hand if hand != null else _visual_root
+	var material := StandardMaterial3D.new()
+	material.albedo_color = Color(0.72, 0.25, 0.18)
+	var bar := MeshInstance3D.new()
+	bar.name = "HeldCrowbar"
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3(0.05, 0.75, 0.05)
+	mesh.material = material
+	bar.mesh = mesh
+	parent.add_child(bar)
+	bar.position = Vector3(0, -0.55, 0.12) if hand != null else Vector3(0.3, 0.9, 0.2)
+	bar.rotation = Vector3(1.2, 0, 0)
+	var claw := MeshInstance3D.new()
+	var claw_mesh := BoxMesh.new()
+	claw_mesh.size = Vector3(0.05, 0.05, 0.16)
+	claw_mesh.material = material
+	claw.mesh = claw_mesh
+	bar.add_child(claw)
+	claw.position = Vector3(0, 0.37, 0.06)
+	return bar
 
 
 ## Heavy load lies visibly on the cart (presentation only).
@@ -571,7 +684,7 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 		return null
 	var best: ScrapItem
 	var best_distance: float = INF
-	var missing_cart: bool = false
+	var missing_tool: String = ""
 	for target: Variant in _objects.values():
 		var item: ScrapItem = target as ScrapItem
 		if not _is_workable(item):
@@ -581,16 +694,17 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 				_refused[item.object_id] = true
 				_say("refuses")
 			continue
-		if is_heavy(item) and not _owns_cart():
-			missing_cart = true
+		var needed: String = tool_needed_for(item)
+		if not needed.is_empty() and not _owns_tool(needed):
+			missing_tool = needed
 			continue
-		if skip_devices and (item.definition.category == profile.device_category or is_heavy(item)):
+		if skip_devices and (item.definition.category == profile.device_category or not needed.is_empty()):
 			continue
 		var distance: float = item.global_position.distance_to(global_position)
 		if distance < best_distance:
 			best = item
 			best_distance = distance
-	_set_missing_cart(missing_cart)
+	_set_missing_tool(missing_tool)
 	return best
 
 
@@ -666,6 +780,9 @@ func _build_graph() -> void:
 		var cart_branch: Array[Vector3] = _marker_points(cart_route_root)
 		cart_branch.append(cart_spot.global_position)
 		_add_chain(cart_branch, _nearest_node(cart_branch[0], 0, main.size()))
+	if crowbar_spot != null:
+		var rack: Array[Vector3] = [crowbar_spot.global_position]
+		_add_chain(rack, _nearest_node(rack[0]))
 
 
 func _add_chain(points: Array[Vector3], join: int) -> void:
@@ -739,7 +856,7 @@ func _face(delta: float, horizontal: Vector3) -> void:
 	var target_yaw: float = _visual_root.rotation.y
 	if horizontal.length() > 0.3:
 		target_yaw = atan2(horizontal.x, horizontal.z)
-	elif _task in [Task.PICKING] and is_instance_valid(_target):
+	elif _task in [Task.PICKING, Task.PRYING] and is_instance_valid(_target):
 		var to_target: Vector3 = _target.global_position - global_position
 		target_yaw = atan2(to_target.x, to_target.z)
 	elif _task == Task.SELLING and counter_spot != null:
