@@ -830,3 +830,16 @@ Referenz: [P2-Spezifikation](p2-arrival-and-scrappy.md).
 - Die Lieferungen sind als erste delegierbare Aufgabe für P3a gedacht.
 
 Referenz: [Anlieferungen](deliveries.md).
+
+## 26.11.2026 — Erster Mitarbeiter: Juri trägt die Palette zur Theke (P3a)
+
+**Beschluss (autonome Entwicklungsphase, MVP-Plan P3a):** Die erste delegierte Tätigkeit ist das Tragen und Verkaufen von losem Schrott von der Abladepalette.
+
+- Figur: Juri, Bennos ehemaliger Lehrling. Er taucht nach der zweiten Anlieferung am Tor auf (Rekrutierung über persönliche Begegnung).
+- Kosten: 10 Cr Handgeld einmalig und 1 Cr Lohn pro verkauftem Teil, direkt vom Erlös. Er kann nie mehr kosten, als er einbringt.
+- Arbeitsbereich ist die Palette. Was der Spieler dort ablegt, wird mitverkauft. Wertvolles lässt Juri liegen.
+- Status arbeitet/wartet/kommt nicht durch/Pause. Pause und Entlassen jederzeit möglich; Entlassen mit Rückfrage.
+- Feste Route mit Wegpunkten statt Navigationsnetz. Keine Kollisionsebene; nach kurzem Hängenbleiben schiebt er sich durch.
+- Spielstand Version 5 mit expliziter Migration aus Version 4.
+
+Referenz: [Erster Mitarbeiter](first-employee.md).

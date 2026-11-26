@@ -122,6 +122,7 @@ func create_initial_state() -> Dictionary:
 		"story": {"flags": [], "key_items": [], "spoken_once": []},
 		"scrappy": {"state": "dormant", "follow": true},
 		"deliveries": {},
+		"employee": {},
 	}
 
 

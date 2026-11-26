@@ -20,6 +20,8 @@ events = {
 "sale": {"chance": 0.6, "cooldown": 40.0, "count": 4},
 "sale_big": {"chance": 1.0, "cooldown": 60.0, "count": 2},
 "search": {"chance": 0.35, "cooldown": 40.0, "count": 3},
+"staff_dismissed": {"count": 1, "cooldown": 30.0},
+"staff_hired": {"count": 1, "once": true, "priority": true},
 "suggest_entrance": {"count": 1, "once": true, "priority": true},
 "wait": {"count": 3, "priority": true},
 "wake": {"count": 4, "once": true, "priority": true, "sequence": true}

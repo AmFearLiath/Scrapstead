@@ -14,12 +14,15 @@ extends Node3D
 @export var world_objects_root: Node3D
 ## Neighbors' drop-off spot (scripts/world/ScrapDeliveries.gd); optional.
 @export var deliveries: ScrapDeliveries
+## The first employee (scripts/world/YardWorker.gd, P3a); optional.
+@export var worker: YardWorker
 @export_group("HUD")
 @export var interaction_prompt: Control
 @export var feedback_toast: Control
 @export var inspect_panel: Control
 @export var sell_panel: Control
 @export var catalog_panel: Control
+@export var staff_panel: Control
 @export var pause_menu: Control
 @export var economy_hud: Control
 @export var controls_hint: Label
@@ -36,6 +39,8 @@ extends Node3D
 @export var letter_panel: Control
 @export var task_notes: Control
 @export var speech_bubble: Control
+## Speech bubble above the employee.
+@export var staff_bubble: Control
 @export_group("Data")
 @export var item_catalog: ItemCatalog
 @export var upgrade_catalog: UpgradeCatalog
@@ -73,6 +78,8 @@ func _ready() -> void:
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
+	# The employee claims the items he carries before the basket is checked.
+	_setup_worker(state.get("employee", {}))
 	_restore_inventory(state.get("inventory", []))
 	# Steps 5-7: camera snaps to the anchor, player gets its movement reference.
 	camera_rig.set_follow_target(player.get_node("CameraAnchor"))
@@ -97,6 +104,9 @@ func _ready() -> void:
 	sell_panel.closed.connect(_on_sell_panel_closed)
 	catalog_panel.action_result.connect(_show_result)
 	catalog_panel.closed.connect(_close_modal)
+	if staff_panel != null:
+		staff_panel.action_result.connect(_on_staff_result)
+		staff_panel.closed.connect(_close_modal)
 	pause_menu.resume_requested.connect(_close_pause_menu)
 	pause_menu.save_requested.connect(func() -> void: save_game())
 	pause_menu.save_and_exit_requested.connect(_on_save_and_exit)
@@ -162,6 +172,7 @@ func create_snapshot() -> Dictionary:
 		"story": _story.to_save_data(),
 		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
 		"deliveries": deliveries.get_save_state() if deliveries != null else {},
+		"employee": worker.get_save_state() if worker != null else {},
 	}
 
 
@@ -206,6 +217,10 @@ func get_upgrades() -> UpgradeProgress:
 
 func get_deliveries() -> ScrapDeliveries:
 	return deliveries
+
+
+func get_worker() -> YardWorker:
+	return worker
 
 
 func get_story() -> StoryState:
@@ -293,7 +308,8 @@ func _restore_inventory(saved_ids: Array) -> void:
 			item.set_state(ScrapItem.State.CARRIED)
 	for target: Interactable in _objects.values():
 		var item := target as ScrapItem
-		if item != null and item.get_state() == ScrapItem.State.CARRIED and not _inventory.contains(item.object_id):
+		if item != null and item.get_state() == ScrapItem.State.CARRIED and not _inventory.contains(item.object_id) \
+				and not (worker != null and worker.is_carrying(item.object_id)):
 			_note("'%s' was carried but not in the inventory, returned to the yard" % item.object_id)
 			item.set_state(ScrapItem.State.IN_WORLD)
 
@@ -324,6 +340,10 @@ func _on_interaction_finished(target_id: String, result: Dictionary) -> void:
 		"catalog":
 			_open_modal()
 			catalog_panel.open(data["station"])
+		"staff":
+			if staff_panel != null:
+				_open_modal()
+				staff_panel.open(data["worker"])
 
 
 func _show_result(result: Dictionary) -> void:
@@ -410,9 +430,13 @@ func _debug_extra_lines() -> String:
 	if deliveries != null:
 		delivery_line = "%s, next in %.0f s, waiting %d" % ["open" if deliveries.is_unlocked() else "locked",
 			deliveries.get_seconds_until_next(), deliveries.get_waiting_count()]
-	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nRestore notes: %s" % [
+	var staff_line: String = "-"
+	if worker != null:
+		staff_line = "%s %s, carrying %d, sold %d items" % [YardWorker.PRESENCE_NAMES[worker.get_presence()],
+			worker.get_status(), worker.get_carried_items().size(), worker.get_stats()["items"]]
+	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nStaff: %s\nRestore notes: %s" % [
 		_wallet.get_balance(), _inventory.get_used_slots(), _inventory.get_capacity(),
-		", ".join(_upgrades.to_save_data()), delivery_line,
+		", ".join(_upgrades.to_save_data()), delivery_line, staff_line,
 		", ".join(_restore_notes) if not _restore_notes.is_empty() else "-"]
 
 
@@ -453,6 +477,9 @@ func _present_interaction(target_id: String, result: Dictionary) -> void:
 			return
 		"inspect":
 			_sound("paper")
+			return
+		"staff":
+			_sound("page")
 			return
 	if target == null:
 		return
@@ -565,6 +592,8 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 		story_director.setup(_story, scrappy, speech_bubble, task_notes, sound_fx, _upgrades, player)
 		if deliveries != null:
 			story_director.bind_deliveries(deliveries)
+		if worker != null:
+			story_director.bind_worker(worker)
 	if letter_panel != null:
 		letter_panel.closed.connect(_on_letter_closed)
 
@@ -693,6 +722,8 @@ func _on_delivery_item_spawned(item: ScrapItem) -> void:
 func _on_delivery_arrived(entry: Dictionary, items: Array) -> void:
 	feedback_toast.show_message(tr("ui.delivery.arrived").format({
 		"sender": tr(str(entry.get("sender", ""))), "note": tr(str(entry.get("note", "")))}))
+	if worker != null:
+		worker.on_delivery_arrived()
 	_sound("van_horn", -8.0)
 	get_tree().create_timer(0.6).timeout.connect(_sound.bind("delivery", -4.0))
 	for item: Variant in items:
@@ -700,3 +731,86 @@ func _on_delivery_arrived(entry: Dictionary, items: Array) -> void:
 			_dust((item as Node3D).global_position, 6, 0.14)
 	if story_director != null:
 		story_director.on_delivery()
+
+
+# --- The first employee (P3a) ------------------------------------------------
+
+func _setup_worker(saved: Dictionary) -> void:
+	if worker == null:
+		return
+	worker.setup(_wallet, _objects, deliveries)
+	worker.apply_save_state(saved)
+	worker.picked_up.connect(_on_worker_picked_up)
+	worker.sold.connect(_on_worker_sold)
+	worker.remark.connect(_on_worker_remark)
+	worker.presence_changed.connect(_on_worker_presence_changed)
+	var animator: Node = worker.get_node_or_null("Animator")
+	if animator != null:
+		animator.setup(worker, null, worker.get_node("VisualRoot/PlaceholderModel"))
+		animator.footstep.connect(func(_at: Vector3) -> void: _sound("step", -16.0))
+		_update_worker_load()
+	if staff_bubble != null:
+		staff_bubble.setup(camera_rig.get_camera(), worker.get_node("SpeechAnchor"))
+
+
+func _update_worker_load() -> void:
+	var animator: Node = worker.get_node_or_null("Animator")
+	if animator != null and animator.has_method("set_load"):
+		animator.set_load(float(worker.get_carried_items().size()) / float(maxi(worker.profile.carry_capacity, 1)))
+
+
+func _on_worker_picked_up(item: ScrapItem) -> void:
+	var animator: Node = worker.get_node_or_null("Animator")
+	if animator != null:
+		animator.play_pickup()
+	_sound(item.definition.pickup_sound, -8.0)
+	if fx != null and animator != null:
+		fx.fly_to(item.get_node("VisualRoot"), animator.get_basket_position, animator.bump_basket)
+	_update_worker_load()
+	if story_director != null:
+		story_director.refresh_notes()
+
+
+func _on_worker_sold(count: int, total: int, wage: int) -> void:
+	_update_worker_load()
+	_sound("kaching", -7.0)
+	if fx != null and worker.counter_spot != null:
+		var counter: Interactable = _first_of_type("SellStation")
+		fx.coins(counter.get_interaction_point() if counter != null else worker.counter_spot.global_position,
+			2 + total / 4)
+	feedback_toast.show_message(tr("ui.staff.sold").format({"name": worker.get_display_name(), "count": count,
+		"total": total, "wage": wage, "net": total - wage}), true)
+
+
+func _on_worker_remark(line_key: String) -> void:
+	# A new remark replaces an unfinished one; idle chatter never interrupts.
+	if staff_bubble == null or not worker.visible:
+		return
+	if line_key.contains(".idle.") and staff_bubble.is_speaking():
+		return
+	staff_bubble.say(tr(line_key))
+
+
+func _on_worker_presence_changed(presence: YardWorker.Presence) -> void:
+	_dust(worker.global_position, 8, 0.18)
+	_update_worker_load()
+	if presence == YardWorker.Presence.AVAILABLE and not _story.has_flag(StoryDirector.FLAG_FIRST_HIRE):
+		feedback_toast.show_message(tr("ui.staff.appeared").format({"name": worker.get_display_name()}))
+
+
+func _on_staff_result(result: Dictionary) -> void:
+	_show_result(result)
+	if not result.get("success", false):
+		_sound("nope", -4.0)
+		return
+	match result.get("message_key", ""):
+		"ui.staff.hired":
+			_sound("kaching", -6.0)
+			if story_director != null:
+				story_director.on_staff_hired()
+		"ui.staff.dismissed":
+			_sound("thud", -6.0)
+			if story_director != null:
+				story_director.on_staff_dismissed()
+		_:
+			_sound("switch", -4.0)

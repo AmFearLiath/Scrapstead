@@ -68,4 +68,4 @@ Screenshots: `30_delivery_arrived`, `31_delivery_pickup`.
 
 - Playtest: Ob 150 s und 11 Cr sich gut anfühlen, und ob die Meldung lang genug sichtbar ist.
 - Ein sichtbarer Lieferwagen oder eine Figur am Tor (bisher nur Hupe und Staub).
-- Diese Lieferungen sind die vorgesehene erste Aufgabe für den ersten Mitarbeiter in P3a: Lieferteile vom Tor zur Verkaufsstelle tragen.
+- Umgesetzt: Juri, der erste Mitarbeiter, trägt die Lieferteile zur Theke ([Erster Mitarbeiter](first-employee.md)).

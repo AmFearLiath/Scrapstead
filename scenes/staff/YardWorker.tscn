@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/YardWorker.gd" id="1_worker"]
+[ext_resource type="Resource" path="res://data/employees/juri.tres" id="2_profile"]
+[ext_resource type="PackedScene" path="res://assets/models/juri_model.glb" id="3_model"]
+[ext_resource type="Script" path="res://scripts/world/YardWorkerTalk.gd" id="4_talk"]
+[ext_resource type="Script" path="res://scripts/player/PlayerAnimator.gd" id="5_animator"]
+
+[sub_resource type="CapsuleShape3D" id="body_shape"]
+radius = 0.22
+height = 1.7
+
+[sub_resource type="SphereShape3D" id="talk_shape"]
+radius = 0.5
+
+[node name="YardWorker" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_worker")
+profile = ExtResource("2_profile")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("body_shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="PlaceholderModel" parent="VisualRoot" instance=ExtResource("3_model")]
+
+[node name="SpeechAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+
+[node name="StatusLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12, 0)
+pixel_size = 0.0075
+billboard = 1
+no_depth_test = true
+modulate = Color(0.949, 0.902, 0.812, 1)
+outline_modulate = Color(0.17, 0.13, 0.1, 1)
+outline_size = 12
+font_size = 44
+
+[node name="Talk" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_talk")
+object_id = "staff_juri"
+action_key = "ui.action.talk"
+highlight_radius = 0.45
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Talk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("talk_shape")
+
+[node name="Animator" type="Node" parent="."]
+script = ExtResource("5_animator")

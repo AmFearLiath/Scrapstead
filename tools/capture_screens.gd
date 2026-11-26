@@ -96,6 +96,33 @@ func _p2_shots(scene: Node, player: Node3D) -> void:
 	player.place(Vector3(6.2, 0.1, -3.1), 0.3)
 	await _frames(120)
 	await _shot("31_delivery_pickup")
+	await _staff_shots(scene, player)
+
+
+## P3a: Juri waits at the gate, the staff panel, Juri at work.
+func _staff_shots(scene: Node, player: Node3D) -> void:
+	var deliveries: ScrapDeliveries = scene.get_deliveries()
+	for item: ScrapItem in deliveries.get_live_items():
+		if item.get_state() == ScrapItem.State.IN_WORLD:
+			item.set_state(ScrapItem.State.SOLD)
+	deliveries.deliver_next()
+	var worker: YardWorker = scene.get_worker()
+	player.place(Vector3(8.4, 0.1, -2.6), -2.2)
+	await _frames(150)
+	await _shot("32_staff_at_gate")
+	var talk: YardWorkerTalk = worker.get_node("Talk")
+	scene._on_interaction_finished(talk.object_id, talk.interact(scene._context))
+	await _frames(20)
+	await _shot("33_staff_panel")
+	scene.get_node("HUD/StaffPanel").get_node("%PrimaryButton").pressed.emit()
+	await _frames(20)
+	await _shot("34_staff_hired_panel")
+	scene.get_node("HUD/StaffPanel").close()
+	player.place(Vector3(9.6, 0.1, -6.2), 0.6)
+	await _frames(300)
+	await _shot("35_staff_working")
+	await _frames(240)
+	await _shot("36_staff_at_counter")
 
 
 ## P1 sequence: carried items, salvage, sell panel, upgrade panel, pause menu.

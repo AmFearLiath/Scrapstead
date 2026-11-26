@@ -464,6 +464,80 @@ def build_player():
     return root
 
 
+# --- Juri, the first employee ------------------------------------------------------
+
+def build_juri():
+    """Juri, Benno's former apprentice: lanky, beanie with a bobble, a hoodie
+    one size too big, headphones around the neck, sneakers with red laces and
+    a wooden crate on a back frame. Faces -Y (Godot +Z). Height about 1.85 m.
+
+    Same pivoted groups as the player model (LegL/LegR, Torso with Head,
+    ArmL/ArmR, Basket with BasketFill), so PlayerAnimator can move him."""
+    kit.seed(131)
+    root = kit.root("JuriModel")
+    hip_z = 0.66
+    for side, x in (("L", -0.11), ("R", 0.11)):
+        leg = group(f"Leg{side}", location=(x, 0, hip_z), parent=root)
+        box(f"Shoe{side}", (0, -0.05, 0.06 - hip_z), (0.15, 0.29, 0.12), "cream", parent=leg, bevel=0.04)
+        box(f"Sole{side}", (0, -0.05, 0.015 - hip_z), (0.16, 0.3, 0.03), "red", parent=leg, bevel=0.01)
+        box(f"Lace{side}", (0, -0.14, 0.11 - hip_z), (0.08, 0.06, 0.02), "red", parent=leg, bevel=0.005)
+        box(f"Shin{side}", (0, 0.0, 0.38 - hip_z), (0.13, 0.14, 0.56), "steel", parent=leg, bevel=0.04)
+        if side == "R":
+            patch("KneeRip", (0, -0.075, 0.42 - hip_z), (0.08, 0.06), "cream", parent=leg, rivets=0)
+    torso = group("Torso", location=(0, 0, hip_z), parent=root)
+    box("Hoodie", (0, 0, 0.94 - hip_z), (0.44, 0.3, 0.6), "green", parent=torso, bevel=0.12)
+    box("HoodieHem", (0, 0, 0.66 - hip_z), (0.46, 0.32, 0.07), "moss", parent=torso, bevel=0.03)
+    box("Pouch", (0, -0.16, 0.82 - hip_z), (0.26, 0.02, 0.14), "moss", parent=torso, bevel=0.02)
+    box("Logo", (0, -0.155, 1.02 - hip_z), (0.12, 0.01, 0.08), "mustard", parent=torso, bevel=0.005,
+        rotation=(0, 6, 0))
+    for side, x in (("L", -0.05), ("R", 0.05)):
+        cylinder(f"String{side}", (x, -0.16, 1.1 - hip_z), 0.008, 0.16, "cream", vertices=6, parent=torso)
+    box("Hood", (0, 0.13, 1.2 - hip_z), (0.36, 0.12, 0.14), "green", parent=torso, bevel=0.05)
+    shoulder_z = 1.18 - hip_z
+    for side, x, angle in (("L", -0.28, 9), ("R", 0.28, -9)):
+        arm = group(f"Arm{side}", location=(x, 0, shoulder_z), rotation=(0, angle, 0), parent=torso)
+        box(f"Sleeve{side}", (0, 0.0, -0.24), (0.12, 0.13, 0.5), "green", parent=arm, bevel=0.05)
+        box(f"Cuff{side}", (0, 0.0, -0.5), (0.13, 0.14, 0.06), "moss", parent=arm, bevel=0.02)
+        sphere(f"Glove{side}", (0, -0.02, -0.57), 0.08, "mustard", parent=arm, scale=(1, 1, 1.1))
+    neck_z = 1.26 - hip_z
+    head = group("Head", location=(0, 0, neck_z), parent=torso)
+    hz = -1.26
+    torus("Headphones", (0, 0.0, 1.24 + hz), 0.15, 0.025, "ink", parent=head, rotation=(0, 0, 0))
+    for side, x in (("L", -0.15), ("R", 0.15)):
+        cylinder(f"Earcup{side}", (x, -0.02, 1.24 + hz), 0.055, 0.05, "plum", vertices=10, parent=head,
+                 rotation=(0, 90, 0))
+    sphere("Skull", (0, -0.01, 1.47 + hz), 0.21, "skin", segments=14, rings=8, parent=head, scale=(0.95, 0.95, 1.08))
+    sphere("Nose", (0, -0.205, 1.44 + hz), 0.045, "skin", parent=head, scale=(1, 1, 1.3))
+    for side, x in (("L", -0.075), ("R", 0.075)):
+        sphere(f"Eye{side}", (x, -0.19, 1.51 + hz), 0.024, "ink", parent=head)
+        box(f"Brow{side}", (x, -0.2, 1.555 + hz), (0.07, 0.02, 0.018), "wood_dark", parent=head, bevel=0.006,
+            rotation=(0, 12 if side == "L" else -8, 0))
+        for index in range(2):
+            sphere(f"Freckle{side}{index}", (x * 1.25 + index * 0.025 - 0.012, -0.195, 1.45 + hz), 0.009,
+                   "rust_light", parent=head)
+    box("Grin", (0.02, -0.2, 1.39 + hz), (0.09, 0.02, 0.018), "ink", parent=head, bevel=0.006, rotation=(0, -8, 0))
+    sphere("EarL", (-0.205, 0, 1.46 + hz), 0.045, "skin", parent=head)
+    sphere("EarR", (0.205, 0, 1.46 + hz), 0.045, "skin", parent=head)
+    sphere("Beanie", (0, 0.02, 1.64 + hz), 0.215, "plum", segments=14, rings=8, parent=head, scale=(1.03, 1.03, 0.78))
+    torus("BeanieRim", (0, 0.02, 1.595 + hz), 0.2, 0.035, "plum", parent=head)
+    sphere("Bobble", (0.03, 0.05, 1.83 + hz), 0.065, "mustard", parent=head)
+    box("Fringe", (-0.07, -0.17, 1.6 + hz), (0.14, 0.05, 0.05), "wood", parent=head, bevel=0.015,
+        rotation=(0, 0, -14))
+    basket = group("Basket", location=(0, 0.25, 1.0 - hip_z), parent=torso)
+    for side, x in (("L", -0.18), ("R", 0.18)):
+        box(f"Frame{side}", (x, 0.0, 0.0), (0.04, 0.04, 0.62), "wood_dark", parent=basket, bevel=0.01)
+    box("CrateBody", (0, 0.04, -0.02), (0.4, 0.26, 0.36), "wood_light", parent=basket, bevel=0.03, jitter=0.01)
+    for index in range(3):
+        box(f"Slat{index}", (0, 0.175, -0.14 + index * 0.12), (0.42, 0.02, 0.05), "wood", parent=basket,
+            bevel=0.01)
+    box("Stencil", (0, 0.19, -0.02), (0.18, 0.005, 0.06), "red", parent=basket, bevel=0.0)
+    fill = group("BasketFill", location=(0, 0.04, -0.12), parent=basket)
+    box("FillCore", (0, 0, 0.22), (0.34, 0.2, 0.42), "rust", parent=fill, bevel=0.04)
+    cylinder("FillPipe", (-0.07, 0.02, 0.48), 0.03, 0.36, "teal", vertices=8, parent=fill, rotation=(-14, 20, 0))
+    torus("FillWire", (0.06, 0.0, 0.46), 0.07, 0.016, "rust_light", parent=fill, rotation=(70, 0, 0))
+    return root
+
+
 # --- Notice board at the entrance --------------------------------------------------
 
 def build_notice_board():
@@ -502,6 +576,7 @@ ASSETS = {
     "workshop_shed": (build_workshop_shed, {"focus": (0, 0, 1.8), "ortho_scale": 12.0}),
     "sales_kiosk": (build_sales_kiosk, {"focus": (0, 0, 1.3), "ortho_scale": 6.0}),
     "player_model": (build_player, {"focus": (0, 0, 0.85), "ortho_scale": 2.2}),
+    "juri_model": (build_juri, {"focus": (0, 0, 0.92), "ortho_scale": 2.3}),
     "notice_board": (build_notice_board, {"focus": (0, 0, 1.1), "ortho_scale": 2.8}),
 }
 

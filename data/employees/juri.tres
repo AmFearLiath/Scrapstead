@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EmployeeProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/EmployeeProfile.gd" id="1_profile"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "juri"
+name_key = "staff.juri.name"
+role_key = "staff.juri.role"
+description_key = "staff.juri.description"
+hire_fee = 10
+wage_per_item = 1
+allowed_category = "loose_scrap"
+carry_capacity = 2
+move_speed = 2.4
+pick_seconds = 0.6
+sell_seconds = 0.9
+work_radius = 1.7
+appear_after_deliveries = 2
+line_prefix = "staff.juri"
+idle_line_seconds = 45.0

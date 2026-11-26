@@ -12,8 +12,8 @@ extends Node
 ## Current save schema version. Other versions are rejected, never silently
 ## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
 ## upgrades (P1), version 3 story and Scrappy (P2), version 4 the neighbors'
-## scrap deliveries.
-const SAVE_VERSION: int = 4
+## scrap deliveries, version 5 the first employee (P3a).
+const SAVE_VERSION: int = 5
 ## Oldest version that can be migrated explicitly (see _migrate()).
 const OLDEST_MIGRATABLE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
@@ -148,6 +148,28 @@ func validate_save_data(data: Dictionary) -> bool:
 			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("id")) != TYPE_STRING \
 					or typeof(entry.get("item")) != TYPE_STRING:
 				return false
+	return _is_valid_employee(data.get("employee"))
+
+
+func _is_valid_employee(value: Variant) -> bool:
+	if typeof(value) != TYPE_DICTIONARY:
+		return false
+	var employee: Dictionary = value
+	if employee.has("presence") and typeof(employee["presence"]) != TYPE_STRING:
+		return false
+	if employee.has("position") and not _is_vector3_array(employee["position"]):
+		return false
+	if employee.has("carrying") and not _is_string_array(employee["carrying"]):
+		return false
+	for key: String in ["seen", "yaw"]:
+		if employee.has(key) and not _is_number(employee[key]):
+			return false
+	if employee.has("stats"):
+		if typeof(employee["stats"]) != TYPE_DICTIONARY:
+			return false
+		for stat: Variant in employee["stats"].values():
+			if not _is_number(stat):
+				return false
 	return true
 
 
@@ -255,4 +277,8 @@ func _migrate(data: Dictionary) -> Dictionary:
 		# v3 -> v4: no deliveries had arrived yet.
 		migrated["deliveries"] = {}
 		migrated["save_version"] = 4
+	if int(migrated["save_version"]) == 4:
+		# v4 -> v5 (P3a): nobody had been hired yet.
+		migrated["employee"] = {}
+		migrated["save_version"] = 5
 	return migrated

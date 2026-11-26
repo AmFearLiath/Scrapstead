@@ -17,6 +17,7 @@ const FLAG_FIRST_PURCHASE := "first_purchase"
 const FLAG_FOUND_HEAD := "found_head"
 const FLAG_FOUND_CORE := "found_core"
 const FLAG_RESTORED := "scrappy_restored"
+const FLAG_FIRST_HIRE := "first_hire"
 const ENTRANCE_WARE := "yard_entrance"
 const MAX_NOTES := 2
 const MAX_QUEUE := 4
@@ -34,6 +35,7 @@ var _sound_fx: Node
 var _upgrades: UpgradeProgress
 var _player: Node3D
 var _deliveries: ScrapDeliveries
+var _worker: YardWorker
 var _rng := RandomNumberGenerator.new()
 var _time: float = 0.0
 var _quiet_until: float = 0.0
@@ -68,6 +70,15 @@ func setup(story: StoryState, scrappy: Node3D, bubble: Control, notes: Control, 
 ## Optional: the drop-off spot, so the notes can point at waiting deliveries.
 func bind_deliveries(deliveries: ScrapDeliveries) -> void:
 	_deliveries = deliveries
+	refresh_notes()
+
+
+## Optional: the yard helper, so the notes can point at him (P3a).
+func bind_worker(worker: YardWorker) -> void:
+	_worker = worker
+	if _worker != null:
+		_worker.presence_changed.connect(func(_presence: YardWorker.Presence) -> void: refresh_notes())
+		_worker.status_changed.connect(func(_status: String) -> void: refresh_notes())
 	refresh_notes()
 
 
@@ -107,7 +118,11 @@ func compute_note_keys() -> PackedStringArray:
 		keys.append("note.catalog")
 	if restored and _upgrades != null and not _upgrades.is_owned(ENTRANCE_WARE):
 		keys.append("note.entrance")
-	if _deliveries != null and _deliveries.get_waiting_count() > 0:
+	var staff_on_it: bool = _worker != null and _worker.is_hired() and not _worker.is_paused()
+	if _worker != null and _worker.get_presence() == YardWorker.Presence.AVAILABLE \
+			and not _story.has_flag(FLAG_FIRST_HIRE):
+		keys.append("note.staff_available")
+	if _deliveries != null and _deliveries.get_waiting_count() > 0 and not staff_on_it:
 		keys.append("note.delivery_waiting")
 	while keys.size() > MAX_NOTES:
 		keys.remove_at(keys.size() - 1)
@@ -167,6 +182,17 @@ func on_delivery() -> void:
 	if not say_event("delivery_first", true):
 		say_event("delivery")
 	refresh_notes()
+
+
+## The player hired the yard helper.
+func on_staff_hired() -> void:
+	_story.set_flag(FLAG_FIRST_HIRE)
+	say_event("staff_hired", true)
+	refresh_notes()
+
+
+func on_staff_dismissed() -> void:
+	say_event("staff_dismissed", true)
 
 
 func on_refused() -> void:

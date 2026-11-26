@@ -305,3 +305,48 @@ scrappy.delivery.4,The neighbors trust us with their scrap. That is basically fr
 ui.delivery.sign,"DROP-OFF
 no questions asked","ABLADEN
 keine Fragen"
+ui.action.talk,Talk to him,Ansprechen
+ui.action.staff_manage,Check on him,Nach ihm sehen
+ui.staff.prompt_available,Looking for work · {fee} Cr to hire,Sucht Arbeit · {fee} Cr Handgeld
+ui.staff.label_available,looking for work,sucht Arbeit
+ui.staff.status.working,working,arbeitet
+ui.staff.status.waiting,waiting for scrap,wartet auf Schrott
+ui.staff.status.blocked,can't get through,kommt nicht durch
+ui.staff.status.paused,on a break,macht Pause
+ui.staff.status_line,Right now: {status},Gerade: {status}
+ui.staff.terms,"Carries loose scrap from the drop-off pallet to the counter and sells it, {capacity} pieces per trip. Anything you leave on the pallet counts. Hiring: {fee} Cr once (for gloves). Wage: {wage} Cr per piece sold, taken straight from that sale.","Trägt losen Schrott von der Abladepalette zur Theke und verkauft ihn, {capacity} Teile pro Runde. Was du auf die Palette legst, zählt mit. Einstellen: einmalig {fee} Cr (für Handschuhe). Lohn: {wage} Cr pro verkauftem Teil, direkt vom Erlös."
+ui.staff.stats,"So far: {trips} trips, {items} pieces, {revenue} Cr sold, {wages} Cr wages. {net} Cr stay with the yard.","Bisher: {trips} Runden, {items} Teile, {revenue} Cr Umsatz, {wages} Cr Lohn. {net} Cr bleiben dem Hof."
+ui.staff.hire,Hire ({fee} Cr),Einstellen ({fee} Cr)
+ui.staff.pause,Take a break,Pause machen
+ui.staff.resume,Back to work,Weiterarbeiten
+ui.staff.dismiss,Let him go,Entlassen
+ui.staff.dismiss_confirm,Really let him go?,Wirklich entlassen?
+ui.staff.cannot_afford,{name} wants {fee} Cr for gloves. You don't have that right now.,{name} möchte {fee} Cr für Handschuhe. So viel hast du gerade nicht.
+ui.staff.hired,{name} is on board. {fee} Cr for gloves.,{name} ist dabei. {fee} Cr für Handschuhe.
+ui.staff.paused,{name} is taking a break.,{name} macht Pause.
+ui.staff.resumed,{name} is back at it.,{name} legt wieder los.
+ui.staff.dismissed,"{name} put everything back on the pallet. He'll wait by the gate, just in case.","{name} hat alles zurück auf die Palette gelegt. Er wartet am Tor, nur für den Fall."
+ui.staff.sold,"{name} sold {count} piece(s): {total} Cr, wage {wage} Cr, +{net} Cr for you.","{name} hat {count} Teil(e) verkauft: {total} Cr, Lohn {wage} Cr, +{net} Cr für dich."
+ui.staff.appeared,Someone is waiting at the gate: {name}.,Am Tor wartet jemand: {name}.
+ui.ledger.staff_hire,Hiring,Einstellung
+ui.ledger.staff_sale,Sale (staff),Verkauf (Personal)
+ui.ledger.staff_wage,Wage,Lohn
+note.staff_available,Someone at the gate is looking for work.,Am Tor sucht jemand Arbeit.
+staff.juri.name,Juri,Juri
+staff.juri.role,Benno's former apprentice · carrier,Bennos ehemaliger Lehrling · Träger
+staff.juri.description,"Benno says Juri is ""good on his feet, less so with tools"". Hums along to whatever is in his headphones. Considers any distance under a kilometre ""just over there"".","Benno sagt, Juri sei „gut zu Fuß, weniger gut mit Werkzeug“. Summt mit, was immer in seinen Kopfhörern läuft. Hält jede Strecke unter einem Kilometer für „gleich da drüben“."
+staff.juri.appear.1,Benno says you've got stuff that needs carrying. I've got legs.,"Benno meint, du hast Zeug, das getragen werden muss. Ich hab Beine."
+staff.juri.hired.1,Gloves! Real ones! I'll start with the pallet.,Handschuhe! Echte! Ich fang mit der Palette an.
+staff.juri.idle.1,Pallet's empty. I'm counting clouds. Fourteen.,Palette leer. Ich zähl Wolken. Vierzehn.
+staff.juri.idle.2,"If someone drops off a fridge, I'm calling in sick.","Wenn jemand einen Kühlschrank ablädt, bin ich krank."
+staff.juri.idle.3,I gave the pallet a name. It's called Paul.,Ich hab der Palette einen Namen gegeben. Sie heißt Paul.
+staff.juri.idle.4,Waiting is work too. Benno said so. Then he let me go.,Warten ist auch Arbeit. Hat Benno gesagt. Dann hat er mich rausgeworfen.
+staff.juri.first_sale.1,First trip done! I'm basically logistics now.,Erste Runde geschafft! Ich bin jetzt quasi Logistik.
+staff.juri.paused.1,Break! I'll guard the pallet. With my eyes.,Pause! Ich bewache die Palette. Mit den Augen.
+staff.juri.paused.2,Sure. My legs were making plans anyway.,Klar. Meine Beine hatten eh schon eigene Pläne.
+staff.juri.resumed.1,Back on it!,Bin wieder dran!
+staff.juri.resumed.2,"Legs, we're working again.","Beine, wir arbeiten wieder."
+staff.juri.dismissed.1,Okay. I'll be at the gate. Not in a weird way.,Okay. Ich bin am Tor. Nicht auf komische Art.
+staff.juri.refuses.1,That one looks valuable. Better sell it yourself.,Das da sieht wertvoll aus. Das verkaufst du lieber selbst.
+scrappy.staff_hired.1,A colleague! Does he have wheels? ...No. Pity. I like him anyway.,Ein Kollege! Hat er Räder? ... Nein. Schade. Ich mag ihn trotzdem.
+scrappy.staff_dismissed.1,He's waiting by the gate. That is either loyal or creepy.,Er wartet am Tor. Das ist entweder treu oder unheimlich.
