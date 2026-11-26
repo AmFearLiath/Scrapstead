@@ -129,3 +129,30 @@ Die Prüfkriterien aus beiden Konzeptdokumenten gelten, soweit sie nicht das Ver
 - **Verbinden** (Anschlusspunkte sind im Datenmodell angelegt) kommt mit der zweiten Maschine.
 - Lager mit Funktion (Teile einlagern), Grundstückserweiterung, Gebäude.
 - Menschlicher Test der Bedienung, besonders der Maussteuerung (die Tests zielen über die Programmierschnittstelle).
+
+## 8. Erweiterung nach dem ersten Spielen
+
+### Bau-UI
+- Die Werkzeugleiste steht am linken Rand: Katalog C, Verschieben M, Entfernen X, Ansehen V, Rückgängig, Wiederholen, Fertig B.
+- Der **Baukatalog** öffnet sich als zentriertes Fenster mit Kategorien, Bildkarten (Vorschaubilder aus Blender, `tools/make_thumbnails.py`) und einem Detailbereich mit Kaufknopf; ein Doppelklick stellt direkt auf.
+- Die Infoleiste steht unten. Esc schließt zuerst den Katalog, dann die laufende Aktion, dann den Baumodus.
+
+### Funktionen gebauter Objekte
+- **Hofstrahler:** schaltbares Spotlicht.
+- **Lager:** Paletten 6, Kistenstapel 10, Fässer 4 Teile. Mit E alles einlagern oder herausnehmen, neuer Gegenstandszustand `stored`.
+- **Kieswege:** 25 % schneller für Spieler und Juri.
+- **Reifenbank:** Juris Pausenplatz.
+- **Scrappy** kommentiert neue Dekorationen.
+
+### Ganzer Hof umbaubar
+- Alle festen Hofobjekte werden beim Laden **übernommen** (`PlacedObjects.adopt`). Ihre Grundfläche ergibt sich aus den Kollisionsboxen.
+  - Dazu gehören Werkstatt, Kiosk, Mauer, Träger, alle Requisiten, Theke, Bürotisch, Werkbank, Zerlegetisch, Schwarzes Brett, Hofstrahler, Fundorte, Kopf-Haufen, roter Werkzeugkasten, Abladepalette, Nagelhaufen und die Werkzeugplätze.
+  - Sie lassen sich versetzen und drehen, aber nicht wegräumen.
+  - Gespeichert werden nur versetzte Objekte (`placed.yard`).
+- **Wegfindung:** `YardNavigation` rechnet A* auf dem 0,5-m-Raster.
+  - Fest blockiert sind nur Dinge, die nicht übernommen sind (Zaun, Tor). Alles andere kommt aus den Grundflächen.
+  - Neu berechnet wird nach jeder Bauaktion und beim Schließen des Baumodus.
+  - Juri läuft über diese Wege; die festen Routen bleiben nur als Rückfallebene.
+- **Erreichbarkeit:** Eine Platzierung, die eine Station, einen Fundort oder die Palette vom Tor aus abschneidet, wird abgelehnt: „Das würde den Weg abschneiden zu: …“.
+- **Juris Plätze** (Theke, Zerlegetisch, Pause, Karren, Brechstange) hängen relativ an ihrem Objekt und wandern mit. Vorbereitete Funde von Fundorten wandern ebenfalls mit.
+- **Tests:** Navigation, Hofobjekt versetzen und speichern, Juri findet die versetzte Theke.

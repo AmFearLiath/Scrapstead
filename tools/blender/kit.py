@@ -25,6 +25,10 @@ PALETTE = {
 
 _rng = random.Random(1974)
 
+# Art style: 1 = flat colours for the toon shader, 2 = weathered baked textures
+# (tools/blender/style2.py, docs/art-style-2.md). Chosen via SCRAP_STYLE.
+STYLE = int(__import__("os").environ.get("SCRAP_STYLE", "1"))
+
 
 def seed(value: int) -> None:
     """Makes wonkiness and colour variation reproducible per asset."""
@@ -81,7 +85,11 @@ def _finish(obj, colour_name, bevel, segments, jitter, variation=0.04):
     rgba = color(colour_name, variation)
     for data in attribute.data:
         data.color = rgba
-    mesh.materials.append(_material())
+    if STYLE == 2:
+        import style2
+        mesh.materials.append(style2.material_for(colour_name))
+    else:
+        mesh.materials.append(_material())
     for polygon in mesh.polygons:
         polygon.use_smooth = False
     return obj
@@ -220,6 +228,14 @@ def export_glb(root_obj, path):
     bpy.context.view_layer.objects.active = children[0]
     kwargs = dict(filepath=path, export_format="GLB", use_selection=True, export_apply=True,
                   export_yup=True, export_materials="EXPORT", export_cameras=False, export_lights=False)
+    if STYLE == 2:
+        kwargs["export_image_format"] = "JPEG"
+        kwargs["export_jpeg_quality"] = 90
+        try:
+            bpy.ops.export_scene.gltf(export_vertex_color="NONE", **kwargs)
+        except TypeError:
+            bpy.ops.export_scene.gltf(**kwargs)
+        return
     try:
         bpy.ops.export_scene.gltf(export_vertex_color="ACTIVE", **kwargs)
     except TypeError:

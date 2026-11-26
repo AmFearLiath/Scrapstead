@@ -364,13 +364,22 @@ def build_workshop_shed():
                scale=(1, 1, 0.8))
     # Roof: two pitches of corrugated panels, one replaced by a teal panel.
     pitch = 16.0
+    roof_colour = "steel_light" if kit.STYLE == 2 else "rust_light"
     for side, sign in (("S", -1), ("N", 1)):
         for index in range(5):
-            colour = "rust_light" if not (side == "S" and index == 3) else "teal"
+            colour = roof_colour if not (side == "S" and index == 3) else "teal"
             x = -w / 2 - 0.25 + (index + 0.5) * (w + 0.5) / 5
-            panel = box(f"Roof{side}{index}", (x, sign * d / 4, h + 0.42), ((w + 0.5) / 5 + 0.04, d / 2 + 0.45,
-                        0.1), colour, parent=root, rotation=(-sign * pitch, kit._rng.uniform(-1, 1), 0),
-                        bevel=0.02, variation=0.07)
+            panel_w = (w + 0.5) / 5 + 0.04
+            panel = box(f"Roof{side}{index}", (x, sign * d / 4, h + 0.42), (panel_w, d / 2 + 0.45,
+                        0.06), colour, parent=root, rotation=(-sign * pitch, kit._rng.uniform(-1, 1), 0),
+                        bevel=0.015, variation=0.07)
+            if kit.STYLE == 2:
+                # Corrugation: ribs running down the slope.
+                ribs = 9
+                for rib in range(ribs):
+                    rx = -panel_w / 2 + (rib + 0.5) * panel_w / ribs
+                    cylinder(f"Rib{side}{index}_{rib}", (rx, 0, 0.035), 0.035, d / 2 + 0.44, colour, vertices=6,
+                             rotation=(90, 0, 0), parent=panel, bevel=0.0)
     tape("RoofTape", (-1.0, -0.8, h + 0.62), 1.4, parent=root, rotation=(-74, 0, 10), width=0.12)
     box("Ridge", (0, 0, h + 0.82), (w + 0.6, 0.3, 0.12), "rust", parent=root, bevel=0.03)
     # Crooked stovepipe with a hat.
@@ -604,6 +613,9 @@ def main():
         kit.reset_scene()
         root = builder()
         kit.merge_parts(root)
+        if kit.STYLE == 2:
+            import style2
+            style2.bake_root(root)
         if preview_dir:
             os.makedirs(preview_dir, exist_ok=True)
             kit.render_preview(os.path.abspath(os.path.join(preview_dir, name + ".png")), **preview)

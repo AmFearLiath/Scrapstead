@@ -282,7 +282,7 @@ func _build_shots(scene: Node, player: Node3D) -> void:
 	mode.set_tool(BuildMode.TOOL_MOVE)
 	mode.aim_at(placed.get_node_for("yard_car_wreck").global_position)
 	mode.confirm()
-	mode.aim_at(Vector3(31.0, 0, -24.5))
+	mode.aim_at(Vector3(32.0, 0, -20.5))
 	mode.rotate_preview()
 	await _frames(10)
 	await _shot("56_build_move_car_wreck")
