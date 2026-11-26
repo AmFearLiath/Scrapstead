@@ -77,9 +77,9 @@ Visueller Humor folgt den Säulen aus `lore-walt-wren.md` und wird sparsam einge
 
 - **Modelle** werden per Python-Skript in Blender erzeugt (`tools/blender/build_props.py` für Hauptobjekte, `tools/blender/props_world.py` für Welt, Fundstücke und Bewuchs), reproduzierbar und versioniert. Ausgabe: `.glb` nach `assets/models/`. Der Hof-Generator `tools/build_blockout.gd` platziert sie mit einfachen Kollisionsboxen.
 - **Maßstab:** 1 Blender-Einheit = 1 m. Ursprung in der Bodenmitte des Objekts. Vorderseite zeigt in Blender nach −Y (wird in Godot +Z = Modellvorderseite).
-- **Farben** als Vertex-Farben (Farbattribut `Col`) auf einem einzigen Material `Scrap`. Godot ersetzt es beim Import durch das gemeinsame Toon-Material.
+- **Farben und Oberflächen** (seit Grafikstil 2, [art-style-2.md](art-style-2.md)): prozedurale Materialien je Palettenfarbe, in Blender mit Umgebungsverdeckung in eine Textur pro Mesh gebacken. Godot importiert die Modelle unverändert.
 - **Benannte Teilknoten** (z. B. `Closed`, `Open`, `Debris`, `Beam`) werden als leere Eltern-Objekte angelegt, damit Spielskripte Zustände umschalten können.
-- **Shader:** `assets/shaders/toon.gdshader` (Stufenlicht, Schattentönung, Lichtsaum) und `outline.gdshader` (Umriss als zweiter Pass). Blockout-Geometrie nutzt denselben Shader mit Farbparameter.
+- **Shader:** Modelle nutzen normales PBR-Licht. Der Boden nutzt `assets/shaders/ground_sand.gdshader`. Toon-Shader und Umriss sind mit Stil 2 entfallen.
 - **Kollision** bleibt einfach und wird in den Godot-Szenen gepflegt, nicht im Modell.
 
 Ablauf nach einer Modelländerung:
@@ -87,12 +87,10 @@ Ablauf nach einer Modelländerung:
 ```bash
 blender -b -P tools/blender/build_props.py -- --out assets/models --preview tests/_output/blender
 godot --headless --path . --import
-godot --headless --path . -s res://tools/configure_model_imports.gd   # einmalig je neuem Modell
-godot --headless --path . --import
 godot --headless --path . -s res://tools/build_blockout.gd            # wenn Gebäude/Deko im Hof betroffen sind
 ```
 
-`--only <name>` baut ein einzelnes Modell. Die Vorschau-Renders verwenden die Winkel der Spielkamera.
+`--only a,b` baut einzelne Modelle. Die Vorschau-Renders verwenden die Winkel der Spielkamera.
 
 ## 6. Umgebung und Assetfamilien
 
@@ -114,10 +112,10 @@ Vorher/Nachher: `docs/art/before_after.png`, Einzelbilder in `docs/art/before/` 
 
 | Bereich | Stand |
 |---|---|
-| Toon-Shader, Umrisse, Schattentönung, Lichtsaum | Umgesetzt, gilt für Modelle und Blockout |
+| Grafikstil 2: verwitterte, gebackene Texturen, Wüstensand, warmes Licht | Umgesetzt für alle Modelle ([art-style-2.md](art-style-2.md)) |
 | Miniatur-Effekt (Tilt-Shift, Vignette) | Umgesetzt (`ui/post/DioramaPost.tscn`) in Spiel und Menü |
 | Blender-Modelle | 50 Modelle: alle Gebäude, Stationen, Suchquellen, Zäune (je 3 Varianten hoch/niedrig), Tor, Ziegelmauer, Träger, drei Schrotthaufen, Autowrack, Container mit Katze, Motorblock, Lagerzone (Kisten, Fässer, Regal mit Gummiente), Paletten, Reifen, Badewannen-Beet, Hofstrahler, Zerlegetisch, Lieferware, alle Fundstücke, Spielfigur, drei Grasbüschel-Varianten |
-| Noch Blockout-Primitive | Boden, Wege, Maschinenfläche (bewusst flach), Zaun-Endpfosten |
+| Noch Blockout-Primitive | Boden und Wege (Sand-Shader), Zaun-Endpfosten |
 | Spielfigur | Modell aus gelenkigen Gruppen (Beine, Torso, Kopf, Arme, Korb). Prozedurale Animation ohne Skelett (`scripts/player/PlayerAnimator.gd`): Laufzyklus mit Arm-/Beinschwung und Wippen, Atmen im Stand, kleines Stauchen beim Abbremsen, Arbeitshaltung beim Halten, Greifbewegung beim Aufheben, Korbfüllung nach belegten Plätzen |
 | Effekte | `scripts/fx/WorldFx.gd`: aufgehobene Teile fliegen im Bogen in den Korb (Korb wippt), Staubwölkchen bei Schritten, Ablegen, Durchsuchen, Bergen und Lieferung, Münzregen beim Verkauf. Rein darstellend |
 

@@ -47,10 +47,8 @@ godot --headless --path . -s res://tests/run_tests.gd
 godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=play
 godot --headless --path . -s res://tests/e2e_restart.gd -- --phase=continue
 
-# Modelle in Blender erzeugen (Stil: docs/world-art-assets.md) und importieren
+# Modelle in Blender erzeugen und backen (Stil: docs/art-style-2.md) und importieren
 blender -b -P tools/blender/build_props.py -- --out assets/models --preview tests/_output/blender
-godot --headless --path . --import
-godot --headless --path . -s res://tools/configure_model_imports.gd
 godot --headless --path . --import
 
 # Geräusche und Musik synthetisieren (Python mit numpy und scipy)

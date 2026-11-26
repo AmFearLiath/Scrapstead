@@ -888,3 +888,19 @@ Referenz: [Erste Maschine](first-machine.md).
 - Spielstand Version 7 mit Migration.
 
 Referenz: [Bausystem](building-system.md).
+
+## 26.11.2026 — Grafikstil 2: sonnige Schrottplatz-Wüste (Stilprobe)
+
+**Beschluss (Wunsch nach maximal hochwertigem Look, Referenzbild warmer isometrischer Schrottplatz):**
+- Kein Nachbau der Referenz, sondern Scrapsteads eigene Modelle mit neuen Materialien: prozedurale Verwitterung in Blender (Lack, Rost, Holz, Gummi, Staub), gebacken mit Umgebungsverdeckung in eine Textur pro Mesh.
+- Boden als Wüstensand-Shader in Weltkoordinaten; Licht mit ACES, SSAO, SSIL und warmer Sonne.
+- Dekorative Kulisse außerhalb des Zauns (Autostapel, Reifentürme, Schrottberg, Trockengras) ohne Kollision, also ohne Einfluss auf Wegfindung und Bausystem.
+- Zuerst eine Stilprobe auf dem Branch `art-style-2`; die komplette Umstellung (Figuren, Toon-Reste, Grafikoptionen) erst nach Freigabe.
+
+Referenz: [Grafikstil 2](art-style-2.md).
+
+## 26.11.2026 — Grafikstil 2 wird dauerhaft
+
+**Beschluss (Freigabe der Stilprobe):** Stil 2 ist der feste Look des Spiels. Toon-Shader, Umriss und das Import-Werkzeug für das Toon-Material entfallen. Spieler und Juri bekommen Stoffkleidung und saubere Haut statt Lackverwitterung. Die Wege sind dunkler und kiesig. Die gelbe Umrandung der Maschinenfläche entfällt, seit der Magnetsammler frei platzierbar ist. Neu ist die Einstellung „Grafik“ (Niedrig/Mittel/Hoch) im Haupt- und Pausenmenü.
+
+Referenz: [Grafikstil 2](art-style-2.md).

@@ -21,6 +21,7 @@ const SETTING_LOCALE: String = "locale"
 const SETTING_WINDOW_MODE: String = "window_mode"
 const SETTING_MUSIC_VOLUME: String = "music_volume"
 const SETTING_SFX_VOLUME: String = "sfx_volume"
+const SETTING_GRAPHICS_QUALITY: String = "graphics_quality"
 const SUPPORTED_LOCALES: PackedStringArray = ["de", "en"]
 const WINDOW_MODES: PackedStringArray = ["windowed", "fullscreen"]
 
@@ -175,7 +176,13 @@ func _sanitize_settings(raw: Dictionary) -> Dictionary:
 		SETTING_WINDOW_MODE: window_mode,
 		SETTING_MUSIC_VOLUME: _sanitize_volume(raw.get(SETTING_MUSIC_VOLUME, 0.8)),
 		SETTING_SFX_VOLUME: _sanitize_volume(raw.get(SETTING_SFX_VOLUME, 0.8)),
+		SETTING_GRAPHICS_QUALITY: _sanitize_quality(raw.get(SETTING_GRAPHICS_QUALITY, GraphicsQuality.DEFAULT)),
 	}
+
+
+func _sanitize_quality(value: Variant) -> String:
+	var quality: String = str(value)
+	return quality if GraphicsQuality.LEVELS.has(quality) else GraphicsQuality.DEFAULT
 
 
 func _sanitize_volume(value: Variant) -> float:

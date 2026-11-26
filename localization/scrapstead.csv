@@ -12,6 +12,10 @@ ui.settings.language,Language,Sprache
 ui.settings.window_mode,Display,Anzeige
 ui.settings.window_mode.windowed,Windowed,Fenster
 ui.settings.window_mode.fullscreen,Fullscreen,Vollbild
+ui.settings.graphics_quality,Graphics,Grafik
+ui.settings.graphics_quality.low,Low,Niedrig
+ui.settings.graphics_quality.medium,Medium,Mittel
+ui.settings.graphics_quality.high,High,Hoch
 ui.settings.back,Back,Zurück
 ui.settings.locale.de,Deutsch,Deutsch
 ui.settings.locale.en,English,English

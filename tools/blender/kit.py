@@ -27,7 +27,7 @@ _rng = random.Random(1974)
 
 # Art style: 1 = flat colours for the toon shader, 2 = weathered baked textures
 # (tools/blender/style2.py, docs/art-style-2.md). Chosen via SCRAP_STYLE.
-STYLE = int(__import__("os").environ.get("SCRAP_STYLE", "1"))
+STYLE = int(__import__("os").environ.get("SCRAP_STYLE", "2"))
 
 
 def seed(value: int) -> None:

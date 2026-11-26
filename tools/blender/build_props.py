@@ -1,6 +1,6 @@
 """Builds Scrapstead's hero props in Blender and exports them as glTF.
 
-    blender -b -P tools/blender/build_props.py -- --out assets/models [--preview DIR] [--only NAME]
+    blender -b -P tools/blender/build_props.py -- --out assets/models [--preview DIR] [--only NAME[,NAME...]]
 
 Every asset follows docs/world-art-assets.md: chunky bevelled shapes, palette
 vertex colours, Walt's repairs on old things, clean shapes on new things.
@@ -596,9 +596,16 @@ import props_story  # noqa: E402
 
 import props_machines  # noqa: E402
 
+import props_style2  # noqa: E402
+
 ASSETS.update(props_world.ASSETS)
 ASSETS.update(props_story.ASSETS)
 ASSETS.update(props_machines.ASSETS)
+ASSETS.update(props_style2.ASSETS)
+
+
+# Humans get fabric clothes and clean skin in art style 2 (docs/art-style-2.md).
+CHARACTERS = ("player_model", "juri_model")
 
 
 def main():
@@ -608,9 +615,12 @@ def main():
     only = argv[argv.index("--only") + 1] if "--only" in argv else ""
     os.makedirs(out_dir, exist_ok=True)
     for name, (builder, preview) in ASSETS.items():
-        if only and name != only:
+        if only and name not in only.split(","):
             continue
         kit.reset_scene()
+        if kit.STYLE == 2:
+            import style2
+            style2.CHARACTER = name in CHARACTERS
         root = builder()
         kit.merge_parts(root)
         if kit.STYLE == 2:

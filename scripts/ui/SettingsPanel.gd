@@ -1,5 +1,6 @@
 extends Control
-## Settings during play (P4): language, window, music and effects volume.
+## Settings during play (P4): language, window, graphics quality, music and
+## effects volume.
 ## Same settings as the main menu; GameSession applies and stores them, the
 ## panel only shows values and forwards changes.
 
@@ -8,9 +9,11 @@ signal closed
 
 const LOCALE_OPTIONS: PackedStringArray = ["de", "en"]
 const WINDOW_MODE_OPTIONS: PackedStringArray = ["windowed", "fullscreen"]
+const QUALITY_OPTIONS: PackedStringArray = ["low", "medium", "high"]
 
 @onready var _language_option: OptionButton = %LanguageOption
 @onready var _window_mode_option: OptionButton = %WindowModeOption
+@onready var _quality_option: OptionButton = %QualityOption
 @onready var _music_slider: HSlider = %MusicSlider
 @onready var _sfx_slider: HSlider = %SfxSlider
 @onready var _back_button: Button = %BackButton
@@ -23,19 +26,24 @@ func _ready() -> void:
 		func(index: int) -> void: setting_changed.emit("locale", LOCALE_OPTIONS[index]))
 	_window_mode_option.item_selected.connect(
 		func(index: int) -> void: setting_changed.emit("window_mode", WINDOW_MODE_OPTIONS[index]))
+	_quality_option.item_selected.connect(
+		func(index: int) -> void: setting_changed.emit("graphics_quality", QUALITY_OPTIONS[index]))
 	_music_slider.value_changed.connect(func(value: float) -> void: setting_changed.emit("music_volume", value))
 	_sfx_slider.value_changed.connect(func(value: float) -> void: setting_changed.emit("sfx_volume", value))
 
 
-func open(locale: String, window_mode: String, music_volume: float, sfx_volume: float) -> void:
-	show_values(locale, window_mode, music_volume, sfx_volume)
+func open(locale: String, window_mode: String, music_volume: float, sfx_volume: float,
+		quality: String = "high") -> void:
+	show_values(locale, window_mode, music_volume, sfx_volume, quality)
 	show()
 	_language_option.grab_focus()
 
 
-func show_values(locale: String, window_mode: String, music_volume: float, sfx_volume: float) -> void:
+func show_values(locale: String, window_mode: String, music_volume: float, sfx_volume: float,
+		quality: String = "high") -> void:
 	_language_option.select(maxi(0, LOCALE_OPTIONS.find(locale)))
 	_window_mode_option.select(maxi(0, WINDOW_MODE_OPTIONS.find(window_mode)))
+	_quality_option.select(maxi(0, QUALITY_OPTIONS.find(quality)))
 	_music_slider.set_value_no_signal(music_volume)
 	_sfx_slider.set_value_no_signal(sfx_volume)
 

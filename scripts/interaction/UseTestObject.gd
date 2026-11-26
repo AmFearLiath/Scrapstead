@@ -13,7 +13,7 @@ var _is_on: bool = false
 func _ready() -> void:
 	super()
 	if lens != null and not (lens.material_override is StandardMaterial3D):
-		# The lens glows on its own; it does not use the shared toon material.
+		# The lens glows on its own; it does not use the baked model texture.
 		var glow := StandardMaterial3D.new()
 		glow.albedo_color = Color("fff3c4")
 		glow.emission_enabled = true

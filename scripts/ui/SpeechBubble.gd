@@ -12,6 +12,9 @@ signal finished
 @onready var _label: Label = %Text
 @onready var _panel: PanelContainer = $Panel
 
+## Bubbles of off-screen speakers stop below the top HUD band.
+const HUD_TOP: float = 210.0
+
 var _camera: Camera3D
 var _anchor: Node3D
 var _tween: Tween
@@ -69,4 +72,5 @@ func _place() -> void:
 	position = screen - Vector2(_panel.size.x * 0.5, _panel.size.y + 14.0)
 	var viewport_size: Vector2 = get_viewport_rect().size
 	position.x = clampf(position.x, 12.0, viewport_size.x - _panel.size.x - 12.0)
-	position.y = clampf(position.y, 90.0, viewport_size.y - _panel.size.y - 160.0)
+	# Below the top HUD band (credits, notes, carry panel, toasts), above the prompt.
+	position.y = clampf(position.y, HUD_TOP, viewport_size.y - _panel.size.y - 160.0)
