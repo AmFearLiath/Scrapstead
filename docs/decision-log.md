@@ -843,3 +843,15 @@ Referenz: [Anlieferungen](deliveries.md).
 - Spielstand Version 5 mit expliziter Migration aus Version 4.
 
 Referenz: [Erster Mitarbeiter](first-employee.md).
+
+## 26.11.2026 — Erste Maschine: kleiner Magnetsammler am Nagelhaufen (P3b)
+
+**Beschluss (autonome Entwicklungsphase, MVP-Plan P3b):** Der kleine Magnetsammler steht fest auf dem reservierten Stellplatz der Arbeitsfläche. Kauf über den Katalog (60 Cr), Upgrade „Stärkerer Magnet“ (35 Cr, 20 → 12 s).
+
+- Eingabe: Walts Nagelhaufen mit endlichem Bestand (45 Teile). Lose Schrauben und Dosen in der Nähe nimmt er zuerst, als dasselbe Objekt.
+- Ausgabe: Drahtkiste mit 6 Plätzen. Volle Kiste stoppt die Maschine, damit kein Leerlauf-Tycoon entsteht.
+- Nur magnetische Teile (Schraube, Dose); Kupfer, Holz und Wertvolles bleiben beim Spieler.
+- Prozesslogik getrennt von der Animation; Ergebnis erst am Ende des Takts.
+- Spielstand Version 6 mit expliziter Migration aus Version 5.
+
+Referenz: [Erste Maschine](first-machine.md).

@@ -61,7 +61,8 @@
 [ext_resource type="PackedScene" path="res://scenes/world/DropOffSpot.tscn" id="69_dropoff"]
 [ext_resource type="PackedScene" path="res://scenes/staff/YardWorker.tscn" id="70_worker"]
 [ext_resource type="PackedScene" path="res://ui/interaction/StaffPanel.tscn" id="71_staff_panel"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "staff_panel", "staff_bubble")]
+[ext_resource type="PackedScene" path="res://scenes/machines/MagnetCollector.tscn" id="72_magnet"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "magnet", "staff_panel", "staff_bubble")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -69,6 +70,7 @@ camera_rig = NodePath("GameplayCamera")
 world_objects_root = NodePath("TestObjects")
 deliveries = NodePath("DropOffSpot")
 worker = NodePath("Staff/YardWorker")
+magnet = NodePath("MagnetCollector")
 interaction_prompt = NodePath("HUD/InteractionPrompt")
 feedback_toast = NodePath("HUD/FeedbackToast")
 inspect_panel = NodePath("HUD/InspectPanel")
@@ -347,6 +349,9 @@ wait_spot = NodePath("../WaitSpot")
 rest_spot = NodePath("../RestSpot")
 route_root = NodePath("../Route")
 counter_spot = NodePath("../CounterSpot")
+
+[node name="MagnetCollector" parent="." instance=ExtResource("72_magnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)
 
 [node name="StoryDirector" type="Node" parent="."]
 script = ExtResource("67_director")

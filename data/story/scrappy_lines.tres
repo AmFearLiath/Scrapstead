@@ -13,6 +13,7 @@ events = {
 "explore": {"chance": 0.75, "cooldown": 25.0, "count": 6},
 "follow": {"count": 3, "priority": true},
 "idle": {"chance": 0.5, "count": 5},
+"machine_installed": {"count": 1, "once": true, "priority": true},
 "pickup": {"chance": 0.22, "cooldown": 35.0, "count": 5},
 "pickup_valuable": {"chance": 1.0, "cooldown": 60.0, "count": 2},
 "purchase": {"count": 3, "cooldown": 10.0, "priority": true},

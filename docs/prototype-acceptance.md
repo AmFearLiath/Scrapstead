@@ -155,6 +155,7 @@ Bei der Sichtprüfung gefundene und behobene Fehler: gespiegelte Grundstücksach
 | P1b | Umgesetzt und geprüft (siehe 8) | Offen: Bewertung im Playtest |
 | P2 | Brief, Notizen, Kopf/Kernteil, Wiederherstellung, Folgen/Warten, Sprüche, Eingang: 12 Integrationstests, Migrationstests und E2E-Neustart grün; Screenshots geprüft | Offen: Playtest (Auffindbarkeit des Kopfes, Häufigkeit der Sprüche) |
 | Nachschub | Anlieferungen der Nachbarn: 8 Integrationstests (Sperre, Verkauf, Rückstau, Reihenfolge, Speichern/Fortsetzen, Migration v3), Screenshots geprüft | Offen: Taktung im Playtest |
+| P3b Erste Maschine | Magnetsammler: 10 Integrationstests (Kauf, Takt, volle Kiste, lose Teile, Bestandsgrenze, Schalter, Upgrade, Animation, Speichern, Migration v5), Screenshots geprüft | Offen: Taktung im Playtest |
 | P3a Erster Mitarbeiter | Juri: 10 Integrationstests (Auftauchen, Einstellen, Arbeit mit Lohnbuchung, Pause, Wertvolles, Entlassen, Speichern mitten in der Runde, Migration v4, Personalfenster), Screenshots geprüft | Offen: Playtest, ob Delegation eine echte Entscheidung ist |
 
 Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerische Bewertung („befriedigende Schleife“) kann nur durch menschliche Playtests erfolgen.
@@ -192,4 +193,5 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 4. Erledigt: gebietsschemaabhängige Dezimalzahlen und Platzhalterprüfung aller Übersetzungen in den Tests.
 5. Erledigt (Linux): `.github/workflows/tests.yml` führt bei jedem Push Unit-, Integrations- und E2E-Tests headless aus. Ein Windows-Lauf in CI fehlt noch.
 6. P2 ist umgesetzt (siehe [P2-Spezifikation](p2-arrival-and-scrappy.md)); als Nächstes Playtest der Einstiegsstunde.
-7. P3a ist umgesetzt ([Erster Mitarbeiter](first-employee.md)). Als Nächstes P3b, die erste Maschine, oder zuerst ein Playtest der Delegation.
+7. P3a ist umgesetzt ([Erster Mitarbeiter](first-employee.md)).
+8. P3b ist umgesetzt ([Erste Maschine](first-machine.md)). Als Nächstes ein Playtest von P1–P3 und danach der Vertical Slice (P4).

@@ -20,3 +20,5 @@ const STAT_CARRY_CAPACITY: String = "carry_capacity"
 @export var grants_tool: String = ""
 ## Optional upgrade ID that must be owned first.
 @export var requires: String = ""
+## Optional localization key of a fixed effect line in the catalog (machines).
+@export var effect_key: String = ""

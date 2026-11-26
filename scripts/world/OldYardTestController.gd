@@ -16,6 +16,8 @@ extends Node3D
 @export var deliveries: ScrapDeliveries
 ## The first employee (scripts/world/YardWorker.gd, P3a); optional.
 @export var worker: YardWorker
+## The magnetic collector (scripts/world/MagnetCollector.gd, P3b); optional.
+@export var magnet: MagnetCollector
 @export_group("HUD")
 @export var interaction_prompt: Control
 @export var feedback_toast: Control
@@ -75,6 +77,7 @@ func _ready() -> void:
 	_story = StoryState.new(state.get("story", {}))
 	# Delivered items exist only at runtime; recreate them before their states.
 	_setup_deliveries(state.get("deliveries", {}))
+	_setup_magnet(state.get("machines", {}))
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
@@ -173,6 +176,7 @@ func create_snapshot() -> Dictionary:
 		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
 		"deliveries": deliveries.get_save_state() if deliveries != null else {},
 		"employee": worker.get_save_state() if worker != null else {},
+		"machines": {"magnet_collector": magnet.get_save_state()} if magnet != null else {},
 	}
 
 
@@ -221,6 +225,10 @@ func get_deliveries() -> ScrapDeliveries:
 
 func get_worker() -> YardWorker:
 	return worker
+
+
+func get_magnet() -> MagnetCollector:
+	return magnet
 
 
 func get_story() -> StoryState:
@@ -434,9 +442,13 @@ func _debug_extra_lines() -> String:
 	if worker != null:
 		staff_line = "%s %s, carrying %d, sold %d items" % [YardWorker.PRESENCE_NAMES[worker.get_presence()],
 			worker.get_status(), worker.get_carried_items().size(), worker.get_stats()["items"]]
-	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nStaff: %s\nRestore notes: %s" % [
+	var machine_line: String = "-"
+	if magnet != null and magnet.is_installed():
+		machine_line = "%s, heap %d, crate %d, next in %.0f%%" % [magnet.get_status(), magnet.get_heap_remaining(),
+			magnet.get_bin_count(), magnet.get_cycle_progress() * 100.0]
+	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nStaff: %s\nMagnet: %s\nRestore notes: %s" % [
 		_wallet.get_balance(), _inventory.get_used_slots(), _inventory.get_capacity(),
-		", ".join(_upgrades.to_save_data()), delivery_line, staff_line,
+		", ".join(_upgrades.to_save_data()), delivery_line, staff_line, machine_line,
 		", ".join(_restore_notes) if not _restore_notes.is_empty() else "-"]
 
 
@@ -594,6 +606,8 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 			story_director.bind_deliveries(deliveries)
 		if worker != null:
 			story_director.bind_worker(worker)
+		if magnet != null:
+			story_director.bind_magnet(magnet)
 	if letter_panel != null:
 		letter_panel.closed.connect(_on_letter_closed)
 
@@ -814,3 +828,39 @@ func _on_staff_result(result: Dictionary) -> void:
 				story_director.on_staff_dismissed()
 		_:
 			_sound("switch", -4.0)
+
+
+# --- The first machine (P3b) -------------------------------------------------
+
+func _setup_magnet(saved_machines: Dictionary) -> void:
+	if magnet == null:
+		return
+	magnet.setup(_upgrades, _objects)
+	magnet.item_spawned.connect(_on_magnet_item_spawned)
+	magnet.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
+	magnet.piece_collected.connect(_on_magnet_piece_collected)
+	magnet.installed.connect(_on_magnet_installed)
+	var saved: Variant = saved_machines.get("magnet_collector", {})
+	magnet.apply_save_state(saved if typeof(saved) == TYPE_DICTIONARY else {})
+	var animator: Node = magnet.get_node_or_null("Animator")
+	if animator != null:
+		animator.touched_down.connect(func() -> void: _sound("clink", -12.0))
+
+
+func _on_magnet_item_spawned(item: ScrapItem) -> void:
+	if _objects.has(item.object_id):
+		push_error("OldYard: duplicate machine object_id '%s'." % item.object_id)
+		return
+	_objects[item.object_id] = item
+
+
+func _on_magnet_piece_collected(item: ScrapItem, _from_heap: bool) -> void:
+	_dust(item.global_position, 4, 0.1)
+	_sound("thud", -12.0)
+
+
+func _on_magnet_installed() -> void:
+	_dust(magnet.global_position, 18, 0.35)
+	_sound("delivery", -2.0)
+	if story_director != null:
+		story_director.on_machine_installed()

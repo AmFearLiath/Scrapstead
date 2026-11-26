@@ -123,6 +123,39 @@ func _staff_shots(scene: Node, player: Node3D) -> void:
 	await _shot("35_staff_working")
 	await _frames(240)
 	await _shot("36_staff_at_counter")
+	await _machine_shots(scene, player)
+
+
+## P3b: reserved pad, catalog, the magnetic collector at work, full crate.
+func _machine_shots(scene: Node, player: Node3D) -> void:
+	var magnet: MagnetCollector = scene.get_magnet()
+	scene.get_node("GameplayCamera")._target_zoom = 10.0
+	player.place(Vector3(34.0, 0.1, -9.0), 2.6)
+	await _frames(150)
+	await _shot("37_machine_pad_reserved")
+	var desk: OrderDesk = scene.get_world_object("station_order_desk") as OrderDesk
+	scene.get_wallet().credit(120, "capture-machine", "capture")
+	scene._on_interaction_finished(desk.object_id, desk.interact(scene._context))
+	await _frames(10)
+	var panel: Control = scene.get_node("HUD/CatalogPanel")
+	var scroll: ScrollContainer = panel.get_node("PanelContainer/Content/Scroll")
+	scroll.scroll_vertical = 10000
+	await _frames(10)
+	await _shot("38_catalog_machine")
+	scene._on_interaction_finished(desk.object_id, desk.buy("machine_magnet_collector"))
+	panel.close()
+	await _frames(90)
+	await _shot("39_machine_installed")
+	magnet._timer = magnet.get_cycle_seconds() * 0.58
+	await _frames(25)
+	await _shot("40_machine_lowering")
+	magnet._timer = magnet.get_cycle_seconds() * 0.25
+	await _frames(25)
+	await _shot("41_machine_carrying")
+	for index: int in magnet.profile.bin_capacity:
+		magnet.collect_once()
+	await _frames(60)
+	await _shot("42_machine_crate_full")
 
 
 ## P1 sequence: carried items, salvage, sell panel, upgrade panel, pause menu.

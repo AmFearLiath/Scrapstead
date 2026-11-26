@@ -8,7 +8,7 @@ Scrapstead ist ein gemütliches, humorvolles isometrisches Cozy Automation Tycoo
 
 **Spielbarer Gameplay-Prototyp (P0 + P1 + P1b + P2).** Godot 4.7.2 Stable, GDScript, Forward+, Windows und Linux.
 
-Der Prototyp enthält Hauptmenü mit Kamerafahrt durch den Old Yard, isometrische Steuerung, Sammeln, Bergen, Verkaufen, Credits, ein Tragekorb-Upgrade, eine optionale Zerlegung und Speichern/Fortsetzen. Seit P2: Walts Brief, ein Notizzettel mit Vorschlägen und Scrappy – sein Kopf steckt irgendwo im Schrott, sein Kernteil hat Walt gut verwahrt. Repariert folgt er dir, kommentiert und erinnert sich an Walt. Ist der Eingang hergerichtet, laden Nachbarn regelmäßig Schrott am Tor ab ([Anlieferungen](docs/deliveries.md)). Bald darauf fragt Juri am Tor nach Arbeit und trägt den Schrott gegen kleinen Lohn zur Theke ([Erster Mitarbeiter](docs/first-employee.md)). Stand, Testprotokoll und bekannte Einschränkungen: [Prototyp-Abnahme](docs/prototype-acceptance.md).
+Der Prototyp enthält Hauptmenü mit Kamerafahrt durch den Old Yard, isometrische Steuerung, Sammeln, Bergen, Verkaufen, Credits, ein Tragekorb-Upgrade, eine optionale Zerlegung und Speichern/Fortsetzen. Seit P2: Walts Brief, ein Notizzettel mit Vorschlägen und Scrappy – sein Kopf steckt irgendwo im Schrott, sein Kernteil hat Walt gut verwahrt. Repariert folgt er dir, kommentiert und erinnert sich an Walt. Ist der Eingang hergerichtet, laden Nachbarn regelmäßig Schrott am Tor ab ([Anlieferungen](docs/deliveries.md)). Bald darauf fragt Juri am Tor nach Arbeit und trägt den Schrott gegen kleinen Lohn zur Theke ([Erster Mitarbeiter](docs/first-employee.md)). Im Katalog wartet der kleine Magnetsammler, der Walts Nagelhaufen Stück für Stück in eine Kiste hebt ([Erste Maschine](docs/first-machine.md)). Stand, Testprotokoll und bekannte Einschränkungen: [Prototyp-Abnahme](docs/prototype-acceptance.md).
 
 ## Prototyp starten
 
@@ -151,6 +151,7 @@ docs/          Konzept, Spezifikationen, Decision Log, Abnahme
 - [Spezifikation des Begleiters Scrappy](docs/scrappy-companion.md)
 - [Anlieferungen der Nachbarn (Nachschub)](docs/deliveries.md)
 - [Erster Mitarbeiter (P3a)](docs/first-employee.md)
+- [Erste Maschine (P3b)](docs/first-machine.md)
 - [Maschinen und Automatisierung](docs/machines-automation.md)
 - [Art Direction: Walts Flickwerk-Diorama](docs/world-art-assets.md)
 - [UI- und UX-Spezifikation](docs/ui-ux.md)

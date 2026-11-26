@@ -12,8 +12,9 @@ extends Node
 ## Current save schema version. Other versions are rejected, never silently
 ## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
 ## upgrades (P1), version 3 story and Scrappy (P2), version 4 the neighbors'
-## scrap deliveries, version 5 the first employee (P3a).
-const SAVE_VERSION: int = 5
+## scrap deliveries, version 5 the first employee (P3a), version 6 the first
+## machine (P3b).
+const SAVE_VERSION: int = 6
 ## Oldest version that can be migrated explicitly (see _migrate()).
 const OLDEST_MIGRATABLE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
@@ -148,7 +149,30 @@ func validate_save_data(data: Dictionary) -> bool:
 			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("id")) != TYPE_STRING \
 					or typeof(entry.get("item")) != TYPE_STRING:
 				return false
-	return _is_valid_employee(data.get("employee"))
+	return _is_valid_employee(data.get("employee")) and _is_valid_machines(data.get("machines"))
+
+
+## Machines by ID: {"on": bool, "timer", "heap_taken", "counter": numbers, "items": [{id, item, slot}]}.
+func _is_valid_machines(value: Variant) -> bool:
+	if typeof(value) != TYPE_DICTIONARY:
+		return false
+	for machine_id: Variant in value:
+		var machine: Variant = value[machine_id]
+		if typeof(machine_id) != TYPE_STRING or typeof(machine) != TYPE_DICTIONARY:
+			return false
+		for key: String in ["timer", "heap_taken", "counter"]:
+			if machine.has(key) and not _is_number(machine[key]):
+				return false
+		if machine.has("on") and typeof(machine["on"]) != TYPE_BOOL:
+			return false
+		if machine.has("items"):
+			if typeof(machine["items"]) != TYPE_ARRAY:
+				return false
+			for entry: Variant in machine["items"]:
+				if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("id")) != TYPE_STRING \
+						or typeof(entry.get("item")) != TYPE_STRING:
+					return false
+	return true
 
 
 func _is_valid_employee(value: Variant) -> bool:
@@ -281,4 +305,8 @@ func _migrate(data: Dictionary) -> Dictionary:
 		# v4 -> v5 (P3a): nobody had been hired yet.
 		migrated["employee"] = {}
 		migrated["save_version"] = 5
+	if int(migrated["save_version"]) == 5:
+		# v5 -> v6 (P3b): no machine had been bought yet.
+		migrated["machines"] = {}
+		migrated["save_version"] = 6
 	return migrated

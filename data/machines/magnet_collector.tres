@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MachineProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/MachineProfile.gd" id="1_profile"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "magnet_collector"
+name_key = "machine.magnet_collector.name"
+description_key = "machine.magnet_collector.description"
+required_upgrade = "machine_magnet_collector"
+speed_upgrade = "upgrade_strong_magnet"
+cycle_seconds = 20.0
+upgraded_cycle_seconds = 12.0
+bin_capacity = 6
+work_radius = 3.0
+magnetic_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can")
+heap_pattern = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can", "scrap_rusted_bolt", "scrap_rusted_bolt", "scrap_empty_can")
+heap_size = 45

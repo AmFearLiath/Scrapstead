@@ -350,3 +350,31 @@ staff.juri.dismissed.1,Okay. I'll be at the gate. Not in a weird way.,Okay. Ich 
 staff.juri.refuses.1,That one looks valuable. Better sell it yourself.,Das da sieht wertvoll aus. Das verkaufst du lieber selbst.
 scrappy.staff_hired.1,A colleague! Does he have wheels? ...No. Pity. I like him anyway.,Ein Kollege! Hat er Räder? ... Nein. Schade. Ich mag ihn trotzdem.
 scrappy.staff_dismissed.1,He's waiting by the gate. That is either loyal or creepy.,Er wartet am Tor. Das ist entweder treu oder unheimlich.
+upgrade.machine_magnet_collector.name,Small magnetic collector,Kleiner Magnetsammler
+upgrade.machine_magnet_collector.description,"Second-hand, from a workshop clearance. Lifts anything that rusts. Ignores copper and wood, a little offended. Set up on the free work area next to Walt's nail heap.","Gebraucht, aus einer Werkstattauflösung. Hebt alles, was rostet. Kupfer und Holz ignoriert er leicht beleidigt. Wird auf der freien Arbeitsfläche neben Walts Nagelhaufen aufgestellt."
+upgrade.machine_magnet_collector.effect,Every 20 s one bolt or can from the nail heap (45 pieces) into its crate · stops when the crate holds 6,"Alle 20 s eine Schraube oder Dose aus dem Nagelhaufen (45 Teile) in seine Kiste · hält an, wenn 6 drin liegen"
+upgrade.machine_magnet_collector.bought,The magnetic collector is set up on the work area. Mind your watch.,Der Magnetsammler steht auf der Arbeitsfläche. Achte auf deine Armbanduhr.
+upgrade.upgrade_strong_magnet.name,Stronger magnet,Stärkerer Magnet
+upgrade.upgrade_strong_magnet.description,"Double-wound coil from an old scrapyard crane. Please don't stand too close with a pacemaker, a watch or strong opinions.","Doppelt gewickelte Spule aus einem alten Schrottplatzkran. Bitte nicht mit Herzschrittmacher, Armbanduhr oder festen Überzeugungen zu nah ran."
+upgrade.upgrade_strong_magnet.effect,Magnetic collector: every 12 s instead of every 20 s,Magnetsammler: alle 12 s statt alle 20 s
+upgrade.upgrade_strong_magnet.bought,New coil fitted. The collector hums half an octave higher.,Neue Spule eingebaut. Der Sammler brummt jetzt eine halbe Oktave höher.
+machine.magnet_collector.name,Magnetic collector,Magnetsammler
+machine.magnet_collector.description,Swings its magnet over Walt's nail heap and drops what sticks into the crate next to it. Takes loose bolts and cans lying near the heap first. Empty the crate yourself.,"Schwenkt seinen Magneten über Walts Nagelhaufen und lässt fallen, was hängen bleibt, in die Kiste daneben. Nimmt lose Schrauben und Dosen in der Nähe des Haufens zuerst. Die Kiste leerst du selbst."
+machine.reserved_sign,"RESERVED
+for something with an engine","RESERVIERT
+für etwas mit Motor"
+machine.heap_sign,"WALT'S NAIL HEAP
+not barefoot","WALTS NAGELHAUFEN
+nicht barfuß"
+ui.action.machine_on,Switch on,Einschalten
+ui.action.machine_off,Switch off,Ausschalten
+ui.machine.detail,{status} · heap {heap} · crate {bin}/{capacity},{status} · Haufen {heap} · Kiste {bin}/{capacity}
+ui.machine.status.working,working,arbeitet
+ui.machine.status.off,switched off,ausgeschaltet
+ui.machine.status.bin_full,crate full,Kiste voll
+ui.machine.status.empty,nothing left to lift,nichts mehr zu holen
+ui.machine.rules,"One piece every {seconds} s. Stops when the crate holds {capacity} pieces. Pieces left in the heap: {heap}. Copper, wood and anything valuable stay where they are.","Ein Teil alle {seconds} s. Hält an, wenn {capacity} Teile in der Kiste liegen. Noch im Haufen: {heap} Teile. Kupfer, Holz und alles Wertvolle bleiben liegen."
+ui.machine.switched_on,{name} rattles back to life.,{name} rattert wieder los.
+ui.machine.switched_off,{name} switched off.,{name} ausgeschaltet.
+note.magnet_full,The magnet's crate is full.,Die Kiste am Magnetsammler ist voll.
+scrappy.machine_installed.1,A magnet! Lovely. I'll keep my distance. I'm rather attached to my screws.,Ein Magnet! Schön. Ich halte Abstand. Ich hänge an meinen Schrauben.

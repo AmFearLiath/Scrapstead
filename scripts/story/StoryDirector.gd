@@ -19,6 +19,7 @@ const FLAG_FOUND_CORE := "found_core"
 const FLAG_RESTORED := "scrappy_restored"
 const FLAG_FIRST_HIRE := "first_hire"
 const ENTRANCE_WARE := "yard_entrance"
+const MAGNET_WARE := "machine_magnet_collector"
 const MAX_NOTES := 2
 const MAX_QUEUE := 4
 
@@ -36,6 +37,7 @@ var _upgrades: UpgradeProgress
 var _player: Node3D
 var _deliveries: ScrapDeliveries
 var _worker: YardWorker
+var _magnet: MagnetCollector
 var _rng := RandomNumberGenerator.new()
 var _time: float = 0.0
 var _quiet_until: float = 0.0
@@ -82,6 +84,18 @@ func bind_worker(worker: YardWorker) -> void:
 	refresh_notes()
 
 
+## Optional: the magnetic collector, so a full crate shows up in the notes.
+func bind_magnet(magnet: MagnetCollector) -> void:
+	_magnet = magnet
+	if _magnet != null:
+		_magnet.status_changed.connect(func(_status: String) -> void: refresh_notes())
+	refresh_notes()
+
+
+func _magnet_full() -> bool:
+	return _magnet != null and _magnet.get_status() == MagnetCollector.STATUS_BIN_FULL
+
+
 ## Most recently started line key (tests, diagnostics).
 func get_last_line() -> String:
 	return _last_line
@@ -116,6 +130,8 @@ func compute_note_keys() -> PackedStringArray:
 		keys.append("note.sell")
 	elif not _story.has_flag(FLAG_FIRST_PURCHASE):
 		keys.append("note.catalog")
+	if _magnet_full():
+		keys.append("note.magnet_full")
 	if restored and _upgrades != null and not _upgrades.is_owned(ENTRANCE_WARE):
 		keys.append("note.entrance")
 	var staff_on_it: bool = _worker != null and _worker.is_hired() and not _worker.is_paused()
@@ -171,6 +187,8 @@ func on_purchase(definition: UpgradeDefinition) -> void:
 	var first: bool = _story.set_flag(FLAG_FIRST_PURCHASE)
 	if definition.id == ENTRANCE_WARE:
 		say_event("entrance", true)
+	elif definition.id == MAGNET_WARE:
+		return
 	else:
 		say_event("purchase", true)
 		if first and _upgrades != null and not _upgrades.is_owned(ENTRANCE_WARE):
@@ -189,6 +207,11 @@ func on_staff_hired() -> void:
 	_story.set_flag(FLAG_FIRST_HIRE)
 	say_event("staff_hired", true)
 	refresh_notes()
+
+
+## The first machine was delivered and set up.
+func on_machine_installed() -> void:
+	say_event("machine_installed", true)
 
 
 func on_staff_dismissed() -> void:

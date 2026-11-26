@@ -585,8 +585,11 @@ import props_world  # noqa: E402
 
 import props_story  # noqa: E402
 
+import props_machines  # noqa: E402
+
 ASSETS.update(props_world.ASSETS)
 ASSETS.update(props_story.ASSETS)
+ASSETS.update(props_machines.ASSETS)
 
 
 def main():
