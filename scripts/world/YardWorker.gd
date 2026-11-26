@@ -17,11 +17,13 @@ signal status_changed(status: String)
 signal picked_up(item: ScrapItem)
 ## A trip was sold at the counter.
 signal sold(count: int, total: int, wage: int)
+## He took a device apart at the station (presentation, story).
+signal dismantled(input: ScrapItem, outputs: Array)
 ## A one-liner (localization key) for his speech bubble.
 signal remark(line_key: String)
 
 enum Presence { ABSENT, AVAILABLE, HIRED }
-enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST }
+enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING }
 
 const PRESENCE_NAMES: PackedStringArray = ["absent", "available", "hired"]
 const STATUS_WORKING := "working"
@@ -36,7 +38,7 @@ const STATUS_COLORS: Dictionary = {"working": Color(0.62, 0.85, 0.5), "waiting":
 	"blocked": Color(0.95, 0.45, 0.35), "paused": Color(0.88, 0.66, 0.23)}
 ## Event -> number of authored variants ("<line_prefix>.<event>.<n>").
 const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale": 1, "paused": 2,
-	"resumed": 2, "dismissed": 1, "refuses": 1}
+	"resumed": 2, "dismissed": 1, "refuses": 1, "dismantles": 2}
 
 @export var profile: EmployeeProfile
 ## Where he waits to be hired, by the gate.
@@ -47,12 +49,24 @@ const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale
 @export var route_root: Node3D
 ## Where he stands to sell (in front of the counter).
 @export var counter_spot: Marker3D
+@export_group("Dismantling")
+## Station he takes broken devices to; optional.
+@export var dismantle_station: DismantleStation
+## Marker3D children from the main route towards the station, in order.
+@export var station_route_root: Node3D
+## Where he stands at the station.
+@export var station_spot: Marker3D
 
 ## Read by the presentation-only PlayerAnimator.
 var move_speed: float = 2.4
 
 var _presence: Presence = Presence.ABSENT
 var _paused: bool = false
+## Player's rule: take broken devices to the station before selling them.
+var _dismantle_devices: bool = true
+## Waypoint graph: positions and neighbour lists (built on first use).
+var _nodes: Array[Vector3] = []
+var _edges: Array = []
 var _task: Task = Task.IDLE
 var _wallet: Wallet
 var _objects: Dictionary = {}
@@ -65,7 +79,7 @@ var _timer: float = 0.0
 var _stuck_timer: float = 0.0
 var _blocked: bool = false
 var _seen: int = 0
-var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0}
+var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0, "dismantled": 0}
 var _status: String = ""
 var _idle_timer: float = 0.0
 var _refused: Dictionary = {}
@@ -111,7 +125,7 @@ func get_status() -> String:
 		return STATUS_PAUSED
 	if _blocked:
 		return STATUS_BLOCKED
-	if _task in [Task.TO_ITEM, Task.PICKING, Task.TO_COUNTER, Task.SELLING]:
+	if _task in [Task.TO_ITEM, Task.PICKING, Task.TO_COUNTER, Task.SELLING, Task.TO_STATION, Task.DISMANTLING]:
 		return STATUS_WORKING
 	return STATUS_WAITING
 
@@ -135,6 +149,23 @@ func is_carrying(object_id: String) -> bool:
 		if is_instance_valid(item) and item.object_id == object_id:
 			return true
 	return false
+
+
+## Whether broken devices are dismantled before they are sold.
+func is_dismantling_devices() -> bool:
+	return _dismantle_devices
+
+
+## True when the yard has a station he could take devices to.
+func can_dismantle() -> bool:
+	return dismantle_station != null and station_spot != null
+
+
+## Toggles the dismantling rule. Returns a result for the panel.
+func toggle_dismantling() -> Dictionary:
+	_dismantle_devices = not _dismantle_devices
+	return Interactable.make_result(true, "ui.staff.dismantle_on" if _dismantle_devices else "ui.staff.dismantle_off",
+		{"name": get_display_name()})
 
 
 func get_display_name() -> String:
@@ -204,7 +235,7 @@ func on_delivery_arrived() -> void:
 
 func get_save_state() -> Dictionary:
 	var data: Dictionary = {"presence": PRESENCE_NAMES[_presence], "seen": _seen, "paused": _paused,
-		"stats": _stats.duplicate()}
+		"dismantle": _dismantle_devices, "stats": _stats.duplicate()}
 	if _presence != Presence.ABSENT:
 		data["position"] = [snappedf(global_position.x, 0.001), snappedf(global_position.y, 0.001),
 			snappedf(global_position.z, 0.001)]
@@ -232,6 +263,7 @@ func apply_save_state(data: Dictionary) -> void:
 		presence = Presence.AVAILABLE
 	_presence = presence as Presence
 	_paused = bool(data.get("paused", false)) and _presence == Presence.HIRED
+	_dismantle_devices = bool(data.get("dismantle", true))
 	var saved_position: Variant = data.get("position")
 	if typeof(saved_position) == TYPE_ARRAY and saved_position.size() == 3:
 		global_position = Vector3(saved_position[0], saved_position[1], saved_position[2])
@@ -259,7 +291,7 @@ func _physics_process(delta: float) -> void:
 	if _task == Task.TO_REST and _presence == Presence.HIRED and not _paused and _find_item() != null:
 		_next_task()
 	match _task:
-		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST:
+		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION:
 			target_velocity = _follow_path(delta)
 			if _path.is_empty():
 				_arrived()
@@ -271,6 +303,10 @@ func _physics_process(delta: float) -> void:
 			_timer -= delta
 			if _timer <= 0.0:
 				_finish_sale()
+		Task.DISMANTLING:
+			_timer -= delta
+			if _timer <= 0.0:
+				_finish_dismantling()
 		Task.IDLE:
 			_idle(delta)
 	var horizontal := Vector3(velocity.x, 0, velocity.z).move_toward(target_velocity, 12.0 * delta)
@@ -295,17 +331,23 @@ func _next_task() -> void:
 	if _presence != Presence.HIRED or _paused:
 		_task = Task.IDLE
 		return
-	if _carrying.size() < profile.carry_capacity:
-		var item: ScrapItem = _find_item()
+	var device: ScrapItem = _carried_device()
+	if device != null and _wants_dismantling(device):
+		_arrive_distance = 0.2
+		_path = _path_to(station_spot.global_position)
+		_task = Task.TO_STATION
+		return
+	if device == null and _carrying.size() < profile.carry_capacity:
+		var item: ScrapItem = _find_item(not _carrying.is_empty())
 		if item != null:
 			_target = item
 			_arrive_distance = 0.55
-			_path = _route_towards_drop_off(item.global_position)
+			_path = _path_to(item.global_position)
 			_task = Task.TO_ITEM
 			return
 	if not _carrying.is_empty():
 		_arrive_distance = 0.2
-		_path = _route_towards_counter()
+		_path = _path_to(_marker_position(counter_spot))
 		_task = Task.TO_COUNTER
 		return
 	_walk_to(_marker_position(rest_spot), Task.TO_REST)
@@ -313,7 +355,7 @@ func _next_task() -> void:
 
 func _walk_to(point: Vector3, task: Task) -> void:
 	_arrive_distance = 0.2
-	_path = _route_towards_drop_off(point)
+	_path = _path_to(point)
 	_task = task
 
 
@@ -328,6 +370,10 @@ func _arrived() -> void:
 		Task.TO_COUNTER:
 			_task = Task.SELLING
 			_timer = profile.sell_seconds
+		Task.TO_STATION:
+			_task = Task.DISMANTLING
+			_timer = dismantle_station.profile.seconds * profile.tool_time_factor
+			_say("dismantles")
 		Task.TO_REST:
 			_task = Task.IDLE
 			_idle_timer = 0.0
@@ -340,6 +386,30 @@ func _finish_pick() -> void:
 		_carrying.append(_target)
 		picked_up.emit(_target)
 	_next_task()
+
+
+## Swaps the carried device for the station's outputs.
+func _finish_dismantling() -> void:
+	var device: ScrapItem = _carried_device()
+	if device != null and dismantle_station != null:
+		var outputs: Array[ScrapItem] = dismantle_station.dismantle_for_staff(device)
+		if not outputs.is_empty():
+			_carrying.erase(device)
+			_carrying.append_array(outputs)
+			_stats["dismantled"] += 1
+			dismantled.emit(device, outputs)
+	_next_task()
+
+
+func _carried_device() -> ScrapItem:
+	for item: ScrapItem in _carrying:
+		if is_instance_valid(item) and item.definition.category == profile.device_category:
+			return item
+	return null
+
+
+func _wants_dismantling(device: ScrapItem) -> bool:
+	return _dismantle_devices and can_dismantle() and dismantle_station.accepts(device)
 
 
 func _finish_sale() -> void:
@@ -383,8 +453,9 @@ func _idle(delta: float) -> void:
 			_say("idle")
 
 
-## Nearest allowed item lying in the work area, or null.
-func _find_item() -> ScrapItem:
+## Nearest allowed item lying in the work area, or null. Devices travel
+## alone, so they are skipped while he already carries something.
+func _find_item(skip_devices: bool = false) -> ScrapItem:
 	if _drop_off == null or profile == null:
 		return null
 	var best: ScrapItem
@@ -393,10 +464,12 @@ func _find_item() -> ScrapItem:
 		var item: ScrapItem = target as ScrapItem
 		if not _is_workable(item):
 			continue
-		if item.definition.category != profile.allowed_category:
+		if not profile.allowed_categories.has(item.definition.category):
 			if not _refused.has(item.object_id):
 				_refused[item.object_id] = true
 				_say("refuses")
+			continue
+		if skip_devices and item.definition.category == profile.device_category:
 			continue
 		var distance: float = item.global_position.distance_to(global_position)
 		if distance < best_distance:
@@ -460,50 +533,82 @@ func _follow_path(delta: float) -> Vector3:
 	return to_point.normalized() * minf(move_speed, to_point.length() * 4.0 + 0.6)
 
 
-func _route_points() -> Array[Vector3]:
+## Waypoint graph: the main route (drop-off -> counter) as a chain, the
+## station route as a branch joined at the nearest main waypoint.
+func _build_graph() -> void:
+	_nodes.clear()
+	_edges.clear()
+	var main: Array[Vector3] = _marker_points(route_root)
+	main.append(_marker_position(counter_spot))
+	_add_chain(main, -1)
+	if station_route_root != null and station_spot != null:
+		var branch: Array[Vector3] = _marker_points(station_route_root)
+		branch.append(station_spot.global_position)
+		var join: int = _nearest_node(branch[0], 0, main.size())
+		_add_chain(branch, join)
+
+
+func _add_chain(points: Array[Vector3], join: int) -> void:
+	var previous: int = join
+	for point: Vector3 in points:
+		_nodes.append(point)
+		_edges.append([])
+		var index: int = _nodes.size() - 1
+		if previous >= 0:
+			_edges[index].append(previous)
+			_edges[previous].append(index)
+		previous = index
+
+
+func _marker_points(root: Node3D) -> Array[Vector3]:
 	var points: Array[Vector3] = []
-	if route_root != null:
-		for child: Node in route_root.get_children():
+	if root != null:
+		for child: Node in root.get_children():
 			if child is Marker3D:
 				points.append((child as Marker3D).global_position)
-	points.append(_marker_position(counter_spot))
 	return points
 
 
-## Remaining route to the counter, starting at the nearest route point.
-func _route_towards_counter() -> Array[Vector3]:
-	var points: Array[Vector3] = _route_points()
-	var start: int = _nearest_index(points)
-	return points.slice(start)
-
-
-## Route back to the drop-off spot (if coming from the counter), then the point.
-func _route_towards_drop_off(point: Vector3) -> Array[Vector3]:
-	var path: Array[Vector3] = []
-	if _is_nearer_to_counter():
-		var points: Array[Vector3] = _route_points()
-		points.reverse()
-		path = points.slice(_nearest_index(points))
-	path.append(point)
-	return path
-
-
-func _is_nearer_to_counter() -> bool:
-	if _drop_off == null or counter_spot == null:
-		return false
-	return global_position.distance_to(counter_spot.global_position) \
-		< global_position.distance_to(_drop_off.global_position)
-
-
-func _nearest_index(points: Array[Vector3]) -> int:
-	var best: int = 0
+func _nearest_node(point: Vector3, from: int = 0, to: int = -1) -> int:
+	var best: int = from
 	var best_distance: float = INF
-	for index: int in points.size():
-		var distance: float = points[index].distance_to(global_position)
+	for index: int in range(from, _nodes.size() if to < 0 else to):
+		var distance: float = _nodes[index].distance_to(point)
 		if distance < best_distance:
 			best = index
 			best_distance = distance
 	return best
+
+
+## Waypoints from the node nearest to him to the node nearest to the target,
+## then the target itself. Short hops skip the graph.
+func _path_to(target: Vector3) -> Array[Vector3]:
+	if _nodes.is_empty():
+		_build_graph()
+	var path: Array[Vector3] = []
+	if _nodes.is_empty() or global_position.distance_to(target) < 2.5:
+		path.append(target)
+		return path
+	var start: int = _nearest_node(global_position)
+	var goal: int = _nearest_node(target)
+	var parents: Dictionary = {start: -1}
+	var queue: Array[int] = [start]
+	while not queue.is_empty():
+		var current: int = queue.pop_front()
+		if current == goal:
+			break
+		for next: int in _edges[current]:
+			if not parents.has(next):
+				parents[next] = current
+				queue.append(next)
+	var chain: Array[Vector3] = []
+	var node: int = goal
+	while node != -1 and parents.has(node):
+		chain.push_front(_nodes[node])
+		node = parents[node]
+	path.append_array(chain)
+	path.append(target)
+	return path
 
 
 func _marker_position(marker: Node3D) -> Vector3:
@@ -519,6 +624,8 @@ func _face(delta: float, horizontal: Vector3) -> void:
 		target_yaw = atan2(to_target.x, to_target.z)
 	elif _task == Task.SELLING and counter_spot != null:
 		target_yaw = counter_spot.global_rotation.y
+	elif _task == Task.DISMANTLING and station_spot != null:
+		target_yaw = station_spot.global_rotation.y
 	else:
 		return
 	_visual_root.rotation.y = lerp_angle(_visual_root.rotation.y, target_yaw, 1.0 - exp(-9.0 * delta))

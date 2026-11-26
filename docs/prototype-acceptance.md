@@ -173,7 +173,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 1. Es gibt **einen Speicherplatz**. „Neues Spiel“ überschreibt den alten Stand erst beim nächsten Speichern.
 2. Kein automatisches Speichern (bewusst, siehe Integrationsspezifikation); ungespeicherter Fortschritt geht bei „Hauptmenü ohne Speichern“ verloren.
 3. Fundstücke regenerieren nicht (Regeneration laut Matrix erst Phase 4–5). Nach dem Kauf „Eingang herrichten“ bringen Nachbarn jedoch regelmäßig kleine Lieferungen (~4,6 Cr/min, nur während des Spielens), siehe [Anlieferungen](deliveries.md).
-4. Die Verarbeitung ist an genau eine Radio-Platzierung gebunden (vorbereitete Ausgabeplätze); mehrere Verarbeitungsobjekte erfordern später eine Erzeugung von Ausgaben zur Laufzeit.
+4. Erledigt: Der Zerlegetisch nimmt jedes defekte Radio an und erzeugt Ausgaben zur Laufzeit; das ursprüngliche Radio behält seine vorbereiteten Ausgabeplätze.
 5. Ablegen nimmt immer das zuletzt aufgenommene Teil; es gibt keine Auswahl einzelner Teile.
 6. Dezimalzahlen sind gebietsschemaabhängig (`NumberFormat`, „3,5 s“ im Deutschen). Credit-Beträge werden noch ohne Tausendertrennzeichen angezeigt (im Prototyp stets unter 1000).
 7. Sprache lässt sich nur im Hauptmenü umstellen; Tastenbelegung ist nicht änderbar (kein Rebinding in P0/P1).

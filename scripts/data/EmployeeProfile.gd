@@ -13,8 +13,13 @@ extends Resource
 ## Wage per item the employee sells. Taken from that sale's proceeds only,
 ## so the employee can never cost money the yard has not earned.
 @export var wage_per_item: int = 1
-## Item category the employee is allowed to carry and sell.
-@export var allowed_category: String = "loose_scrap"
+## Item categories the employee is allowed to carry and sell.
+@export var allowed_categories: PackedStringArray = ["loose_scrap"]
+## Category of broken devices he takes to the dismantling station first
+## (if the player allows it); carried alone, one per trip.
+@export var device_category: String = "device"
+## Factor on a station's processing time ("good on his feet, less so with tools").
+@export var tool_time_factor: float = 1.5
 ## Items per trip.
 @export var carry_capacity: int = 2
 @export var move_speed: float = 2.4

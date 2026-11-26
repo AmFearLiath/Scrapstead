@@ -314,8 +314,8 @@ ui.staff.status.waiting,waiting for scrap,wartet auf Schrott
 ui.staff.status.blocked,can't get through,kommt nicht durch
 ui.staff.status.paused,on a break,macht Pause
 ui.staff.status_line,Right now: {status},Gerade: {status}
-ui.staff.terms,"Carries loose scrap from the drop-off pallet to the counter and sells it, {capacity} pieces per trip. Anything you leave on the pallet counts. Hiring: {fee} Cr once (for gloves). Wage: {wage} Cr per piece sold, taken straight from that sale.","Trägt losen Schrott von der Abladepalette zur Theke und verkauft ihn, {capacity} Teile pro Runde. Was du auf die Palette legst, zählt mit. Einstellen: einmalig {fee} Cr (für Handschuhe). Lohn: {wage} Cr pro verkauftem Teil, direkt vom Erlös."
-ui.staff.stats,"So far: {trips} trips, {items} pieces, {revenue} Cr sold, {wages} Cr wages. {net} Cr stay with the yard.","Bisher: {trips} Runden, {items} Teile, {revenue} Cr Umsatz, {wages} Cr Lohn. {net} Cr bleiben dem Hof."
+ui.staff.terms,"Carries loose scrap and broken devices from the drop-off pallet to the counter and sells them, {capacity} pieces per trip (devices one at a time). Anything you leave on the pallet counts. Hiring: {fee} Cr once (for gloves). Wage: {wage} Cr per piece sold, taken straight from that sale.","Trägt losen Schrott und defekte Geräte von der Abladepalette zur Theke und verkauft sie, {capacity} Teile pro Runde (Geräte einzeln). Was du auf die Palette legst, zählt mit. Einstellen: einmalig {fee} Cr (für Handschuhe). Lohn: {wage} Cr pro verkauftem Teil, direkt vom Erlös."
+ui.staff.stats,"So far: {trips} trips, {items} pieces, {dismantled} devices dismantled, {revenue} Cr sold, {wages} Cr wages. {net} Cr stay with the yard.","Bisher: {trips} Runden, {items} Teile, {dismantled} Geräte zerlegt, {revenue} Cr Umsatz, {wages} Cr Lohn. {net} Cr bleiben dem Hof."
 ui.staff.hire,Hire ({fee} Cr),Einstellen ({fee} Cr)
 ui.staff.pause,Take a break,Pause machen
 ui.staff.resume,Back to work,Weiterarbeiten
@@ -379,3 +379,10 @@ ui.machine.switched_off,{name} switched off.,{name} ausgeschaltet.
 note.magnet_full,The magnet's crate is full.,Die Kiste am Magnetsammler ist voll.
 scrappy.machine_installed.1,A magnet! Lovely. I'll keep my distance. I'm rather attached to my screws.,Ein Magnet! Schön. Ich halte Abstand. Ich hänge an meinen Schrauben.
 ui.machine.refilled,"Kowalski the scrap dealer tipped {amount} pieces of small scrap onto the nail heap. ""Saves me the landfill fee.""",Schrotthändler Kowalski hat {amount} Teile Kleinschrott auf den Nagelhaufen gekippt. „Spart mir die Deponiegebühr.“
+delivery.note.pohl_3,My husband repaired this radio in 1983. Since then it only plays polka.,Das Radio hat mein Mann 1983 repariert. Seitdem spielt es nur noch Polka.
+delivery.note.anonymous_2,Works. Sometimes. Don't ask.,Funktioniert. Manchmal. Nicht fragen.
+ui.staff.dismantle_rule,"Dismantle broken devices before selling (more for you, more wage for him)","Defekte Geräte vor dem Verkauf zerlegen (mehr für dich, mehr Lohn für ihn)"
+ui.staff.dismantle_on,{name} will take broken devices to the dismantling table first.,{name} bringt defekte Geräte zuerst zum Zerlegetisch.
+ui.staff.dismantle_off,{name} will sell broken devices as they are.,"{name} verkauft defekte Geräte so, wie sie sind."
+staff.juri.dismantles.1,"Screwdriver, screwdriver... Benno always said: righty-tighty. Or was it lefty?","Schraubenzieher, Schraubenzieher... Benno hat immer gesagt: rechts fest. Oder links?"
+staff.juri.dismantles.2,"If this radio plays polka now, I'm not responsible.","Wenn das Radio gleich Polka spielt, war ich das nicht."

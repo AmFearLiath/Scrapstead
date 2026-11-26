@@ -41,6 +41,17 @@ Die passende Wiederholungstätigkeit gibt es seit den [Anlieferungen](deliveries
 
 **Entscheidung für den Spieler:** Juri behält etwa 29 % des Lieferertrags (1 Cr bei durchschnittlich ~3,5 Cr pro Teil). Dafür muss der Spieler nicht mehr zum Tor laufen und kann sammeln, zerlegen oder erkunden. Wer bastelt (Kupferrohr aufheben statt verkaufen), pausiert ihn oder nimmt die Teile selbst. Was auf der Palette liegt, gehört zu Juris Aufgabe. Damit ist die Palette ein einfacher, sichtbarer Arbeitsbereich.
 
+## 4a. Geräte zerlegen (Erweiterung)
+
+Seit der Rückmeldung nach dem ersten Spielen bringen Nachbarn gelegentlich defekte Radios (Frau Pohls Polka-Radio, „Funktioniert. Manchmal.“).
+
+- **Regel im Personalfenster:** „Defekte Geräte vor dem Verkauf zerlegen“ (Standard: an).
+- **An:** Juri trägt ein Radio allein über eine eigene Route nördlich des Kiosks zum Zerlegetisch. Weil er „weniger gut mit Werkzeug“ ist, braucht er dort 1,5-mal so lange wie der Spieler. Danach verkauft er Kupferdraht und Elektronikteile an der Theke.
+- **Ergebnis:** 16 Cr Erlös, 2 Cr Lohn (2 Teile), also 14 Cr für den Hof statt 11 Cr beim Direktverkauf. Beide verdienen mehr; dafür dauert die Runde deutlich länger.
+- **Aus:** Er verkauft das Radio, wie es ist (12 Cr, 1 Cr Lohn).
+- Der Zerlegetisch nimmt jetzt jedes Radio an. Das ursprüngliche Radio behält seine vorbereiteten Ausgaben; alle weiteren bekommen frische Teile (`dismantled_<n>`), die mit dem Spielstand gespeichert und nach dem Verkauf entfernt werden.
+- Juri läuft über einen kleinen Wegpunktgraphen (Hauptroute Palette → Theke, Abzweig zum Zerlegetisch) statt über eine einzelne Route.
+
 ## 5. Technik
 
 - `EmployeeProfile` (Resource, `data/employees/juri.tres`): Name, Rolle, Kosten, Kapazität, Tempo, Arbeitsradius und Erscheinen.
@@ -71,3 +82,4 @@ Screenshots `32_staff_at_gate` bis `36_staff_at_counter`.
 - Playtest: Ob sich Handgeld und Lohn wie eine Entscheidung anfühlen oder wie eine Selbstverständlichkeit, und ob Juris Tempo nervt oder beruhigt.
 - Scrappy beobachtet Juri noch nicht bei der Arbeit (Konzept: Scrappy besucht Mitarbeiter). Das ist ein guter nächster Schritt für die Figurenbeziehungen.
 - Keine Erfahrung oder Entwicklung; das feste Rollenprofil genügt laut Kernmatrix für die Kernversion.
+- Tests der Erweiterung: `tests/integration/test_staff_dismantling.gd` (4 Tests: Spieler zerlegt ein geliefertes Radio, Juri mit und ohne Regel, Gerät allein und Neustart mitten in der Runde).

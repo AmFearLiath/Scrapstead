@@ -15,6 +15,7 @@ signal closed
 @onready var _primary_button: Button = %PrimaryButton
 @onready var _dismiss_button: Button = %DismissButton
 @onready var _close_button: Button = %CloseButton
+@onready var _dismantle_toggle: CheckButton = %DismantleToggle
 
 var _worker: YardWorker
 var _confirm_dismiss: bool = false
@@ -25,6 +26,7 @@ func _ready() -> void:
 	_close_button.pressed.connect(close)
 	_primary_button.pressed.connect(_on_primary_pressed)
 	_dismiss_button.pressed.connect(_on_dismiss_pressed)
+	_dismantle_toggle.toggled.connect(_on_dismantle_toggled)
 
 
 func open(worker: YardWorker) -> void:
@@ -62,13 +64,16 @@ func _rebuild() -> void:
 	_terms.text = tr("ui.staff.terms").format({"fee": profile.hire_fee, "wage": profile.wage_per_item,
 		"capacity": profile.carry_capacity})
 	_status.visible = hired
+	_dismantle_toggle.visible = hired and _worker.can_dismantle()
+	_dismantle_toggle.set_pressed_no_signal(_worker.is_dismantling_devices())
 	_stats.visible = hired
 	_dismiss_button.visible = hired
 	if hired:
 		_status.text = tr("ui.staff.status_line").format({"status": tr("ui.staff.status." + _worker.get_status())})
 		var stats: Dictionary = _worker.get_stats()
 		_stats.text = tr("ui.staff.stats").format({"trips": stats["trips"], "items": stats["items"],
-			"revenue": stats["revenue"], "wages": stats["wages"], "net": stats["revenue"] - stats["wages"]})
+			"revenue": stats["revenue"], "wages": stats["wages"], "net": stats["revenue"] - stats["wages"],
+			"dismantled": stats["dismantled"]})
 		_primary_button.text = tr("ui.staff.resume" if _worker.is_paused() else "ui.staff.pause")
 		_dismiss_button.text = tr("ui.staff.dismiss_confirm" if _confirm_dismiss else "ui.staff.dismiss")
 	else:
@@ -95,6 +100,12 @@ func _on_dismiss_pressed() -> void:
 		return
 	action_result.emit(_worker.dismiss())
 	close()
+
+
+func _on_dismantle_toggled(pressed: bool) -> void:
+	if _worker == null or pressed == _worker.is_dismantling_devices():
+		return
+	action_result.emit(_worker.toggle_dismantling())
 
 
 func _on_status_changed(_status_name: String) -> void:

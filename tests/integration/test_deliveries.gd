@@ -44,7 +44,7 @@ func _sell_all(scene: Node) -> int:
 	return int(result.get("message_args", {}).get("total", 0))
 
 
-func test_table_is_valid_and_only_delivers_common_sellable_scrap() -> void:
+func test_table_is_valid_and_only_delivers_common_scrap_and_devices() -> void:
 	var table: DeliveryTable = load("res://data/deliveries/neighbor_deliveries.tres")
 	var catalog: ItemCatalog = load("res://data/items/item_catalog.tres")
 	var problems: PackedStringArray = table.validate(catalog)
@@ -54,7 +54,8 @@ func test_table_is_valid_and_only_delivers_common_sellable_scrap() -> void:
 		for item_id: String in entry["items"]:
 			var definition: ItemDefinition = catalog.get_definition(item_id)
 			total += definition.sell_value
-			check(definition.category == "loose_scrap", "%s is loose scrap" % item_id)
+			check(definition.category in ["loose_scrap", "device"], "%s is common scrap or a broken device" % item_id)
+			check(definition.carry_size <= 2 or definition.category == "bulk_scrap", "%s fits a basket" % item_id)
 		for key: String in [entry["sender"], entry["note"]]:
 			for locale: String in ["de", "en"]:
 				TranslationServer.set_locale(locale)

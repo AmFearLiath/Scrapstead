@@ -860,3 +860,6 @@ Referenz: [Erste Maschine](first-machine.md).
 
 **Beschluss (Rückmeldung nach dem ersten Spielen: Sammler und Upgrade sind nach dem Haufen nutzlos):** Schrotthändler Kowalski kippt alle 4 Minuten Spielzeit 12 Teile auf den Nagelhaufen (höchstens 45). „Stärkerer Magnet“ kostet 25 statt 35 Cr. Versetzen der Maschine bleibt zurückgestellt, weil es ein Platzierungssystem erfordert.
 
+## 26.11.2026 — Juri zerlegt Geräte vor dem Verkauf
+
+**Beschluss (Rückmeldung nach dem ersten Spielen):** Nachbarn liefern gelegentlich defekte Radios. Juri bringt sie, wenn der Spieler es erlaubt (Standard: an), allein zum Zerlegetisch, braucht dort 1,5-mal so lange und verkauft die Teile. Hof +14 statt +11 Cr, Juri 2 statt 1 Cr Lohn. Der Zerlegetisch erzeugt Ausgaben für jedes weitere Radio zur Laufzeit; das ursprüngliche Radio bleibt unverändert, damit P1b-Spielstände gültig bleiben. Eine Speicherversion ist nicht nötig (neue Felder sind optional).

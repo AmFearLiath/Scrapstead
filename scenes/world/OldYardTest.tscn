@@ -343,12 +343,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.85, 0, -4.6)
 [node name="CounterSpot" type="Marker3D" parent="Staff"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 12.75, 0, -5.35)
 
-[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot") instance=ExtResource("70_worker")]
+[node name="StationRoute" type="Node3D" parent="Staff"]
+
+[node name="Point1" type="Marker3D" parent="Staff/StationRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.0, 0, -2.8)
+
+[node name="Point2" type="Marker3D" parent="Staff/StationRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0, -2.8)
+
+[node name="Point3" type="Marker3D" parent="Staff/StationRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 0, -3.8)
+
+[node name="Point4" type="Marker3D" parent="Staff/StationRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2, 0, -4.6)
+
+[node name="StationSpot" type="Marker3D" parent="Staff"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 31.5, 0, -5.9)
+
+[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot", "dismantle_station", "station_route_root", "station_spot") instance=ExtResource("70_worker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9, 0, -0.9)
 wait_spot = NodePath("../WaitSpot")
 rest_spot = NodePath("../RestSpot")
 route_root = NodePath("../Route")
 counter_spot = NodePath("../CounterSpot")
+dismantle_station = NodePath("../../TestObjects/DismantleStation")
+station_route_root = NodePath("../StationRoute")
+station_spot = NodePath("../StationSpot")
 
 [node name="MagnetCollector" parent="." instance=ExtResource("72_magnet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)

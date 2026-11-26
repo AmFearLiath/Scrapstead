@@ -282,6 +282,9 @@ func _register_world_objects() -> void:
 			push_error("OldYard: duplicate object_id '%s'." % target.object_id)
 			continue
 		_objects[target.object_id] = target
+		if target is DismantleStation:
+			(target as DismantleStation).item_spawned.connect(_on_runtime_item_spawned)
+			(target as DismantleStation).item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
 
 
 func _restore_player(player_state: Dictionary) -> void:
@@ -297,7 +300,13 @@ func _restore_player(player_state: Dictionary) -> void:
 
 
 func _restore_world_objects(saved_objects: Dictionary) -> void:
+	# Stations first: they recreate runtime outputs whose own states follow.
 	for object_id: String in saved_objects:
+		if _objects.get(object_id) is DismantleStation:
+			_objects[object_id].apply_save_state(saved_objects[object_id])
+	for object_id: String in saved_objects:
+		if _objects.get(object_id) is DismantleStation:
+			continue
 		if not _objects.has(object_id):
 			_note("unknown object id '%s' ignored" % object_id)
 			continue
@@ -758,6 +767,7 @@ func _setup_worker(saved: Dictionary) -> void:
 	worker.sold.connect(_on_worker_sold)
 	worker.remark.connect(_on_worker_remark)
 	worker.presence_changed.connect(_on_worker_presence_changed)
+	worker.dismantled.connect(_on_worker_dismantled)
 	var animator: Node = worker.get_node_or_null("Animator")
 	if animator != null:
 		animator.setup(worker, null, worker.get_node("VisualRoot/PlaceholderModel"))
@@ -874,3 +884,20 @@ func _on_magnet_refilled(amount: int) -> void:
 	var heap: Node3D = magnet.get_node_or_null("Heap") as Node3D
 	if heap != null:
 		_dust(heap.global_position, 14, 0.3)
+
+
+## Outputs a station created at runtime join the object registry.
+func _on_runtime_item_spawned(item: ScrapItem) -> void:
+	if _objects.has(item.object_id):
+		push_error("OldYard: duplicate runtime object_id '%s'." % item.object_id)
+		return
+	_objects[item.object_id] = item
+
+
+func _on_worker_dismantled(_input: ScrapItem, _outputs: Array) -> void:
+	_update_worker_load()
+	if worker.dismantle_station != null:
+		_dust(worker.dismantle_station.get_interaction_point(), 8, 0.2)
+	_sound("clink", -8.0)
+	if sound_fx != null:
+		sound_fx.play_burst("pop", 2, 0.12, -8.0)
