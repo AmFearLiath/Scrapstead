@@ -22,7 +22,7 @@ PALETTE = {
     "steel": ("metal", "6d7a82"), "steel_light": ("metal", "b5bcbe"), "wood": ("wood", "9a6a40"),
     "wood_light": ("wood", "c79560"), "wood_dark": ("wood", "5e4029"), "sand": ("concrete", "d6aa7c"),
     "soil": ("concrete", "93704f"), "ink": ("paint", "2a2624"), "plum": ("fabric", "6b4a6b"),
-    "red": ("paint", "c63f2a"), "tyre": ("rubber", "262422"), "brass": ("metal", "c9a24a"),
+    "red": ("paint", "c63f2a"), "tyre": ("rubber", "262422"), "brass": ("metal", "c9a24a"), "copper": ("metal", "b8693a"),
     "paper": ("paper", "f3e9d2"), "glass": ("glass", "5f8f9c"), "green": ("paint", "5c9a4a"),
     "skin": ("skin", "e8a47c"),
 }

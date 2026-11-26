@@ -64,21 +64,29 @@ func test_data_is_valid_and_translated() -> void:
 	var profile: PressProfile = load("res://data/machines/scrap_press.tres")
 	var catalog: ItemCatalog = load("res://data/items/item_catalog.tres")
 	check(profile.validate(catalog).is_empty(), "profile valid: %s" % ", ".join(profile.validate(catalog)))
-	var bale: ItemDefinition = catalog.get_definition(profile.bale_item)
-	var pieces_value: int = 0
-	for item_id: String in profile.accepted_items:
-		pieces_value = maxi(pieces_value, catalog.get_definition(item_id).sell_value)
-	check(bale.sell_value > pieces_value * profile.pieces_per_bale * 0.9, "a bale pays more than loose pieces on average")
-	check(bale.carry_size < profile.pieces_per_bale, "a bale saves basket room")
+	check_eq(profile.groups.size(), 3, "steel, copper & electronics, wood")
+	for group: MaterialGroup in profile.groups:
+		var bale: ItemDefinition = catalog.get_definition(group.bale_item)
+		var average: float = 0.0
+		for item_id: String in group.items:
+			average += catalog.get_definition(item_id).sell_value
+		average /= group.items.size()
+		var loose: float = average * group.pieces_per_bale
+		check(bale.sell_value >= loose * 1.25, "%s bale pays a premium: %d vs %.1f loose" % [group.id, bale.sell_value, loose])
+		check(bale.sell_value <= loose * 1.6, "%s premium stays modest" % group.id)
+		check(bale.carry_size < group.pieces_per_bale, "%s bale saves basket room" % group.id)
+		check(tr(group.name_key) != group.name_key, "%s named" % group.id)
 	var placeable: PlaceableDefinition = load("res://data/placeables/scrap_press.tres")
+	check_eq(placeable.max_count, 3, "up to three presses")
 	var kinds: Array = []
 	for port: Dictionary in placeable.ports:
 		kinds.append(port["kind"])
 	check(kinds.has("in") and kinds.has("out"), "press has input and output ports")
 	var keys: PackedStringArray = [profile.name_key, profile.description_key, "item.bale_steel.name",
-		"item.bale_steel.description", "build.tool.connect", "build.info.connect_pick", "build.info.connect_target",
-		"build.info.connect_ok", "build.info.remove_link", "build.linked", "build.unlinked", "build.link_blocked",
-		"ui.press.detail", "ui.press.fed", "ui.press.nothing_to_feed", "build.problem.press_not_empty"]
+		"item.bale_steel.description", "item.bale_copper.name", "item.bale_wood.name", "build.tool.connect",
+		"build.info.connect_pick", "build.info.connect_target", "build.info.connect_ok", "build.info.remove_link",
+		"build.linked", "build.unlinked", "build.link_blocked", "ui.press.detail", "ui.press.fed",
+		"ui.press.nothing_to_feed", "ui.press.rule", "ui.press.hopper_empty", "build.problem.press_not_empty"]
 	for status: String in ["working", "waiting", "tray_full", "off"]:
 		keys.append("ui.press.status." + status)
 	for key: String in ["link_same", "link_no_output", "link_no_input", "link_output_used", "link_input_used",
@@ -91,7 +99,7 @@ func test_data_is_valid_and_translated() -> void:
 	TranslationServer.set_locale("de")
 
 
-func test_press_by_hand_makes_a_bale_worth_more() -> void:
+func test_press_by_hand_makes_bales_per_material() -> void:
 	var scene: Node = await _new_game()
 	var uid: String = _place(scene, "scrap_press", Vector2i(30, -40))
 	if uid.is_empty():
@@ -101,38 +109,29 @@ func test_press_by_hand_makes_a_bale_worth_more() -> void:
 	var hopper: PressControls = press.get_node("Machine/Hopper")
 	var refused: Dictionary = hopper.interact(scene._context)
 	check(not refused["success"] and refused["message_key"] == "ui.press.nothing_to_feed", "empty basket refused")
-	var fed_ids: Array = []
-	for object_id: String in ["scrap_rusted_bolt_01", "scrap_empty_can_01", "scrap_rusted_bolt_02", "scrap_empty_can_02"]:
+	for object_id: String in ["scrap_rusted_bolt_01", "scrap_empty_can_01", "scrap_rusted_bolt_02", "scrap_wire_coil_01"]:
 		var item: ScrapItem = scene.get_world_object(object_id) as ScrapItem
 		check(item.interact(scene._context)["success"], "picked up %s" % object_id)
-		fed_ids.append(object_id)
-	var wire: ScrapItem = scene.get_world_object("scrap_wire_coil_01") as ScrapItem
 	var result: Dictionary = hopper.interact(scene._context)
 	check(result["success"] and int(result["message_args"]["count"]) == 4, "four pieces fed")
 	check(scene.get_inventory().is_empty(), "basket emptied")
 	check_eq((scene.get_world_object("scrap_rusted_bolt_01") as ScrapItem).get_state(), ScrapItem.State.PROCESSED,
 		"fed piece consumed")
-	check(not press.can_accept(wire.get_item_id()), "copper wire is not pressed")
-	for object_id: String in ["scrap_rusted_bolt_03"]:
-		check(press.accept_item(scene.get_world_object(object_id) as ScrapItem), "%s accepted" % object_id)
-	check_eq(press.get_hopper_count(), 5, "five waiting")
-	check(press.press_once() == null, "not enough for a bale")
-	# One more from the magnet's heap kind: a can lying elsewhere in the world.
-	var extra: ScrapItem = null
-	for target: Variant in scene._objects.values():
-		var item: ScrapItem = target as ScrapItem
-		if item != null and item.get_state() == ScrapItem.State.IN_WORLD and press.can_accept(item.get_item_id()):
-			extra = item
-			break
-	if extra == null:
-		var magnet_uid: String = _place(scene, "magnet_collector", MAGNET_ANCHOR)
-		extra = (scene.get_placed().get_node_for(magnet_uid) as MagnetCollector).collect_once()
-	check(press.accept_item(extra), "sixth piece accepted")
+	check_eq(press.get_group_counts(), {"steel": 3, "copper": 1}, "pieces counted per material")
+	check(not press.can_accept("device_broken_radio"), "devices are not pressed")
+	check(not press.can_accept("bale_steel"), "bales are not pressed again")
+	check(press.accept_item(scene.get_world_object("scrap_empty_can_02") as ScrapItem), "can accepted")
+	check(press.accept_item(scene.get_world_object("scrap_rusted_bolt_03") as ScrapItem), "bolt accepted")
+	check(press.press_once() == null, "five steel pieces are not a bale yet")
+	var magnet_uid: String = _place(scene, "magnet_collector", MAGNET_ANCHOR)
+	var extra: ScrapItem = (scene.get_placed().get_node_for(magnet_uid) as MagnetCollector).collect_once()
+	check(press.accept_item(extra), "sixth steel piece accepted")
 	check_eq(press.get_status(), ScrapPress.STATUS_WORKING, "pressing")
 	var bale: ScrapItem = press.press_once()
 	check(bale != null and bale.get_item_id() == "bale_steel", "a steel bale")
+	check_eq(press.get_group_counts(), {"copper": 1}, "the copper piece waits for its own bale")
 	check(scene.get_world_object(bale.object_id) == bale, "bale registered")
-	check_eq(press.get_hopper_count(), 0, "hopper used up")
+	check(bale.object_id.begins_with("press_" + uid), "bale id unique per press")
 	check(press.get_removal_problem() != "", "can't store the press with a bale on the tray")
 	var bale_id: String = bale.object_id
 	check(bale.interact(scene._context)["success"], "bale picked up")

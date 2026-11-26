@@ -21,12 +21,14 @@ signal sold(count: int, total: int, wage: int)
 signal pried_open(crate: ScrapItem)
 ## He took a device apart at the station (presentation, story).
 signal dismantled(input: ScrapItem, outputs: Array)
+## He put pieces into a machine of the processing chain.
+signal fed_machine(machine: Node3D, count: int)
 ## A one-liner (localization key) for his speech bubble.
 signal remark(line_key: String)
 
 enum Presence { ABSENT, AVAILABLE, HIRED }
 enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING, TO_TOOL, TO_TOOL_RETURN,
-	PRYING }
+	PRYING, TO_MACHINE, FEEDING }
 
 ## Tools he can fetch: the handcart (pushed) and the crowbar (in hand).
 const TOOL_CART := "cart"
@@ -88,6 +90,12 @@ var rest_provider: Callable
 var ground_factor: Callable
 ## Optional: walkable grid of the yard (A*); the fixed route graph is the fallback.
 var navigation: YardNavigation
+## Optional: processing machines of the chain (docs/processing-chain.md),
+## `func() -> Array[Node3D]` (presses and the sorting machine). He feeds them
+## what they take instead of selling it, and fetches finished bales.
+var machines_provider: Callable
+## Machine he is walking to with his load.
+var _machine_target: Node3D
 
 var _presence: Presence = Presence.ABSENT
 var _paused: bool = false
@@ -117,7 +125,8 @@ var _timer: float = 0.0
 var _stuck_timer: float = 0.0
 var _blocked: bool = false
 var _seen: int = 0
-var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0, "dismantled": 0, "opened": 0}
+var _stats: Dictionary = {"trips": 0, "items": 0, "revenue": 0, "wages": 0, "dismantled": 0, "opened": 0,
+	"fed": 0}
 var _status: String = ""
 var _idle_timer: float = 0.0
 var _refused: Dictionary = {}
@@ -391,7 +400,7 @@ func _physics_process(delta: float) -> void:
 	if _task == Task.TO_REST and _presence == Presence.HIRED and not _paused and _find_item() != null:
 		_next_task()
 	match _task:
-		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION, Task.TO_TOOL, Task.TO_TOOL_RETURN:
+		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION, Task.TO_TOOL, Task.TO_TOOL_RETURN, Task.TO_MACHINE:
 			target_velocity = _follow_path(delta)
 			if _path.is_empty():
 				_arrived()
@@ -411,6 +420,10 @@ func _physics_process(delta: float) -> void:
 			_timer -= delta
 			if _timer <= 0.0:
 				_finish_prying()
+		Task.FEEDING:
+			_timer -= delta
+			if _timer <= 0.0:
+				_finish_feeding()
 		Task.IDLE:
 			_idle(delta)
 	var horizontal := Vector3(velocity.x, 0, velocity.z).move_toward(target_velocity, 12.0 * delta)
@@ -466,6 +479,14 @@ func _next_task() -> void:
 			_task = Task.TO_ITEM
 			return
 	if not _carrying.is_empty():
+		# Processing pays more than selling: feed a machine that takes some of it.
+		var machine: Node3D = _feed_target()
+		if machine != null:
+			_machine_target = machine
+			_arrive_distance = 0.3
+			_path = _path_to(_feed_point(machine))
+			_task = Task.TO_MACHINE
+			return
 		_arrive_distance = 0.2
 		_path = _path_to(_marker_position(counter_spot))
 		_task = Task.TO_COUNTER
@@ -499,7 +520,11 @@ func _walk_to(point: Vector3, task: Task) -> void:
 func _arrived() -> void:
 	match _task:
 		Task.TO_ITEM:
-			if _is_workable(_target) and _target.is_openable():
+			if _target != null and is_instance_valid(_target) and _is_takeable(_target) and not _is_workable(_target) \
+					and not _target.is_openable():
+				_task = Task.PICKING
+				_timer = profile.pick_seconds
+			elif _is_workable(_target) and _target.is_openable():
 				_task = Task.PRYING
 				_timer = _target.definition.open_seconds * profile.tool_time_factor
 			elif _is_workable(_target):
@@ -510,6 +535,9 @@ func _arrived() -> void:
 		Task.TO_COUNTER:
 			_task = Task.SELLING
 			_timer = profile.sell_seconds
+		Task.TO_MACHINE:
+			_task = Task.FEEDING
+			_timer = profile.pick_seconds
 		Task.TO_TOOL:
 			_set_tool(_tool_target)
 			_next_task()
@@ -532,7 +560,7 @@ func _arrived() -> void:
 
 
 func _finish_pick() -> void:
-	if _is_workable(_target) and _carrying.size() < profile.carry_capacity:
+	if (_is_workable(_target) or _is_takeable(_target)) and _carrying.size() < profile.carry_capacity:
 		_target.set_state(ScrapItem.State.CARRIED)
 		_carrying.append(_target)
 		picked_up.emit(_target)
@@ -551,6 +579,69 @@ func _finish_dismantling() -> void:
 			_stats["dismantled"] += 1
 			dismantled.emit(device, outputs)
 	_next_task()
+
+
+## Puts everything the machine takes into its hopper.
+func _finish_feeding() -> void:
+	var machine: Node3D = _machine_target
+	_machine_target = null
+	if machine != null and is_instance_valid(machine) and machine.has_method("accept_item"):
+		var fed: int = 0
+		for item: ScrapItem in _carrying.duplicate():
+			if is_instance_valid(item) and machine.can_accept(item.get_item_id()) and machine.accept_item(item):
+				_carrying.erase(item)
+				fed += 1
+		_update_cart_load()
+		if fed > 0:
+			_stats["fed"] = int(_stats.get("fed", 0)) + fed
+			fed_machine.emit(machine, fed)
+	_next_task()
+
+
+## The best machine for what he carries: a press first (it keeps materials
+## apart by itself), otherwise the sorting machine. Null if none takes anything.
+func _feed_target() -> Node3D:
+	if not machines_provider.is_valid():
+		return null
+	var best: Node3D
+	var best_rank: int = 99
+	var best_distance: float = INF
+	for machine: Node3D in machines_provider.call():
+		if not is_instance_valid(machine) or not machine.has_method("can_accept"):
+			continue
+		var takes: bool = false
+		for item: ScrapItem in _carrying:
+			if is_instance_valid(item) and machine.can_accept(item.get_item_id()):
+				takes = true
+				break
+		if not takes:
+			continue
+		var rank: int = 0 if machine is ScrapPress else 1
+		var distance: float = machine.global_position.distance_to(global_position)
+		if rank < best_rank or rank == best_rank and distance < best_distance:
+			best = machine
+			best_rank = rank
+			best_distance = distance
+	return best
+
+
+## Where he stands to feed a machine: in front of its hopper.
+func _feed_point(machine: Node3D) -> Vector3:
+	var hopper: Node = machine.find_child("Hopper", true, false)
+	if hopper is Interactable:
+		return (hopper as Interactable).get_interaction_point()
+	return machine.global_position
+
+
+## Finished bales waiting on press trays: he fetches and sells them.
+func _machine_outputs() -> Array[ScrapItem]:
+	var items: Array[ScrapItem] = []
+	if not machines_provider.is_valid():
+		return items
+	for machine: Node3D in machines_provider.call():
+		if is_instance_valid(machine) and machine is ScrapPress:
+			items.append_array((machine as ScrapPress).get_output_items())
+	return items
 
 
 ## Opens the crate he stands at; its contents land on the pallet.
@@ -704,9 +795,14 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 	var best: ScrapItem
 	var best_distance: float = INF
 	var missing_tool: String = ""
-	for target: Variant in _objects.values():
+	var bales: Array[ScrapItem] = _machine_outputs()
+	var candidates: Array = _objects.values()
+	for bale: ScrapItem in bales:
+		if not candidates.has(bale):
+			candidates.append(bale)
+	for target: Variant in candidates:
 		var item: ScrapItem = target as ScrapItem
-		if not _is_workable(item):
+		if not _is_workable(item) and not (bales.has(item) and _is_takeable(item)):
 			continue
 		if not profile.allowed_categories.has(item.definition.category):
 			if not _refused.has(item.object_id):
@@ -725,6 +821,11 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 			best_distance = distance
 	_set_missing_tool(missing_tool)
 	return best
+
+
+## Lying in the world, whereever it is (press trays are outside his area).
+func _is_takeable(item: ScrapItem) -> bool:
+	return is_instance_valid(item) and item.definition != null and item.get_state() == ScrapItem.State.IN_WORLD
 
 
 func _is_workable(target: Variant) -> bool:

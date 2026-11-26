@@ -62,6 +62,9 @@ var _has_mouse: bool = false
 var _link_from: String = ""
 ## Conveyor under the cursor (remove tool), or -1.
 var _hover_link: int = -1
+## Where the source was clicked: picks the output channel (sorting machine).
+var _link_point: Vector3 = Vector3.ZERO
+var _aim_point: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
@@ -188,6 +191,7 @@ func rotate_preview(clockwise: bool = true) -> void:
 
 ## Aims at a world point (mouse ray hit, or tests).
 func aim_at(point: Vector3) -> void:
+	_aim_point = point
 	var definition: PlaceableDefinition = _current_definition()
 	if definition != null:
 		_anchor = BuildGrid.anchor_for(definition, point, _rotation)
@@ -240,7 +244,7 @@ func remove_hovered() -> Dictionary:
 		var link: Dictionary = placed.links.get_link(_hover_link)
 		var unlinked: Dictionary = placed.links.unlink(_hover_link)
 		if unlinked["ok"]:
-			_push({"op": "unlink", "id": link["id"], "from": link["from"], "to": link["to"]})
+			_push({"op": "unlink", "id": link["id"], "from": link["from"], "to": link["to"], "channel": link["channel"]})
 			_hover_link = -1
 		return unlinked
 	if _hover_uid.is_empty():
@@ -405,9 +409,9 @@ func _step(from: Array[Dictionary], to: Array[Dictionary], undoing: bool) -> Dic
 				step["from_rot"] if undoing else step["to_rot"])
 		"link":
 			result = placed.links.unlink(placed.links.find_link(step["from"], step["to"])) if undoing else \
-				placed.links.link(step["from"], step["to"], step["id"])
+				placed.links.link(step["from"], step["to"], step["id"], step.get("channel", ""))
 		"unlink":
-			result = placed.links.link(step["from"], step["to"], step["id"]) if undoing else \
+			result = placed.links.link(step["from"], step["to"], step["id"], step.get("channel", "")) if undoing else \
 				placed.links.unlink(placed.links.find_link(step["from"], step["to"]))
 	if result.get("ok", false):
 		to.append(step)
@@ -431,10 +435,12 @@ func _connect_click() -> Dictionary:
 		if not placed.links.has_output(_hover_uid):
 			return {"ok": false, "message_key": "build.problem.link_no_output", "message_args": {}}
 		_link_from = _hover_uid
+		_link_point = _aim_point
 		return {"ok": true, "message_key": "", "message_args": {}}
-	result = placed.links.link(_link_from, _hover_uid)
+	var channel: String = placed.links.nearest_channel(_link_from, _link_point)
+	result = placed.links.link(_link_from, _hover_uid, -1, channel)
 	if result["ok"]:
-		_push({"op": "link", "id": result["link_id"], "from": _link_from, "to": _hover_uid})
+		_push({"op": "link", "id": result["link_id"], "from": _link_from, "to": _hover_uid, "channel": channel})
 		_link_from = ""
 	return result
 
@@ -448,7 +454,8 @@ func _refresh_connect() -> void:
 		_last_check = {}
 		preview_changed.emit()
 		return
-	var check: Dictionary = placed.links.check_link(_link_from, _hover_uid)
+	var check: Dictionary = placed.links.check_link(_link_from, _hover_uid, -1,
+		placed.links.nearest_channel(_link_from, _link_point))
 	var cells: Array = check["cells"]
 	_last_check = {"ok": check["ok"], "problems": [] if check["ok"] else [{"key": check["key"], "cells": []}],
 		"cells": cells, "hints": PackedStringArray()}

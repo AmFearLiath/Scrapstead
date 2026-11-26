@@ -52,6 +52,14 @@ Seit der Rückmeldung nach dem ersten Spielen bringen Nachbarn gelegentlich defe
 - Der Zerlegetisch nimmt jetzt jedes Radio an. Das ursprüngliche Radio behält seine vorbereiteten Ausgaben; alle weiteren bekommen frische Teile (`dismantled_<n>`), die mit dem Spielstand gespeichert und nach dem Verkauf entfernt werden.
 - Juri läuft über einen kleinen Wegpunktgraphen (Hauptroute Palette → Theke, Abzweig zum Zerlegetisch) statt über eine einzelne Route.
 
+## 4a+. Verarbeitungskette (Erweiterung)
+
+Stehen Presse(n) oder Sortiermaschine, verkauft Juri lose Teile nicht mehr
+direkt: Er bringt sie zuerst zu einer Presse, die sie annimmt, sonst zur
+Sortiermaschine, und holt fertige Ballen von den Pressen ab, um sie zu
+verkaufen. Nur was keine Maschine nimmt, geht direkt an die Theke. Details:
+[Verarbeitungskette](processing-chain.md).
+
 ## 4b. Schwere Teile und der Handkarren (Erweiterung)
 
 - Benno liefert gelegentlich einen Stahlträger („Aus den Knien heben.“, 20 Cr, Tragegröße 3).

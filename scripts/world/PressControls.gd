@@ -23,13 +23,13 @@ func get_action_key() -> String:
 func get_prompt_detail(_context: InteractionContext) -> String:
 	return tr("ui.press.detail").format({"status": tr("ui.press.status." + machine.get_status()),
 		"hopper": machine.get_hopper_count(), "capacity": machine.profile.hopper_capacity,
-		"per_bale": machine.profile.pieces_per_bale, "tray": machine.get_tray_count(),
+		"groups": _group_line(), "tray": machine.get_tray_count(),
 		"tray_capacity": machine.profile.tray_capacity})
 
 
 func get_inspection(_context: InteractionContext) -> Dictionary:
 	return {"title": tr(machine.profile.name_key), "body": tr(machine.profile.description_key) + "\n\n"
-		+ tr("ui.press.rules").format({"per_bale": machine.profile.pieces_per_bale,
+		+ tr("ui.press.rules").format({"rules": _rules_line(),
 			"seconds": NumberFormat.decimal(machine.get_cycle_seconds(), 0)})}
 
 
@@ -55,6 +55,24 @@ func interact(context: InteractionContext) -> Dictionary:
 	interaction_state_changed.emit(self)
 	return make_result(true, "ui.machine.switched_on" if on else "ui.machine.switched_off",
 		{"name": tr(machine.profile.name_key)})
+
+
+## "Steel 4/6 · Copper 1/4": what is waiting per material.
+func _group_line() -> String:
+	var counts: Dictionary = machine.get_group_counts()
+	var parts: PackedStringArray = []
+	for group: MaterialGroup in machine.profile.groups:
+		if counts.has(group.id):
+			parts.append("%s %d/%d" % [tr(group.name_key), counts[group.id], group.pieces_per_bale])
+	return " · ".join(parts) if not parts.is_empty() else tr("ui.press.hopper_empty")
+
+
+func _rules_line() -> String:
+	var parts: PackedStringArray = []
+	for group: MaterialGroup in machine.profile.groups:
+		parts.append(tr("ui.press.rule").format({"pieces": group.pieces_per_bale, "material": tr(group.name_key),
+			"bale": tr("item.%s.name" % group.bale_item)}))
+	return "\n".join(parts)
 
 
 func _fitting_count(context: InteractionContext) -> int:

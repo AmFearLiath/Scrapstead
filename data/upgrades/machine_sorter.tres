@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("1_def")
-id = "machine_scrap_press"
-name_key = "upgrade.machine_scrap_press.name"
-description_key = "upgrade.machine_scrap_press.description"
-price = 140
+id = "machine_sorter"
+name_key = "upgrade.machine_sorter.name"
+description_key = "upgrade.machine_sorter.description"
+price = 180
 stat = ""
 bonus = 0
 grants_tool = ""
 requires = ""
-effect_key = "upgrade.machine_scrap_press.effect"
+effect_key = "upgrade.machine_sorter.effect"
 hidden_in_catalog = true

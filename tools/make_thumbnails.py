@@ -22,6 +22,7 @@ SIZE = (192, 160)
 MODELS = {
     "magnet_collector": "magnet_collector",
     "scrap_press": "scrap_press",
+    "sorter": "sorter",
     "storage_pallets": "pallet_stack",
     "storage_crates": "crate_stack",
     "storage_barrels": "barrel_group",

@@ -18,7 +18,9 @@ extends Node3D
 ##   picture. So saving never has to know about pieces in transit.
 ##
 ## Machines take part through duck-typed hooks: sources implement
-## get_output_items(); targets can_accept(item_id) and accept_item(item).
+## get_output_items(channel); targets can_accept(item_id) and accept_item(item).
+## A machine may have several outputs ("channels", e.g. the sorting machine's
+## steel, copper and wood chutes); every channel feeds its own link.
 
 signal changed
 ## A link could no longer be routed (or works again).
@@ -30,6 +32,7 @@ const BELT_SPEED := 1.4
 const SEND_INTERVAL := 2.0
 const BELT_HEIGHT := 0.36
 const COST_PROTECTED := 3.0
+const COST_NEAR_PORT := 12.0
 
 var placed: PlacedObjects
 var straight_scene: PackedScene = preload("res://assets/models/conveyor_straight.glb")
@@ -90,39 +93,81 @@ func has_input(uid: String) -> bool:
 	return not _ports(uid, "in").is_empty()
 
 
-## Checks a link without creating it: {"ok", "key", "cells"}.
-func check_link(from_uid: String, to_uid: String, ignore_link: int = -1) -> Dictionary:
-	if from_uid == to_uid:
-		return {"ok": false, "key": "link_same", "cells": []}
-	if not has_output(from_uid):
-		return {"ok": false, "key": "link_no_output", "cells": []}
-	if not has_input(to_uid):
-		return {"ok": false, "key": "link_no_input", "cells": []}
-	for link_id: int in _links:
-		if link_id == ignore_link:
+## Output channels of a machine ("" for a single unnamed output).
+func get_channels(uid: String) -> PackedStringArray:
+	var channels: PackedStringArray = []
+	for entry: Dictionary in placed.get_entries():
+		if entry["uid"] != uid:
 			continue
-		if _links[link_id]["from"] == from_uid:
-			return {"ok": false, "key": "link_output_used", "cells": []}
-		if _links[link_id]["to"] == to_uid:
-			return {"ok": false, "key": "link_input_used", "cells": []}
-	if not _compatible(from_uid, to_uid):
-		return {"ok": false, "key": "link_incompatible", "cells": []}
-	var cells: Array[Vector2i] = _route(from_uid, to_uid, ignore_link)
+		for port: Dictionary in (entry["def"] as PlaceableDefinition).ports:
+			var channel: String = str(port.get("channel", ""))
+			if str(port.get("kind", "")) == "out" and not channels.has(channel):
+				channels.append(channel)
+	return channels
+
+
+## The output channel whose port lies closest to `point` (where the player
+## clicked); free channels first.
+func nearest_channel(uid: String, point: Vector3) -> String:
+	var best: String = ""
+	var best_score: float = INF
+	for channel: String in get_channels(uid):
+		var used: bool = _channel_used(uid, channel, -1)
+		for cell: Vector2i in _ports(uid, "out", channel):
+			var score: float = BuildGrid.cell_center(cell).distance_to(Vector3(point.x, 0, point.z)) + (100.0 if used else 0.0)
+			if score < best_score:
+				best_score = score
+				best = channel
+	return best
+
+
+## Checks a link without creating it: {"ok", "key", "cells", "channel"}.
+## Without a channel the first free compatible one is taken.
+func check_link(from_uid: String, to_uid: String, ignore_link: int = -1, channel: Variant = null) -> Dictionary:
+	if from_uid == to_uid:
+		return {"ok": false, "key": "link_same", "cells": [], "channel": ""}
+	if not has_output(from_uid):
+		return {"ok": false, "key": "link_no_output", "cells": [], "channel": ""}
+	if not has_input(to_uid):
+		return {"ok": false, "key": "link_no_input", "cells": [], "channel": ""}
+	var channels: PackedStringArray = get_channels(from_uid) if channel == null else PackedStringArray([str(channel)])
+	var key: String = "link_output_used"
+	for candidate: String in channels:
+		if _channel_used(from_uid, candidate, ignore_link):
+			continue
+		key = "link_incompatible"
+		if _compatible(from_uid, to_uid, candidate):
+			key = ""
+			channels = PackedStringArray([candidate])
+			break
+	if not key.is_empty():
+		return {"ok": false, "key": key, "cells": [], "channel": ""}
+	for link_id: int in _links:
+		if link_id != ignore_link and _links[link_id]["to"] == to_uid:
+			return {"ok": false, "key": "link_input_used", "cells": [], "channel": ""}
+	var cells: Array[Vector2i] = _route(from_uid, to_uid, ignore_link, channels[0])
 	if cells.is_empty():
-		return {"ok": false, "key": "link_no_route", "cells": []}
-	return {"ok": true, "key": "", "cells": cells}
+		return {"ok": false, "key": "link_no_route", "cells": [], "channel": channels[0]}
+	return {"ok": true, "key": "", "cells": cells, "channel": channels[0]}
+
+
+func _channel_used(uid: String, channel: String, ignore_link: int) -> bool:
+	for link_id: int in _links:
+		if link_id != ignore_link and _links[link_id]["from"] == uid and _links[link_id]["channel"] == channel:
+			return true
+	return false
 
 
 ## Creates a link. Returns {"ok", "message_key", "message_args", "link_id"}.
-func link(from_uid: String, to_uid: String, link_id: int = -1) -> Dictionary:
-	var check: Dictionary = check_link(from_uid, to_uid)
+func link(from_uid: String, to_uid: String, link_id: int = -1, channel: Variant = null) -> Dictionary:
+	var check: Dictionary = check_link(from_uid, to_uid, -1, channel)
 	if not check["ok"]:
 		return {"ok": false, "message_key": "build.problem." + str(check["key"]), "message_args": {}, "link_id": -1}
 	if link_id < 0:
 		link_id = _next_id
 	_next_id = maxi(_next_id, link_id + 1)
-	_links[link_id] = {"id": link_id, "from": from_uid, "to": to_uid, "cells": check["cells"], "blocked": false,
-		"timer": SEND_INTERVAL, "visual": null}
+	_links[link_id] = {"id": link_id, "from": from_uid, "to": to_uid, "channel": check["channel"],
+		"cells": check["cells"], "blocked": false, "timer": SEND_INTERVAL, "visual": null}
 	_build_visual(link_id)
 	changed.emit()
 	return {"ok": true, "message_key": "build.linked", "message_args": {"from": _name(from_uid), "to": _name(to_uid)},
@@ -157,7 +202,7 @@ func refresh() -> void:
 		if _still_valid(current):
 			cells.assign(current["cells"])
 		else:
-			cells = _route(current["from"], current["to"], link_id)
+			cells = _route(current["from"], current["to"], link_id, current["channel"])
 		var blocked: bool = cells.is_empty()
 		var was_blocked: bool = current["blocked"]
 		current["blocked"] = blocked
@@ -193,7 +238,7 @@ func send_once(link_id: int) -> String:
 	var target: Object = PlacedObjects.hook(placed.get_node_for(current["to"]), "accept_item")
 	if source == null or target == null:
 		return ""
-	for item: ScrapItem in source.get_output_items():
+	for item: ScrapItem in source.get_output_items(current["channel"]):
 		if not target.can_accept(item.get_item_id()):
 			continue
 		var start: Vector3 = item.global_position
@@ -211,7 +256,8 @@ func send_once(link_id: int) -> String:
 func get_save_state() -> Array:
 	var saved: Array = []
 	for link_id: int in _links:
-		saved.append({"id": link_id, "from": _links[link_id]["from"], "to": _links[link_id]["to"]})
+		saved.append({"id": link_id, "from": _links[link_id]["from"], "to": _links[link_id]["to"],
+			"channel": _links[link_id]["channel"]})
 	return saved
 
 
@@ -224,15 +270,16 @@ func apply_save_state(saved: Array) -> PackedStringArray:
 		var from_uid: String = str(entry.get("from", ""))
 		var to_uid: String = str(entry.get("to", ""))
 		var link_id: int = int(entry.get("id", -1))
+		var channel: String = str(entry.get("channel", ""))
 		if placed.get_node_for(from_uid) == null or placed.get_node_for(to_uid) == null:
 			notes.append("link %s -> %s dropped: machine missing" % [from_uid, to_uid])
 			continue
-		var result: Dictionary = link(from_uid, to_uid, link_id)
+		var result: Dictionary = link(from_uid, to_uid, link_id, channel)
 		if not result["ok"]:
 			# Keep it as blocked: the player sees it and can fix the layout.
 			var id: int = link_id if link_id >= 0 else _next_id
 			_next_id = maxi(_next_id, id + 1)
-			_links[id] = {"id": id, "from": from_uid, "to": to_uid, "cells": [], "blocked": true,
+			_links[id] = {"id": id, "from": from_uid, "to": to_uid, "channel": channel, "cells": [], "blocked": true,
 				"timer": SEND_INTERVAL, "visual": null}
 			notes.append("link %s -> %s blocked after loading" % [from_uid, to_uid])
 	return notes
@@ -241,14 +288,14 @@ func apply_save_state(saved: Array) -> PackedStringArray:
 # --- Routing ----------------------------------------------------------------------------
 
 ## World cells of a machine's ports of a kind.
-func _ports(uid: String, kind: String) -> Array[Vector2i]:
+func _ports(uid: String, kind: String, channel: Variant = null) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
 	for entry: Dictionary in placed.get_entries():
 		if entry["uid"] != uid:
 			continue
 		var definition: PlaceableDefinition = entry["def"]
 		for port: Dictionary in definition.ports:
-			if str(port.get("kind", "")) == kind:
+			if str(port.get("kind", "")) == kind and (channel == null or str(port.get("channel", "")) == str(channel)):
 				cells.append_array(BuildGrid.local_rect_cells(definition, entry["anchor"], entry["rot"],
 					Rect2i(port["cell"], Vector2i.ONE)))
 	return cells
@@ -262,15 +309,27 @@ func _footprint(uid: String) -> Array[Vector2i]:
 
 
 ## Free cells right next to a port, outside the machine's footprint.
-func _port_ends(uid: String, kind: String, solid: Dictionary) -> Array[Vector2i]:
+func _port_ends(uid: String, kind: String, solid: Dictionary, channel: Variant = null) -> Array[Vector2i]:
 	var footprint: Array[Vector2i] = _footprint(uid)
 	var ends: Array[Vector2i] = []
-	for port: Vector2i in _ports(uid, kind):
+	for port: Vector2i in _ports(uid, kind, channel):
 		for step: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
 			var cell: Vector2i = port + step
 			if not footprint.has(cell) and not solid.has(cell) and placed.validator.plot.has_point(cell):
 				ends.append(cell)
 	return ends
+
+
+## Cells right next to every port of every placed machine.
+func _all_port_ends() -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	var none: Dictionary = {}
+	for entry: Dictionary in placed.get_entries():
+		if (entry["def"] as PlaceableDefinition).ports.is_empty():
+			continue
+		for kind: String in ["in", "out"]:
+			cells.append_array(_port_ends(entry["uid"], kind, none))
+	return cells
 
 
 func _solid_cells(ignore_link: int) -> Dictionary:
@@ -286,12 +345,19 @@ func _solid_cells(ignore_link: int) -> Dictionary:
 	return solid
 
 
-func _route(from_uid: String, to_uid: String, ignore_link: int) -> Array[Vector2i]:
+func _route(from_uid: String, to_uid: String, ignore_link: int, channel: String = "") -> Array[Vector2i]:
 	var solid: Dictionary = _solid_cells(ignore_link)
-	var starts: Array[Vector2i] = _port_ends(from_uid, "out", solid)
+	var starts: Array[Vector2i] = _port_ends(from_uid, "out", solid, channel)
 	var ends: Array[Vector2i] = _port_ends(to_uid, "in", solid)
 	if starts.is_empty() or ends.is_empty():
 		return []
+	# A belt never covers the cell in front of another port: it would cut that
+	# output or input off for good.
+	var foreign: Array[Vector2i] = []
+	for cell: Vector2i in _all_port_ends():
+		if not starts.has(cell) and not ends.has(cell):
+			solid[cell] = true
+			foreign.append(cell)
 	var region: Rect2i = placed.validator.plot
 	var astar := AStarGrid2D.new()
 	astar.region = region
@@ -308,6 +374,12 @@ func _route(from_uid: String, to_uid: String, ignore_link: int) -> Array[Vector2
 	for cell: Variant in costly:
 		if region.has_point(cell) and not solid.has(cell):
 			astar.set_point_weight_scale(cell, COST_PROTECTED)
+	# ... and stays away from them, so it does not wall a free port in.
+	for cell: Vector2i in foreign:
+		for step: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			var near: Vector2i = cell + step
+			if region.has_point(near) and not solid.has(near):
+				astar.set_point_weight_scale(near, COST_NEAR_PORT)
 	var best: Array[Vector2i] = []
 	for start: Vector2i in starts:
 		for end: Vector2i in ends:
@@ -326,16 +398,16 @@ func _still_valid(current: Dictionary) -> bool:
 	for cell: Vector2i in cells:
 		if solid.has(cell):
 			return false
-	return _port_ends(current["from"], "out", solid).has(cells[0]) \
+	return _port_ends(current["from"], "out", solid, current["channel"]).has(cells[0]) \
 		and _port_ends(current["to"], "in", solid).has(cells[cells.size() - 1])
 
 
-func _compatible(from_uid: String, to_uid: String) -> bool:
+func _compatible(from_uid: String, to_uid: String, channel: String = "") -> bool:
 	var source: Object = PlacedObjects.hook(placed.get_node_for(from_uid), "get_output_item_ids")
 	var target: Object = PlacedObjects.hook(placed.get_node_for(to_uid), "accepts_item_type")
 	if source == null or target == null:
 		return false
-	for item_id: String in source.get_output_item_ids():
+	for item_id: String in source.get_output_item_ids(channel):
 		if target.accepts_item_type(item_id):
 			return true
 	return false

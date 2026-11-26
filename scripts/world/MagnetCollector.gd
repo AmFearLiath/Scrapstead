@@ -108,11 +108,11 @@ func get_lift_point() -> Vector3:
 # --- Machine ports (MachineLinks, docs/machine-links.md) ---------------------------
 
 ## The crate is the output: everything lying in it can leave over a belt.
-func get_output_items() -> Array[ScrapItem]:
+func get_output_items(_channel: String = "") -> Array[ScrapItem]:
 	return _items_in_bin()
 
 
-func get_output_item_ids() -> PackedStringArray:
+func get_output_item_ids(_channel: String = "") -> PackedStringArray:
 	return profile.magnetic_items if profile != null else PackedStringArray()
 
 

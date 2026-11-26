@@ -2,8 +2,9 @@ class_name ScrapPress
 extends Node3D
 ## The scrap press, the second machine (docs/scrap-press.md), placed and moved
 ## in build mode. Small steel scrap goes into its hopper - by hand, by Juri or
-## over a conveyor from another machine - and every `pieces_per_bale` pieces
-## become one steel bale on the output tray. A bale is worth more than its
+## over a conveyor from another machine - and as soon as enough pieces of one
+## material group (MaterialGroup) are together, they become one bale of that
+## material on the output tray. A bale is worth more than its
 ## pieces and needs far less room in the basket.
 ##
 ## Process logic only; ScrapPressAnimator shows the ram.
@@ -48,11 +49,18 @@ var _counter: int = 0
 var _status: String = ""
 var _live: Array[Dictionary] = []
 var _installed: bool = false
+## Prefix of the items this machine creates; unique per placed machine.
+var _prefix: String = OBJECT_PREFIX
 
 
 ## `objects` is the scene's live registry (object ID -> Interactable).
-func setup(objects: Dictionary) -> void:
+func setup(objects: Dictionary, uid: String = "") -> void:
 	_objects = objects
+	if not uid.is_empty():
+		_prefix = "%s%s_" % [OBJECT_PREFIX, uid]
+		for node: Node in find_children("*", "Interactable", true, false):
+			if not node is ScrapItem:
+				(node as Interactable).object_id += "_" + uid
 	_timer = get_cycle_seconds()
 	_installed = true
 	_update_status()
@@ -111,7 +119,7 @@ func get_status() -> String:
 		return STATUS_OFF
 	if get_tray_count() >= profile.tray_capacity:
 		return STATUS_TRAY_FULL
-	if _hopper.size() < profile.pieces_per_bale:
+	if _next_group() == null:
 		return STATUS_WAITING
 	return STATUS_WORKING
 
@@ -129,8 +137,8 @@ func accepts_item_type(item_id: String) -> bool:
 	return profile != null and profile.accepts(item_id)
 
 
-func get_output_item_ids() -> PackedStringArray:
-	return PackedStringArray([profile.bale_item]) if profile != null else PackedStringArray()
+func get_output_item_ids(_channel: String = "") -> PackedStringArray:
+	return profile.get_bale_items() if profile != null else PackedStringArray()
 
 
 ## Whether the hopper takes this item now.
@@ -150,7 +158,7 @@ func accept_item(item: ScrapItem) -> bool:
 
 
 ## Bales on the tray are this machine's output (for a following machine).
-func get_output_items() -> Array[ScrapItem]:
+func get_output_items(_channel: String = "") -> Array[ScrapItem]:
 	return _items_on_tray()
 
 
@@ -214,12 +222,21 @@ func _process(delta: float) -> void:
 
 ## Finishes one stroke now: one bale onto the tray. Returns it or null.
 func press_once() -> ScrapItem:
-	if not is_installed() or _hopper.size() < profile.pieces_per_bale \
-			or get_tray_count() >= profile.tray_capacity:
+	if not is_installed() or get_tray_count() >= profile.tray_capacity:
 		return null
-	_hopper = _hopper.slice(profile.pieces_per_bale)
+	var group: MaterialGroup = _next_group()
+	if group == null:
+		return null
+	var taken: int = 0
+	var rest: Array[String] = []
+	for item_id: String in _hopper:
+		if taken < group.pieces_per_bale and group.has_item(item_id):
+			taken += 1
+		else:
+			rest.append(item_id)
+	_hopper = rest
 	_counter += 1
-	var bale: ScrapItem = _spawn("%s%d" % [OBJECT_PREFIX, _counter], profile.bale_item, _free_slot())
+	var bale: ScrapItem = _spawn("%s%d" % [_prefix, _counter], group.bale_item, _free_slot())
 	if bale != null:
 		bale.reveal()
 		bale_pressed.emit(bale)
@@ -254,6 +271,27 @@ func apply_save_state(state: Dictionary) -> void:
 
 
 # --- Helpers -----------------------------------------------------------------------
+
+## Pieces waiting per material group id.
+func get_group_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	for item_id: String in _hopper:
+		var group: MaterialGroup = profile.group_for(item_id)
+		if group != null:
+			counts[group.id] = int(counts.get(group.id, 0)) + 1
+	return counts
+
+
+## The material whose pieces fill a bale first (the oldest piece decides).
+func _next_group() -> MaterialGroup:
+	if profile == null:
+		return null
+	var counts: Dictionary = get_group_counts()
+	for item_id: String in _hopper:
+		var group: MaterialGroup = profile.group_for(item_id)
+		if group != null and int(counts.get(group.id, 0)) >= group.pieces_per_bale:
+			return group
+	return null
 
 func _items_on_tray() -> Array[ScrapItem]:
 	var result: Array[ScrapItem] = []

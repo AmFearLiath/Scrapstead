@@ -619,22 +619,24 @@ ui.stash.result.pallets.2,A loose board comes away. Then another one. Oops.,Ein 
 ui.stash.result.pallets.3,"Pallets: the furniture of the future, says Juri. Walt sold them.","Paletten: die Möbel der Zukunft, sagt Juri. Walt hat sie verkauft."
 machine.scrap_press.name,Scrap press,Schrottpresse
 machine.scrap_press.hopper,Press hopper,Einfülltrichter der Presse
-machine.scrap_press.description,"Squeezes bolts and cans into steel bales. A bale is worth more than its pieces and takes far less room in the basket. Feed it by hand at the hopper, or connect it to the magnetic collector with a conveyor.",Presst Schrauben und Dosen zu Stahlballen. Ein Ballen ist mehr wert als seine Einzelteile und braucht viel weniger Platz im Korb. Füttere sie von Hand am Trichter oder verbinde sie per Förderband mit dem Magnetsammler.
-placeable.scrap_press.description,"Presses bolts and cans into steel bales (6 pieces, 22 Cr). Hopper at the back, bales come out in front.","Presst Schrauben und Dosen zu Stahlballen (6 Teile, 22 Cr). Trichter hinten, Ballen kommen vorne raus."
+machine.scrap_press.description,"Squeezes scrap into bales: steel, copper & electronics or wood - one material per bale. A bale is worth clearly more than its pieces and takes far less room in the basket. Feed it by hand or connect it with a conveyor.","Presst Schrott zu Ballen: Stahl, Kupfer & Elektronik oder Holz - pro Ballen ein Material. Ein Ballen ist deutlich mehr wert als seine Einzelteile und braucht viel weniger Platz im Korb. Füttere sie von Hand oder verbinde sie per Förderband."
+placeable.scrap_press.description,"Presses steel, copper & electronics or wood into bales. Hopper at the back, bales come out in front. Up to 3.","Presst Stahl, Kupfer & Elektronik oder Holz zu Ballen. Trichter hinten, Ballen kommen vorne raus. Bis zu 3 Stück."
 upgrade.machine_scrap_press.name,Scrap press,Schrottpresse
 upgrade.machine_scrap_press.description,From a bankrupt can factory. The sign on it says 'Keep fingers out'. The sign is right.,Aus einer pleitegegangenen Dosenfabrik. Auf dem Schild steht „Finger weg“. Das Schild hat recht.
 upgrade.machine_scrap_press.effect,"6 bolts or cans become one steel bale (22 Cr, size 2) · 8 s per bale","6 Schrauben oder Dosen werden ein Stahlballen (22 Cr, Größe 2) · 8 s pro Ballen"
 item.bale_steel.name,Steel bale,Stahlballen
 item.bale_steel.description,"Bolts and cans, pressed and strapped. Looks like modern art, sells like scrap. Good scrap.","Schrauben und Dosen, gepresst und verschnürt. Sieht aus wie moderne Kunst, verkauft sich wie Schrott. Guter Schrott."
 ui.action.feed,Feed (hold),Einfüllen (halten)
-ui.press.detail,{status} · hopper {hopper}/{capacity} ({per_bale} per bale) · bales {tray}/{tray_capacity},{status} · Trichter {hopper}/{capacity} ({per_bale} pro Ballen) · Ballen {tray}/{tray_capacity}
+ui.press.detail,{status} · hopper {hopper}/{capacity}: {groups} · bales {tray}/{tray_capacity},{status} · Trichter {hopper}/{capacity}: {groups} · Ballen {tray}/{tray_capacity}
 ui.press.status.working,pressing,presst
 ui.press.status.waiting,waiting for scrap,wartet auf Schrott
 ui.press.status.tray_full,tray full,Ablage voll
 ui.press.status.off,switched off,ausgeschaltet
-ui.press.rules,Takes bolts and cans. {per_bale} pieces make one bale; one bale takes {seconds} s.,Nimmt Schrauben und Dosen. {per_bale} Teile ergeben einen Ballen; ein Ballen dauert {seconds} s.
+ui.press.rules,"{rules}
+One bale takes {seconds} s.","{rules}
+Ein Ballen dauert {seconds} s."
 ui.press.hopper_full,The hopper is full. Let the press do its thing.,Der Trichter ist voll. Lass die Presse erst mal arbeiten.
-ui.press.nothing_to_feed,Nothing in your basket the press would eat. It only likes bolts and cans.,"Nichts im Korb, was die Presse fressen würde. Sie mag nur Schrauben und Dosen."
+ui.press.nothing_to_feed,Nothing in your basket the press would eat. Devices go to the dismantling table first.,"Nichts im Korb, was die Presse fressen würde. Geräte kommen erst auf den Zerlegetisch."
 ui.press.fed,{count} piece(s) into the hopper ({hopper} waiting).,{count} Teil(e) in den Trichter ({hopper} warten).
 build.problem.press_not_empty,Empty hopper and tray first.,Erst Trichter und Ablage leeren.
 build.tool.connect,Connect,Verbinden
@@ -653,3 +655,28 @@ build.problem.link_output_used,Its output is already connected. Remove that conv
 build.problem.link_input_used,Its input is already fed by a conveyor.,Der Eingang wird schon von einem Förderband beliefert.
 build.problem.link_incompatible,That machine doesn't want what this one makes.,"Die Maschine will nicht, was diese herstellt."
 build.problem.link_no_route,There's no free way for a conveyor between the two. Move something or make room.,Zwischen den beiden gibt es keinen freien Weg für ein Förderband. Verschieb etwas oder schaff Platz.
+material.steel,Steel,Stahl
+material.copper,Copper & electronics,Kupfer & Elektronik
+material.wood,Wood,Holz
+item.bale_copper.name,Copper bale,Kupferballen
+item.bale_copper.description,"Pipes, wire and circuit boards, squeezed into one shiny brick. The scrap dealer's favourite.","Rohre, Kabel und Platinen, zu einem glänzenden Klotz gequetscht. Der Liebling jedes Schrotthändlers."
+item.bale_wood.name,Wood bundle,Holzbündel
+item.bale_wood.description,"Offcuts, tied with rope. Someone will build a shelf from it. Or burn it. Both pay.","Holzreste, mit Seil verschnürt. Irgendwer baut daraus ein Regal. Oder verheizt es. Beides zahlt."
+machine.sorter.name,Sorting machine,Sortiermaschine
+machine.sorter.hopper,Sorting machine hopper,Einfülltrichter der Sortiermaschine
+machine.sorter.description,"Rattles mixed scrap through its drum and drops every piece into the right bin: steel left, copper & electronics in front, wood right. Connect each bin to its own press and the whole chain runs by itself. Devices have to be dismantled first.","Rüttelt gemischten Schrott durch ihre Trommel und wirft jedes Teil in die richtige Kiste: Stahl links, Kupfer & Elektronik vorne, Holz rechts. Verbinde jede Kiste mit einer eigenen Presse, dann läuft die ganze Kette von allein. Geräte müssen vorher zerlegt werden."
+placeable.sorter.description,"Sorts mixed scrap into steel, copper & electronics and wood. Three bins, three outputs for three presses.","Sortiert gemischten Schrott in Stahl, Kupfer & Elektronik und Holz. Drei Kisten, drei Ausgänge für drei Pressen."
+upgrade.machine_sorter.name,Sorting machine,Sortiermaschine
+upgrade.machine_sorter.description,Formerly sorted coins in an arcade. Now it sorts scrap. A career change many envy.,"Hat früher Münzen in einer Spielhalle sortiert. Jetzt sortiert sie Schrott. Ein Berufswechsel, um den sie viele beneiden."
+upgrade.machine_sorter.effect,One piece every 2.5 s into the right bin · 3 outputs for conveyors,"Alle 2,5 s ein Teil in die richtige Kiste · 3 Ausgänge für Förderbänder"
+ui.sorter.detail,{status} · hopper {hopper}/{capacity} · {bins},{status} · Trichter {hopper}/{capacity} · {bins}
+ui.sorter.status.working,sorting,sortiert
+ui.sorter.status.waiting,waiting for scrap,wartet auf Schrott
+ui.sorter.status.bin_full,a bin is full,eine Kiste ist voll
+ui.sorter.status.off,switched off,ausgeschaltet
+ui.sorter.hopper_full,The hopper is full.,Der Trichter ist voll.
+ui.sorter.nothing_to_feed,Nothing in your basket it could sort. Devices go to the dismantling table first.,"Nichts im Korb, was sie sortieren könnte. Geräte kommen erst auf den Zerlegetisch."
+ui.sorter.fed,{count} piece(s) into the hopper ({hopper} waiting).,{count} Teil(e) in den Trichter ({hopper} warten).
+build.problem.sorter_not_empty,Empty hopper and bins first.,Erst Trichter und Kisten leeren.
+ui.press.hopper_empty,empty,leer
+ui.press.rule,{pieces} × {material} → {bale},{pieces} × {material} → {bale}

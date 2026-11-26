@@ -6,9 +6,10 @@
 
 ## Zweck
 
-Der Magnetsammler liefert viele kleine, billige Stahlteile (Schrauben 3 Cr,
-Dosen 2 Cr). Die Presse macht daraus Stahlballen: 6 Teile werden ein Ballen
-für 22 Cr, der im Korb nur 2 Plätze braucht statt 6. Mit einem Förderband vom
+Die Presse macht aus losem Schrott sortenreine Ballen: Stahl (6 Teile → 22 Cr),
+Kupfer & Elektronik (4 Teile → 40 Cr) und Holz (6 Teile → 17 Cr). Ein Ballen
+braucht im Korb nur 2 Plätze. Bis zu drei Pressen, je 140 Cr; siehe
+[Verarbeitungskette](processing-chain.md). Mit einem Förderband vom
 Magnetsammler läuft die Kette „Magnet → Band → Presse → Ballen“ ohne Zutun;
 der Spieler (oder Juri) verkauft nur noch Ballen.
 
@@ -24,13 +25,12 @@ der Spieler (oder Juri) verkauft nur noch Ballen.
 
 ## Daten
 
-`data/machines/scrap_press.tres` (`PressProfile`): angenommene Teile
-(Schraube, Dose), 6 Teile pro Ballen, 8 s pro Ballen, Trichter 12, Ablage 3.
-Ballen: `data/items/bale_steel.tres` (22 Cr, Größe 2, Kategorie
-`bulk_scrap`, Juri darf ihn tragen und verkaufen). Kauf im Baumenü über die
-versteckte Katalogware `machine_scrap_press` (140 Cr), Platzierbar
-`scrap_press` (4 × 6 Felder, Eingang hinten, Ausgang vorne, Bedienplatz vorne
-und rechts).
+`data/machines/scrap_press.tres` (`PressProfile`): Materialgruppen aus
+`data/materials/`, 8 s pro Ballen, Trichter 12, Ablage 3. Ballen:
+`bale_steel`, `bale_copper`, `bale_wood` (Größe 2, Kategorie `bulk_scrap`,
+Juri darf sie tragen und verkaufen). Kauf im Baumenü als Stückware (140 Cr,
+höchstens 3), Platzierbar `scrap_press` (4 × 6 Felder, Eingang hinten,
+Ausgang vorne, Bedienplatz vorne und rechts).
 
 ## Technik
 

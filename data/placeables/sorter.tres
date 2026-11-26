@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/machines/SortingMachine.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "sorter"
+name_key = "machine.sorter.name"
+description_key = "placeable.sorter.description"
+category = "machines"
+price = 180
+unlock_ware = "machine_sorter"
+max_count = 1
+scene = ExtResource("2_scene")
+size = Vector2i(5, 5)
+clearance = Array[Rect2i]([Rect2i(0, 5, 5, 1)])
+solid = true
+height = 1.7
+ports = Array[Dictionary]([{"cell": Vector2i(2, 0), "kind": "in"}, {"cell": Vector2i(0, 2), "kind": "out", "channel": "steel"}, {"cell": Vector2i(2, 4), "kind": "out", "channel": "copper"}, {"cell": Vector2i(4, 2), "kind": "out", "channel": "wood"}])

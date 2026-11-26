@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="PressProfile" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="PressProfile" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/PressProfile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://scripts/data/MaterialGroup.gd" id="2_group"]
+[ext_resource type="Resource" path="res://data/materials/steel.tres" id="3_steel"]
+[ext_resource type="Resource" path="res://data/materials/copper.tres" id="4_copper"]
+[ext_resource type="Resource" path="res://data/materials/wood.tres" id="5_wood"]
 
 [resource]
 script = ExtResource("1_profile")
 id = "scrap_press"
 name_key = "machine.scrap_press.name"
 description_key = "machine.scrap_press.description"
-required_upgrade = "machine_scrap_press"
-accepted_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can")
-pieces_per_bale = 6
-bale_item = "bale_steel"
+groups = Array[ExtResource("2_group")]([ExtResource("3_steel"), ExtResource("4_copper"), ExtResource("5_wood")])
 cycle_seconds = 8.0
 hopper_capacity = 12
 tray_capacity = 3

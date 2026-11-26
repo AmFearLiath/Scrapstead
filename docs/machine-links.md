@@ -56,7 +56,10 @@ Darstellung. Darum muss der Spielstand keine Teile „unterwegs“ kennen.
 - `BuildMode`: Werkzeug `connect`, Entfernen von Bändern, Rückgängig-Schritte
   `link`/`unlink`.
 
-## Offen
+## Mehrere Ausgänge
 
-- Weitere Maschinen (Sortierstation als dritte) nutzen dieselbe Schnittstelle.
-- Juri füllt die Presse noch nicht von Hand.
+Eine Maschine kann mehrere Ausgänge („Kanäle“) haben, z. B. die drei Kisten
+der Sortiermaschine. Jeder Kanal speist ein eigenes Band. Beim Verbinden
+zählt, wo der Spieler die Quellmaschine anklickt: Der nächste freie Ausgang
+wird verbunden. Routen belegen nie das Feld vor einem fremden Anschluss und
+meiden seine Nachbarfelder. Siehe [Verarbeitungskette](processing-chain.md).

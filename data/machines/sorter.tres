@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SorterProfile" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/SorterProfile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://scripts/data/MaterialGroup.gd" id="2_group"]
+[ext_resource type="Resource" path="res://data/materials/steel.tres" id="3_steel"]
+[ext_resource type="Resource" path="res://data/materials/copper.tres" id="4_copper"]
+[ext_resource type="Resource" path="res://data/materials/wood.tres" id="5_wood"]
+
+[resource]
+script = ExtResource("1_profile")
+id = "sorter"
+name_key = "machine.sorter.name"
+description_key = "machine.sorter.description"
+required_upgrade = "machine_sorter"
+groups = Array[ExtResource("2_group")]([ExtResource("3_steel"), ExtResource("4_copper"), ExtResource("5_wood")])
+cycle_seconds = 2.5
+hopper_capacity = 16
+bin_capacity = 8

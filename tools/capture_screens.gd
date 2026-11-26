@@ -310,6 +310,7 @@ func _build_shots(scene: Node, player: Node3D) -> void:
 	await _wait_for(func() -> bool: return false, 0.6)
 	await _shot("57_car_wreck_moved")
 	await _press_shots(scene, player, placed, mode)
+	await _chain_shots(scene, player, placed)
 
 
 ## The scrap press and a conveyor from the magnet (docs/scrap-press.md, machine-links.md).
@@ -359,6 +360,60 @@ func _press_shots(scene: Node, player: Node3D, placed: PlacedObjects, mode: Buil
 	player.place(controls.get_interaction_point() + Vector3(0.3, 0.1, 0.0), -PI * 0.5)
 	await _wait_for(func() -> bool: return false, 0.5)
 	await _shot("60_press_controls")
+
+
+## The full processing chain: sorting machine with three presses (docs/processing-chain.md).
+func _chain_shots(scene: Node, player: Node3D, placed: PlacedObjects) -> void:
+	scene.get_wallet().credit(2000, "capture-chain", "test")
+	var sorter_uid: String = _place_free(placed, "sorter", Vector2i(36, -56), Callable())
+	if sorter_uid.is_empty():
+		print("capture: no place for the sorter")
+		return
+	var sorter: SortingMachine = placed.get_node_for(sorter_uid) as SortingMachine
+	var directions: Dictionary = {"steel": Vector3.LEFT, "copper": Vector3.BACK, "wood": Vector3.RIGHT}
+	for channel: String in ["steel", "copper", "wood"]:
+		var uid: String = _place_free(placed, "scrap_press", Vector2i(36, -56), func(candidate: String) -> bool:
+			var offset: Vector3 = placed.get_node_for(candidate).global_position - sorter.global_position
+			return offset.dot(directions[channel]) > 2.4 and absf(offset.dot(directions[channel].cross(Vector3.UP))) < 2.0 				and placed.links.check_link(sorter_uid, candidate, -1, channel)["ok"])
+		if not uid.is_empty():
+			placed.links.link(sorter_uid, uid, -1, channel)
+	for object_id: String in ["scrap_wire_coil_01", "scrap_wire_coil_02", "scrap_empty_can_01", "scrap_empty_can_02"]:
+		var item: ScrapItem = scene.get_world_object(object_id) as ScrapItem
+		if item != null and item.get_state() == ScrapItem.State.IN_WORLD:
+			sorter.accept_item(item)
+	for index: int in 3:
+		sorter.sort_once()
+	for link: Dictionary in placed.links.get_links():
+		if link["from"] == sorter_uid:
+			placed.links.send_once(link["id"])
+	player.place(sorter.global_position + Vector3(3.0, 0.1, 3.5), 2.4)
+	scene.get_node("GameplayCamera")._target_zoom = 17.0
+	await _wait_for(func() -> bool: return false, 1.2)
+	await _shot("61_processing_chain")
+	var hopper: Interactable = sorter.get_node("Machine/Hopper")
+	player.place(hopper.get_interaction_point() + Vector3(0, 0.1, 0.2), PI)
+	scene.get_node("GameplayCamera")._target_zoom = 12.0
+	await _wait_for(func() -> bool: return false, 0.8)
+	await _shot("62_sorter_prompt")
+
+
+func _place_free(placed: PlacedObjects, placeable_id: String, near: Vector2i, accept: Callable) -> String:
+	var definition: PlaceableDefinition = placed.catalog.get_definition(placeable_id)
+	for distance: int in range(0, 24):
+		for dx: int in range(-distance, distance + 1):
+			for dy: int in range(-distance, distance + 1):
+				if maxi(absi(dx), absi(dy)) != distance:
+					continue
+				var anchor: Vector2i = near + Vector2i(dx, dy)
+				if not placed.check_placement(definition, anchor, 0)["ok"]:
+					continue
+				var result: Dictionary = placed.place(placeable_id, anchor, 0)
+				if not result["ok"]:
+					continue
+				if not accept.is_valid() or accept.call(result["uid"]):
+					return result["uid"]
+				placed.remove(result["uid"])
+	return ""
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.

@@ -916,3 +916,9 @@ Referenz: [Durchsuchbare Hof-Requisiten](yard-stashes.md).
 **Beschluss (Wunsch: „Beide nacheinander“, erst Presse, dann Sortierstation):** Die Schrottpresse presst 6 Schrauben oder Dosen zu einem Stahlballen (22 Cr, Größe 2). Mit ihr kommt das Verbinden-Werkzeug: Ausgang anklicken, Eingang anklicken, die Route sucht das Spiel. Bänder sind begehbar, blockieren nur das Bauen, folgen verschobenen Maschinen und werden bei fehlendem Weg „blockiert“ statt gelöscht. Der Transport wird logisch sofort entschieden, das fahrende Teil ist nur Darstellung. Die Sortierstation folgt als dritte Maschine mit derselben Schnittstelle.
 
 Referenz: [Schrottpresse](scrap-press.md), [Maschinenverbindungen](machine-links.md).
+
+## 26.11.2026 — Verarbeitungskette: Sortiermaschine mit drei Pressen, Juri verarbeitet statt zu verkaufen
+
+**Beschluss (Vorschlag des Nutzers):** Die Sortiermaschine trennt gemischten Schrott in Stahl, Kupfer & Elektronik und Holz; jede Kiste speist über ein Band eine eigene Presse, die sortenreine Ballen mit Aufpreis presst (bis zu drei Pressen, Stückkauf). Juri bringt Lieferungen und Zerlegeteile zuerst zu einer Presse, sonst zur Sortiermaschine, und verkauft nur, was keine Maschine nimmt; fertige Ballen holt er selbst ab. Fehlende Maschinen blockieren nichts: Dann wird von Hand verkauft. Eine Verkaufspalette für Ballen ist zurückgestellt, weil Juri die Ballen direkt abholt.
+
+Referenz: [Verarbeitungskette](processing-chain.md).

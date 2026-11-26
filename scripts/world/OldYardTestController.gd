@@ -851,6 +851,10 @@ func _setup_worker(saved: Dictionary) -> void:
 		return
 	worker.setup(_wallet, _objects, deliveries)
 	worker.rest_provider = _bench_rest_spot
+	worker.machines_provider = _chain_machines
+	worker.fed_machine.connect(func(machine: Node3D, _count: int) -> void:
+		_dust(machine.global_position + Vector3(0, 1.0, 0), 5, 0.12)
+		_sound("clink", -10.0))
 	if placed != null:
 		worker.navigation = placed.navigation
 	if placed != null:
@@ -1087,7 +1091,9 @@ func _on_object_placed(uid: String, node: Node3D) -> void:
 	if node is MagnetCollector:
 		_setup_magnet(node as MagnetCollector)
 	elif node is ScrapPress:
-		_setup_press(node as ScrapPress)
+		_setup_press(node as ScrapPress, uid)
+	elif node is SortingMachine:
+		_setup_sorter(node as SortingMachine, uid)
 	for storage: Node in node.find_children("*", "PlacedStorage", true, false):
 		(storage as PlacedStorage).objects = _objects
 		(storage as PlacedStorage).context = _context
@@ -1119,6 +1125,16 @@ func _verify_storages() -> void:
 		for storage: Node in (entry["node"] as Node).find_children("*", "PlacedStorage", true, false):
 			for note: String in (storage as PlacedStorage).verify_contents():
 				_note(note)
+
+
+## Presses and the sorting machine for Juri's processing chain.
+func _chain_machines() -> Array[Node3D]:
+	var machines: Array[Node3D] = []
+	if placed == null:
+		return machines
+	machines.append_array(placed.get_nodes_of("scrap_press"))
+	machines.append_array(placed.get_nodes_of("sorter"))
+	return machines
 
 
 ## Juri waits on a bench if there is one (the nearest to the pallet).
@@ -1164,14 +1180,23 @@ func _setup_magnet(machine: MagnetCollector) -> void:
 
 
 ## The scrap press (docs/scrap-press.md): bales join the registry.
-func _setup_press(press: ScrapPress) -> void:
+func _setup_press(press: ScrapPress, uid: String) -> void:
 	press.item_spawned.connect(_on_runtime_item_spawned)
 	press.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
-	press.setup(_objects)
+	press.setup(_objects, uid)
 	press.bale_pressed.connect(func(bale: ScrapItem) -> void:
 		_dust(bale.global_position, 10, 0.18)
 		_sound("thud", -4.0))
 	press.piece_fed.connect(func(_item_id: String) -> void: _sound("clink", -14.0))
+
+
+## The sorting machine (docs/processing-chain.md): sorted pieces join the registry.
+func _setup_sorter(sorter: SortingMachine, uid: String) -> void:
+	sorter.item_spawned.connect(_on_runtime_item_spawned)
+	sorter.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
+	sorter.setup(_objects, uid)
+	sorter.piece_fed.connect(func(_item_id: String) -> void: _sound("clink", -14.0))
+	sorter.piece_sorted.connect(func(_item: ScrapItem, _channel: String) -> void: _sound("clink", -16.0))
 
 
 func _on_magnet_item_spawned(item: ScrapItem) -> void:

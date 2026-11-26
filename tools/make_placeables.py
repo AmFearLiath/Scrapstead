@@ -250,8 +250,7 @@ name_key = "machine.scrap_press.name"
 description_key = "placeable.scrap_press.description"
 category = "machines"
 price = 140
-unlock_ware = "machine_scrap_press"
-max_count = 1
+max_count = 3
 scene = ExtResource("2_scene")
 size = Vector2i(4, 6)
 clearance = Array[Rect2i]([Rect2i(0, 6, 4, 1), Rect2i(4, 0, 1, 4)])
@@ -260,6 +259,30 @@ height = 2.1
 ports = Array[Dictionary]([{"cell": Vector2i(1, 0), "kind": "in"}, {"cell": Vector2i(2, 0), "kind": "in"}, {"cell": Vector2i(1, 5), "kind": "out"}, {"cell": Vector2i(2, 5), "kind": "out"}])
 ''')
     ids.insert(1, "scrap_press")
+    # The sorting machine (docs/processing-chain.md): hopper at the back, three
+    # bins = three output channels (steel left, copper front, wood right).
+    write("data/placeables/sorter.tres", '''[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/machines/SortingMachine.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "sorter"
+name_key = "machine.sorter.name"
+description_key = "placeable.sorter.description"
+category = "machines"
+price = 180
+unlock_ware = "machine_sorter"
+max_count = 1
+scene = ExtResource("2_scene")
+size = Vector2i(5, 5)
+clearance = Array[Rect2i]([Rect2i(0, 5, 5, 1)])
+solid = true
+height = 1.7
+ports = Array[Dictionary]([{"cell": Vector2i(2, 0), "kind": "in"}, {"cell": Vector2i(0, 2), "kind": "out", "channel": "steel"}, {"cell": Vector2i(2, 4), "kind": "out", "channel": "copper"}, {"cell": Vector2i(4, 2), "kind": "out", "channel": "wood"}])
+''')
+    ids.insert(2, "sorter")
     entries = ", ".join(f'ExtResource("{i + 2}")' for i in range(len(ids)))
     ext = "\n".join(f'[ext_resource type="Resource" path="res://data/placeables/{pid}.tres" id="{i + 2}"]'
                     for i, pid in enumerate(ids))

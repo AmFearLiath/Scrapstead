@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MaterialGroup" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/MaterialGroup.gd" id="1_group"]
+
+[resource]
+script = ExtResource("1_group")
+id = "steel"
+name_key = "material.steel"
+items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can")
+bale_item = "bale_steel"
+pieces_per_bale = 6
