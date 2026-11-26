@@ -5,9 +5,11 @@ extends Node3D
 
 const DUST_COLOR: Color = Color("c8b38c")
 const COIN_COLOR: Color = Color("e0a93b")
+const SPARK_COLOR: Color = Color("ffd36b")
 
 var _dust_material: ShaderMaterial
 var _coin_material: ShaderMaterial
+var _spark_material: StandardMaterial3D
 var _dust_mesh: SphereMesh
 var _coin_mesh: CylinderMesh
 var _rng := RandomNumberGenerator.new()
@@ -22,6 +24,9 @@ func _ready() -> void:
 	_coin_material.shader = toon
 	_coin_material.set_shader_parameter("albedo", COIN_COLOR)
 	_coin_material.next_pass = load("res://assets/materials/outline.tres")
+	_spark_material = StandardMaterial3D.new()
+	_spark_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_spark_material.albedo_color = SPARK_COLOR
 	_dust_mesh = SphereMesh.new()
 	_dust_mesh.radius = 0.5
 	_dust_mesh.height = 1.0
@@ -100,3 +105,28 @@ func coins(world_position: Vector3, count: int) -> void:
 func _coin_step(t: float, coin: Node3D, start: Vector3, direction: Vector3, arc: Vector3) -> void:
 	coin.global_position = start + direction * arc.x * t + Vector3(0, sin(t * PI) * arc.y - t * 0.9, 0)
 	coin.rotation = Vector3(t * 9.0, t * 6.0, 0)
+
+
+## Bright little sparks jumping out of a point (welding, repairs).
+func sparks(world_position: Vector3, count: int = 14) -> void:
+	for index: int in count:
+		var spark := MeshInstance3D.new()
+		spark.mesh = _dust_mesh
+		spark.material_override = _spark_material
+		spark.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(spark)
+		spark.global_position = world_position
+		spark.scale = Vector3.ONE * _rng.randf_range(0.035, 0.07)
+		var angle: float = _rng.randf() * TAU
+		var direction := Vector3(cos(angle), _rng.randf_range(0.6, 1.4), sin(angle)) * _rng.randf_range(0.6, 1.3)
+		var duration: float = _rng.randf_range(0.3, 0.55)
+		var tween: Tween = spark.create_tween()
+		tween.tween_method(_spark_step.bind(spark, world_position, direction), 0.0, 1.0, duration)
+		tween.tween_callback(spark.queue_free)
+
+
+func _spark_step(t: float, spark: Node3D, start: Vector3, direction: Vector3) -> void:
+	if not is_instance_valid(spark):
+		return
+	spark.global_position = start + direction * t + Vector3(0, -1.6 * t * t, 0)
+	spark.scale = spark.scale.lerp(Vector3.ONE * 0.005, 0.08)

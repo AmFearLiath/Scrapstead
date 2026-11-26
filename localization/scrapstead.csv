@@ -163,3 +163,123 @@ item.find_brass_figurine.description,A small brass man holding an even smaller b
 ui.catalog.effect_locked.carry_capacity,Carry capacity +{bonus} slots,Tragekapazität +{bonus} Plätze
 ui.settings.music_volume,Music,Musik
 ui.settings.sfx_volume,Sound effects,Geräusche
+story.letter.salutation,"To the new owner,","An den neuen Besitzer,"
+story.letter.body,"if you are reading this letter, the scrapyard belongs to you now.
+
+Don't worry. The roof only leaks in three places. Four when it's windy.
+
+The workshop is basically safe. Do avoid the red button next to the workbench, though. I forgot what it's for.
+
+Most things here are still useful. Some need a little love, others a hammer. With a few, I'm not sure.
+
+Look after Scrappy. He's a good lad. A bit of a know-it-all, but he got that from me.
+
+And if you get him running again: don't tell him I wrote his last performance review.
+
+He already thinks he's employee of the year.
+
+Good luck.","falls du diesen Brief liest, gehört dir jetzt der Schrottplatz.
+
+Keine Sorge. Das Dach ist nur an drei Stellen undicht. Vier, wenn es windig ist.
+
+Die Werkstatt ist grundsätzlich sicher. Meide allerdings den roten Knopf neben der Werkbank. Ich habe vergessen, wofür er ist.
+
+Die meisten Dinge hier sind noch zu gebrauchen. Manche brauchen etwas Liebe, andere einen Hammer. Bei einigen bin ich mir nicht sicher.
+
+Pass auf Scrappy auf. Er ist ein guter Kerl. Ein bisschen besserwisserisch, aber das hat er von mir.
+
+Und falls du ihn wieder zum Laufen bringst: Sag ihm nicht, dass ich seine letzte Leistungsbewertung geschrieben habe.
+
+Er hält sich ohnehin schon für den besten Mitarbeiter des Jahres.
+
+Viel Glück."
+story.letter.signature,Walt,Walt
+story.letter.close,Put the letter away,Brief weglegen
+ui.pause.letter,Walt's letter,Walts Brief
+ui.notes.title,Notes,Notizen
+ui.notes.key_items,Special: {items},Besonderes: {items}
+key_item.scrappy_head.name,Scrappy's head,Scrappys Kopf
+key_item.scrappy_core.name,Core component,Kernteil
+note.look_around,Have a look around the yard.,Sieh dich auf dem Hof um.
+note.sell,Bring scrap to the intake counter.,Bring Schrott zum Annahmetresen.
+note.catalog,Walt's order catalog is in the office.,Im Büro liegt Walts Bestellkatalog.
+note.need_core,The head needs a core component. Walt surely kept one somewhere.,Der Kopf braucht ein Kernteil. Walt hat bestimmt etwas aufbewahrt.
+note.core_where,What does this core component belong to? Somewhere in the yard …,Wozu gehört dieses Kernteil? Irgendwo auf dem Hof …
+note.repair_scrappy,Repair Scrappy at the workbench.,Repariere Scrappy an der Werkbank.
+note.entrance,Make the entrance look nice (order catalog).,Mach den Eingang hübsch (Bestellkatalog).
+ui.action.open,Open,Öffnen
+ui.action.dig_out,Dig out (hold),Freilegen (halten)
+ui.action.repair_scrappy,Repair Scrappy (hold),Scrappy reparieren (halten)
+ui.action.scrappy_wait,Ask him to wait here,Hier warten lassen
+ui.action.scrappy_follow,Ask him to come along,Mitkommen lassen
+scrappy.name,Scrappy,Scrappy
+scrappy.description,A robot head on a paint bucket on a skateboard. Wears a bow tie. Considers himself indispensable – and is surprisingly often right.,Ein Roboterkopf auf einem Farbeimer auf einem Rollbrett. Trägt Fliege. Hält sich für unverzichtbar – und hat damit erstaunlich oft recht.
+scrappy.prompt_detail,"Likes to talk. Listens too, sometimes.","Redet gern. Hört auch zu, manchmal."
+story.head_site.name,Something round in the scrap,Etwas Rundes im Schrott
+story.head_site.description,An eye peeks out of the heap. It doesn't blink. Hopefully.,Aus dem Haufen schaut ein Auge heraus. Es blinzelt nicht. Hoffentlich.
+story.head_site.detail,Gently. It's looking back.,"Behutsam, das schaut zurück."
+story.head_found.title,A robot head,Ein Roboterkopf
+story.head_found.body,"Dented, dusty and remarkably well groomed for a head without hair. On the forehead, in Walt's handwriting: ""SCRAPPY – do not sell!!"" A core component is missing inside.","Verbeult, verstaubt und erstaunlich gut frisiert für einen Kopf ohne Haare. Auf der Stirn steht in Walts Handschrift: „SCRAPPY – nicht verkaufen!!“ Innen fehlt ein Kernteil."
+story.red_toolbox.name,Walt's red toolbox,Walts roter Werkzeugkasten
+story.red_toolbox.description,"The only polished object in the whole yard. The sticker shows a heart and the word ""PRIVATE"".",Der einzige polierte Gegenstand auf dem ganzen Hof. Auf dem Aufkleber: ein Herz und das Wort „PRIVAT“.
+story.core_found.title,A core component and a note,Ein Kernteil und ein Zettel
+story.core_found.body,"Bedded in velvet: a softly humming core component. Next to it, a note from Walt: ""For Scrappy, in case he does something silly again. There's an emergency frame under the workbench. It's a paint bucket. Tell him it's a designer piece.""","In Samt gebettet: ein leise summendes Kernteil. Daneben ein Zettel von Walt: „Für Scrappy, falls er wieder Unsinn macht. Unter der Werkbank steht ein Notgestell. Es ist ein Farbeimer. Sag ihm, es ist ein Designerstück.“"
+story.bench.repair_detail,Head and core component are ready.,Kopf und Kernteil liegen bereit.
+story.bench.repaired,Scrappy is back!,Scrappy ist wieder da!
+station.workbench.description_after,"Walt's workbench. This is where Scrappy woke up again. For building things of your own, plans are still missing – and courage.",Walts Werkbank. Hier ist Scrappy wieder aufgewacht. Für das Bauen eigener Dinge fehlen noch Pläne – und Mut.
+upgrade.yard_entrance.name,Spruce up the entrance,Eingang herrichten
+upgrade.yard_entrance.description,"A freshly painted yard sign, two planters and a doormat saying ""Welcome (mostly)"". Watering instructions included.","Frisch gestrichenes Hofschild, zwei Blumenkübel und eine Fußmatte mit der Aufschrift „Willkommen (meistens)“. Gießanleitung liegt bei."
+ui.catalog.effect.decor,Prettier yard · better mood,Hübscherer Hof · bessere Laune
+scrappy.wake.1,…System start. Memory: damaged. Dignity: intact.,…Systemstart. Speicher: beschädigt. Würde: unbeschädigt.
+scrappy.wake.2,Oh. This is… surprising. I had expected a somewhat more dignified place to wake up.,Oh. Das ist… überraschend. Ich hatte eigentlich mit einem etwas würdevolleren Aufwachort gerechnet.
+scrappy.wake.3,"Is this… a paint bucket? I am a paint bucket. Walt, you old pragmatist.","Ist das… ein Farbeimer? Ich bin ein Farbeimer. Walt, du alter Pragmatiker."
+scrappy.wake.4,"So you're the new boss. I'm Scrappy, employee of the year. Probably. The paperwork is missing.","Du bist also der neue Chef. Ich bin Scrappy, Mitarbeiter des Jahres. Vermutlich. Die Unterlagen sind verschollen."
+scrappy.pickup.1,"Good choice. I'd have done the same, only more elegantly.","Gute Wahl. Ich hätte es genauso gemacht, nur eleganter."
+scrappy.pickup.2,Another piece of history. This time with rust.,Noch ein Stück Geschichte. Diesmal mit Rost.
+scrappy.pickup.3,"I'm keeping records. In my head. Which is, admittedly, on loan.",Ich führe Buch. Im Kopf. Der ist allerdings nur geliehen.
+scrappy.pickup.4,Careful! That could be valuable. Or rubbish. The line is blurry around here.,Vorsicht! Das könnte wertvoll sein. Oder Müll. Die Grenze ist hier fließend.
+scrappy.pickup.5,"Walt used to call things like that ""raw materials with personality"".",Walt hat so etwas immer „Rohstoff mit Persönlichkeit“ genannt.
+scrappy.pickup_valuable.1,That's valuable! I can tell by the amount of dust.,Das ist wertvoll! Ich erkenne das an der Menge Staub.
+scrappy.pickup_valuable.2,"Ooh. It doesn't shine, but it shines on the inside.","Ooh. Das glänzt nicht, aber es glänzt innerlich."
+scrappy.basket_full.1,"The basket is full. I'd help carry, but I'm a bucket with principles.","Der Korb ist voll. Ich würde ja tragen helfen, aber ich bin ein Eimer mit Prinzipien."
+scrappy.basket_full.2,No room left. Now might be a good moment for the counter.,Kein Platz mehr. Jetzt wäre ein guter Moment für den Tresen.
+scrappy.sale.1,A fair deal. Almost as fair as my last performance review.,Ein faires Geschäft. Fast so fair wie meine letzte Leistungsbewertung.
+scrappy.sale.2,Ka-ching! The sound of a working business.,Klingeling! Das Geräusch eines funktionierenden Betriebs.
+scrappy.sale.3,"We're practically a corporation. A very small, very dusty corporation.","Wir sind praktisch ein Konzern. Ein sehr kleiner, sehr staubiger Konzern."
+scrappy.sale.4,Noted: revenue. Also noted: I was there.,Notiert: Umsatz. Ebenfalls notiert: Ich war dabei.
+scrappy.sale_big.1,So much at once! Walt would have put the coffee on now. A bad one.,So viel auf einmal! Walt hätte jetzt Kaffee aufgesetzt. Einen schlechten.
+scrappy.sale_big.2,"That's more money than I've ever seen in one piece. Granted, I only had one eye working.","Das ist mehr Geld, als ich je am Stück gesehen habe. Zugegeben, ich hatte nur ein Auge in Betrieb."
+scrappy.purchase.1,An excellent investment. I have no objections whatsoever. Only quiet concerns.,Eine ausgezeichnete Investition. Ich habe keinerlei Einwände. Nur leise Bedenken.
+scrappy.purchase.2,Something new? In this yard? That's going to make the other things nervous.,Etwas Neues? Auf diesem Hof? Das macht die anderen Sachen nervös.
+scrappy.purchase.3,"The mail-order catalog. Walt's favourite read, right after the backs of screw packets.","Der Versandkatalog. Walts Lieblingslektüre, gleich nach den Rückseiten von Schraubenpackungen."
+scrappy.suggest_entrance.1,May I suggest something? The entrance. It looks like it gave up. The catalog has a remedy.,"Darf ich etwas vorschlagen? Der Eingang. Der sieht aus, als hätte er aufgegeben. Im Katalog gibt es Abhilfe."
+scrappy.entrance.1,Flowers! A sign! A doormat! We are now officially a place people come to voluntarily.,"Blumen! Ein Schild! Eine Fußmatte! Wir sind jetzt offiziell ein Ort, an den Leute freiwillig kommen."
+scrappy.refuse.1,"That didn't work. I'd have said so beforehand, but I didn't want to be a know-it-all.","Das hat nicht geklappt. Ich hätte es vorher gesagt, aber ich wollte nicht besserwisserisch sein."
+scrappy.refuse.2,Some things need the right tool. Some need patience. And some are just stubborn.,Manche Dinge brauchen das richtige Werkzeug. Manche Geduld. Und manche sind einfach stur.
+scrappy.refuse.3,No? No. Fine. We'll pretend that was on purpose.,"Nein? Nein. Gut. Wir tun so, als wäre das Absicht gewesen."
+scrappy.search.1,Rummaging is an art form. You are… on your way there.,Wühlen ist eine Kunstform. Du bist… auf dem Weg dorthin.
+scrappy.search.2,Walt once found his glasses in there. He was wearing them. On his head. The whole time.,Walt hat da mal seine Brille gefunden. Er hatte sie auf. Auf dem Kopf. Die ganze Zeit.
+scrappy.search.3,Whatever was in there has been waiting for you for a long time.,"Was auch immer da drin war, es hat lange auf dich gewartet."
+scrappy.dismantle.1,Taking things apart! My favourite part. After putting them together. And talking.,Zerlegen! Mein Lieblingsteil. Nach dem Zusammenbauen. Und dem Reden.
+scrappy.dismantle.2,"On the inside, everything looks like me. Just with less charm.",Innen sieht alles aus wie ich. Nur mit weniger Charme.
+scrappy.follow.1,I'm coming along. Someone has to make sure you don't miss anything important.,"Ich komme mit. Jemand muss ja aufpassen, dass du nichts Wichtiges übersiehst."
+scrappy.follow.2,"Off we go! I'll roll ahead. Behind, I mean. Behind.","Auf geht's! Ich rolle voraus. Hinterher, meine ich. Hinterher."
+scrappy.follow.3,Finally. Waiting is not for employees of the year.,Endlich. Warten ist nichts für Mitarbeiter des Jahres.
+scrappy.wait.1,I'll wait here. I'm very good at waiting. I practised for years in a heap.,Ich warte hier. Ich bin sehr gut im Warten. Ich habe jahrelang in einem Haufen geübt.
+scrappy.wait.2,Understood. I'll guard this spot. Nobody will steal it.,Verstanden. Ich bewache diesen Fleck. Niemand wird ihn stehlen.
+scrappy.wait.3,I'm staying. If anyone asks: I'm the supervisor here.,Ich bleibe. Falls jemand fragt: Ich bin hier die Aufsicht.
+scrappy.explore.1,Hm. Interesting. No. Yes. No.,Hm. Interessant. Nein. Doch. Nein.
+scrappy.explore.2,This has potential. Or tetanus. Both are possible.,Das hier hat Potenzial. Oder Tetanus. Beides möglich.
+scrappy.explore.3,I'm only inspecting. Touching is not my department.,Ich untersuche nur. Anfassen ist nicht meine Abteilung.
+scrappy.explore.4,Psst. There's something lying over here. Just a hint. No obligation.,Psst. Hier liegt noch was. Nur ein Hinweis. Ganz unverbindlich.
+scrappy.explore.5,I have a feeling about this thing. Either intuition or a loose contact.,Ich habe ein Gefühl bei diesem Ding. Entweder Intuition oder ein Wackelkontakt.
+scrappy.explore.6,"Walt never tidied this up. He called it ""storage for ideas"".",Das hat Walt nie aufgeräumt. Er nannte es „Lager für Ideen“.
+scrappy.idle.1,You know what Walt always said? Me neither. Memory damage.,"Weißt du, was Walt immer gesagt hat? Ich auch nicht. Speicherschaden."
+scrappy.idle.2,I'm counting the screws in the yard. Lost count at three hundred. Again.,Ich zähle gerade die Schrauben auf dem Hof. Bei dreihundert hab ich mich verzählt. Schon wieder.
+scrappy.idle.3,"Lovely day. For a scrapyard, anyway.",Schöner Tag. Für einen Schrottplatz jedenfalls.
+scrappy.idle.4,If you're taking a break: very sensible. If not: also sensible. I'm flexible.,Falls du Pause machst: sehr vernünftig. Falls nicht: auch vernünftig. Ich bin flexibel.
+scrappy.idle.5,"My bow tie is crooked, isn't it? Don't say anything. I can feel it.","Meine Fliege sitzt schief, oder? Sag nichts. Ich spüre es."
+scrappy.memory.workbench,"This is where Walt first screwed me together. He hummed the whole time. Off-key, but with devotion.","Hier hat Walt mich zum ersten Mal zusammengeschraubt. Er hat dabei gesummt. Falsch, aber mit Hingabe."
+scrappy.memory.container,The container! Mrs. Mouser the cat lived in there. She never liked me. I miss her anyway.,"Der Container! Da hat Frau Mauser gewohnt, die Katze. Sie mochte mich nie. Ich vermisse sie trotzdem."
+scrappy.memory.wheelbarrow,Walt's wheelbarrow. He called it Bertha and never changed the wheel. Out of respect.,Walts Schubkarre. Er nannte sie Bertha und hat nie das Rad gewechselt. Aus Respekt.
+scrappy.memory.gate,"Every morning Walt said ""Good morning, yard"" at this gate. The yard never answered. Until now, sort of.","Jeden Morgen hat Walt an diesem Tor „Guten Morgen, Hof“ gesagt. Der Hof hat nie geantwortet. Bis heute, sozusagen."

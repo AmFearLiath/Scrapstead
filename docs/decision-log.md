@@ -803,3 +803,16 @@ Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).
 
 Referenz: [Art Direction, Abschnitt 11](world-art-assets.md).
 
+## 26.11.2026 — P2: Einstieg und Scrappy
+
+**Beschluss (autonome Entwicklungsphase, Entscheidungen von der Projektleitung delegiert):** P2 wird nach `p2-arrival-and-scrappy.md` umgesetzt.
+
+- Kein Intro-Film: Walts Brief liegt bei „Neues Spiel“ als Blatt über dem Hof und ist über das Pausemenü erneut lesbar.
+- Notizzettel mit höchstens zwei Vorschlägen, abgeleitet aus Story-Flags; keine Pflichtreihenfolge.
+- Scrappys Kopf liegt teilverschüttet am großen Schrotthaufen (Freilegen ohne Werkzeug), die Kernkomponente im roten Werkzeugkasten neben der Werkbank; beides sind Schlüsselgegenstände außerhalb des Tragekorbs.
+- Wiederherstellung einmalig an der Werkbank; Scrappys Notgestell ist ein Farbeimer auf einem Rollbrett (mit Greifzange, Taschenlampe und Fliege).
+- Erste sichtbare Hofverbesserung: Katalogware „Eingang herrichten“ (25 Cr).
+- Spielstand Version 3 mit expliziter Migration aus Version 2; Version 1 bleibt abgelehnt.
+- Scrappy ist szenenlokal (kein Autoload) und hat keine Kollisionsebene, kann also nie den Weg versperren.
+
+Referenz: [P2-Spezifikation](p2-arrival-and-scrappy.md).

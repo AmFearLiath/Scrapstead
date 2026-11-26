@@ -6,9 +6,9 @@ Scrapstead ist ein gemütliches, humorvolles isometrisches Cozy Automation Tycoo
 
 ## Projektstatus
 
-**Spielbarer Gameplay-Prototyp (P0 + P1 + P1b).** Godot 4.7.2 Stable, GDScript, Forward+, Windows und Linux.
+**Spielbarer Gameplay-Prototyp (P0 + P1 + P1b + P2).** Godot 4.7.2 Stable, GDScript, Forward+, Windows und Linux.
 
-Der Prototyp enthält Hauptmenü mit Kamerafahrt durch den Old Yard, isometrische Steuerung, Sammeln, Bergen, Verkaufen, Credits, ein Tragekorb-Upgrade, eine optionale Zerlegung und Speichern/Fortsetzen. Stand, Testprotokoll und bekannte Einschränkungen: [Prototyp-Abnahme](docs/prototype-acceptance.md).
+Der Prototyp enthält Hauptmenü mit Kamerafahrt durch den Old Yard, isometrische Steuerung, Sammeln, Bergen, Verkaufen, Credits, ein Tragekorb-Upgrade, eine optionale Zerlegung und Speichern/Fortsetzen. Seit P2: Walts Brief, ein Notizzettel mit Vorschlägen und Scrappy – sein Kopf steckt irgendwo im Schrott, sein Kernteil hat Walt gut verwahrt. Repariert folgt er dir, kommentiert und erinnert sich an Walt. Stand, Testprotokoll und bekannte Einschränkungen: [Prototyp-Abnahme](docs/prototype-acceptance.md).
 
 ## Prototyp starten
 
@@ -26,6 +26,7 @@ godot --path .
 | Bewegen | WASD / Pfeiltasten |
 | Interagieren, Bergen/Durchsuchen/Zerlegen (halten) | E |
 | Fundstück oder Einrichtung ansehen | R |
+| Mit Scrappy reden (Mitkommen / Hier warten) | E, wenn du ihn ansiehst |
 | Zuletzt aufgenommenes Teil ablegen | Q |
 | Pausemenü (Speichern) / Panel schließen | Esc |
 | Zoom | Mausrad |

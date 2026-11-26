@@ -547,6 +547,60 @@ def sfx_creak(_variant):
     return finish(bandpass(creak, 250, 1800), peak_db=-8)
 
 
+def _beep(freq_start, freq_end, seconds, wobble=0.0):
+    """Little robot syllable: a sine glide with a soft square edge."""
+    t = t_axis(seconds)
+    freq = np.linspace(freq_start, freq_end, len(t)) * (1 + wobble * np.sin(2 * np.pi * 28 * t))
+    phase = 2 * np.pi * np.cumsum(freq) / SR
+    tone = np.sin(phase) + 0.18 * np.sign(np.sin(phase))
+    env = np.minimum(1, t / 0.008) * np.minimum(1, (seconds - t) / 0.02)
+    return tone * env
+
+
+def sfx_scrappy_chirp(variant):
+    """Scrappy talking: two or three cheerful, slightly wonky syllables."""
+    patterns = [
+        [(820, 1150, 0.07), (1250, 980, 0.09)],
+        [(700, 900, 0.06), (1000, 1300, 0.06), (1350, 1050, 0.1)],
+        [(1100, 760, 0.08), (900, 1220, 0.11)],
+        [(950, 950, 0.05), (1200, 1500, 0.07), (1000, 880, 0.08)],
+    ]
+    out = np.zeros(int(0.45 * SR))
+    cursor = 0.0
+    for start, end, seconds in patterns[variant % len(patterns)]:
+        mix_into(out, _beep(start, end, seconds, wobble=0.02), cursor, 0.55)
+        cursor += seconds + 0.025
+    return finish(reverb(lowpass(out, 5000), 0.3, 0.1), peak_db=-9)
+
+
+def sfx_scrappy_wake(_variant):
+    """Power-up: a rising hum, a stutter, then a pleased little chirp."""
+    out = np.zeros(int(1.9 * SR))
+    t = t_axis(0.9)
+    freq = 60 + 420 * (t / 0.9) ** 2
+    hum = np.sin(2 * np.pi * np.cumsum(freq) / SR) * np.minimum(1, t / 0.2)
+    mix_into(out, lowpass(hum, 1200), 0.0, 0.5)
+    for index in range(3):
+        mix_into(out, _beep(500 + index * 120, 520 + index * 120, 0.04), 0.85 + index * 0.07, 0.35)
+    mix_into(out, _beep(900, 1400, 0.09, 0.03), 1.15, 0.55)
+    mix_into(out, _beep(1500, 1150, 0.12, 0.03), 1.27, 0.5)
+    mix_into(out, music_box(midi_hz(n("C6")), 0.6), 1.3, 0.25)
+    return finish(reverb(out, 0.6, 0.18), peak_db=-5)
+
+
+def sfx_spark(variant):
+    """Welding crackle: dense bright clicks over a short hiss."""
+    seconds = 0.55
+    hiss = highpass(noise(seconds), 3500) * env_exp(seconds, 0.18) * 0.35
+    crackle = np.zeros(int(seconds * SR))
+    local = np.random.default_rng(300 + variant)
+    for _ in range(40):
+        position = int(local.uniform(0, seconds * 0.85) * SR)
+        length = int(0.003 * SR)
+        crackle[position:position + length] += local.uniform(-1, 1, length) * local.uniform(0.3, 1.0)
+    return finish(highpass(hiss + crackle, 1500), peak_db=-8)
+
+
 SFX = {
     "step": (sfx_footstep, 4), "clink": (sfx_clink, 3), "tin": (sfx_tin, 2), "wire": (sfx_wire, 2),
     "wood": (sfx_wood, 2), "brass": (sfx_brass, 1), "box": (sfx_box, 2), "basket": (sfx_basket, 2),
@@ -554,7 +608,8 @@ SFX = {
     "coins": (sfx_coins, 2), "page": (sfx_page, 2), "paper": (sfx_paper, 1), "phone": (sfx_phone, 1),
     "delivery": (sfx_delivery, 1), "jingle": (sfx_jingle, 1), "switch": (sfx_switch, 1), "pop": (sfx_pop, 3),
     "click": (sfx_click, 1), "rummage": (sfx_rummage, 1), "hoist": (sfx_hoist, 1), "screw": (sfx_screw, 1),
-    "creak": (sfx_creak, 1),
+    "creak": (sfx_creak, 1), "scrappy_chirp": (sfx_scrappy_chirp, 4), "scrappy_wake": (sfx_scrappy_wake, 1),
+    "spark": (sfx_spark, 2),
 }
 LOOPS = {"rummage", "hoist", "screw"}
 

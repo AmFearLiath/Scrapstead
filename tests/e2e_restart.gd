@@ -38,6 +38,12 @@ func _play() -> void:
 	menu.get_node("MenuUI/Root/MenuPanel/NewGameButton").pressed.emit()
 	var scene: Node = await _wait_scene(YARD)
 	await _physics(5)
+	var letter: Control = scene.get_node("HUD/LetterPanel")
+	_check(letter.visible, "Walt's letter shown on a new game")
+	_check(not scene.get_node("Player/PlayerInteractor").is_enabled(), "input blocked while reading")
+	letter.get_node("%CloseButton").pressed.emit()
+	await _physics(3)
+	_check(not letter.visible and scene.get_story().has_flag("letter_read"), "letter closed and remembered")
 	for object_id: String in ["scrap_rusted_bolt_01", "scrap_empty_can_01", "scrap_wire_coil_01", "scrap_rusted_bolt_02"]:
 		await _use(scene, object_id, 0.05)
 	await _sell(scene)
@@ -62,6 +68,20 @@ func _play() -> void:
 	for object_id: String in ["scrap_empty_can_04", "scrap_empty_can_05", "scrap_copper_pipe_01", "scrap_empty_can_02"]:
 		await _use(scene, object_id, 0.05)
 	_check(scene.get_inventory().get_used_slots() == 4, "4 of 8 slots used after upgrade")
+	# P2: find the head and the core, repair Scrappy at the workbench.
+	await _use(scene, "story_scrappy_head", 2.5)
+	_check(scene.get_node("HUD/InspectPanel").visible, "head discovery is shown")
+	scene.get_node("HUD/InspectPanel").close()
+	await _physics(2)
+	await _use(scene, "story_red_toolbox", 0.05)
+	scene.get_node("HUD/InspectPanel").close()
+	await _physics(2)
+	_check(scene.get_story().has_key_item("scrappy_head") and scene.get_story().has_key_item("scrappy_core"),
+		"both key items found")
+	await _use(scene, "station_workbench", 3.5)
+	await _wait_seconds(3.5)
+	_check(scene.get_node("Scrappy").is_active(), "Scrappy restored and awake")
+	_check(scene.get_inventory().get_used_slots() == 4, "key items never used basket slots")
 	_send("pause_menu", true)
 	await _frames(3)
 	scene.get_node("HUD/PauseMenu").get_node("%SaveExitButton").pressed.emit()
@@ -83,6 +103,10 @@ func _continue() -> void:
 	_check(scene.get_inventory().get_used_slots() == 4, "carried load restored")
 	_check(scene.get_world_object("bulk_metal_beam_01").get_state() == ScrapItem.State.SOLD, "beam sold")
 	_check(scene.get_world_object("source_rusted_drum_01").is_searched(), "drum stays searched")
+	_check(not scene.get_node("HUD/LetterPanel").visible, "letter not shown again after loading")
+	_check(scene.get_node("Scrappy").is_active(), "Scrappy awake after restart")
+	_check(scene.get_story().has_flag("scrappy_restored"), "story flags restored")
+	_check(not scene.get_world_object("story_scrappy_head").is_interaction_available(), "head stays taken")
 	await _use(scene, "device_broken_radio_01", 0.05)
 	await _use(scene, "station_dismantle_table", 4.0)
 	_check(scene.get_inventory().contains("device_broken_radio_01_copper_wire"), "P1b works after restart")
@@ -119,6 +143,10 @@ func _sell(scene: Node) -> void:
 	_check(panel.visible, "sell panel open")
 	panel.get_node("%ConfirmButton").pressed.emit()
 	await _physics(2)
+
+
+func _wait_seconds(seconds: float) -> void:
+	await create_timer(seconds).timeout
 
 
 func _send(action: StringName, pressed: bool) -> void:

@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/scrappy/ScrappyController.gd" id="1_controller"]
+[ext_resource type="Script" path="res://scripts/scrappy/ScrappyAnimator.gd" id="2_animator"]
+[ext_resource type="Script" path="res://scripts/scrappy/ScrappyInteraction.gd" id="3_talk"]
+[ext_resource type="PackedScene" path="res://assets/models/scrappy.glb" id="4_model"]
+
+[sub_resource type="CapsuleShape3D" id="body_shape"]
+radius = 0.22
+height = 0.7
+
+[sub_resource type="SphereShape3D" id="talk_shape"]
+radius = 0.45
+
+[node name="Scrappy" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("body_shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="Model" parent="VisualRoot" instance=ExtResource("4_model")]
+
+[node name="SpeechAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+
+[node name="Talk" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_talk")
+object_id = "scrappy"
+name_key = "scrappy.name"
+description_key = "scrappy.description"
+highlight_radius = 0.45
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Talk"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("talk_shape")
+
+[node name="Animator" type="Node" parent="."]
+script = ExtResource("2_animator")

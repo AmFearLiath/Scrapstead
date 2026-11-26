@@ -64,6 +64,10 @@ func set_enabled(enabled: bool) -> void:
 		_refresh_selection()
 
 
+func is_enabled() -> bool:
+	return _enabled
+
+
 ## True while an action key is being held on a target (presentation hook).
 func is_holding() -> bool:
 	return _hold_target != null

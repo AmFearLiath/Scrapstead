@@ -27,20 +27,27 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_1.wav" id="25"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_2.wav" id="26"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/rummage_0.wav" id="27"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/screw_0.wav" id="28"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_0.wav" id="29"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_1.wav" id="30"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_2.wav" id="31"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_3.wav" id="32"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/switch_0.wav" id="33"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_0.wav" id="34"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_1.wav" id="35"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_0.wav" id="36"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_1.wav" id="37"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="38"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="39"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="40"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="41"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_0.wav" id="28"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_1.wav" id="29"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_2.wav" id="30"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_3.wav" id="31"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_wake_0.wav" id="32"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/screw_0.wav" id="33"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_0.wav" id="34"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_1.wav" id="35"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_0.wav" id="36"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_1.wav" id="37"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_2.wav" id="38"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_3.wav" id="39"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/switch_0.wav" id="40"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_0.wav" id="41"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_1.wav" id="42"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_0.wav" id="43"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_1.wav" id="44"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="45"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="46"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="47"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="48"]
 
 [resource]
 script = ExtResource("1")
@@ -63,12 +70,15 @@ sounds = {
 "phone": [ExtResource("23")],
 "pop": [ExtResource("24"), ExtResource("25"), ExtResource("26")],
 "rummage": [ExtResource("27")],
-"screw": [ExtResource("28")],
-"step": [ExtResource("29"), ExtResource("30"), ExtResource("31"), ExtResource("32")],
-"switch": [ExtResource("33")],
-"thud": [ExtResource("34"), ExtResource("35")],
-"tin": [ExtResource("36"), ExtResource("37")],
-"wire": [ExtResource("38"), ExtResource("39")],
-"wood": [ExtResource("40"), ExtResource("41")]
+"scrappy_chirp": [ExtResource("28"), ExtResource("29"), ExtResource("30"), ExtResource("31")],
+"scrappy_wake": [ExtResource("32")],
+"screw": [ExtResource("33")],
+"spark": [ExtResource("34"), ExtResource("35")],
+"step": [ExtResource("36"), ExtResource("37"), ExtResource("38"), ExtResource("39")],
+"switch": [ExtResource("40")],
+"thud": [ExtResource("41"), ExtResource("42")],
+"tin": [ExtResource("43"), ExtResource("44")],
+"wire": [ExtResource("45"), ExtResource("46")],
+"wood": [ExtResource("47"), ExtResource("48")]
 }
 loops = PackedStringArray("hoist", "rummage", "screw")

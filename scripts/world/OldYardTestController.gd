@@ -27,6 +27,13 @@ extends Node3D
 @export var fx: Node3D
 ## Scene sound effects (scripts/audio/SoundFx.gd); optional.
 @export var sound_fx: Node
+@export_group("Story")
+## Scrappy (scenes/scrappy/Scrappy.tscn); optional so P1 test scenes still run.
+@export var scrappy: CharacterBody3D
+@export var story_director: StoryDirector
+@export var letter_panel: Control
+@export var task_notes: Control
+@export var speech_bubble: Control
 @export_group("Data")
 @export var item_catalog: ItemCatalog
 @export var upgrade_catalog: UpgradeCatalog
@@ -39,6 +46,9 @@ var _context := InteractionContext.new()
 var _wallet: Wallet
 var _inventory: CarryInventory
 var _upgrades: UpgradeProgress
+var _story: StoryState
+var _letter_from_pause: bool = false
+var _staging: bool = false
 ## Stable object ID -> Interactable placed in this scene.
 var _objects: Dictionary = {}
 var _modal_open: bool = false
@@ -55,6 +65,7 @@ func _ready() -> void:
 	_register_world_objects()
 	var state: Dictionary = GameSession.get_current_state()
 	_create_economy(state)
+	_story = StoryState.new(state.get("story", {}))
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
@@ -69,10 +80,12 @@ func _ready() -> void:
 	_context.wallet = _wallet
 	_context.item_catalog = item_catalog
 	_context.upgrades = _upgrades
+	_context.story = _story
 	_interactor.setup(player.get_node("InteractionDetector"), player, player.get_facing_direction,
 		interaction_prompt, _context)
 	_interactor.interaction_finished.connect(_on_interaction_finished)
 	_connect_stations()
+	_setup_story(state.get("scrappy", {}))
 	# Step 9: HUD and diagnostics.
 	economy_hud.setup(_wallet, _inventory, _upgrades)
 	_setup_presentation()
@@ -84,12 +97,18 @@ func _ready() -> void:
 	pause_menu.save_requested.connect(func() -> void: save_game())
 	pause_menu.save_and_exit_requested.connect(_on_save_and_exit)
 	pause_menu.exit_without_saving_requested.connect(GameSession.return_to_main_menu)
+	if pause_menu.has_signal("letter_requested"):
+		pause_menu.letter_requested.connect(_on_letter_requested)
 	debug_overlay.setup(player, camera_rig, _interactor, _debug_extra_lines)
 	GameSession.save_completed.connect(_on_save_completed)
 	_update_controls_hint()
 	# Step 10: release input once physics has seen the restored positions.
 	await get_tree().physics_frame
 	_set_gameplay_input(true)
+	if letter_panel != null and GameSession.intro_enabled and not _story.has_flag(StoryDirector.FLAG_LETTER_READ):
+		open_letter()
+	elif story_director != null and not GameSession.intro_enabled:
+		story_director.on_letter_closed()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -136,6 +155,8 @@ func create_snapshot() -> Dictionary:
 		"wallet": _wallet.to_save_data(),
 		"inventory": _inventory.to_save_data(),
 		"upgrades": _upgrades.to_save_data(),
+		"story": _story.to_save_data(),
+		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
 	}
 
 
@@ -178,6 +199,19 @@ func get_upgrades() -> UpgradeProgress:
 	return _upgrades
 
 
+func get_story() -> StoryState:
+	return _story
+
+
+## Opens Walt's letter as a modal sheet.
+func open_letter() -> void:
+	if letter_panel == null:
+		return
+	_open_modal()
+	_sound("paper")
+	letter_panel.open()
+
+
 func _create_economy(state: Dictionary) -> void:
 	var wallet_data: Dictionary = state.get("wallet", {})
 	_wallet = Wallet.new(int(wallet_data.get("balance", balance.starting_credits)),
@@ -204,6 +238,9 @@ func _connect_stations() -> void:
 		elif target is OrderDesk:
 			(target as OrderDesk).refresh_deliveries(_upgrades)
 			(target as OrderDesk).ware_bought.connect(_on_ware_bought)
+		elif target is RepairBench:
+			(target as RepairBench).bind_context(_context)
+			(target as RepairBench).scrappy_restored.connect(_on_scrappy_restored)
 
 
 func _register_world_objects() -> void:
@@ -265,6 +302,7 @@ func _set_gameplay_input(enabled: bool) -> void:
 
 func _on_interaction_finished(target_id: String, result: Dictionary) -> void:
 	_present_interaction(target_id, result)
+	_report_story_event(target_id, result)
 	_show_result(result)
 	var data: Dictionary = result.get("panel_data", {})
 	match result.get("panel", ""):
@@ -298,6 +336,8 @@ func _on_sale_completed(object_ids: Array, total: int) -> void:
 		var item: ScrapItem = _objects.get(str(object_id)) as ScrapItem
 		if item != null:
 			item.set_state(ScrapItem.State.SOLD)
+	if story_director != null:
+		story_director.on_sale(total)
 
 
 func _on_sell_panel_closed(result: Dictionary) -> void:
@@ -434,6 +474,8 @@ func _on_item_arrived() -> void:
 
 func _on_ware_bought(definition: UpgradeDefinition) -> void:
 	_sound("phone")
+	if story_director != null:
+		story_director.on_purchase(definition)
 	get_tree().create_timer(0.9).timeout.connect(_deliver.bind(definition.id))
 
 
@@ -483,3 +525,125 @@ func _first_of_type(type_name: String) -> Interactable:
 		if target.get_script() != null and target.get_script().get_global_name() == type_name:
 			return target
 	return null
+
+
+# --- Story (P2: letter, notes, Scrappy) --------------------------------------
+
+func _setup_story(scrappy_state: Dictionary) -> void:
+	if scrappy != null:
+		scrappy.setup(player, _explore_candidates)
+		var talk: ScrappyInteraction = scrappy.get_node("Talk") as ScrappyInteraction
+		talk.bind(scrappy, player)
+		talk.follow_toggled.connect(_on_follow_toggled)
+		scrappy.get_node("Animator").setup(scrappy, scrappy.get_node("VisualRoot/Model"))
+		scrappy.explored.connect(_on_scrappy_explored)
+		if _story.has_flag(StoryDirector.FLAG_RESTORED):
+			scrappy.apply_save_state(scrappy_state if not scrappy_state.is_empty() else {"state": "active"})
+			if not scrappy.is_active():
+				_note("scrappy was restored but saved dormant, woken at the player")
+				scrappy.apply_save_state({"state": "active", "follow": scrappy_state.get("follow", true)})
+		else:
+			scrappy.set_dormant()
+	if story_director != null:
+		story_director.setup(_story, scrappy, speech_bubble, task_notes, sound_fx, _upgrades, player)
+	if letter_panel != null:
+		letter_panel.closed.connect(_on_letter_closed)
+
+
+## Things Scrappy may wander to and look at: loose finds and unsearched sources.
+func _explore_candidates() -> Array:
+	var result: Array = []
+	for target: Interactable in _objects.values():
+		if not target.is_interaction_available():
+			continue
+		if target is ScrapItem and (target as ScrapItem).get_state() == ScrapItem.State.IN_WORLD:
+			result.append(target)
+		elif target is SearchSource:
+			result.append(target)
+	return result
+
+
+func _report_story_event(target_id: String, result: Dictionary) -> void:
+	if story_director == null:
+		return
+	var target: Interactable = _objects.get(target_id)
+	if not result.get("success", false):
+		if not str(result.get("message_key", "")).is_empty():
+			story_director.on_refused()
+		return
+	if target is ScrapItem and (target as ScrapItem).get_state() == ScrapItem.State.CARRIED:
+		story_director.on_item_picked_up((target as ScrapItem).definition)
+		if _inventory.get_used_slots() >= _inventory.get_capacity():
+			story_director.on_basket_full()
+	elif target is SearchSource:
+		story_director.on_searched()
+	elif target is DismantleStation:
+		story_director.on_dismantled()
+	elif target is ScrappyHeadSite or target is RedToolbox:
+		_dust(target.get_interaction_point(), 10, 0.22)
+		_sound("creak" if target is ScrappyHeadSite else "clink")
+
+
+func _on_letter_closed() -> void:
+	_sound("paper")
+	if story_director != null:
+		story_director.on_letter_closed()
+	if _letter_from_pause:
+		_letter_from_pause = false
+		pause_menu.open()
+	else:
+		_close_modal()
+
+
+func _on_letter_requested() -> void:
+	_letter_from_pause = true
+	pause_menu.close()
+	letter_panel.open()
+
+
+func _on_follow_toggled(following: bool) -> void:
+	_sound("scrappy_chirp", -4.0)
+	scrappy.get_node("Animator").hop()
+	if story_director != null:
+		story_director.on_follow_toggled(following)
+
+
+func _on_scrappy_explored(target: Node3D) -> void:
+	if story_director != null:
+		story_director.on_explored(target)
+
+
+## Staging of the repair: camera closes in, sparks, Scrappy wakes and talks.
+func _on_scrappy_restored() -> void:
+	if scrappy == null:
+		return
+	_staging = true
+	_set_gameplay_input(false)
+	var bench: Interactable = _first_of_type("RepairBench")
+	var spot: Vector3 = Vector3(10.5, 0.0, -13.0)
+	if bench != null:
+		spot = bench.global_position + bench.global_basis.z * 1.2
+	scrappy.global_position = spot
+	camera_rig.focus_on(scrappy, 8.5)
+	_sound("spark")
+	for index: int in 4:
+		get_tree().create_timer(0.25 * index).timeout.connect(_repair_sparks.bind(spot))
+	await get_tree().create_timer(1.2).timeout
+	_sound("scrappy_wake")
+	var to_player: Vector3 = player.global_position - spot
+	scrappy.activate(spot, atan2(to_player.x, to_player.z))
+	scrappy.get_node("Animator").hop()
+	_dust(spot, 10, 0.2)
+	if story_director != null:
+		story_director.play_wake_sequence()
+	await get_tree().create_timer(1.4).timeout
+	camera_rig.end_focus()
+	_staging = false
+	if not _modal_open:
+		_set_gameplay_input(true)
+
+
+func _repair_sparks(at: Vector3) -> void:
+	if fx != null and fx.has_method("sparks"):
+		fx.sparks(at + Vector3(0, 0.5, 0), 12)
+	_sound("spark", -6.0)

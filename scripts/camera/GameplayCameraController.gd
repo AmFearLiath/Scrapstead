@@ -26,6 +26,8 @@ extends Node3D
 var _follow_target: Node3D
 var _target_zoom: float
 var _warned_missing_target: bool = false
+var _focus_saved_target: Node3D
+var _focus_saved_zoom: float = 14.0
 
 
 func _ready() -> void:
@@ -47,6 +49,28 @@ func set_follow_target(target: Node3D) -> void:
 		_camera_target.global_position = target.global_position
 		reset_physics_interpolation()
 		_camera.reset_physics_interpolation()
+
+
+## Briefly frames another target with a closer zoom (story moments). The
+## previous anchor and zoom return with end_focus().
+func focus_on(target: Node3D, zoom: float) -> void:
+	if _focus_saved_target == null:
+		_focus_saved_target = _follow_target
+		_focus_saved_zoom = _target_zoom
+	_follow_target = target
+	_target_zoom = clampf(zoom, zoom_min * 0.6, zoom_max)
+
+
+func end_focus() -> void:
+	if _focus_saved_target == null:
+		return
+	_follow_target = _focus_saved_target
+	_target_zoom = _focus_saved_zoom
+	_focus_saved_target = null
+
+
+func is_focusing() -> bool:
+	return _focus_saved_target != null
 
 
 ## The active gameplay camera, used by the PlayerController as movement basis.

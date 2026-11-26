@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradeCatalog" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="UpgradeCatalog" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/data/UpgradeCatalog.gd" id="1_catalog"]
 [ext_resource type="Script" path="res://scripts/data/UpgradeDefinition.gd" id="1_def"]
@@ -6,7 +6,8 @@
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_carry_basket.tres" id="3_upgrade_carry_basket"]
 [ext_resource type="Resource" path="res://data/upgrades/tool_hoist.tres" id="4_tool_hoist"]
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_handcart.tres" id="5_upgrade_handcart"]
+[ext_resource type="Resource" path="res://data/upgrades/yard_entrance.tres" id="6_yard_entrance"]
 
 [resource]
 script = ExtResource("1_catalog")
-upgrades = Array[ExtResource("1_def")]([ExtResource("2_tool_crowbar"), ExtResource("3_upgrade_carry_basket"), ExtResource("4_tool_hoist"), ExtResource("5_upgrade_handcart")])
+upgrades = Array[ExtResource("1_def")]([ExtResource("2_tool_crowbar"), ExtResource("3_upgrade_carry_basket"), ExtResource("4_tool_hoist"), ExtResource("5_upgrade_handcart"), ExtResource("6_yard_entrance")])

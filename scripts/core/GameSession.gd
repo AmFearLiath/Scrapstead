@@ -24,6 +24,9 @@ const SETTING_SFX_VOLUME: String = "sfx_volume"
 const SUPPORTED_LOCALES: PackedStringArray = ["de", "en"]
 const WINDOW_MODES: PackedStringArray = ["windowed", "fullscreen"]
 
+## Shows Walt's letter when a new game starts. Automated tests switch it off.
+var intro_enabled: bool = true
+
 var _state: Dictionary = {}
 var _settings: Dictionary = {}
 var _session_active: bool = false
@@ -116,6 +119,8 @@ func create_initial_state() -> Dictionary:
 		"wallet": {},
 		"inventory": [],
 		"upgrades": [],
+		"story": {"flags": [], "key_items": [], "spoken_once": []},
+		"scrappy": {"state": "dormant", "follow": true},
 	}
 
 

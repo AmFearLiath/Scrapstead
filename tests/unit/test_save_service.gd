@@ -87,3 +87,33 @@ func _write_raw(text: String) -> void:
 	var file := FileAccess.open(_service.get_save_path(), FileAccess.WRITE)
 	file.store_string(text)
 	file.close()
+
+
+func test_version_2_save_is_migrated_to_version_3() -> void:
+	var data: Dictionary = _valid_data()
+	data["save_version"] = 2
+	data.erase("story")
+	data.erase("scrappy")
+	data["wallet"] = {"balance": 17, "sequence": 3, "ledger": []}
+	_write_raw(JSON.stringify(data))
+	var result: Dictionary = _service.load_game()
+	check(result["ok"], "v2 save loads after migration")
+	var migrated: Dictionary = result.get("data", {})
+	check_eq(migrated.get("save_version"), _service.SAVE_VERSION, "version raised to current")
+	check_eq(migrated.get("story", {}).get("flags"), [], "empty story added")
+	check_eq(migrated.get("scrappy", {}).get("state"), "dormant", "Scrappy starts dormant")
+	check_eq(int(migrated["wallet"]["balance"]), 17, "existing data kept")
+
+
+func test_version_1_save_is_still_rejected() -> void:
+	var data: Dictionary = _valid_data()
+	data["save_version"] = 1
+	_write_raw(JSON.stringify(data))
+	check_eq(_service.load_game()["error"], _service.ErrorCode.UNSUPPORTED_VERSION, "v1 not migratable")
+
+
+func test_invalid_story_data_is_rejected() -> void:
+	var data: Dictionary = _valid_data()
+	data["story"] = {"flags": [1, 2], "key_items": [], "spoken_once": []}
+	_write_raw(JSON.stringify(data))
+	check_eq(_service.load_game()["error"], _service.ErrorCode.INVALID_DATA, "non-string flags rejected")

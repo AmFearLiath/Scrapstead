@@ -153,6 +153,7 @@ Bei der Sichtprüfung gefundene und behobene Fehler: gespiegelte Grundstücksach
 | P0 | Alle Kriterien automatisiert bzw. im Fensterlauf geprüft | Offen: Bedienungstest durch Menschen |
 | P1 | Abnahmesequenz 1–12 vollständig und wiederholbar geprüft | Erstes Anspielen durch die Projektleitung: Spielgefühl gut. Noch nicht freigegeben – Schleife wird vertieft (0.2) |
 | P1b | Umgesetzt und geprüft (siehe 8) | Offen: Bewertung im Playtest |
+| P2 | Brief, Notizen, Kopf/Kernteil, Wiederherstellung, Folgen/Warten, Sprüche, Eingang: 12 Integrationstests, Migrationstests und E2E-Neustart grün; Screenshots geprüft | Offen: Playtest (Auffindbarkeit des Kopfes, Häufigkeit der Sprüche) |
 
 Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerische Bewertung („befriedigende Schleife“) kann nur durch menschliche Playtests erfolgen.
 
@@ -173,7 +174,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 5. Ablegen nimmt immer das zuletzt aufgenommene Teil; es gibt keine Auswahl einzelner Teile.
 6. Zahlenformatierung ist nicht vollständig gebietsschemaabhängig (z. B. „3.5 s“ statt „3,5 s“ im Deutschen).
 7. Sprache lässt sich nur im Hauptmenü umstellen; Tastenbelegung ist nicht änderbar (kein Rebinding in P0/P1).
-12. Die Werkbank hat noch keine Funktion (Crafting folgt); sie ist nur untersuchbar.
+12. Die Werkbank dient bisher nur der einmaligen Wiederherstellung Scrappys; Crafting folgt.
 14. Grafik: Boden und Wege sind bewusst flache Geometrie; die Spielfigur ist prozedural animiert (kein Skelett-Rig, keine Mimik). Audio ist synthetisiert (kein Studio-Niveau) und wurde nur technisch geprüft (Pegel, Loops, Auslösung), nicht durch Hören. Für Modelländerungen wird Blender 4.2 benötigt.
 13. Gekaufte Ware wird ohne Lieferzeit sofort an der Lieferstelle angezeigt.
 8. Keine Sichtlinienprüfung bei Interaktionen; im Blockout traten keine offensichtlich falschen Interaktionen durch Wände auf.
@@ -188,4 +189,4 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 3. Entscheidung über **Regeneration oder Nachschub** (z. B. Schrotthaufen als Suchquelle), damit die Schleife länger trägt – als bewusste Designentscheidung vor P2.
 4. **Gebietsschemaabhängige Zahlenformatierung** und automatischer Lokalisierungscheck in der Testpipeline erweitern.
 5. **CI** für Headless-Tests (Windows und Linux) einrichten.
-6. Danach P2-Planung (Einstieg, Scrappy) gemäß MVP-Plan.
+6. P2 ist umgesetzt (siehe [P2-Spezifikation](p2-arrival-and-scrappy.md)); als Nächstes Playtest der Einstiegsstunde.

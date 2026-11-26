@@ -40,6 +40,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "ui.pause.resume"
 
+[node name="LetterButton" type="Button" parent="PanelContainer/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ui.pause.letter"
+
 [node name="SaveButton" type="Button" parent="PanelContainer/Content"]
 unique_name_in_owner = true
 layout_mode = 2

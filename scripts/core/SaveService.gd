@@ -12,7 +12,9 @@ extends Node
 ## Current save schema version. Other versions are rejected, never silently
 ## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
 ## upgrades (P1).
-const SAVE_VERSION: int = 2
+const SAVE_VERSION: int = 3
+## Oldest version that can be migrated explicitly (see _migrate()).
+const OLDEST_MIGRATABLE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
 const SETTINGS_FILE_NAME: String = "settings.json"
 const DEFAULT_SAVE_DIRECTORY: String = "user://saves"
@@ -60,7 +62,7 @@ func load_game() -> Dictionary:
 	var json := JSON.new()
 	if json.parse(text) != OK or typeof(json.data) != TYPE_DICTIONARY:
 		return _result(ErrorCode.CORRUPT)
-	var data: Dictionary = json.data
+	var data: Dictionary = _migrate(json.data)
 	var version_error: ErrorCode = _check_version(data)
 	if version_error != ErrorCode.NONE:
 		return _result(version_error)
@@ -122,6 +124,15 @@ func validate_save_data(data: Dictionary) -> bool:
 	if wallet.has("ledger") and typeof(wallet["ledger"]) != TYPE_ARRAY:
 		return false
 	if not _is_string_array(data.get("inventory")) or not _is_string_array(data.get("upgrades")):
+		return false
+	if typeof(data.get("story")) != TYPE_DICTIONARY or typeof(data.get("scrappy")) != TYPE_DICTIONARY:
+		return false
+	var story: Dictionary = data["story"]
+	for key: String in ["flags", "key_items", "spoken_once"]:
+		if not _is_string_array(story.get(key, [])):
+			return false
+	var scrappy: Dictionary = data["scrappy"]
+	if scrappy.has("position") and not _is_vector3_array(scrappy["position"]):
 		return false
 	return true
 
@@ -213,3 +224,17 @@ func _is_string_array(value: Variant) -> bool:
 		if typeof(entry) != TYPE_STRING:
 			return false
 	return true
+
+
+## Explicit, documented migrations. Each step upgrades exactly one version;
+## unknown or too old versions are left untouched and rejected later.
+func _migrate(data: Dictionary) -> Dictionary:
+	if not _is_number(data.get("save_version")):
+		return data
+	var migrated: Dictionary = data.duplicate(true)
+	if int(migrated["save_version"]) == 2:
+		# v2 -> v3 (P2): story progress and Scrappy did not exist yet.
+		migrated["story"] = {"flags": [], "key_items": [], "spoken_once": []}
+		migrated["scrappy"] = {"state": "dormant", "follow": true}
+		migrated["save_version"] = 3
+	return migrated

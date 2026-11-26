@@ -14,3 +14,5 @@ var wallet: Wallet
 var item_catalog: ItemCatalog
 ## Owned upgrades.
 var upgrades: UpgradeProgress
+## Story progress and key items (P2).
+var story: StoryState

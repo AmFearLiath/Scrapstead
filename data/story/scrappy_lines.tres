@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="ScrappyLines" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/story/ScrappyLines.gd" id="1_lines"]
+
+[resource]
+script = ExtResource("1_lines")
+events = {
+"basket_full": {"chance": 0.8, "cooldown": 90.0, "count": 2},
+"dismantle": {"chance": 0.5, "cooldown": 45.0, "count": 2},
+"entrance": {"count": 1, "once": true, "priority": true},
+"explore": {"chance": 0.75, "cooldown": 25.0, "count": 6},
+"follow": {"count": 3, "priority": true},
+"idle": {"chance": 0.5, "count": 5},
+"pickup": {"chance": 0.22, "cooldown": 35.0, "count": 5},
+"pickup_valuable": {"chance": 1.0, "cooldown": 60.0, "count": 2},
+"purchase": {"count": 3, "cooldown": 10.0, "priority": true},
+"refuse": {"chance": 0.4, "cooldown": 50.0, "count": 3},
+"sale": {"chance": 0.6, "cooldown": 40.0, "count": 4},
+"sale_big": {"chance": 1.0, "cooldown": 60.0, "count": 2},
+"search": {"chance": 0.35, "cooldown": 40.0, "count": 3},
+"suggest_entrance": {"count": 1, "once": true, "priority": true},
+"wait": {"count": 3, "priority": true},
+"wake": {"count": 4, "once": true, "priority": true, "sequence": true}
+}
+memories = Array[Dictionary]([{"line": "scrappy.memory.workbench", "position": Vector3(10.5, 0, -13.4), "radius": 2.2}, {"line": "scrappy.memory.container", "position": Vector3(44.5, 0, -29), "radius": 3.6}, {"line": "scrappy.memory.wheelbarrow", "position": Vector3(16.2, 0, -22.8), "radius": 2.4}, {"line": "scrappy.memory.gate", "position": Vector3(8, 0, -1), "radius": 2.6}])
+global_gap_seconds = 8.0
+idle_interval_seconds = 50.0

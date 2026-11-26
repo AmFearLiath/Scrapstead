@@ -39,6 +39,7 @@ func _run() -> void:
 	var save_service: Node = root.get_node("SaveService")
 	save_service.save_directory = "user://test_run/saves"
 	save_service.settings_directory = "user://test_run"
+	root.get_node("GameSession").intro_enabled = false
 	var total: int = 0
 	var failed: int = 0
 	var report: PackedStringArray = []

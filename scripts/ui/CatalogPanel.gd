@@ -102,6 +102,8 @@ func _effect_text(offer: Dictionary) -> String:
 	if not definition.grants_tool.is_empty():
 		lines.append(tr("ui.catalog.effect.tool").format(
 			{"tool": tr(UpgradeProgress.tool_name_key(definition.grants_tool))}))
+	if definition.stat.is_empty() and definition.grants_tool.is_empty():
+		lines.append(tr("ui.catalog.effect.decor"))
 	if offer["status"] == "locked" and not definition.requires.is_empty():
 		var requirement: UpgradeDefinition = _station.get_offers()[0]["definition"]
 		for other: Dictionary in _station.get_offers():

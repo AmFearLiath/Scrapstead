@@ -49,7 +49,16 @@
 [ext_resource type="Script" path="res://scripts/audio/MusicPlayer.gd" id="95_music"]
 [ext_resource type="AudioStream" path="res://assets/audio/music/old_yard_shuffle.wav" id="96_music_stream"]
 [ext_resource type="AudioStream" path="res://assets/audio/ambience/yard_ambience.wav" id="97_ambience_stream"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx")]
+[ext_resource type="PackedScene" path="res://scenes/interaction/ScrappyHeadSite.tscn" id="60_head"]
+[ext_resource type="PackedScene" path="res://scenes/interaction/RedToolbox.tscn" id="61_redbox"]
+[ext_resource type="PackedScene" path="res://scenes/scrappy/Scrappy.tscn" id="62_scrappy"]
+[ext_resource type="PackedScene" path="res://assets/models/entrance_improvement.glb" id="63_entrance"]
+[ext_resource type="PackedScene" path="res://ui/hud/TaskNotes.tscn" id="64_notes"]
+[ext_resource type="PackedScene" path="res://ui/hud/SpeechBubble.tscn" id="65_bubble"]
+[ext_resource type="PackedScene" path="res://ui/hud/LetterPanel.tscn" id="66_letter"]
+[ext_resource type="Script" path="res://scripts/story/StoryDirector.gd" id="67_director"]
+[ext_resource type="Resource" path="res://data/story/scrappy_lines.tres" id="68_lines"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -66,6 +75,11 @@ controls_hint = NodePath("HUD/ControlsHint")
 debug_overlay = NodePath("HUD/DebugOverlay")
 fx = NodePath("Fx")
 sound_fx = NodePath("SoundFx")
+scrappy = NodePath("Scrappy")
+story_director = NodePath("StoryDirector")
+letter_panel = NodePath("HUD/LetterPanel")
+task_notes = NodePath("HUD/TaskNotes")
+speech_bubble = NodePath("HUD/SpeechBubble")
 item_catalog = ExtResource("21_items")
 upgrade_catalog = ExtResource("22_upgrades")
 balance = ExtResource("23_balance")
@@ -265,6 +279,12 @@ definition = ExtResource("def_scrap_copper_pipe")
 object_id = "scrap_copper_pipe_01"
 starts_pending = true
 
+[node name="ScrappyHeadSite" parent="TestObjects" instance=ExtResource("60_head")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.4, 0, -28.8)
+
+[node name="RedToolbox" parent="TestObjects" instance=ExtResource("61_redbox")]
+transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, 12.5, 0, -14.3)
+
 [node name="DeliveryArea" type="Node3D" parent="."]
 
 [node name="tool_crowbar" parent="DeliveryArea" instance=ExtResource("45_eq_crowbar")]
@@ -278,6 +298,17 @@ visible = false
 [node name="upgrade_handcart" parent="DeliveryArea" instance=ExtResource("47_eq_handcart")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.5, 0, -20.0)
 visible = false
+
+[node name="yard_entrance" parent="DeliveryArea" instance=ExtResource("63_entrance")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+visible = false
+
+[node name="Scrappy" parent="." instance=ExtResource("62_scrappy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 0, -13)
+
+[node name="StoryDirector" type="Node" parent="."]
+script = ExtResource("67_director")
+lines = ExtResource("68_lines")
 
 [node name="PlayerStart" type="Marker3D" parent="." unique_id=320113948]
 transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -4.6)
@@ -340,6 +371,10 @@ theme_override_colors/font_outline_color = Color(0.12, 0.09, 0.07, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 16
 
+[node name="TaskNotes" parent="HUD" instance=ExtResource("64_notes")]
+
+[node name="SpeechBubble" parent="HUD" instance=ExtResource("65_bubble")]
+
 [node name="InspectPanel" parent="HUD" unique_id=1901206679 instance=ExtResource("12_inspect_panel")]
 
 [node name="SellPanel" parent="HUD" unique_id=1172746647 instance=ExtResource("18_sell_panel")]
@@ -347,6 +382,8 @@ theme_override_font_sizes/font_size = 16
 [node name="CatalogPanel" parent="HUD" unique_id=297656786 instance=ExtResource("19_upgrade_panel")]
 
 [node name="PauseMenu" parent="HUD" unique_id=640406047 instance=ExtResource("20_pause")]
+
+[node name="LetterPanel" parent="HUD" instance=ExtResource("66_letter")]
 
 [node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
 

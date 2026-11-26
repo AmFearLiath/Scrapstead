@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/ScrappyHeadSite.gd" id="1_site"]
+[ext_resource type="PackedScene" path="res://assets/models/scrappy_head_buried.glb" id="2_model"]
+
+[sub_resource type="SphereShape3D" id="shape"]
+radius = 0.5
+
+[node name="ScrappyHeadSite" type="StaticBody3D" node_paths=PackedStringArray("buried_visual")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_site")
+object_id = "story_scrappy_head"
+name_key = "story.head_site.name"
+action_key = "ui.action.dig_out"
+description_key = "story.head_site.description"
+highlight_radius = 0.6
+buried_visual = NodePath("VisualRoot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+shape = SubResource("shape")
+
+[node name="VisualRoot" type="Node3D" parent="."]
+
+[node name="PlaceholderModel" parent="VisualRoot" instance=ExtResource("2_model")]
+
+[node name="InteractionPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0, 0)
