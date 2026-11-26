@@ -476,13 +476,13 @@ placeable.decor_bench.description,"Two tyre stacks, one plank, one cushion with 
 placeable.decor_flamingo.name,Pipe flamingo,Rohrflamingo
 placeable.decor_flamingo.description,"Bent from copper pipe, painted by someone with ambition.","Aus Kupferrohr gebogen, angemalt von jemandem mit Ambitionen."
 build.controls,WASD Camera · Wheel Zoom · {rotate} Rotate (Shift: back) · Left click Do · Right click Cancel · {undo} Undo · {done} Done,WASD Kamera · Mausrad Zoom · {rotate} Drehen (Shift: zurück) · Linksklick Ausführen · Rechtsklick Abbrechen · {undo} Rückgängig · {done} Fertig
-build.tool.build,Build,Bauen
+build.tool.build,Catalog,Katalog
 build.tool.move,Move,Verschieben
 build.tool.remove,Remove,Entfernen
 build.tool.look,Look,Ansehen
 build.undo,Undo,Rückgängig
 build.redo,Redo,Wiederholen
-build.done,Done (B),Fertig (B)
+build.done,Done [B],Fertig [B]
 build.category.machines,Machines,Maschinen
 build.category.storage,Storage,Lager & Ablagen
 build.category.paths,Paths & fences,Wege & Zäune
@@ -508,3 +508,8 @@ build.nothing_to_undo,Nothing to undo.,Nichts rückgängig zu machen.
 build.nothing_to_redo,Nothing to redo.,Nichts zu wiederholen.
 build.cannot_undo,Can't undo that any more - something is in the way.,Das geht nicht mehr rückgängig - da ist jetzt etwas im Weg.
 build.cannot_redo,Can't redo that any more - something is in the way.,Das geht nicht mehr - da ist jetzt etwas im Weg.
+build.catalog.title,Build catalog,Baukatalog
+build.detail.radius,Work radius {r} m,Arbeitsradius {r} m
+build.detail.walkable,Can be walked on,Begehbar
+build.detail.place_buy,Buy and set up ({price} Cr),Kaufen und aufstellen ({price} Cr)
+build.detail.place_stock,Set up from storage,Aus dem Lager aufstellen

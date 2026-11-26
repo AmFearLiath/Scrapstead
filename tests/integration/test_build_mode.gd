@@ -41,6 +41,10 @@ func test_entering_and_leaving_build_mode() -> void:
 	check(not player.is_input_enabled() if player.has_method("is_input_enabled") else true, "player stands still")
 	check(scene.get_node("HUD/BuildMenu").find_child("Controls", true, false).text.contains("WASD"),
 		"the menu explains the keys")
+	check(scene.get_node("HUD/BuildMenu").is_catalog_open(), "catalog window opens first")
+	send_action("pause_menu")
+	await wait_process_frames(2)
+	check(mode.is_active() and not scene.get_node("HUD/BuildMenu").is_catalog_open(), "Esc closes the catalog first")
 	var before: Vector3 = player.global_position
 	Input.action_press("move_right")
 	await wait_process_frames(20)
@@ -69,8 +73,12 @@ func test_build_tool_places_repeatedly_and_explains_problems() -> void:
 			gnome_card = card
 	check(gnome_card != null and not gnome_card.disabled, "gnome offered and affordable")
 	check(gnome_card.text.contains("9 Cr"), "card shows the price: %s" % gnome_card.text)
+	check(menu.is_catalog_open(), "catalog opens with build mode")
 	gnome_card.pressed.emit()
-	check_eq(mode.get_selected().id, "decor_gnome", "card selects the object")
+	check_eq(menu.get_focus().id, "decor_gnome", "card shows the details")
+	menu.get_place_button().pressed.emit()
+	check_eq(mode.get_selected().id, "decor_gnome", "button selects the object")
+	check(not menu.is_catalog_open(), "catalog closes to place")
 	mode.aim_at(_cell_point(FREE))
 	check(mode.get_last_check()["ok"], "free spot")
 	check(menu.get_info_text().contains("9"), "info line tells the price: %s" % menu.get_info_text())

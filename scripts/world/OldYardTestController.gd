@@ -157,7 +157,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			exit_build_mode()
 		elif event.is_action_pressed("pause_menu"):
 			get_viewport().set_input_as_handled()
-			if not build_mode.cancel():
+			if build_menu != null and build_menu.is_catalog_open():
+				build_menu.close_catalog()
+			elif not build_mode.cancel():
 				exit_build_mode()
 		return
 	if event.is_action_pressed("build_mode") and not _modal_open and not _staging and build_mode != null:
