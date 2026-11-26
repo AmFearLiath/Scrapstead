@@ -118,7 +118,8 @@ Vorher/Nachher: `docs/art/before_after.png`, Einzelbilder in `docs/art/before/` 
 | Miniatur-Effekt (Tilt-Shift, Vignette) | Umgesetzt (`ui/post/DioramaPost.tscn`) in Spiel und Menü |
 | Blender-Modelle | 50 Modelle: alle Gebäude, Stationen, Suchquellen, Zäune (je 3 Varianten hoch/niedrig), Tor, Ziegelmauer, Träger, drei Schrotthaufen, Autowrack, Container mit Katze, Motorblock, Lagerzone (Kisten, Fässer, Regal mit Gummiente), Paletten, Reifen, Badewannen-Beet, Hofstrahler, Zerlegetisch, Lieferware, alle Fundstücke, Spielfigur, drei Grasbüschel-Varianten |
 | Noch Blockout-Primitive | Boden, Wege, Maschinenfläche (bewusst flach), Zaun-Endpfosten |
-| Spielfigur | Statisches Modell im Zielstil, keine Lauf-/Aktionsanimation |
+| Spielfigur | Modell aus gelenkigen Gruppen (Beine, Torso, Kopf, Arme, Korb). Prozedurale Animation ohne Skelett (`scripts/player/PlayerAnimator.gd`): Laufzyklus mit Arm-/Beinschwung und Wippen, Atmen im Stand, kleines Stauchen beim Abbremsen, Arbeitshaltung beim Halten, Greifbewegung beim Aufheben, Korbfüllung nach belegten Plätzen |
+| Effekte | `scripts/fx/WorldFx.gd`: aufgehobene Teile fliegen im Bogen in den Korb (Korb wippt), Staubwölkchen bei Schritten, Ablegen, Durchsuchen, Bergen und Lieferung, Münzregen beim Verkauf. Rein darstellend |
 
 ## 10. Abgrenzung zu menschlicher Kunstarbeit
 

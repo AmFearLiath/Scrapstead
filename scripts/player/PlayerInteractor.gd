@@ -61,6 +61,11 @@ func set_enabled(enabled: bool) -> void:
 		_refresh_selection()
 
 
+## True while an action key is being held on a target (presentation hook).
+func is_holding() -> bool:
+	return _hold_target != null
+
+
 ## Currently selected target or null.
 func get_current_target() -> Interactable:
 	return _current if is_instance_valid(_current) else null

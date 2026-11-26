@@ -22,12 +22,16 @@ extends Node3D
 @export var economy_hud: Control
 @export var controls_hint: Label
 @export var debug_overlay: Control
+@export_group("Presentation")
+## World effects (dust, flying items, coins); optional.
+@export var fx: Node3D
 @export_group("Data")
 @export var item_catalog: ItemCatalog
 @export var upgrade_catalog: UpgradeCatalog
 @export var balance: PrototypeBalance
 
 var _interactor: Node
+var _animator: Node
 var _context := InteractionContext.new()
 var _wallet: Wallet
 var _inventory: CarryInventory
@@ -40,6 +44,7 @@ var _restore_notes: PackedStringArray = []
 
 func _ready() -> void:
 	_interactor = player.get_node("PlayerInteractor")
+	_animator = player.get_node_or_null("PlayerAnimator")
 	player.set_input_enabled(false)
 	for problem: String in item_catalog.validate():
 		push_error("OldYard: item catalog: " + problem)
@@ -67,6 +72,7 @@ func _ready() -> void:
 	_connect_stations()
 	# Step 9: HUD and diagnostics.
 	economy_hud.setup(_wallet, _inventory, _upgrades)
+	_setup_presentation()
 	inspect_panel.closed.connect(_close_modal)
 	sell_panel.closed.connect(_on_sell_panel_closed)
 	catalog_panel.action_result.connect(_show_result)
@@ -140,6 +146,7 @@ func drop_last_item() -> bool:
 	if item == null or not _inventory.remove(object_id):
 		return false
 	item.drop_at(_free_drop_position(), player.get_facing_yaw())
+	_dust(item.global_position, 5, 0.12)
 	feedback_toast.show_message(tr("ui.inventory.dropped").format({"name": item.get_display_name()}))
 	return true
 
@@ -192,6 +199,7 @@ func _connect_stations() -> void:
 			(target as DismantleStation).set_world_objects(_objects)
 		elif target is OrderDesk:
 			(target as OrderDesk).refresh_deliveries(_upgrades)
+			(target as OrderDesk).ware_bought.connect(_on_ware_bought)
 
 
 func _register_world_objects() -> void:
@@ -251,7 +259,8 @@ func _set_gameplay_input(enabled: bool) -> void:
 	_interactor.set_enabled(enabled)
 
 
-func _on_interaction_finished(_target_id: String, result: Dictionary) -> void:
+func _on_interaction_finished(target_id: String, result: Dictionary) -> void:
+	_present_interaction(target_id, result)
 	_show_result(result)
 	var data: Dictionary = result.get("panel_data", {})
 	match result.get("panel", ""):
@@ -273,7 +282,11 @@ func _show_result(result: Dictionary) -> void:
 			result.get("success", false))
 
 
-func _on_sale_completed(object_ids: Array, _total: int) -> void:
+func _on_sale_completed(object_ids: Array, total: int) -> void:
+	if fx != null:
+		var counter: Interactable = _first_of_type("SellStation")
+		if counter != null:
+			fx.coins(counter.get_interaction_point(), 4 + total / 3)
 	for object_id: Variant in object_ids:
 		var item: ScrapItem = _objects.get(str(object_id)) as ScrapItem
 		if item != null:
@@ -341,3 +354,55 @@ func _debug_extra_lines() -> String:
 		_wallet.get_balance(), _inventory.get_used_slots(), _inventory.get_capacity(),
 		", ".join(_upgrades.to_save_data()),
 		", ".join(_restore_notes) if not _restore_notes.is_empty() else "-"]
+
+
+# --- Presentation (animation and effects; no gameplay rules) -----------------
+
+func _setup_presentation() -> void:
+	if _animator != null:
+		_animator.setup(player, _interactor, player.get_node("VisualRoot/PlaceholderModel"))
+		_animator.footstep.connect(func(at: Vector3) -> void: _dust(at, 2, 0.07))
+		_inventory.changed.connect(_update_basket_load)
+		_update_basket_load()
+
+
+func _update_basket_load() -> void:
+	if _animator != null:
+		_animator.set_load(float(_inventory.get_used_slots()) / float(_inventory.get_capacity()))
+
+
+func _present_interaction(target_id: String, result: Dictionary) -> void:
+	if not result.get("success", false) or result.has("panel"):
+		return
+	var target: Interactable = _objects.get(target_id)
+	if target == null:
+		return
+	if target is ScrapItem and (target as ScrapItem).get_state() == ScrapItem.State.CARRIED:
+		if _animator != null:
+			_animator.play_pickup()
+		if fx != null:
+			var arrival: Callable = _animator.bump_basket if _animator != null else Callable()
+			var basket: Callable = _animator.get_basket_position if _animator != null else player.get_global_position
+			fx.fly_to(target.get_node("VisualRoot"), basket, arrival)
+		if target is SalvageableScrap:
+			_dust(target.global_position, 12, 0.3)
+	elif target is SearchSource or target is DismantleStation:
+		_dust(target.get_interaction_point(), 8, 0.2)
+
+
+func _on_ware_bought(definition: UpgradeDefinition) -> void:
+	var delivery: Node3D = get_node_or_null("DeliveryArea/" + definition.id)
+	if delivery != null:
+		_dust(delivery.global_position, 10, 0.22)
+
+
+func _dust(at: Vector3, amount: int, size: float) -> void:
+	if fx != null:
+		fx.dust(Vector3(at.x, 0.0, at.z), amount, size)
+
+
+func _first_of_type(type_name: String) -> Interactable:
+	for target: Interactable in _objects.values():
+		if target.get_script() != null and target.get_script().get_global_name() == type_name:
+			return target
+	return null

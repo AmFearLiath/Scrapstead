@@ -778,3 +778,14 @@ Referenz: [Art Direction](world-art-assets.md).
 - Die Linse des Hofstrahlers behält ein eigenes leuchtendes Material; alle übrigen Modelle nutzen das gemeinsame Toon-Material.
 
 Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).
+
+
+## 26.11.2026 — Lebendigkeits-Pass: prozedurale Animation und Effekte
+
+**Beschluss:** Die Spielfigur und die wichtigsten Aktionen erhalten Animation und Rückmeldung im Stil der Art Direction, ohne Skelett-Rig und ohne externe Assets.
+
+- Die Spielfigur wird in Blender aus gelenkigen Gruppen gebaut; `PlayerAnimator` bewegt sie prozedural aus Geschwindigkeit und Interaktionszustand. Er liest nur und verändert keine Spielwerte.
+- `WorldFx` erzeugt kurzlebige Effekte (Flug in den Korb, Staub, Münzen) per Tween; die Szene ruft ihn nur nach bereits erfolgreich verbuchten Aktionen auf.
+- Ein späteres, von Artists erstelltes Rig mit Animationen kann den Animator ersetzen, ohne Spielsysteme zu ändern.
+
+Referenz: [Art Direction, Abschnitt 9](world-art-assets.md).

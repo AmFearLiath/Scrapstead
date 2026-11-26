@@ -42,7 +42,8 @@
 [ext_resource type="Resource" path="res://data/items/scrap_copper_pipe.tres" id="def_scrap_copper_pipe"]
 [ext_resource type="Resource" path="res://data/items/find_brass_figurine.tres" id="def_find_brass_figurine"]
 [ext_resource type="PackedScene" path="res://ui/post/DioramaPost.tscn" id="90_post"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay")]
+[ext_resource type="Script" path="res://scripts/fx/WorldFx.gd" id="91_fx"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -57,6 +58,7 @@ pause_menu = NodePath("HUD/PauseMenu")
 economy_hud = NodePath("HUD/EconomyHud")
 controls_hint = NodePath("HUD/ControlsHint")
 debug_overlay = NodePath("HUD/DebugOverlay")
+fx = NodePath("Fx")
 item_catalog = ExtResource("21_items")
 upgrade_catalog = ExtResource("22_upgrades")
 balance = ExtResource("23_balance")
@@ -277,6 +279,9 @@ transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.1, -4.6)
 
 [node name="GameplayCamera" parent="." unique_id=380493830 instance=ExtResource("8_camera")]
+
+[node name="Fx" type="Node3D" parent="."]
+script = ExtResource("91_fx")
 
 [node name="DioramaPost" parent="." instance=ExtResource("90_post")]
 

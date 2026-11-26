@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteractor.gd" id="2_interactor"]
+[ext_resource type="Script" path="res://scripts/player/PlayerAnimator.gd" id="4_animator"]
 [ext_resource type="PackedScene" path="res://assets/models/player_model.glb" id="3_model"]
 
 [sub_resource type="CapsuleShape3D" id="body_shape"]
@@ -39,3 +40,6 @@ shape = SubResource("detector_shape")
 
 [node name="PlayerInteractor" type="Node" parent="."]
 script = ExtResource("2_interactor")
+
+[node name="PlayerAnimator" type="Node" parent="."]
+script = ExtResource("4_animator")

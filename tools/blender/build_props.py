@@ -404,47 +404,63 @@ def build_sales_kiosk():
 def build_player():
     """Chunky yard worker: big head, cap with visor, overalls with a knee patch,
     oversized gloves and boots, the wicker carry basket on the back.
-    Faces -Y (Godot +Z). Height about 1.7 m."""
+    Faces -Y (Godot +Z). Height about 1.7 m.
+
+    Built from pivoted groups so PlayerAnimator can move it without a skeleton:
+    LegL/LegR (hip pivots), Torso (waist) with Head (neck), ArmL/ArmR
+    (shoulders) and Basket with BasketFill (scaled with the carried load)."""
     kit.seed(111)
     root = kit.root("PlayerModel")
+    hip_z = 0.55
     for side, x in (("L", -0.13), ("R", 0.13)):
-        box(f"Boot{side}", (x, -0.04, 0.07), (0.17, 0.27, 0.14), "ink", parent=root, bevel=0.05)
-        box(f"Leg{side}", (x, 0.0, 0.33), (0.16, 0.17, 0.4), "rust_light", parent=root, bevel=0.05)
-    patch("KneePatch", (-0.13, -0.09, 0.33), (0.12, 0.12), "teal", parent=root, rivets=0)
-    body = box("Body", (0, 0, 0.78), (0.46, 0.33, 0.56), "rust_light", parent=root, bevel=0.12)
-    box("Bib", (0, -0.17, 0.82), (0.26, 0.02, 0.22), "rust", parent=root, bevel=0.02)
-    box("Pocket", (0.0, -0.185, 0.8), (0.12, 0.01, 0.08), "rust_light", parent=root, bevel=0.01)
-    cylinder("PencilA", (0.04, -0.18, 0.87), 0.01, 0.1, "mustard", vertices=6, parent=root, rotation=(0, 10, 0))
-    box("Belt", (0, 0, 0.55), (0.48, 0.35, 0.06), "wood_dark", parent=root, bevel=0.02)
-    box("Buckle", (0, -0.18, 0.55), (0.07, 0.02, 0.05), "brass", parent=root, bevel=0.01)
+        leg = group(f"Leg{side}", location=(x, 0, hip_z), parent=root)
+        box(f"Boot{side}", (0, -0.04, 0.07 - hip_z), (0.17, 0.27, 0.14), "ink", parent=leg, bevel=0.05)
+        box(f"Shin{side}", (0, 0.0, 0.33 - hip_z), (0.16, 0.17, 0.42), "rust_light", parent=leg, bevel=0.05)
+        if side == "L":
+            patch("KneePatch", (0, -0.09, 0.33 - hip_z), (0.12, 0.12), "teal", parent=leg, rivets=0)
+    torso = group("Torso", location=(0, 0, hip_z), parent=root)
+    box("Body", (0, 0, 0.78 - hip_z), (0.46, 0.33, 0.56), "rust_light", parent=torso, bevel=0.12)
+    box("Bib", (0, -0.17, 0.82 - hip_z), (0.26, 0.02, 0.22), "rust", parent=torso, bevel=0.02)
+    box("Pocket", (0.0, -0.185, 0.8 - hip_z), (0.12, 0.01, 0.08), "rust_light", parent=torso, bevel=0.01)
+    cylinder("PencilA", (0.04, -0.18, 0.87 - hip_z), 0.01, 0.1, "mustard", vertices=6, parent=torso,
+             rotation=(0, 10, 0))
+    box("Belt", (0, 0, 0.0), (0.48, 0.35, 0.06), "wood_dark", parent=torso, bevel=0.02)
+    box("Buckle", (0, -0.18, 0.0), (0.07, 0.02, 0.05), "brass", parent=torso, bevel=0.01)
+    for side, x in (("L", -0.13), ("R", 0.13)):
+        box(f"Strap{side}", (x, -0.15, 0.92 - hip_z), (0.05, 0.02, 0.44), "wood_dark", parent=torso, bevel=0.01)
+    shoulder_z = 1.02 - hip_z
     for side, x, angle in (("L", -0.3, 12), ("R", 0.3, -12)):
-        box(f"Arm{side}", (x, 0.0, 0.83), (0.13, 0.14, 0.42), "rust_light", parent=root, bevel=0.05,
-            rotation=(0, angle, 0))
-        sphere(f"Glove{side}", (x * 1.1, -0.02, 0.6), 0.095, "mustard", parent=root, scale=(1, 1, 1.1))
-    # Head: large and friendly.
-    sphere("Head", (0, -0.01, 1.32), 0.24, "skin", segments=14, rings=8, parent=root, scale=(1, 0.95, 1.0))
-    sphere("Nose", (0, -0.235, 1.29), 0.06, "rust_light", parent=root)
+        arm = group(f"Arm{side}", location=(x, 0, shoulder_z), rotation=(0, angle, 0), parent=torso)
+        box(f"Sleeve{side}", (0, 0.0, -0.19), (0.13, 0.14, 0.42), "rust_light", parent=arm, bevel=0.05)
+        sphere(f"Glove{side}", (0, -0.02, -0.43), 0.095, "mustard", parent=arm, scale=(1, 1, 1.1))
+    neck_z = 1.1 - hip_z
+    head = group("Head", location=(0, 0, neck_z), parent=torso)
+    hz = -1.1
+    sphere("Skull", (0, -0.01, 1.32 + hz), 0.24, "skin", segments=14, rings=8, parent=head, scale=(1, 0.95, 1.0))
+    sphere("Nose", (0, -0.235, 1.29 + hz), 0.06, "rust_light", parent=head)
     for side, x in (("L", -0.085), ("R", 0.085)):
-        sphere(f"Eye{side}", (x, -0.215, 1.37), 0.028, "ink", parent=root)
-    box("Mustache", (0, -0.225, 1.235), (0.17, 0.04, 0.035), "wood_dark", parent=root, bevel=0.015)
-    sphere("EarL", (-0.235, 0, 1.31), 0.055, "skin", parent=root)
-    sphere("EarR", (0.235, 0, 1.31), 0.055, "skin", parent=root)
-    # Cap with visor, a little patch and a pencil behind the ear.
-    sphere("Cap", (0, 0.0, 1.43), 0.245, "teal", segments=14, rings=8, parent=root, scale=(1.02, 1.02, 0.62))
-    box("Visor", (0, -0.25, 1.45), (0.3, 0.2, 0.035), "teal", parent=root, bevel=0.015, rotation=(-8, 0, 0))
-    box("CapPatch", (0.1, -0.12, 1.55), (0.08, 0.06, 0.02), "mustard", parent=root, rotation=(-35, 0, 20),
+        sphere(f"Eye{side}", (x, -0.215, 1.37 + hz), 0.028, "ink", parent=head)
+    box("Mustache", (0, -0.225, 1.235 + hz), (0.17, 0.04, 0.035), "wood_dark", parent=head, bevel=0.015)
+    sphere("EarL", (-0.235, 0, 1.31 + hz), 0.055, "skin", parent=head)
+    sphere("EarR", (0.235, 0, 1.31 + hz), 0.055, "skin", parent=head)
+    sphere("Cap", (0, 0.0, 1.43 + hz), 0.245, "teal", segments=14, rings=8, parent=head, scale=(1.02, 1.02, 0.62))
+    box("Visor", (0, -0.25, 1.45 + hz), (0.3, 0.2, 0.035), "teal", parent=head, bevel=0.015, rotation=(-8, 0, 0))
+    box("CapPatch", (0.1, -0.12, 1.55 + hz), (0.08, 0.06, 0.02), "mustard", parent=head, rotation=(-35, 0, 20),
         bevel=0.005)
-    cylinder("EarPencil", (0.24, -0.06, 1.38), 0.012, 0.18, "mustard", vertices=6, parent=root,
+    cylinder("EarPencil", (0.24, -0.06, 1.38 + hz), 0.012, 0.18, "mustard", vertices=6, parent=head,
              rotation=(0, 70, 20))
-    # Wicker carry basket on the back with straps.
-    basket = box("Basket", (0, 0.27, 0.9), (0.42, 0.24, 0.5), "wood_light", parent=root, bevel=0.05,
-                 jitter=0.008)
+    basket = group("Basket", location=(0, 0.27, 0.9 - hip_z), parent=torso)
+    box("BasketBody", (0, 0, 0), (0.42, 0.24, 0.5), "wood_light", parent=basket, bevel=0.05, jitter=0.008)
     for index in range(4):
-        box(f"Weave{index}", (0, 0.39, 0.72 + index * 0.12), (0.44, 0.02, 0.04), "wood", parent=root,
+        box(f"Weave{index}", (0, 0.12, -0.18 + index * 0.12), (0.44, 0.02, 0.04), "wood", parent=basket,
             bevel=0.01)
-    box("BasketRim", (0, 0.27, 1.16), (0.46, 0.28, 0.05), "wood_dark", parent=root, bevel=0.02)
-    for side, x in (("L", -0.13), ("R", 0.13)):
-        box(f"Strap{side}", (x, -0.15, 0.92), (0.05, 0.02, 0.44), "wood_dark", parent=root, bevel=0.01)
+    box("BasketRim", (0, 0, 0.26), (0.46, 0.28, 0.05), "wood_dark", parent=basket, bevel=0.02)
+    # Load sticking out of the basket; PlayerAnimator scales it with the carried slots.
+    fill = group("BasketFill", location=(0, 0, -0.2), parent=basket)
+    box("FillCore", (0, 0, 0.25), (0.36, 0.18, 0.5), "rust", parent=fill, bevel=0.04)
+    cylinder("FillPipe", (0.08, 0.02, 0.55), 0.035, 0.4, "teal", vertices=8, parent=fill, rotation=(12, -18, 0))
+    box("FillSheet", (-0.1, -0.02, 0.5), (0.18, 0.04, 0.24), "steel", parent=fill, rotation=(0, 16, 0), bevel=0.01)
+    torus("FillWire", (0.0, 0.0, 0.52), 0.08, 0.018, "rust_light", parent=fill, rotation=(70, 0, 0))
     return root
 
 

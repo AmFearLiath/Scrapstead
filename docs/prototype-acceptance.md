@@ -174,7 +174,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 6. Zahlenformatierung ist nicht vollständig gebietsschemaabhängig (z. B. „3.5 s“ statt „3,5 s“ im Deutschen).
 7. Sprache lässt sich nur im Hauptmenü umstellen; Tastenbelegung ist nicht änderbar (kein Rebinding in P0/P1).
 12. Die Werkbank hat noch keine Funktion (Crafting folgt); sie ist nur untersuchbar.
-14. Art-Direction-Prototyp: Ein Teil der Welt ist noch Blockout-Geometrie (Liste in `world-art-assets.md`, Abschnitt 9); die Spielfigur ist nicht animiert. Für Modelländerungen wird Blender 4.2 benötigt.
+14. Grafik: Boden und Wege sind bewusst flache Geometrie; die Spielfigur ist prozedural animiert (kein Skelett-Rig, keine Mimik). Es gibt noch kein Audio. Für Modelländerungen wird Blender 4.2 benötigt.
 13. Gekaufte Ware wird ohne Lieferzeit sofort an der Lieferstelle angezeigt.
 8. Keine Sichtlinienprüfung bei Interaktionen; im Blockout traten keine offensichtlich falschen Interaktionen durch Wände auf.
 9. Keine Gebäudetransparenz; hohe Objekte (Werkstatt, Container) können den Spieler teilweise verdecken (laut Kamera-Spezifikation bewusst nicht Teil von P0).
