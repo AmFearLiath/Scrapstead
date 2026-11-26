@@ -61,12 +61,26 @@
 [ext_resource type="PackedScene" path="res://scenes/world/DropOffSpot.tscn" id="69_dropoff"]
 [ext_resource type="PackedScene" path="res://scenes/staff/YardWorker.tscn" id="70_worker"]
 [ext_resource type="PackedScene" path="res://ui/interaction/StaffPanel.tscn" id="71_staff_panel"]
-[ext_resource type="PackedScene" path="res://scenes/machines/MagnetCollector.tscn" id="72_magnet"]
+[ext_resource type="Script" path="res://scripts/build/PlacedObjects.gd" id="77_placed_script"]
+[ext_resource type="Resource" path="res://data/placeables/placeable_catalog.tres" id="78_placeables"]
+[ext_resource type="PackedScene" path="res://scenes/world/NailHeap.tscn" id="79_nail_heap"]
 [ext_resource type="PackedScene" path="res://assets/models/equipment_handcart.glb" id="73_cart_model"]
 [ext_resource type="PackedScene" path="res://ui/hud/TaskListPanel.tscn" id="74_task_list"]
 [ext_resource type="Resource" path="res://data/story/walts_list.tres" id="75_walts_list"]
 [ext_resource type="PackedScene" path="res://ui/hud/SettingsPanel.tscn" id="76_settings"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "magnet", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
+
+[sub_resource type="BoxMesh" id="reserved_post"]
+size = Vector3(0.07, 1.1, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="reserved_material"]
+albedo_color = Color(0.94, 0.9, 0.8, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="reserved_board"]
+material = SubResource("reserved_material")
+size = Vector3(1.2, 0.42, 0.04)
+
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "placed", "nail_heap", "reserved_sign", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -74,7 +88,9 @@ camera_rig = NodePath("GameplayCamera")
 world_objects_root = NodePath("TestObjects")
 deliveries = NodePath("DropOffSpot")
 worker = NodePath("Staff/YardWorker")
-magnet = NodePath("MagnetCollector")
+placed = NodePath("Placed")
+nail_heap = NodePath("NailHeap")
+reserved_sign = NodePath("ReservedSign")
 interaction_prompt = NodePath("HUD/InteractionPrompt")
 feedback_toast = NodePath("HUD/FeedbackToast")
 inspect_panel = NodePath("HUD/InspectPanel")
@@ -402,8 +418,31 @@ cart_scene = ExtResource("73_cart_model")
 crowbar_spot = NodePath("../CrowbarSpot")
 crowbar_display = NodePath("../../DeliveryArea/tool_crowbar")
 
-[node name="MagnetCollector" parent="." instance=ExtResource("72_magnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)
+[node name="Placed" type="Node3D" parent="."]
+script = ExtResource("77_placed_script")
+catalog = ExtResource("78_placeables")
+
+[node name="NailHeap" parent="." instance=ExtResource("79_nail_heap")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.65, 0, -12.75)
+
+[node name="ReservedSign" type="Node3D" parent="."]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, 34.5, 0, -11.67)
+
+[node name="Post" type="MeshInstance3D" parent="ReservedSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("reserved_post")
+
+[node name="Board" type="MeshInstance3D" parent="ReservedSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0.03)
+mesh = SubResource("reserved_board")
+
+[node name="Label" type="Label3D" parent="ReservedSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0.06)
+pixel_size = 0.004
+modulate = Color(0.2, 0.13, 0.08, 1)
+outline_size = 0
+text = "machine.reserved_sign"
+font_size = 40
 
 [node name="StoryDirector" type="Node" parent="."]
 script = ExtResource("67_director")

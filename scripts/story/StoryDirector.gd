@@ -42,6 +42,7 @@ var _player: Node3D
 var _deliveries: ScrapDeliveries
 var _worker: YardWorker
 var _magnet: MagnetCollector
+var _placed: PlacedObjects
 var _rng := RandomNumberGenerator.new()
 var _time: float = 0.0
 var _quiet_until: float = 0.0
@@ -93,13 +94,25 @@ func bind_worker(worker: YardWorker) -> void:
 ## Optional: the magnetic collector, so a full crate shows up in the notes.
 func bind_magnet(magnet: MagnetCollector) -> void:
 	_magnet = magnet
-	if _magnet != null:
-		_magnet.status_changed.connect(func(_status: String) -> void: refresh_notes())
+	if _magnet != null and not _magnet.status_changed.is_connected(_on_magnet_status):
+		_magnet.status_changed.connect(_on_magnet_status)
+	refresh_notes()
+
+
+func _on_magnet_status(_status: String) -> void:
+	refresh_notes()
+
+
+## Optional: placed objects, for Walt's list ("placed:<id>" entries).
+func bind_placed(placed: PlacedObjects) -> void:
+	_placed = placed
+	if _placed != null:
+		_placed.changed.connect(refresh_notes)
 	refresh_notes()
 
 
 func _magnet_full() -> bool:
-	return _magnet != null and _magnet.get_status() == MagnetCollector.STATUS_BIN_FULL
+	return _magnet != null and is_instance_valid(_magnet) and _magnet.get_status() == MagnetCollector.STATUS_BIN_FULL
 
 
 ## Most recently started line key (tests, diagnostics).
@@ -159,7 +172,7 @@ func get_task_states() -> Array:
 	if task_list == null:
 		return states
 	for entry: Dictionary in task_list.entries:
-		states.append({"entry": entry, "done": TaskList.is_done(entry, _story, _upgrades)})
+		states.append({"entry": entry, "done": TaskList.is_done(entry, _story, _upgrades, _placed)})
 	return states
 
 

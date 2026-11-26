@@ -39,9 +39,16 @@ func _buy(scene: Node, ware_id: String) -> Dictionary:
 	return desk.buy(ware_id)
 
 
+## The former pad of the machine (build grid anchor, rotation 0).
+const PAD_ANCHOR := Vector2i(69, -27)
+
+
+## Buys the machine in the build menu and sets it up on its former pad.
 func _installed(scene: Node) -> MagnetCollector:
-	var result: Dictionary = _buy(scene, WARE)
-	check(result["success"], "magnet bought: %s" % result.get("message_key"))
+	var placed: PlacedObjects = scene.get_placed()
+	scene.get_wallet().credit(placed.get_price(placed.catalog.get_definition("magnet_collector")), "test", "test")
+	var result: Dictionary = placed.place("magnet_collector", PAD_ANCHOR, 0)
+	check(result["ok"], "magnet bought and placed: %s" % result.get("message_key"))
 	return scene.get_magnet()
 
 
@@ -74,16 +81,13 @@ func test_profile_is_valid_translated_and_pays_off_modestly() -> void:
 
 func test_nothing_happens_before_the_machine_is_bought() -> void:
 	var scene: Node = await _new_game()
-	var magnet: MagnetCollector = scene.get_magnet()
-	check(magnet != null, "machine pad in the yard")
-	check(not magnet.is_installed(), "not installed at the start")
-	check(magnet.get_node("ReservedPad").visible, "reserved pad shows where it goes")
-	check(not magnet.get_node("Machine").visible, "no machine yet")
-	check_eq(magnet.get_node("Machine/Body").collision_layer, 0, "no invisible obstacle")
-	check(not magnet.get_node("Machine/Controls").is_interaction_available(), "controls not offered")
-	magnet._process(1000.0)
-	check(magnet.collect_once() == null, "collects nothing")
-	check_eq(magnet.get_heap_remaining(), magnet.profile.heap_size, "heap untouched")
+	check(scene.get_magnet() == null, "no machine at the start")
+	check(scene.get_node("ReservedSign").visible, "reserved sign shows where one could go")
+	check(scene.get_world_object("machine_magnet_controls") == null, "no controls in the yard")
+	var desk: OrderDesk = scene.get_world_object("station_order_desk") as OrderDesk
+	desk.interact(scene._context)
+	for offer: Dictionary in desk.get_offers():
+		check(offer["definition"].id != WARE, "machine is sold in the build menu, not the catalog")
 	var definition: UpgradeDefinition = scene.get_upgrades().get_catalog().get_definition("upgrade_strong_magnet")
 	scene.get_wallet().credit(definition.price, "test", "test")
 	check(scene.get_upgrades().purchase("upgrade_strong_magnet", scene.get_wallet())
@@ -92,12 +96,13 @@ func test_nothing_happens_before_the_machine_is_bought() -> void:
 
 func test_bought_machine_fills_its_crate_from_the_heap() -> void:
 	var scene: Node = await _new_game()
-	var installed: Array = []
-	scene.get_magnet().installed.connect(func() -> void: installed.append(true))
+	var spoken: Array = []
+	scene.get_node("StoryDirector").line_spoken.connect(func(key: String) -> void: spoken.append(key))
 	var magnet: MagnetCollector = _installed(scene)
-	check_eq(installed.size(), 1, "installation announced")
-	check(magnet.get_node("Machine").visible and not magnet.get_node("ReservedPad").visible, "machine stands")
-	check_eq(magnet.get_node("Machine/Body").collision_layer, 1, "solid now")
+	check(scene.get_upgrades().is_owned(WARE), "bought through the build menu")
+	check(not scene.get_node("ReservedSign").visible, "sign gone once a machine stands")
+	check_eq(magnet.get_node("Machine/Body").collision_layer, 1, "solid")
+	check(magnet.heap_in_reach(), "the nail heap is in reach on the old pad")
 	check_eq(magnet.get_status(), MagnetCollector.STATUS_WORKING, "starts working")
 	check_near(magnet.get_cycle_seconds(), 20.0, 0.01, "one piece every 20 s")
 	magnet._process(19.0)
@@ -146,7 +151,7 @@ func test_full_crate_stops_the_machine_until_emptied() -> void:
 func test_loose_iron_in_the_work_area_is_taken_first_and_copper_is_ignored() -> void:
 	var scene: Node = await _new_game()
 	var magnet: MagnetCollector = _installed(scene)
-	var heap_center: Vector3 = magnet.heap_center.global_position
+	var heap_center: Vector3 = magnet.get_work_center() + Vector3(-0.9, 0.0, -0.7)
 	var bolt: ScrapItem = scene.get_world_object("scrap_rusted_bolt_01") as ScrapItem
 	var pipe: ScrapItem = scene.get_world_object("scrap_copper_pipe_01") as ScrapItem
 	bolt.drop_at(heap_center + Vector3(1.0, 0.1, 0.5), 0.0)
@@ -171,7 +176,8 @@ func test_never_more_than_the_heap_holds() -> void:
 	check_eq(magnet.get_heap_remaining(), 0, "heap empty")
 	check(magnet.collect_once() == null, "nothing out of thin air")
 	check_eq(magnet.get_status(), MagnetCollector.STATUS_EMPTY, "says there is nothing left")
-	check(not magnet.get_node("Heap").visible or magnet.get_heap_remaining() == 0, "heap state consistent")
+	await wait_process_frames(2)
+	check(not scene.get_node("NailHeap/Heap").visible, "the empty heap is gone from view")
 	var created: int = 0
 	for target: Variant in scene._objects.values():
 		if target is ScrapItem and (target as ScrapItem).object_id.begins_with(MagnetCollector.OBJECT_PREFIX):
@@ -251,20 +257,49 @@ func test_old_version_5_save_migrates_and_broken_machine_data_is_rejected() -> v
 	file.close()
 	var result: Dictionary = service.load_game()
 	check(result["ok"], "v5 save loads")
-	check_eq(result["data"].get("machines"), {}, "no machine yet")
-	data["save_version"] = 6
-	data["machines"] = {"magnet_collector": {"items": [{"id": "magnet_1"}]}}
+	check_eq(result["data"]["placed"]["objects"], [], "no machine yet")
+	check(not result["data"].has("machines"), "old machine block replaced")
+	data["save_version"] = 7
+	var broken: Dictionary = {"uid": "placed_1", "def": "magnet_collector", "cell": [69, -27], "rot": 0,
+		"state": {"items": [{"id": "magnet_1"}]}}
+	data["placed"] = {"objects": [broken]}
 	check(not service.validate_save_data(data), "broken crate entry rejected")
-	data["machines"] = {"magnet_collector": {"on": "yes"}}
+	broken["state"] = {"on": "yes"}
 	check(not service.validate_save_data(data), "broken switch rejected")
+	broken["state"] = {}
+	broken["cell"] = [69]
+	check(not service.validate_save_data(data), "broken cell rejected")
+
+
+func test_version_6_save_with_a_machine_becomes_a_placed_machine() -> void:
+	var service: Node = tree.root.get_node("SaveService")
+	var data: Dictionary = _session.create_initial_state()
+	data["save_version"] = 6
+	data.erase("placed")
+	data["upgrades"] = ["machine_magnet_collector"]
+	data["machines"] = {"magnet_collector": {"on": false, "heap_taken": 5, "heap_stock": 40, "counter": 5,
+		"items": []}}
+	DirAccess.make_dir_recursive_absolute(service.save_directory)
+	var file := FileAccess.open(service.get_save_path(), FileAccess.WRITE)
+	file.store_string(JSON.stringify(data))
+	file.close()
+	check(_session.continue_game(), "v6 save continues")
+	await wait_process_frames(2)
+	var scene: Node = await wait_for_scene(YARD)
+	await wait_physics_frames(3)
+	var magnet: MagnetCollector = scene.get_magnet()
+	check(magnet != null, "machine stands on its former pad")
+	check(magnet != null and magnet.global_position.distance_to(Vector3(35.5, 0, -12.8)) < 0.2,
+		"same place as before (%s)" % [magnet.global_position if magnet != null else Vector3.ZERO])
+	check(magnet != null and not magnet.is_switched_on() and magnet.get_heap_remaining() == 40, "state kept")
+	check(magnet != null and magnet.heap_in_reach(), "heap in reach as before")
+	check(scene.get_restore_notes().is_empty(), "no repairs: %s" % ", ".join(scene.get_restore_notes()))
 
 
 func test_kowalski_refills_the_heap_while_the_machine_stands() -> void:
 	var scene: Node = await _new_game()
-	var magnet: MagnetCollector = scene.get_magnet()
-	magnet._process(10000.0)
-	check_eq(magnet.get_heap_remaining(), magnet.profile.heap_size, "no supplier before the purchase")
-	magnet = _installed(scene)
+	check(scene.get_magnet() == null, "no machine, no supplier")
+	var magnet: MagnetCollector = _installed(scene)
 	magnet.apply_save_state({"heap_taken": magnet.profile.heap_size, "counter": 0})
 	check_eq(magnet.get_heap_remaining(), 0, "old saves without stock: heap derived from what was taken")
 	check_eq(magnet.get_status(), MagnetCollector.STATUS_EMPTY, "empty heap")

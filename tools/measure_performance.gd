@@ -63,9 +63,10 @@ func _fill_the_yard(scene: Node) -> void:
 	var upgrades: UpgradeProgress = scene.get_upgrades()
 	var wallet: Wallet = scene.get_wallet()
 	wallet.credit(500, "perf", "perf")
-	for ware: String in ["yard_entrance", "tool_crowbar", "upgrade_carry_basket", "upgrade_handcart",
-			"machine_magnet_collector", "upgrade_strong_magnet"]:
+	for ware: String in ["yard_entrance", "tool_crowbar", "upgrade_carry_basket", "upgrade_handcart"]:
 		upgrades.purchase(ware, wallet)
+	scene.get_placed().place("magnet_collector", Vector2i(69, -27), 0)
+	upgrades.purchase("upgrade_strong_magnet", wallet)
 	(scene.get_world_object("station_order_desk") as OrderDesk).refresh_deliveries(upgrades)
 	scene.get_story().set_flag(StoryDirector.FLAG_RESTORED)
 	scene.get_node("Scrappy").apply_save_state({"state": "active", "follow": true})

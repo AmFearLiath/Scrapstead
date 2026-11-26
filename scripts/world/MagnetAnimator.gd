@@ -58,9 +58,6 @@ func _ready() -> void:
 		_lamp_material = StandardMaterial3D.new()
 		_lamp_material.emission_enabled = true
 		_lamp.material_override = _lamp_material
-	_heap = machine.get_node_or_null("Heap") as Node3D
-	if _heap != null:
-		_heap_base_scale = _heap.scale
 	_yaw = _yaw_to(machine.bin)
 	_set_cable(CABLE_UP)
 	_hum = machine.get_node_or_null("Machine/Hum") as AudioStreamPlayer3D
@@ -79,7 +76,7 @@ func _process(delta: float) -> void:
 	var carrying: bool = false
 	if status == MagnetCollector.STATUS_WORKING:
 		var p: float = machine.get_cycle_progress()
-		var to_heap: float = _yaw_to(machine.heap_center)
+		var to_heap: float = _yaw_to_point(machine.get_lift_point())
 		var to_bin: float = _yaw_to(machine.bin)
 		if p < 0.3:
 			target_yaw = lerp_angle(to_bin, to_heap, _smooth(p / 0.3))
@@ -161,6 +158,10 @@ func _update_lamp(status: String) -> void:
 
 
 func _update_heap() -> void:
+	if _heap == null and machine.heap_center != null:
+		_heap = machine.heap_center.get_node_or_null("Heap") as Node3D
+		if _heap != null:
+			_heap_base_scale = _heap.scale
 	if _heap == null or machine.profile == null or machine.profile.heap_size <= 0:
 		return
 	var fraction: float = float(machine.get_heap_remaining()) / float(machine.profile.heap_size)
@@ -173,7 +174,13 @@ func _update_heap() -> void:
 func _yaw_to(node: Node3D) -> float:
 	if node == null or _turret == null:
 		return _yaw
-	var local: Vector3 = _turret.get_parent_node_3d().to_local(node.global_position) - _turret.position
+	return _yaw_to_point(node.global_position)
+
+
+func _yaw_to_point(point: Vector3) -> float:
+	if _turret == null:
+		return _yaw
+	var local: Vector3 = _turret.get_parent_node_3d().to_local(point) - _turret.position
 	return atan2(local.x, local.z)
 
 

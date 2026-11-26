@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/MagnetCollector.gd" id="1_machine"]
 [ext_resource type="Resource" path="res://data/machines/magnet_collector.tres" id="2_profile"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" path="res://scenes/interaction/ScrapItem.tscn" id="4_item"]
 [ext_resource type="PackedScene" path="res://assets/models/magnet_collector.glb" id="5_model"]
 [ext_resource type="PackedScene" path="res://assets/models/magnet_bin.glb" id="6_bin"]
-[ext_resource type="PackedScene" path="res://assets/models/scrap_heap_small.glb" id="7_heap"]
 [ext_resource type="Script" path="res://scripts/world/MagnetControls.gd" id="8_controls"]
 [ext_resource type="Script" path="res://scripts/world/MagnetAnimator.gd" id="9_animator"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/magnet_hum_0.wav" id="10_hum"]
@@ -23,42 +22,12 @@ height = 0.12
 radial_segments = 12
 rings = 6
 
-[sub_resource type="BoxMesh" id="post_mesh"]
-size = Vector3(0.07, 1.1, 0.07)
-
-[sub_resource type="StandardMaterial3D" id="sign_material"]
-albedo_color = Color(0.94, 0.9, 0.8, 1)
-roughness = 0.9
-
-[sub_resource type="BoxMesh" id="sign_mesh"]
-material = SubResource("sign_material")
-size = Vector3(1.2, 0.42, 0.04)
-
-[node name="MagnetCollector" type="Node3D" node_paths=PackedStringArray("heap_center", "bin")]
+[node name="MagnetCollector" type="Node3D" node_paths=PackedStringArray("bin")]
 script = ExtResource("1_machine")
 profile = ExtResource("2_profile")
 item_catalog = ExtResource("3_items")
 item_scene = ExtResource("4_item")
-heap_center = NodePath("HeapCenter")
 bin = NodePath("Bin")
-
-[node name="ReservedPad" type="Node3D" parent="."]
-
-[node name="Post" type="MeshInstance3D" parent="ReservedPad"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0, 0.55, 1.1)
-mesh = SubResource("post_mesh")
-
-[node name="Sign" type="MeshInstance3D" parent="ReservedPad"]
-transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, -1.0, 1.05, 1.13)
-mesh = SubResource("sign_mesh")
-
-[node name="SignLabel" type="Label3D" parent="ReservedPad"]
-transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, -0.99, 1.05, 1.16)
-pixel_size = 0.004
-modulate = Color(0.2, 0.13, 0.08, 1)
-outline_size = 0
-text = "machine.reserved_sign"
-font_size = 40
 
 [node name="Machine" type="Node3D" parent="."]
 
@@ -100,31 +69,6 @@ volume_db = -40.0
 unit_size = 5.0
 max_distance = 22.0
 bus = &"SFX"
-
-[node name="Heap" parent="." instance=ExtResource("7_heap")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.15, 0, 0.05)
-
-[node name="HeapCenter" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15, 0, 0.05)
-
-[node name="HeapSign" type="Node3D" parent="."]
-transform = Transform3D(0.766, 0, 0.643, 0, 1, 0, -0.643, 0, 0.766, 3.3, 0, 1.25)
-
-[node name="Post" type="MeshInstance3D" parent="HeapSign"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
-mesh = SubResource("post_mesh")
-
-[node name="Board" type="MeshInstance3D" parent="HeapSign"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.04)
-mesh = SubResource("sign_mesh")
-
-[node name="Label" type="Label3D" parent="HeapSign"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.07)
-pixel_size = 0.004
-modulate = Color(0.2, 0.13, 0.08, 1)
-outline_size = 0
-text = "machine.heap_sign"
-font_size = 40
 
 [node name="Bin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 2.05)

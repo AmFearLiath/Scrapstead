@@ -1,11 +1,12 @@
 class_name MagnetCollector
 extends Node3D
-## The small magnetic collector, the first machine (P3b, docs/first-machine.md).
+## The small magnetic collector, the first machine (P3b, docs/first-machine.md),
+## placed and moved in build mode (docs/building-system.md, section 4).
 ##
-## Once bought, it swings its magnet over Walt's nail heap and drops one iron
-## piece per cycle into its output crate. Loose magnetic scrap lying in its
-## work area is taken first; only then does it dig into the heap's finite
-## stock. It never creates anything beyond that stock and never duplicates.
+## It swings its magnet over its work area and drops one iron piece per cycle
+## into its output crate. Loose magnetic scrap in reach is taken first; then it
+## digs into Walt's nail heap - but only while the heap is within reach of the
+## boom. It never creates anything beyond the heap's stock and never duplicates.
 ##
 ## Process logic only: the result of a cycle is decided here when the timer
 ## runs out. MagnetAnimator merely shows the progress (scripts/world).
@@ -17,8 +18,6 @@ signal piece_collected(item: ScrapItem, from_heap: bool)
 signal item_spawned(item: ScrapItem)
 ## A crate item left the world for good (sold or consumed).
 signal item_removed(object_id: String)
-## The machine was installed (bought) while the scene runs.
-signal installed
 ## The supplier tipped new small scrap onto the heap.
 signal refilled(amount: int)
 
@@ -29,12 +28,19 @@ const STATUS_BIN_FULL := "bin_full"
 const STATUS_EMPTY := "empty"
 ## Items closer than this to the crate count as lying in it.
 const BIN_RADIUS := 0.95
+## Slewing column in machine space: the centre of reach and work area.
+const COLUMN := Vector3(0.1, 0.0, -0.05)
+## The heap counts as in reach between these distances from the column.
+const HEAP_REACH_MIN := 1.3
+const HEAP_REACH_MAX := 2.8
+## Machine origin relative to the footprint centre (build grid).
+const SCENE_OFFSET := Vector3(0.0, 0.0, -1.0)
 
 @export var profile: MachineProfile
 @export var item_catalog: ItemCatalog
 @export var item_scene: PackedScene
-## Centre of the heap and of the work area.
-@export var heap_center: Marker3D
+## Walt's nail heap (fixed in the yard); set by the scene.
+var heap_center: Node3D
 ## Output crate; its Marker3D children are the slots.
 @export var bin: Node3D
 
@@ -51,26 +57,87 @@ var _counter: int = 0
 var _status: String = ""
 ## Live crate items created from the heap: {"id", "item", "slot", "node"}.
 var _live: Array[Dictionary] = []
+var _installed: bool = false
 
 
 func _ready() -> void:
 	if profile != null:
 		_heap_stock = profile.heap_size
 		_refill_timer = profile.refill_interval_seconds
-	_apply_installed()
 
 
 ## `objects` is the scene's live registry (object ID -> Interactable).
-func setup(upgrades: UpgradeProgress, objects: Dictionary) -> void:
+func setup(upgrades: UpgradeProgress, objects: Dictionary, heap: Node3D) -> void:
 	_upgrades = upgrades
 	_objects = objects
+	heap_center = heap
 	_timer = get_cycle_seconds()
 	_upgrades.upgrade_purchased.connect(_on_upgrade_purchased)
-	_apply_installed()
+	_installed = true
 
 
+## Standing on the yard and wired up by the scene.
 func is_installed() -> bool:
-	return profile != null and _upgrades != null and _upgrades.is_owned(profile.required_upgrade)
+	return _installed and profile != null
+
+
+## Centre of reach and work area (world).
+func get_work_center() -> Vector3:
+	return to_global(COLUMN)
+
+
+## Whether Walt's nail heap lies within reach of the boom.
+func heap_in_reach() -> bool:
+	if heap_center == null:
+		return false
+	var offset: Vector3 = heap_center.global_position - get_work_center()
+	offset.y = 0.0
+	return offset.length() >= HEAP_REACH_MIN and offset.length() <= HEAP_REACH_MAX
+
+
+## Where the magnet dips next (animation): the loose piece or the heap.
+func get_lift_point() -> Vector3:
+	var loose: ScrapItem = _find_loose_piece()
+	if loose != null:
+		return loose.global_position
+	if heap_in_reach():
+		return heap_center.global_position
+	return get_work_center() + global_basis.x * 2.0
+
+
+# --- Build mode (PlacedObjects) ---------------------------------------------------
+
+func get_scene_offset() -> Vector3:
+	return SCENE_OFFSET
+
+
+func get_placed_state() -> Dictionary:
+	return get_save_state()
+
+
+func apply_placed_state(state: Dictionary) -> void:
+	apply_save_state(state)
+
+
+## Items someone dropped into the crate move along with it.
+func on_relocated(old_transform: Transform3D, new_transform: Transform3D) -> void:
+	var old_bin: Vector3 = old_transform * bin.position
+	for target: Variant in _objects.values():
+		var item: ScrapItem = target as ScrapItem
+		if item == null or not is_instance_valid(item) or item.get_state() != ScrapItem.State.IN_WORLD:
+			continue
+		if item.get_parent() == self:
+			continue
+		var offset: Vector3 = item.global_position - old_bin
+		offset.y = 0.0
+		if offset.length() <= BIN_RADIUS:
+			item.drop_at(new_transform * (old_transform.affine_inverse() * item.global_position), item.rotation.y)
+	_update_status()
+
+
+## The crate must be empty before the machine goes back to storage.
+func get_removal_problem() -> String:
+	return "build.problem.crate_not_empty" if get_bin_count() > 0 else ""
 
 
 func is_switched_on() -> bool:
@@ -109,7 +176,7 @@ func get_status() -> String:
 		return STATUS_OFF
 	if get_bin_count() >= profile.bin_capacity:
 		return STATUS_BIN_FULL
-	if _find_loose_piece() == null and get_heap_remaining() <= 0:
+	if _find_loose_piece() == null and (get_heap_remaining() <= 0 or not heap_in_reach()):
 		return STATUS_EMPTY
 	return STATUS_WORKING
 
@@ -132,7 +199,7 @@ func peek_next_item_id() -> String:
 	var loose: ScrapItem = _find_loose_piece()
 	if loose != null:
 		return loose.get_item_id()
-	return profile.get_heap_item(_heap_taken) if get_heap_remaining() > 0 else ""
+	return profile.get_heap_item(_heap_taken) if get_heap_remaining() > 0 and heap_in_reach() else ""
 
 
 ## Switches the machine on or off. Returns the new state.
@@ -167,7 +234,7 @@ func collect_once() -> ScrapItem:
 		piece_collected.emit(loose, false)
 		_update_status()
 		return loose
-	if get_heap_remaining() <= 0:
+	if get_heap_remaining() <= 0 or not heap_in_reach():
 		return null
 	var item_id: String = profile.get_heap_item(_heap_taken)
 	_heap_taken += 1
@@ -236,8 +303,9 @@ func refill_now() -> int:
 
 ## Nearest loose magnetic item in the work area that is not already in the crate.
 func _find_loose_piece() -> ScrapItem:
-	if heap_center == null or profile == null:
+	if profile == null or not _installed:
 		return null
+	var center: Vector3 = get_work_center()
 	var best: ScrapItem
 	var best_distance: float = INF
 	for target: Variant in _objects.values():
@@ -246,7 +314,7 @@ func _find_loose_piece() -> ScrapItem:
 			continue
 		if not profile.magnetic_items.has(item.get_item_id()) or _is_in_bin(item):
 			continue
-		var offset: Vector3 = item.global_position - heap_center.global_position
+		var offset: Vector3 = item.global_position - center
 		offset.y = 0.0
 		if offset.length() <= profile.work_radius and offset.length() < best_distance:
 			best = item
@@ -352,26 +420,6 @@ func _update_status() -> void:
 func _on_upgrade_purchased(definition: UpgradeDefinition) -> void:
 	if profile == null:
 		return
-	if definition.id == profile.required_upgrade:
-		_timer = get_cycle_seconds()
-		_apply_installed()
-		installed.emit()
-	elif definition.id == profile.speed_upgrade:
+	if definition.id == profile.speed_upgrade:
 		_timer = minf(_timer, get_cycle_seconds())
 	_update_status()
-
-
-func _apply_installed() -> void:
-	var present: bool = is_installed()
-	var model: Node3D = get_node_or_null("Machine") as Node3D
-	if model != null:
-		model.visible = present
-	var controls: CollisionObject3D = get_node_or_null("Machine/Controls") as CollisionObject3D
-	if controls != null:
-		controls.collision_layer = 4 if present else 0
-	var body: CollisionObject3D = get_node_or_null("Machine/Body") as CollisionObject3D
-	if body != null:
-		body.collision_layer = 1 if present else 0
-	var placeholder: Node3D = get_node_or_null("ReservedPad") as Node3D
-	if placeholder != null:
-		placeholder.visible = not present

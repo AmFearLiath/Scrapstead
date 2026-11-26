@@ -133,9 +133,65 @@ def build_item_sealed_crate():
     return root
 
 
+# --- Build-mode decorations (docs/building-system.md) --------------------------
+
+def build_scrap_gnome():
+    """Garden gnome welded from scrap: can body, bolt nose, a funnel for a hat
+    and a wrench he holds like a fishing rod."""
+    kit.seed(941)
+    root = kit.root("ScrapGnome")
+    box("Base", (0, 0, 0.03), (0.3, 0.3, 0.06), "steel", parent=root, bevel=0.02)
+    cylinder("Body", (0, 0, 0.2), 0.11, 0.28, "red", vertices=12, parent=root, bevel=0.02)
+    cylinder("Belt", (0, 0, 0.17), 0.115, 0.04, "ink", vertices=12, parent=root)
+    sphere("Head", (0, 0, 0.4), 0.09, "skin", parent=root)
+    sphere("Beard", (0, -0.06, 0.35), 0.08, "cream", parent=root, scale=(1.0, 0.7, 1.1))
+    cylinder("Nose", (0, -0.085, 0.41), 0.022, 0.04, "rust_light", vertices=6, rotation=(90, 0, 0), parent=root)
+    cylinder("Hat", (0, 0, 0.56), 0.1, 0.22, "teal", vertices=10, radius_top=0.01, parent=root,
+             rotation=(8, 0, 0))
+    cylinder("Rod", (0.12, -0.05, 0.38), 0.012, 0.45, "steel_light", vertices=6, parent=root, rotation=(0, -30, 0))
+    box("Wrench", (0.24, -0.06, 0.58), (0.06, 0.02, 0.05), "steel_light", parent=root, bevel=0.005)
+    return root
+
+
+def build_tyre_bench():
+    """Bench: two stacks of tyres, a weathered plank, a cushion that has seen
+    things."""
+    kit.seed(951)
+    root = kit.root("TyreBench")
+    for side, x in (("L", -0.7), ("R", 0.7)):
+        for level in range(2):
+            torus(f"Tyre{side}{level}", (x, 0, 0.1 + level * 0.19), 0.24, 0.09, "tyre", parent=root)
+    plank = box("Plank", (0, 0, 0.46), (1.85, 0.42, 0.07), "wood_light", parent=root, bevel=0.02)
+    wonk(plank, 1.0)
+    box("Back", (0, 0.2, 0.75), (1.8, 0.06, 0.32), "wood", parent=root, bevel=0.02, rotation=(-8, 0, 0))
+    for side, x in (("L", -0.75), ("R", 0.75)):
+        box(f"Post{side}", (x, 0.2, 0.62), (0.07, 0.07, 0.4), "wood_dark", parent=root, bevel=0.01)
+    box("Cushion", (0.35, -0.02, 0.52), (0.45, 0.35, 0.06), "plum", parent=root, bevel=0.03, rotation=(0, 0, 4))
+    patch("CushionPatch", (0.42, -0.02, 0.555), (0.12, 0.1), "mustard", parent=root, rivets=0)
+    return root
+
+
+def build_pipe_flamingo():
+    """Flamingo bent from copper pipe, painted pink by someone with ambition."""
+    kit.seed(961)
+    root = kit.root("PipeFlamingo")
+    cylinder("Leg", (0, 0, 0.28), 0.015, 0.56, "steel_light", vertices=6, parent=root)
+    cylinder("LegBent", (0.05, 0, 0.33), 0.013, 0.22, "steel_light", vertices=6, parent=root, rotation=(0, 60, 0))
+    sphere("Body", (0, 0, 0.62), 0.12, "red", parent=root, scale=(1.4, 0.8, 0.85))
+    cylinder("Neck", (-0.13, 0, 0.8), 0.022, 0.32, "red", vertices=8, parent=root, rotation=(0, -25, 0))
+    sphere("Head", (-0.2, 0, 0.96), 0.05, "red", parent=root)
+    cylinder("Beak", (-0.25, 0, 0.94), 0.015, 0.08, "ink", vertices=6, parent=root, rotation=(0, -70, 0))
+    sphere("Eye", (-0.21, -0.04, 0.98), 0.012, "ink", parent=root)
+    box("Foot", (0, 0, 0.02), (0.12, 0.08, 0.03), "steel", parent=root, bevel=0.01)
+    return root
+
+
 ASSETS = {
     "magnet_collector": (build_magnet_collector, {"focus": (0, -0.6, 0.9), "ortho_scale": 4.2}),
     "magnet_bin": (build_magnet_bin, {"focus": (0, 0, 0.2), "ortho_scale": 1.8}),
     "device_broken_toaster": (build_item_toaster, {"focus": (0, 0, 0.2), "ortho_scale": 0.9}),
     "sealed_crate": (build_item_sealed_crate, {"focus": (0, 0, 0.25), "ortho_scale": 1.1}),
+    "decor_scrap_gnome": (build_scrap_gnome, {"focus": (0, 0, 0.35), "ortho_scale": 0.9}),
+    "decor_tyre_bench": (build_tyre_bench, {"focus": (0, 0, 0.45), "ortho_scale": 2.2}),
+    "decor_pipe_flamingo": (build_pipe_flamingo, {"focus": (0, 0, 0.5), "ortho_scale": 1.2}),
 }

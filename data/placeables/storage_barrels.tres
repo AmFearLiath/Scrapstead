@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/placeables/storage_barrels.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "storage_barrels"
+name_key = "placeable.storage_barrels.name"
+description_key = "placeable.storage_barrels.description"
+category = "storage"
+price = 8
+scene = ExtResource("2_scene")
+size = Vector2i(4, 4)
+solid = true
+height = 1.2

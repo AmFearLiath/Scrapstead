@@ -123,7 +123,7 @@ func create_initial_state() -> Dictionary:
 		"scrappy": {"state": "dormant", "follow": true},
 		"deliveries": {},
 		"employee": {},
-		"machines": {},
+		"placed": {},
 	}
 
 

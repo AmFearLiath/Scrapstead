@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlaceableCatalog" format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableCatalog.gd" id="1_catalog"]
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="Resource" path="res://data/placeables/magnet_collector.tres" id="2"]
+[ext_resource type="Resource" path="res://data/placeables/storage_pallets.tres" id="3"]
+[ext_resource type="Resource" path="res://data/placeables/storage_crates.tres" id="4"]
+[ext_resource type="Resource" path="res://data/placeables/storage_barrels.tres" id="5"]
+[ext_resource type="Resource" path="res://data/placeables/paths_fence_low.tres" id="6"]
+[ext_resource type="Resource" path="res://data/placeables/paths_gravel.tres" id="7"]
+[ext_resource type="Resource" path="res://data/placeables/decor_planter.tres" id="8"]
+[ext_resource type="Resource" path="res://data/placeables/decor_floodlight.tres" id="9"]
+[ext_resource type="Resource" path="res://data/placeables/decor_tyres.tres" id="10"]
+[ext_resource type="Resource" path="res://data/placeables/decor_wheelbarrow.tres" id="11"]
+[ext_resource type="Resource" path="res://data/placeables/decor_gnome.tres" id="12"]
+[ext_resource type="Resource" path="res://data/placeables/decor_bench.tres" id="13"]
+[ext_resource type="Resource" path="res://data/placeables/decor_flamingo.tres" id="14"]
+
+[resource]
+script = ExtResource("1_catalog")
+placeables = Array[ExtResource("1_def")]([ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5"), ExtResource("6"), ExtResource("7"), ExtResource("8"), ExtResource("9"), ExtResource("10"), ExtResource("11"), ExtResource("12"), ExtResource("13"), ExtResource("14")])

@@ -75,6 +75,8 @@ func _build_offers(context: InteractionContext) -> Array[Dictionary]:
 	if context == null:
 		return offers
 	for definition: UpgradeDefinition in context.upgrades.get_catalog().upgrades:
+		if definition.hidden_in_catalog:
+			continue
 		var status: String = "available"
 		match context.upgrades.check_purchase(definition.id, context.wallet):
 			UpgradeProgress.PurchaseResult.ALREADY_OWNED:

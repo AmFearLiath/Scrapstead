@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/scrap_heap_small.glb" id="1_heap"]
+
+[sub_resource type="BoxMesh" id="post_mesh"]
+size = Vector3(0.07, 1.1, 0.07)
+
+[sub_resource type="StandardMaterial3D" id="sign_material"]
+albedo_color = Color(0.94, 0.9, 0.8, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="sign_mesh"]
+material = SubResource("sign_material")
+size = Vector3(1.2, 0.42, 0.04)
+
+[node name="NailHeap" type="Marker3D"]
+
+[node name="Heap" parent="." instance=ExtResource("1_heap")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
+
+[node name="HeapSign" type="Node3D" parent="."]
+transform = Transform3D(0.766, 0, 0.643, 0, 1, 0, -0.643, 0, 0.766, 1.15, 0, 1.2)
+
+[node name="Post" type="MeshInstance3D" parent="HeapSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("post_mesh")
+
+[node name="Board" type="MeshInstance3D" parent="HeapSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.04)
+mesh = SubResource("sign_mesh")
+
+[node name="Label" type="Label3D" parent="HeapSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.07)
+pixel_size = 0.004
+modulate = Color(0.2, 0.13, 0.08, 1)
+outline_size = 0
+text = "machine.heap_sign"
+font_size = 40

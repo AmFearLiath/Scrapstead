@@ -428,3 +428,50 @@ tasks.helper.title,Find someone to lend a hand,"Jemanden finden, der mit anpackt
 tasks.helper.comment,Pay fairly. Gloves are not optional.,Fair bezahlen. Handschuhe sind Pflicht.
 tasks.machine.title,Set up a machine,Eine Maschine aufstellen
 tasks.machine.comment,Something with an engine. The spot is reserved. Has been for years.,Etwas mit Motor. Der Platz ist reserviert. Seit Jahren.
+ui.ledger.build,Build,Bauen
+build.failed,That didn't work.,Das hat nicht geklappt.
+build.placed,{name} set up.,{name} aufgestellt.
+build.placed_bought,{name} bought for {price} Cr and set up.,{name} für {price} Cr gekauft und aufgestellt.
+build.moved,{name} moved.,{name} versetzt.
+build.removed,"{name} is back in storage. Set it up again any time, free of charge.",{name} ist zurück im Lager. Jederzeit kostenlos wieder aufstellbar.
+build.status.locked,Not available yet.,Noch nicht verfügbar.
+build.status.limit,You only need one of those.,Davon brauchst du nur einen.
+build.status.too_expensive,Not enough credits.,Nicht genug Credits.
+build.problem.outside,That would stand outside your plot.,Das stünde außerhalb deines Grundstücks.
+build.problem.clearance_outside,The space in front of it would be outside your plot.,Der Platz davor läge außerhalb deines Grundstücks.
+build.problem.obstacle,Something is already standing there.,Da steht schon etwas.
+build.problem.clearance_blocked,The space in front of it is blocked - you need to be able to reach it.,Der Platz davor ist zugestellt - man muss rankommen.
+build.problem.overlap,That overlaps with something you built.,"Das überschneidet sich mit etwas, das du gebaut hast."
+build.problem.clearance_taken,Something you built is in the way of the space in front.,"Etwas, das du gebaut hast, steht vor der Bedienseite."
+build.problem.keep_free_gate,Keep the gate free - deliveries have to get in.,Das Tor bleibt frei - die Lieferungen müssen rein.
+build.problem.keep_free_route,Juri walks here. He'd only squeeze past.,Hier läuft Juri. Er würde sich nur vorbeiquetschen.
+build.problem.keep_free_station,Keep this free - you need to reach the station.,Das bleibt frei - man muss an die Station rankommen.
+build.problem.keep_free_scrap,There's still scrap lying there. Pick it up first.,Da liegt noch Schrott. Erst aufheben.
+build.problem.crate_not_empty,Empty the crate first.,Erst die Kiste leeren.
+build.hint.heap_out_of_reach,Walt's nail heap is out of reach - the magnet will only take loose iron.,Walts Nagelhaufen ist außer Reichweite - der Magnet nimmt dann nur lose Eisenteile.
+build.hint.heap_in_reach,Walt's nail heap is in reach.,Walts Nagelhaufen ist in Reichweite.
+placeable.magnet_collector.description,Swings its magnet over everything iron in reach and drops it into its crate. Works Walt's nail heap if you set it up next to it.,"Schwenkt seinen Magneten über alles Eiserne in Reichweite und lässt es in seine Kiste fallen. Bearbeitet Walts Nagelhaufen, wenn du ihn daneben aufstellst."
+placeable.storage_pallets.name,Pallet stack,Palettenstapel
+placeable.storage_pallets.description,Every yard needs one. Nobody knows why.,"Gehört auf jeden Hof. Keiner weiß, warum."
+placeable.storage_crates.name,Crate stack,Kistenstapel
+placeable.storage_crates.description,"Labelled ""Important"". All of them.",Beschriftet mit „Wichtig“. Alle.
+placeable.storage_barrels.name,Barrels,Fässer
+placeable.storage_barrels.description,Empty. Probably. Don't shake them.,Leer. Vermutlich. Nicht schütteln.
+placeable.paths_gravel.name,Gravel tile,Kiesplatte
+placeable.paths_gravel.description,1 m of tidy path. Walkable. Crunches pleasantly.,1 m ordentlicher Weg. Begehbar. Knirscht angenehm.
+placeable.paths_fence_low.name,Low fence,Niedriger Zaun
+placeable.paths_fence_low.description,"4 m of picket fence. Keeps nothing out, looks great doing it.","4 m Lattenzaun. Hält nichts ab, sieht dabei aber gut aus."
+placeable.decor_planter.name,Bathtub planter,Badewannenbeet
+placeable.decor_planter.description,Walt's favourite kind of recycling.,Walts liebste Art von Recycling.
+placeable.decor_floodlight.name,Floodlight,Hofstrahler
+placeable.decor_floodlight.description,For the late shift. Or for the atmosphere.,Für die Spätschicht. Oder für die Stimmung.
+placeable.decor_tyres.name,Tyre stack,Reifenstapel
+placeable.decor_tyres.description,"Four tyres, zero cars.","Vier Reifen, null Autos."
+placeable.decor_wheelbarrow.name,Wheelbarrow,Schubkarre
+placeable.decor_wheelbarrow.description,Not self-driving. Unlike Walt's.,Nicht selbstfahrend. Anders als Walts.
+placeable.decor_gnome.name,Scrap gnome,Schrottzwerg
+placeable.decor_gnome.description,Welded from a can and a funnel. Watches the yard. Judges a little.,Aus Dose und Trichter geschweißt. Bewacht den Hof. Urteilt ein bisschen.
+placeable.decor_bench.name,Tyre bench,Reifenbank
+placeable.decor_bench.description,"Two tyre stacks, one plank, one cushion with a past.","Zwei Reifenstapel, ein Brett, ein Kissen mit Vergangenheit."
+placeable.decor_flamingo.name,Pipe flamingo,Rohrflamingo
+placeable.decor_flamingo.description,"Bent from copper pipe, painted by someone with ambition.","Aus Kupferrohr gebogen, angemalt von jemandem mit Ambitionen."

@@ -16,8 +16,12 @@ extends Node3D
 @export var deliveries: ScrapDeliveries
 ## The first employee (scripts/world/YardWorker.gd, P3a); optional.
 @export var worker: YardWorker
-## The magnetic collector (scripts/world/MagnetCollector.gd, P3b); optional.
-@export var magnet: MagnetCollector
+## Objects the player placed in build mode (scripts/build/PlacedObjects.gd); optional.
+@export var placed: PlacedObjects
+## Walt's nail heap (fixed in the yard), worked by the magnetic collector.
+@export var nail_heap: Node3D
+## "Reserved" sign on the empty machine pad; hidden once a machine stands.
+@export var reserved_sign: Node3D
 @export_group("HUD")
 @export var interaction_prompt: Control
 @export var feedback_toast: Control
@@ -66,6 +70,9 @@ var _staging: bool = false
 var _objects: Dictionary = {}
 var _modal_open: bool = false
 var _restore_notes: PackedStringArray = []
+## The placed magnetic collector, if any (P3b, now placed in build mode).
+var magnet: MagnetCollector
+var _restoring: bool = false
 
 
 func _ready() -> void:
@@ -81,7 +88,7 @@ func _ready() -> void:
 	_story = StoryState.new(state.get("story", {}))
 	# Delivered items exist only at runtime; recreate them before their states.
 	_setup_deliveries(state.get("deliveries", {}))
-	_setup_magnet(state.get("machines", {}))
+	_setup_placed(state.get("placed", {}))
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
@@ -187,7 +194,7 @@ func create_snapshot() -> Dictionary:
 		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
 		"deliveries": deliveries.get_save_state() if deliveries != null else {},
 		"employee": worker.get_save_state() if worker != null else {},
-		"machines": {"magnet_collector": magnet.get_save_state()} if magnet != null else {},
+		"placed": placed.get_save_state() if placed != null else {},
 	}
 
 
@@ -463,7 +470,7 @@ func _debug_extra_lines() -> String:
 		staff_line = "%s %s, carrying %d, sold %d items" % [YardWorker.PRESENCE_NAMES[worker.get_presence()],
 			worker.get_status(), worker.get_carried_items().size(), worker.get_stats()["items"]]
 	var machine_line: String = "-"
-	if magnet != null and magnet.is_installed():
+	if magnet != null and is_instance_valid(magnet) and magnet.is_installed():
 		machine_line = "%s, heap %d, crate %d, next in %.0f%%" % [magnet.get_status(), magnet.get_heap_remaining(),
 			magnet.get_bin_count(), magnet.get_cycle_progress() * 100.0]
 	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nStaff: %s\nMagnet: %s\nRestore notes: %s" % [
@@ -636,6 +643,8 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 			story_director.bind_worker(worker)
 		if magnet != null:
 			story_director.bind_magnet(magnet)
+		if placed != null:
+			story_director.bind_placed(placed)
 	if letter_panel != null:
 		letter_panel.closed.connect(_on_letter_closed)
 	if story_director != null:
@@ -867,22 +876,67 @@ func _on_staff_result(result: Dictionary) -> void:
 			_sound("switch", -4.0)
 
 
-# --- The first machine (P3b) -------------------------------------------------
+# --- Placed objects and the first machine (P3b, build system) ---------------
 
-func _setup_magnet(saved_machines: Dictionary) -> void:
-	if magnet == null:
+func get_placed() -> PlacedObjects:
+	return placed
+
+
+func _setup_placed(saved: Dictionary) -> void:
+	if placed == null:
 		return
-	magnet.setup(_upgrades, _objects)
+	placed.setup(_upgrades, _wallet, _story)
+	placed.object_placed.connect(_on_object_placed)
+	placed.object_removed.connect(_on_object_removed)
+	placed.changed.connect(_update_reserved_sign)
+	placed.protected_provider = _loose_scrap_cells
+	placed.validator.hint_source = _placement_hints
+	_restoring = true
+	for note: String in placed.apply_save_state(saved):
+		_note(note)
+	_restoring = false
+	placed.set_static_protected(_build_protected_cells())
+	_update_reserved_sign()
+
+
+func _on_object_placed(_uid: String, node: Node3D) -> void:
+	if node is MagnetCollector:
+		_setup_magnet(node as MagnetCollector)
+	if not _restoring:
+		_dust(node.global_position, 16, 0.32)
+		_sound("thud", -2.0)
+
+
+func _on_object_removed(_uid: String) -> void:
+	if magnet != null and not is_instance_valid(magnet):
+		magnet = null
+	for entry: Dictionary in placed.get_entries():
+		if entry["node"] is MagnetCollector:
+			return
+	if magnet != null and magnet.is_queued_for_deletion():
+		magnet = null
+		if story_director != null:
+			story_director.bind_magnet(null)
+
+
+func _update_reserved_sign() -> void:
+	if reserved_sign != null and placed != null:
+		reserved_sign.visible = placed.count_placed("magnet_collector") == 0
+
+
+func _setup_magnet(machine: MagnetCollector) -> void:
+	magnet = machine
+	magnet.setup(_upgrades, _objects, nail_heap)
 	magnet.item_spawned.connect(_on_magnet_item_spawned)
 	magnet.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
 	magnet.piece_collected.connect(_on_magnet_piece_collected)
-	magnet.installed.connect(_on_magnet_installed)
 	magnet.refilled.connect(_on_magnet_refilled)
-	var saved: Variant = saved_machines.get("magnet_collector", {})
-	magnet.apply_save_state(saved if typeof(saved) == TYPE_DICTIONARY else {})
 	var animator: Node = magnet.get_node_or_null("Animator")
 	if animator != null:
 		animator.touched_down.connect(func() -> void: _sound("clink", -12.0))
+	if story_director != null and story_director.has_method("bind_magnet") and not _restoring:
+		story_director.bind_magnet(magnet)
+		story_director.on_machine_installed()
 
 
 func _on_magnet_item_spawned(item: ScrapItem) -> void:
@@ -897,20 +951,112 @@ func _on_magnet_piece_collected(item: ScrapItem, _from_heap: bool) -> void:
 	_sound("thud", -12.0)
 
 
-func _on_magnet_installed() -> void:
-	_dust(magnet.global_position, 18, 0.35)
-	_sound("delivery", -2.0)
-	if story_director != null:
-		story_director.on_machine_installed()
-
-
 func _on_magnet_refilled(amount: int) -> void:
 	feedback_toast.show_message(tr(magnet.profile.refill_message_key).format({"amount": amount}))
 	_sound("van_horn", -10.0)
 	get_tree().create_timer(0.7).timeout.connect(_sound.bind("delivery", -6.0))
-	var heap: Node3D = magnet.get_node_or_null("Heap") as Node3D
-	if heap != null:
-		_dust(heap.global_position, 14, 0.3)
+	if nail_heap != null:
+		_dust(nail_heap.global_position, 14, 0.3)
+
+
+## Areas the yard needs to keep working: the gate, the helper's walkways,
+## the spots in front of every station, the pallet and the nail heap.
+func _build_protected_cells() -> Dictionary:
+	var cells: Dictionary = {}
+	_protect_rect(cells, Rect2(5.4, -1.6, 5.2, 1.6), "gate")
+	if worker != null:
+		var chains: Array = [_chain(worker.route_root, worker.counter_spot), _chain(worker.station_route_root,
+			worker.station_spot), _chain(worker.cart_route_root, worker.cart_spot)]
+		for chain: Array in chains:
+			for index: int in range(chain.size() - 1):
+				_protect_segment(cells, chain[index], chain[index + 1], 0.6, "route")
+		# Each branch joins the main route at its nearest point.
+		var main: Array = chains[0]
+		for branch: Array in [chains[1], chains[2]]:
+			if not branch.is_empty() and not main.is_empty():
+				_protect_segment(cells, _nearest(main, branch[0]), branch[0], 0.6, "route")
+		for spot: Node3D in [worker.wait_spot, worker.rest_spot, worker.crowbar_spot]:
+			if spot != null:
+				_protect_circle(cells, spot.global_position, 0.6, "route")
+	for target: Interactable in _objects.values():
+		if target is ScrapItem or not target.is_inside_tree():
+			continue
+		if placed != null and placed.is_ancestor_of(target):
+			continue
+		_protect_circle(cells, target.get_interaction_point(), 0.7, "station")
+	if deliveries != null:
+		_protect_circle(cells, deliveries.global_position, 1.9, "station")
+	if nail_heap != null:
+		_protect_circle(cells, nail_heap.global_position, 1.0, "station")
+	return cells
+
+
+## Non-blocking notes for the preview: e.g. whether the nail heap is in reach.
+func _placement_hints(definition: PlaceableDefinition, anchor: Vector2i, rotation_steps: int) -> PackedStringArray:
+	var hints: PackedStringArray = []
+	if definition.id == "magnet_collector" and nail_heap != null:
+		var basis := Basis(Vector3.UP, BuildGrid.rotation_y(rotation_steps))
+		var column: Vector3 = BuildGrid.object_center(definition, anchor, rotation_steps) 			+ basis * (MagnetCollector.SCENE_OFFSET + MagnetCollector.COLUMN)
+		var offset: Vector3 = nail_heap.global_position - column
+		offset.y = 0.0
+		var in_reach: bool = offset.length() >= MagnetCollector.HEAP_REACH_MIN 			and offset.length() <= MagnetCollector.HEAP_REACH_MAX
+		hints.append("build.hint.heap_in_reach" if in_reach else "build.hint.heap_out_of_reach")
+	return hints
+
+
+## Loose scrap lying in the yard: nothing gets built on top of it.
+func _loose_scrap_cells() -> Dictionary:
+	var cells: Dictionary = {}
+	for target: Interactable in _objects.values():
+		var item: ScrapItem = target as ScrapItem
+		if item != null and item.get_state() == ScrapItem.State.IN_WORLD and item.is_inside_tree():
+			cells[BuildGrid.world_to_cell(item.global_position)] = "scrap"
+	return cells
+
+
+func _chain(root: Node3D, end: Node3D) -> Array:
+	var points: Array = []
+	if root != null:
+		for child: Node in root.get_children():
+			if child is Marker3D:
+				points.append((child as Marker3D).global_position)
+	if end != null:
+		points.append(end.global_position)
+	return points
+
+
+func _nearest(points: Array, to: Vector3) -> Vector3:
+	var best: Vector3 = points[0]
+	for point: Vector3 in points:
+		if point.distance_to(to) < best.distance_to(to):
+			best = point
+	return best
+
+
+func _protect_rect(cells: Dictionary, rect: Rect2, reason: String) -> void:
+	var from: Vector2i = BuildGrid.world_to_cell(Vector3(rect.position.x, 0, rect.position.y))
+	var to: Vector2i = BuildGrid.world_to_cell(Vector3(rect.end.x, 0, rect.end.y))
+	for x: int in range(from.x, to.x + 1):
+		for y: int in range(from.y, to.y + 1):
+			cells[Vector2i(x, y)] = reason
+
+
+func _protect_circle(cells: Dictionary, center: Vector3, radius: float, reason: String) -> void:
+	var from: Vector2i = BuildGrid.world_to_cell(center - Vector3(radius, 0, radius))
+	var to: Vector2i = BuildGrid.world_to_cell(center + Vector3(radius, 0, radius))
+	for x: int in range(from.x, to.x + 1):
+		for y: int in range(from.y, to.y + 1):
+			var cell := Vector2i(x, y)
+			var offset: Vector3 = BuildGrid.cell_center(cell) - Vector3(center.x, 0, center.z)
+			if offset.length() <= radius + BuildGrid.CELL * 0.5 and not cells.has(cell):
+				cells[cell] = reason
+
+
+func _protect_segment(cells: Dictionary, a: Vector3, b: Vector3, half_width: float, reason: String) -> void:
+	var length: float = Vector2(b.x - a.x, b.z - a.z).length()
+	var steps: int = maxi(1, ceili(length / (BuildGrid.CELL * 0.5)))
+	for index: int in steps + 1:
+		_protect_circle(cells, a.lerp(b, float(index) / steps), half_width, reason)
 
 
 ## Outputs a station created at runtime join the object registry.

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/machines/MagnetCollector.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "magnet_collector"
+name_key = "machine.magnet_collector.name"
+description_key = "placeable.magnet_collector.description"
+category = "machines"
+price = 60
+unlock_ware = "machine_magnet_collector"
+max_count = 1
+scene = ExtResource("2_scene")
+size = Vector2i(4, 7)
+clearance = Array[Rect2i]([Rect2i(0, 7, 4, 1)])
+work_radius = 2.8
+solid = true
+height = 1.4
+ports = Array[Dictionary]([{"cell": Vector2i(1, 6), "kind": "out"}])

@@ -13,8 +13,8 @@ extends Node
 ## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
 ## upgrades (P1), version 3 story and Scrappy (P2), version 4 the neighbors'
 ## scrap deliveries, version 5 the first employee (P3a), version 6 the first
-## machine (P3b).
-const SAVE_VERSION: int = 6
+## machine (P3b), version 7 the build system (placed objects).
+const SAVE_VERSION: int = 7
 ## Oldest version that can be migrated explicitly (see _migrate()).
 const OLDEST_MIGRATABLE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
@@ -149,7 +149,37 @@ func validate_save_data(data: Dictionary) -> bool:
 			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("id")) != TYPE_STRING \
 					or typeof(entry.get("item")) != TYPE_STRING:
 				return false
-	return _is_valid_employee(data.get("employee")) and _is_valid_machines(data.get("machines"))
+	return _is_valid_employee(data.get("employee")) and _is_valid_placed(data.get("placed"))
+
+
+## Placed objects: {"counter", "objects": [{uid, def, cell: [x, y], rot, state}], "stored": {id: count}}.
+func _is_valid_placed(value: Variant) -> bool:
+	if typeof(value) != TYPE_DICTIONARY:
+		return false
+	var placed: Dictionary = value
+	if placed.has("counter") and not _is_number(placed["counter"]):
+		return false
+	if placed.has("objects"):
+		if typeof(placed["objects"]) != TYPE_ARRAY:
+			return false
+		for entry: Variant in placed["objects"]:
+			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("uid")) != TYPE_STRING \
+					or typeof(entry.get("def")) != TYPE_STRING or not _is_number(entry.get("rot", 0)):
+				return false
+			var cell: Variant = entry.get("cell")
+			if typeof(cell) != TYPE_ARRAY or cell.size() != 2 or not _is_number(cell[0]) or not _is_number(cell[1]):
+				return false
+			if entry.has("state") and typeof(entry["state"]) != TYPE_DICTIONARY:
+				return false
+			if entry.has("state") and not _is_valid_machines({"m": entry["state"]}):
+				return false
+	if placed.has("stored"):
+		if typeof(placed["stored"]) != TYPE_DICTIONARY:
+			return false
+		for count: Variant in placed["stored"].values():
+			if not _is_number(count):
+				return false
+	return true
 
 
 ## Machines by ID: {"on": bool, "timer", "heap_taken", "counter": numbers, "items": [{id, item, slot}]}.
@@ -309,4 +339,16 @@ func _migrate(data: Dictionary) -> Dictionary:
 		# v5 -> v6 (P3b): no machine had been bought yet.
 		migrated["machines"] = {}
 		migrated["save_version"] = 6
+	if int(migrated["save_version"]) == 6:
+		# v6 -> v7 (build system): a bought magnetic collector becomes a placed
+		# object on its former pad; everything else was not placeable yet.
+		var objects: Array = []
+		if _is_string_array(migrated.get("upgrades")) and migrated["upgrades"].has("machine_magnet_collector"):
+			var machines: Variant = migrated.get("machines", {})
+			var state: Variant = machines.get("magnet_collector", {}) if typeof(machines) == TYPE_DICTIONARY else {}
+			objects.append({"uid": "placed_1", "def": "magnet_collector", "cell": [69, -27], "rot": 0,
+				"state": state if typeof(state) == TYPE_DICTIONARY else {}})
+		migrated["placed"] = {"counter": objects.size(), "objects": objects, "stored": {}}
+		migrated.erase("machines")
+		migrated["save_version"] = 7
 	return migrated

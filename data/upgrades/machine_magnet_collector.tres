@@ -13,3 +13,4 @@ bonus = 0
 grants_tool = ""
 requires = ""
 effect_key = "upgrade.machine_magnet_collector.effect"
+hidden_in_catalog = true

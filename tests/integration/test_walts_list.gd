@@ -88,10 +88,10 @@ func test_last_entry_completes_the_list() -> void:
 	for flag: String in [StoryDirector.FLAG_FIRST_SALE, StoryDirector.FLAG_FIRST_PURCHASE, StoryDirector.FLAG_RESTORED,
 			StoryDirector.FLAG_FIRST_HIRE]:
 		story.set_flag(flag)
-	for ware: String in ["yard_entrance", "machine_magnet_collector"]:
-		var definition: UpgradeDefinition = scene.get_upgrades().get_catalog().get_definition(ware)
-		scene.get_wallet().credit(definition.price, "test-" + ware, "test")
-		scene.get_upgrades().purchase(ware, scene.get_wallet())
+	var entrance: UpgradeDefinition = scene.get_upgrades().get_catalog().get_definition("yard_entrance")
+	scene.get_wallet().credit(entrance.price + 60, "test", "test")
+	scene.get_upgrades().purchase("yard_entrance", scene.get_wallet())
+	check(scene.get_placed().place("magnet_collector", Vector2i(69, -27), 0)["ok"], "machine set up")
 	check_eq(last, ["machine"], "the last entry completes the list")
 
 

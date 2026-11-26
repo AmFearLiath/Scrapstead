@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/placeables/decor_gnome.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "decor_gnome"
+name_key = "placeable.decor_gnome.name"
+description_key = "placeable.decor_gnome.description"
+category = "decor"
+price = 9
+scene = ExtResource("2_scene")
+size = Vector2i(1, 1)
+solid = true
+height = 0.7

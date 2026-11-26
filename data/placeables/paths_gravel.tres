@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PlaceableDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlaceableDefinition.gd" id="1_def"]
+[ext_resource type="PackedScene" path="res://scenes/placeables/paths_gravel.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_def")
+id = "paths_gravel"
+name_key = "placeable.paths_gravel.name"
+description_key = "placeable.paths_gravel.description"
+category = "paths"
+price = 2
+scene = ExtResource("2_scene")
+size = Vector2i(2, 2)
+solid = false
+height = 0.05

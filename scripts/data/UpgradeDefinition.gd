@@ -22,3 +22,5 @@ const STAT_CARRY_CAPACITY: String = "carry_capacity"
 @export var requires: String = ""
 ## Optional localization key of a fixed effect line in the catalog (machines).
 @export var effect_key: String = ""
+## Sold elsewhere (e.g. machines in the build menu); not listed in the catalog.
+@export var hidden_in_catalog: bool = false
