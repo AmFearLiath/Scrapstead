@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" path="res://ui/interaction/CatalogPanel.tscn" id="19_upgrade_panel"]
 [ext_resource type="PackedScene" path="res://ui/hud/PauseMenu.tscn" id="20_pause"]
 [ext_resource type="Resource" path="res://data/items/item_catalog.tres" id="21_items"]
+[ext_resource type="Script" path="res://scripts/world/YardStashes.gd" id="60_stashes"]
+[ext_resource type="Resource" path="res://data/stashes/yard_stashes.tres" id="61_stash_table"]
 [ext_resource type="Resource" path="res://data/upgrades/upgrade_catalog.tres" id="22_upgrades"]
 [ext_resource type="Resource" path="res://data/prototype/p1_balance.tres" id="23_balance"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/DismantleStation.tscn" id="30_dismantle"]
@@ -83,13 +85,14 @@ roughness = 0.9
 material = SubResource("reserved_material")
 size = Vector3(1.2, 0.42, 0.04)
 
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "placed", "nail_heap", "reserved_sign", "build_mode", "build_menu", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "yard_stashes", "worker", "placed", "nail_heap", "reserved_sign", "build_mode", "build_menu", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
 camera_rig = NodePath("GameplayCamera")
 world_objects_root = NodePath("TestObjects")
 deliveries = NodePath("DropOffSpot")
+yard_stashes = NodePath("YardStashes")
 worker = NodePath("Staff/YardWorker")
 placed = NodePath("Placed")
 nail_heap = NodePath("NailHeap")
@@ -326,6 +329,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.4, 0, -28.8)
 
 [node name="RedToolbox" parent="TestObjects" instance=ExtResource("61_redbox")]
 transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, 12.5, 0, -14.3)
+
+[node name="YardStashes" type="Node3D" parent="."]
+script = ExtResource("60_stashes")
+table = ExtResource("61_stash_table")
+item_catalog = ExtResource("21_items")
+item_scene = ExtResource("13_item")
 
 [node name="DeliveryArea" type="Node3D" parent="."]
 

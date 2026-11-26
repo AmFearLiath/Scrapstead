@@ -904,3 +904,9 @@ Referenz: [Grafikstil 2](art-style-2.md).
 **Beschluss (Freigabe der Stilprobe):** Stil 2 ist der feste Look des Spiels. Toon-Shader, Umriss und das Import-Werkzeug für das Toon-Material entfallen. Spieler und Juri bekommen Stoffkleidung und saubere Haut statt Lackverwitterung. Die Wege sind dunkler und kiesig. Die gelbe Umrandung der Maschinenfläche entfällt, seit der Magnetsammler frei platzierbar ist. Neu ist die Einstellung „Grafik“ (Niedrig/Mittel/Hoch) im Haupt- und Pausenmenü.
 
 Referenz: [Grafikstil 2](art-style-2.md).
+
+## 26.11.2026 — Block 4: Hof-Requisiten werden Fundstellen
+
+**Beschluss (Wunsch: „Alle füllen sich langsam wieder auf“):** Zwölf Hof-Objekte (Reifen, Autowrack, Regal, zwei Kistenstapel, Fässer, kleiner Schrotthaufen, zwei Schrotthaufen, Motorblock, Container, Paletten) sind beliebig oft durchsuchbar. Jede hat eine kleine Zahl Ladungen, die sich in Spielzeit einzeln wieder auffüllen. Autowrack, vernagelte Kisten und Container brauchen die Brechstange, der Motorblock den Flaschenzug. Die Funde sind gewichtete Zufallsteile aus bestehenden Gegenständen, keine Story- oder Schlüsselgegenstände. Ältere Spielstände bleiben gültig.
+
+Referenz: [Durchsuchbare Hof-Requisiten](yard-stashes.md).

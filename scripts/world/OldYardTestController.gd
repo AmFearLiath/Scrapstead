@@ -14,6 +14,8 @@ extends Node3D
 @export var world_objects_root: Node3D
 ## Neighbors' drop-off spot (scripts/world/ScrapDeliveries.gd); optional.
 @export var deliveries: ScrapDeliveries
+## Searchable yard fixtures with slow refill (block 4); optional.
+@export var yard_stashes: YardStashes
 ## The first employee (scripts/world/YardWorker.gd, P3a); optional.
 @export var worker: YardWorker
 ## Objects the player placed in build mode (scripts/build/PlacedObjects.gd); optional.
@@ -92,6 +94,7 @@ func _ready() -> void:
 	# Delivered items exist only at runtime; recreate them before their states.
 	_setup_deliveries(state.get("deliveries", {}))
 	_setup_placed(state.get("placed", {}))
+	_setup_stashes(state.get("stashes", {}))
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
@@ -214,6 +217,7 @@ func create_snapshot() -> Dictionary:
 		"story": _story.to_save_data(),
 		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
 		"deliveries": deliveries.get_save_state() if deliveries != null else {},
+		"stashes": yard_stashes.get_save_state() if yard_stashes != null else {},
 		"employee": worker.get_save_state() if worker != null else {},
 		"placed": placed.get_save_state() if placed != null else {},
 	}
@@ -817,6 +821,27 @@ func _on_delivery_arrived(entry: Dictionary, items: Array) -> void:
 			_dust((item as Node3D).global_position, 6, 0.14)
 	if story_director != null:
 		story_director.on_delivery()
+
+
+# --- Searchable yard fixtures (block 4) ----------------------------------------
+
+func _setup_stashes(saved: Dictionary) -> void:
+	if yard_stashes == null:
+		return
+	yard_stashes.item_spawned.connect(_on_runtime_item_spawned)
+	yard_stashes.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
+	yard_stashes.searched.connect(_on_stash_searched)
+	yard_stashes.apply_save_state(saved)
+	yard_stashes.setup(self, player)
+
+
+func _on_stash_searched(_stash_id: String, items: Array) -> void:
+	for item: Variant in items:
+		if item is Node3D:
+			_dust((item as Node3D).global_position, 5, 0.12)
+	_sound("clink", -8.0)
+	if story_director != null:
+		story_director.refresh_notes()
 
 
 # --- The first employee (P3a) ------------------------------------------------

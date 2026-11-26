@@ -1,0 +1,200 @@
+[gd_resource type="Resource" script_class="StashTable" load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/StashTable.gd" id="1_table"]
+[ext_resource type="Script" path="res://scripts/data/StashDefinition.gd" id="2_def"]
+
+[sub_resource type="Resource" id="tyres"]
+script = ExtResource("2_def")
+id = "tyres"
+fixture_path = "LevelGeometry/Obstacles/WorkAreaD/Tyres"
+name_key = "yard.tyres"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.4
+capacity = 2
+refill_seconds = 300.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_wire_coil", "scrap_rusted_bolt", "scrap_empty_can")
+loot_weights = PackedFloat32Array(3.0, 2.0, 2.0)
+result_keys = PackedStringArray("ui.stash.result.tyres.1", "ui.stash.result.tyres.2", "ui.stash.result.tyres.3")
+
+[sub_resource type="Resource" id="car_wreck"]
+script = ExtResource("2_def")
+id = "car_wreck"
+fixture_path = "LevelGeometry/Obstacles/ScrapYardB/CarWreck"
+name_key = "yard.car_wreck"
+action_key = "ui.action.pry_open"
+required_tool = "crowbar"
+search_seconds = 2.4
+capacity = 2
+refill_seconds = 480.0
+min_items = 1
+max_items = 3
+loot_items = PackedStringArray("device_broken_radio", "mat_copper_wire", "scrap_copper_pipe", "scrap_rusted_bolt", "find_brass_figurine")
+loot_weights = PackedFloat32Array(2.0, 3.0, 2.0, 2.0, 0.3)
+result_keys = PackedStringArray("ui.stash.result.car_wreck.1", "ui.stash.result.car_wreck.2", "ui.stash.result.car_wreck.3")
+
+[sub_resource type="Resource" id="shelf"]
+script = ExtResource("2_def")
+id = "shelf"
+fixture_path = "LevelGeometry/Obstacles/StorageZoneA/Shelf"
+name_key = "yard.shelf"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.6
+capacity = 3
+refill_seconds = 360.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_rusted_bolt", "scrap_wire_coil", "device_broken_toaster", "mat_electronic_parts")
+loot_weights = PackedFloat32Array(3.0, 2.0, 1.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.shelf.1", "ui.stash.result.shelf.2", "ui.stash.result.shelf.3")
+
+[sub_resource type="Resource" id="crates_open"]
+script = ExtResource("2_def")
+id = "crates_open"
+fixture_path = "LevelGeometry/Obstacles/StorageZoneA/Crates1"
+name_key = "yard.crates"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.6
+capacity = 2
+refill_seconds = 360.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_wood_offcut", "scrap_rusted_bolt", "scrap_empty_can")
+loot_weights = PackedFloat32Array(3.0, 2.0, 2.0)
+result_keys = PackedStringArray("ui.stash.result.crates_open.1", "ui.stash.result.crates_open.2", "ui.stash.result.crates_open.3")
+
+[sub_resource type="Resource" id="crates_nailed"]
+script = ExtResource("2_def")
+id = "crates_nailed"
+fixture_path = "LevelGeometry/Obstacles/StorageZoneA/Crates2"
+name_key = "yard.crates_nailed"
+action_key = "ui.action.pry_open"
+required_tool = "crowbar"
+search_seconds = 2.2
+capacity = 2
+refill_seconds = 420.0
+min_items = 1
+max_items = 3
+loot_items = PackedStringArray("mat_electronic_parts", "scrap_wire_coil", "scrap_wood_offcut", "device_broken_radio")
+loot_weights = PackedFloat32Array(2.0, 2.0, 2.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.crates_nailed.1", "ui.stash.result.crates_nailed.2", "ui.stash.result.crates_nailed.3")
+
+[sub_resource type="Resource" id="barrels"]
+script = ExtResource("2_def")
+id = "barrels"
+fixture_path = "LevelGeometry/Obstacles/StorageZoneA/Barrels"
+name_key = "yard.barrels"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.4
+capacity = 2
+refill_seconds = 300.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_empty_can", "scrap_copper_pipe", "scrap_rusted_bolt")
+loot_weights = PackedFloat32Array(3.0, 2.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.barrels.1", "ui.stash.result.barrels.2", "ui.stash.result.barrels.3")
+
+[sub_resource type="Resource" id="scrap_pile"]
+script = ExtResource("2_def")
+id = "scrap_pile"
+fixture_path = "LevelGeometry/Obstacles/StorageZoneA/SmallScrapPile"
+name_key = "yard.scrap_pile"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.4
+capacity = 2
+refill_seconds = 240.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can", "scrap_wire_coil")
+loot_weights = PackedFloat32Array(3.0, 2.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.scrap_pile.1", "ui.stash.result.scrap_pile.2", "ui.stash.result.scrap_pile.3")
+
+[sub_resource type="Resource" id="scrap_heap_large"]
+script = ExtResource("2_def")
+id = "scrap_heap_large"
+fixture_path = "LevelGeometry/Obstacles/ScrapYardB/LargeScrapHeap"
+name_key = "yard.scrap_heap_large"
+action_key = "ui.action.dig"
+required_tool = ""
+search_seconds = 2.0
+capacity = 4
+refill_seconds = 240.0
+min_items = 2
+max_items = 3
+loot_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can", "scrap_copper_pipe", "scrap_wire_coil", "device_broken_toaster", "find_brass_figurine")
+loot_weights = PackedFloat32Array(3.0, 2.0, 2.0, 2.0, 0.7, 0.2)
+result_keys = PackedStringArray("ui.stash.result.scrap_heap_large.1", "ui.stash.result.scrap_heap_large.2", "ui.stash.result.scrap_heap_large.3")
+
+[sub_resource type="Resource" id="scrap_heap_small"]
+script = ExtResource("2_def")
+id = "scrap_heap_small"
+fixture_path = "LevelGeometry/Obstacles/ScrapYardB/SmallScrapHeap"
+name_key = "yard.scrap_heap_small"
+action_key = "ui.action.dig"
+required_tool = ""
+search_seconds = 1.6
+capacity = 2
+refill_seconds = 240.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can", "scrap_wire_coil")
+loot_weights = PackedFloat32Array(3.0, 2.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.scrap_heap_small.1", "ui.stash.result.scrap_heap_small.2", "ui.stash.result.scrap_heap_small.3")
+
+[sub_resource type="Resource" id="engine_block"]
+script = ExtResource("2_def")
+id = "engine_block"
+fixture_path = "LevelGeometry/Obstacles/ScrapYardB/EngineBlock"
+name_key = "yard.engine_block"
+action_key = "ui.action.lift"
+required_tool = "hoist"
+search_seconds = 2.6
+capacity = 1
+refill_seconds = 600.0
+min_items = 2
+max_items = 3
+loot_items = PackedStringArray("mat_copper_wire", "scrap_copper_pipe", "scrap_rusted_bolt")
+loot_weights = PackedFloat32Array(3.0, 2.0, 2.0)
+result_keys = PackedStringArray("ui.stash.result.engine_block.1", "ui.stash.result.engine_block.2", "ui.stash.result.engine_block.3")
+
+[sub_resource type="Resource" id="container"]
+script = ExtResource("2_def")
+id = "container"
+fixture_path = "LevelGeometry/Obstacles/ScrapYardB/Container"
+name_key = "yard.container"
+action_key = "ui.action.pry_open"
+required_tool = "crowbar"
+search_seconds = 2.6
+capacity = 2
+refill_seconds = 600.0
+min_items = 2
+max_items = 3
+loot_items = PackedStringArray("device_broken_toaster", "device_broken_radio", "mat_electronic_parts", "scrap_wire_coil", "find_brass_figurine")
+loot_weights = PackedFloat32Array(2.0, 2.0, 2.0, 1.0, 0.3)
+result_keys = PackedStringArray("ui.stash.result.container.1", "ui.stash.result.container.2", "ui.stash.result.container.3")
+
+[sub_resource type="Resource" id="pallets"]
+script = ExtResource("2_def")
+id = "pallets"
+fixture_path = "LevelGeometry/Obstacles/WorkAreaD/Pallets"
+name_key = "yard.pallets"
+action_key = "ui.action.search"
+required_tool = ""
+search_seconds = 1.2
+capacity = 2
+refill_seconds = 300.0
+min_items = 1
+max_items = 2
+loot_items = PackedStringArray("scrap_wood_offcut", "scrap_rusted_bolt")
+loot_weights = PackedFloat32Array(4.0, 1.0)
+result_keys = PackedStringArray("ui.stash.result.pallets.1", "ui.stash.result.pallets.2", "ui.stash.result.pallets.3")
+
+[resource]
+script = ExtResource("1_table")
+stashes = Array[ExtResource("2_def")]([SubResource("tyres"), SubResource("car_wreck"), SubResource("shelf"), SubResource("crates_open"), SubResource("crates_nailed"), SubResource("barrels"), SubResource("scrap_pile"), SubResource("scrap_heap_large"), SubResource("scrap_heap_small"), SubResource("engine_block"), SubResource("container"), SubResource("pallets")])

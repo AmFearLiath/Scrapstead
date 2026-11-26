@@ -573,3 +573,47 @@ yard.tool_handcart,Handcart parking,Handkarren-Platz
 build.yard_fixture,"Part of the yard. Can be moved and turned, not put away.","Gehört zum Hof. Lässt sich versetzen und drehen, aber nicht wegräumen."
 build.problem.yard_fixture,"That belongs to the yard - you can move it, not put it away.","Das gehört zum Hof - du kannst es versetzen, aber nicht wegräumen."
 build.problem.blocks_access,That would cut off the way to: {name}.,Das würde den Weg abschneiden zu: {name}.
+ui.action.dig,Rummage (hold),Wühlen (halten)
+ui.action.lift,Lift (hold),Anheben (halten)
+yard.crates_nailed,Nailed crates,Vernagelte Kisten
+ui.search.missing_tool.hoist,{name} weighs more than your ambition. A chain hoist from the office catalog would help.,{name} wiegt mehr als dein Ehrgeiz. Ein Flaschenzug aus dem Bürokatalog würde helfen.
+ui.stash.detail.charges,Worth a look ({count}× left),Lohnt sich ({count}× noch)
+ui.stash.detail.empty,Searched empty – more in about {minutes} min,Leer gesucht – in ca. {minutes} Min. wieder
+ui.stash.empty,{name} has nothing left right now. Give it about {minutes} minutes – scrap has a way of piling up.,{name} gibt gerade nichts mehr her. Gib dem Ganzen ca. {minutes} Minuten – Schrott sammelt sich von allein.
+ui.stash.result.generic,Found {count} piece(s).,{count} Teil(e) gefunden.
+ui.stash.result.tyres.1,Inside the third tyre: someone's lunch can. Empty. Thankfully.,Im dritten Reifen: eine Brotzeitdose. Leer. Zum Glück.
+ui.stash.result.tyres.2,"Tyres collect everything. Mostly water, sometimes treasure.","Reifen sammeln alles. Meistens Regenwasser, manchmal Schätze."
+ui.stash.result.tyres.3,A wasp looks at you. You look at the wire. Everybody wins.,Eine Wespe schaut dich an. Du schaust auf das Kabel. Alle gewinnen.
+ui.stash.result.car_wreck.1,The door gives way with a sigh. The car seems relieved.,Die Tür gibt mit einem Seufzer nach. Das Auto wirkt erleichtert.
+ui.stash.result.car_wreck.2,Under the seat: {count} piece(s) and a parking ticket from 1987.,Unter dem Sitz: {count} Teil(e) und ein Strafzettel von 1987.
+ui.stash.result.car_wreck.3,The glovebox still smells of peppermint and broken promises.,Das Handschuhfach riecht noch nach Pfefferminz und gebrochenen Versprechen.
+ui.stash.result.shelf.1,"Walt's filing system: everything, everywhere, on one shelf.","Walts Ablagesystem: alles, überall, auf einem Regal."
+ui.stash.result.shelf.2,Behind the paint tins: {count} piece(s) and a very offended spider.,Hinter den Farbdosen: {count} Teil(e) und eine sehr beleidigte Spinne.
+ui.stash.result.shelf.3,The rubber duck watches you take things. It will remember.,Die Gummiente sieht dir beim Nehmen zu. Sie wird sich erinnern.
+ui.stash.result.crates_open.1,The crate is labelled 'IMPORTANT'. It isn't.,Auf der Kiste steht „WICHTIG“. Ist es nicht.
+ui.stash.result.crates_open.2,"Sawdust, cobwebs and {count} usable piece(s).","Sägespäne, Spinnweben und {count} brauchbare(s) Teil(e)."
+ui.stash.result.crates_open.3,Someone packed this crate in a hurry. Or never.,Jemand hat diese Kiste in Eile gepackt. Oder nie.
+ui.stash.result.crates_nailed.1,Forty nails for this? Walt really didn't want anyone in here.,Vierzig Nägel für das hier? Walt wollte wirklich niemanden reinlassen.
+ui.stash.result.crates_nailed.2,"The lid creaks open. Electronics! Slightly damp, but electronics.","Der Deckel knarzt auf. Elektronik! Etwas feucht, aber Elektronik."
+ui.stash.result.crates_nailed.3,A note inside: 'Not for Walt.' Walt seems to have ignored it.,Ein Zettel drin: „Nicht für Walt.“ Walt hat ihn offenbar ignoriert.
+ui.stash.result.barrels.1,The barrel sloshes suspiciously. You decide not to ask.,"Das Fass gluckert verdächtig. Du beschließt, nicht nachzufragen."
+ui.stash.result.barrels.2,At the bottom: {count} piece(s). At the very bottom: better not.,Am Boden: {count} Teil(e). Ganz am Boden: lieber nicht.
+ui.stash.result.barrels.3,Smells like 1974. Looks like money.,Riecht nach 1974. Sieht nach Geld aus.
+ui.stash.result.scrap_pile.1,The pile shifts and offers {count} piece(s) as a peace treaty.,Der Haufen rutscht und bietet {count} Teil(e) als Friedensangebot an.
+ui.stash.result.scrap_pile.2,"Rust, dust and a little bit of luck.","Rost, Staub und ein bisschen Glück."
+ui.stash.result.scrap_pile.3,It's not hoarding if you sell it.,"Es ist kein Horten, wenn man es verkauft."
+ui.stash.result.scrap_heap_large.1,"Deep in the heap something clinks. Several things, in fact.",Tief im Haufen klirrt es. Sogar mehrfach.
+ui.stash.result.scrap_heap_large.2,The heap gives and the heap takes. Today it gives {count}.,Der Haufen gibt und der Haufen nimmt. Heute gibt er {count}.
+ui.stash.result.scrap_heap_large.3,You find {count} piece(s) and one sock. You leave the sock.,Du findest {count} Teil(e) und eine Socke. Die Socke bleibt.
+ui.stash.result.scrap_heap_small.1,A little heap with a big heart.,Ein kleiner Haufen mit großem Herz.
+ui.stash.result.scrap_heap_small.2,"Two minutes of rummaging, {count} piece(s) richer.","Zwei Minuten gewühlt, {count} Teil(e) reicher."
+ui.stash.result.scrap_heap_small.3,Something bit you. Probably a nail. Probably.,Irgendwas hat dich gezwickt. Vermutlich ein Nagel. Vermutlich.
+ui.stash.result.engine_block.1,"The hoist groans, the engine rises – and underneath: copper!","Der Flaschenzug ächzt, der Motor hebt sich – und darunter: Kupfer!"
+ui.stash.result.engine_block.2,"This engine ran for 300,000 km. Its wiring will run a little further.",Dieser Motor lief 300.000 km. Seine Kabel laufen noch ein Stück weiter.
+ui.stash.result.engine_block.3,Oil everywhere. But also {count} piece(s).,Überall Öl. Aber auch {count} Teil(e).
+ui.stash.result.container.1,The container door screams. The cat on the roof doesn't care.,Die Containertür kreischt. Die Katze auf dem Dach ist unbeeindruckt.
+ui.stash.result.container.2,Inside: the dreams of a 1990s electronics shop.,Drinnen: die Träume eines Elektroladens aus den Neunzigern.
+ui.stash.result.container.3,"It's dark, it's warm and there are {count} piece(s). Not bad.","Es ist dunkel, warm und es gibt {count} Teil(e). Nicht schlecht."
+ui.stash.result.pallets.1,Splinters are free. The wood costs nothing either.,Splitter gibt's gratis. Das Holz übrigens auch.
+ui.stash.result.pallets.2,A loose board comes away. Then another one. Oops.,Ein loses Brett löst sich. Dann noch eins. Hoppla.
+ui.stash.result.pallets.3,"Pallets: the furniture of the future, says Juri. Walt sold them.","Paletten: die Möbel der Zukunft, sagt Juri. Walt hat sie verkauft."
