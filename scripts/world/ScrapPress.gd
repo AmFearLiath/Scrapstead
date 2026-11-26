@@ -162,6 +162,10 @@ func get_output_items(_channel: String = "") -> Array[ScrapItem]:
 	return _items_on_tray()
 
 
+func holds_output(item: ScrapItem) -> bool:
+	return _items_on_tray().has(item)
+
+
 ## Feeds every fitting piece from the player's basket. Returns the count.
 func feed_from_inventory(inventory: CarryInventory) -> int:
 	var fed: int = 0

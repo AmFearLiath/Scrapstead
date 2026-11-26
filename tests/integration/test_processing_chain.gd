@@ -209,3 +209,69 @@ func test_juri_feeds_the_press_and_sells_bales() -> void:
 	check(bale != null, "bale pressed")
 	check(await _work_until(func() -> bool: return int(worker.get_stats()["revenue"]) >= revenue_before + 22, 150.0),
 		"Juri fetched the bale and sold it")
+
+
+func test_magnet_leaves_sorted_pieces_alone() -> void:
+	var scene: Node = await _new_game()
+	var placed: PlacedObjects = scene.get_placed()
+	_credit(scene, 60)
+	var magnet_uid: String = placed.place("magnet_collector", Vector2i(69, -27), 0)["uid"]
+	var magnet: MagnetCollector = placed.get_node_for(magnet_uid) as MagnetCollector
+	# The sorting machine right next to the magnet, its steel bin in reach.
+	var sorter_uid: String = _place_near(scene, "sorter", Vector2i(69, -27), func(candidate: String) -> bool:
+		var bin: Node3D = placed.get_node_for(candidate).get_node("BinSteel")
+		var offset: Vector3 = bin.global_position - magnet.get_work_center()
+		offset.y = 0.0
+		return offset.length() < magnet.profile.work_radius - 0.3)
+	var sorter: SortingMachine = placed.get_node_for(sorter_uid) as SortingMachine
+	var bolt: ScrapItem = scene.get_world_object("scrap_rusted_bolt_01") as ScrapItem
+	check(sorter.accept_item(bolt), "bolt into the sorter")
+	var sorted: ScrapItem = sorter.sort_once()
+	check(sorted != null and sorter.get_bin_count("steel") == 1, "bolt lies in the steel bin")
+	check(sorter.holds_output(sorted), "the sorter holds it as output")
+	check(magnet._find_loose_piece() != sorted, "the magnet does not fish in the sorter's bin")
+	var collected: ScrapItem = magnet.collect_once()
+	check(collected != sorted, "the magnet takes from its heap instead")
+	check_eq(sorter.get_bin_count("steel"), 1, "the sorted bolt stays where it is")
+
+
+func test_juri_starts_the_chain_at_a_connected_sorter() -> void:
+	var scene: Node = await _new_game()
+	var definition: UpgradeDefinition = scene.get_upgrades().get_catalog().get_definition("yard_entrance")
+	_credit(scene, definition.price + 40)
+	scene.get_upgrades().purchase("yard_entrance", scene.get_wallet())
+	var deliveries: ScrapDeliveries = scene.get_deliveries()
+	deliveries.deliver_next()
+	deliveries.deliver_next()
+	for item: ScrapItem in deliveries.get_live_items():
+		item.set_state(ScrapItem.State.SOLD)
+	deliveries._next_entry = 1
+	deliveries._timer = 100000.0
+	var worker: YardWorker = scene.get_worker()
+	check(worker.hire().get("success", false), "Juri hired")
+	var placed: PlacedObjects = scene.get_placed()
+	var near: Vector2i = BuildGrid.world_to_cell(deliveries.global_position) + Vector2i(6, -12)
+	var sorter_uid: String = _place_near(scene, "sorter", near)
+	var sorter: SortingMachine = placed.get_node_for(sorter_uid) as SortingMachine
+	check(not scene._chain_machines().has(sorter), "without belts the sorter is not offered to Juri")
+	var press_uid: String = _place_near(scene, "scrap_press", near, func(candidate: String) -> bool:
+		return placed.links.check_link(sorter_uid, candidate, -1, "steel")["ok"])
+	check(placed.links.link(sorter_uid, press_uid, -1, "steel")["ok"], "steel bin feeds the press")
+	check(scene._chain_machines().has(sorter), "with a belt it is the start of the chain")
+	var fed: Array = []
+	sorter.piece_fed.connect(func(item_id: String) -> void: fed.append(item_id))
+	var mixed: Array[ScrapItem] = deliveries.deliver_next()
+	check_eq(mixed.size(), 3, "Krull brings wire, a can and wood")
+	check(await _work_until(func() -> bool: return fed.size() >= 3, 150.0),
+		"Juri puts the mixed delivery into the sorter (%s)" % ", ".join(fed))
+	var press: ScrapPress = placed.get_node_for(press_uid) as ScrapPress
+	var refed: Array = []
+	sorter.piece_fed.connect(func(item_id: String) -> void: refed.append(item_id))
+	# The steel can rides the belt; copper and wood lie in unconnected bins:
+	# Juri fetches them and brings them to the press, never back to the sorter.
+	check(await _work_until(func() -> bool:
+		var counts: Dictionary = press.get_group_counts()
+		return counts.has("steel") and counts.has("copper") and counts.has("wood"), 200.0),
+		"all three materials reach the press: %s" % press.get_group_counts())
+	check_eq(refed, [], "nothing went back into the sorter")
+	check_eq(sorter.get_hopper_count(), 0, "sorter hopper empty")

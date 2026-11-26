@@ -94,6 +94,9 @@ var navigation: YardNavigation
 ## `func() -> Array[Node3D]` (presses and the sorting machine). He feeds them
 ## what they take instead of selling it, and fetches finished bales.
 var machines_provider: Callable
+## Optional: machine outputs he may fetch, `func() -> Array[ScrapItem]`
+## (bales on press trays, pieces in sorter bins no belt takes away).
+var outputs_provider: Callable
 ## Machine he is walking to with his load.
 var _machine_target: Node3D
 
@@ -588,7 +591,7 @@ func _finish_feeding() -> void:
 	if machine != null and is_instance_valid(machine) and machine.has_method("accept_item"):
 		var fed: int = 0
 		for item: ScrapItem in _carrying.duplicate():
-			if is_instance_valid(item) and machine.can_accept(item.get_item_id()) and machine.accept_item(item):
+			if _may_feed(machine, item) and machine.accept_item(item):
 				_carrying.erase(item)
 				fed += 1
 		_update_cart_load()
@@ -598,8 +601,16 @@ func _finish_feeding() -> void:
 	_next_task()
 
 
-## The best machine for what he carries: a press first (it keeps materials
-## apart by itself), otherwise the sorting machine. Null if none takes anything.
+## Whether he may put this piece into this machine. Pieces that already came
+## out of a sorting machine never go back into one (no loops).
+func _may_feed(machine: Node3D, item: ScrapItem) -> bool:
+	if not is_instance_valid(item) or not machine.can_accept(item.get_item_id()):
+		return false
+	return not (machine is SortingMachine and item.object_id.begins_with(SortingMachine.OBJECT_PREFIX))
+
+
+## The best machine for what he carries: the sorting machine if it is part of
+## a chain, otherwise a press. Null if none takes anything.
 func _feed_target() -> Node3D:
 	if not machines_provider.is_valid():
 		return null
@@ -611,12 +622,14 @@ func _feed_target() -> Node3D:
 			continue
 		var takes: bool = false
 		for item: ScrapItem in _carrying:
-			if is_instance_valid(item) and machine.can_accept(item.get_item_id()):
+			if _may_feed(machine, item):
 				takes = true
 				break
 		if not takes:
 			continue
-		var rank: int = 0 if machine is ScrapPress else 1
+		# A sorting machine is only offered when its bins feed belts (the
+		# provider decides); then the chain starts there.
+		var rank: int = 0 if machine is SortingMachine else 1
 		var distance: float = machine.global_position.distance_to(global_position)
 		if rank < best_rank or rank == best_rank and distance < best_distance:
 			best = machine
@@ -636,6 +649,9 @@ func _feed_point(machine: Node3D) -> Vector3:
 ## Finished bales waiting on press trays: he fetches and sells them.
 func _machine_outputs() -> Array[ScrapItem]:
 	var items: Array[ScrapItem] = []
+	if outputs_provider.is_valid():
+		items.assign(outputs_provider.call())
+		return items
 	if not machines_provider.is_valid():
 		return items
 	for machine: Node3D in machines_provider.call():
@@ -834,6 +850,11 @@ func _is_workable(target: Variant) -> bool:
 		return false
 	var item: ScrapItem = target
 	if item.definition == null:
+		return false
+	# Machine outputs near the pallet are not loose scrap; the ones he may
+	# fetch come from `outputs_provider`.
+	var owner_machine: Node = item.get_parent()
+	if owner_machine != null and owner_machine.has_method("holds_output") and owner_machine.holds_output(item):
 		return false
 	if item.get_state() != ScrapItem.State.IN_WORLD or _drop_off == null:
 		return false

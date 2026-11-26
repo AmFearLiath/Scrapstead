@@ -150,6 +150,15 @@ func get_output_items(channel: String = "") -> Array[ScrapItem]:
 	return result
 
 
+## Whether the item lies in one of the bins (it belongs to the belts, not to
+## the magnet or Juri).
+func holds_output(item: ScrapItem) -> bool:
+	for group: MaterialGroup in profile.groups:
+		if get_output_items(group.id).has(item):
+			return true
+	return false
+
+
 func get_output_item_ids(channel: String = "") -> PackedStringArray:
 	var group: MaterialGroup = profile.get_group(channel) if profile != null else null
 	return group.items if group != null else PackedStringArray()

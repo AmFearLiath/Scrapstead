@@ -41,12 +41,20 @@ Messingfigur, verschlossene Kisten und Träger werden direkt verkauft.
 ## Juri in der Kette
 
 - Er zerlegt Geräte wie bisher (Schalter „Zerlegen“ im Mitarbeiterfenster).
-- Was er trägt, bringt er zuerst zu einer Presse, die es annimmt (die trennt
-  Materialien selbst), sonst zur Sortiermaschine. Nur was keine Maschine
-  nimmt, verkauft er am Tresen.
+- Was er trägt, bringt er zuerst zur Sortiermaschine, sofern mindestens eine
+  ihrer Kisten per Band weiterführt (sonst würden sich die Kisten nur füllen).
+  Gibt es keine solche Sortiermaschine, bringt er es zu einer Presse (die
+  trennt Materialien selbst). Nur was keine Maschine nimmt, verkauft er.
 - Fertige Ballen holt er von den Pressen-Ablagen und verkauft sie.
-- Teile in den Sortierkisten rührt er nicht an: Die gehören den Bändern, und
-  so kann nichts im Kreis laufen.
+- Aus Sortierkisten ohne Band holt er die Teile und bringt sie zu einer Presse
+  oder verkauft sie. Kisten mit Band rührt er nicht an. Sortierte Teile
+  kommen nie zurück in eine Sortiermaschine, darum kann nichts im Kreis laufen.
+- Der Magnetsammler fischt nicht in fremden Kisten oder Ablagen
+  (`holds_output()` der Maschinen); früher holte er sortierte Schrauben aus
+  einer nahen Sortiermaschine zurück in seine Kiste.
+- Walts Nagelhaufen enthält nur Eisen, und der Magnet hebt nur Eisen: Über den
+  Magnetsammler kommt immer nur Stahl. Gemischtes Material bringen Lieferungen
+  und Fundstellen.
 - Lohn: weiter pro verkauftem Stück. Ein Ballen ist ein Stück, also zahlt die
   Verarbeitung auch beim Lohn.
 

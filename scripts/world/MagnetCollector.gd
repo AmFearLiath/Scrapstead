@@ -329,6 +329,11 @@ func _find_loose_piece() -> ScrapItem:
 			continue
 		if not profile.magnetic_items.has(item.get_item_id()) or _is_in_bin(item):
 			continue
+		# Pieces in another machine's bin or tray are that machine's output.
+		var owner_machine: Node = item.get_parent()
+		if owner_machine != self and owner_machine != null and owner_machine.has_method("holds_output") \
+				and owner_machine.holds_output(item):
+			continue
 		var offset: Vector3 = item.global_position - center
 		offset.y = 0.0
 		if offset.length() <= profile.work_radius and offset.length() < best_distance:

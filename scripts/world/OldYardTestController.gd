@@ -852,6 +852,7 @@ func _setup_worker(saved: Dictionary) -> void:
 	worker.setup(_wallet, _objects, deliveries)
 	worker.rest_provider = _bench_rest_spot
 	worker.machines_provider = _chain_machines
+	worker.outputs_provider = _chain_outputs
 	worker.fed_machine.connect(func(machine: Node3D, _count: int) -> void:
 		_dust(machine.global_position + Vector3(0, 1.0, 0), 5, 0.12)
 		_sound("clink", -10.0))
@@ -1133,8 +1134,37 @@ func _chain_machines() -> Array[Node3D]:
 	if placed == null:
 		return machines
 	machines.append_array(placed.get_nodes_of("scrap_press"))
-	machines.append_array(placed.get_nodes_of("sorter"))
+	# The sorting machine only makes sense for Juri when a belt takes something
+	# away from it; otherwise its bins would just fill up.
+	for sorter: Node3D in placed.get_nodes_of("sorter"):
+		if not _linked_channels(sorter).is_empty():
+			machines.append(sorter)
 	return machines
+
+
+## What Juri may fetch from machines: bales on press trays, and pieces in
+## sorter bins that no belt takes away.
+func _chain_outputs() -> Array[ScrapItem]:
+	var items: Array[ScrapItem] = []
+	if placed == null:
+		return items
+	for press: Node3D in placed.get_nodes_of("scrap_press"):
+		items.append_array((press as ScrapPress).get_output_items())
+	for sorter: Node3D in placed.get_nodes_of("sorter"):
+		var linked: PackedStringArray = _linked_channels(sorter)
+		for group: MaterialGroup in (sorter as SortingMachine).profile.groups:
+			if not linked.has(group.id):
+				items.append_array((sorter as SortingMachine).get_output_items(group.id))
+	return items
+
+
+func _linked_channels(machine: Node3D) -> PackedStringArray:
+	var channels: PackedStringArray = []
+	var uid: String = str(machine.name)
+	for link: Dictionary in placed.links.get_links():
+		if link["from"] == uid and not link["blocked"]:
+			channels.append(str(link["channel"]))
+	return channels
 
 
 ## Juri waits on a bench if there is one (the nearest to the pallet).
