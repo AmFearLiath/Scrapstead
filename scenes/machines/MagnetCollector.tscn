@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://assets/models/scrap_heap_small.glb" id="7_heap"]
 [ext_resource type="Script" path="res://scripts/world/MagnetControls.gd" id="8_controls"]
 [ext_resource type="Script" path="res://scripts/world/MagnetAnimator.gd" id="9_animator"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/magnet_hum_0.wav" id="10_hum"]
 
 [sub_resource type="BoxShape3D" id="body_shape"]
 size = Vector3(1.6, 1.4, 1.3)
@@ -91,6 +92,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1.05)
 [node name="StatusLamp" type="MeshInstance3D" parent="Machine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.1, 0.45)
 mesh = SubResource("lamp_mesh")
+
+[node name="Hum" type="AudioStreamPlayer3D" parent="Machine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+stream = ExtResource("10_hum")
+volume_db = -40.0
+unit_size = 5.0
+max_distance = 22.0
+bus = &"SFX"
 
 [node name="Heap" parent="." instance=ExtResource("7_heap")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 2.15, 0, 0.05)

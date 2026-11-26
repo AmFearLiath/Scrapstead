@@ -32,6 +32,7 @@ var _yaw: float = 0.0
 var _phase_down: bool = false
 var _phase_release: bool = false
 var _time: float = 0.0
+var _hum: AudioStreamPlayer3D
 
 
 func _ready() -> void:
@@ -62,6 +63,9 @@ func _ready() -> void:
 		_heap_base_scale = _heap.scale
 	_yaw = _yaw_to(machine.bin)
 	_set_cable(CABLE_UP)
+	_hum = machine.get_node_or_null("Machine/Hum") as AudioStreamPlayer3D
+	if _hum != null and _hum.stream != null:
+		_hum.stream = AudioLoop.looping(_hum.stream)
 
 
 func _process(delta: float) -> void:
@@ -69,6 +73,7 @@ func _process(delta: float) -> void:
 	var status: String = machine.get_status()
 	_update_lamp(status)
 	_update_heap()
+	_update_hum(status, delta)
 	var target_yaw: float = _yaw_to(machine.bin)
 	var cable: float = CABLE_UP
 	var carrying: bool = false
@@ -108,6 +113,20 @@ func _process(delta: float) -> void:
 	_turret.rotation.y = _yaw
 	_set_cable(cable)
 	_update_proxy(carrying)
+
+
+## Engine and coil hum while working, fading in and out (presentation only).
+func _update_hum(status: String, delta: float) -> void:
+	if _hum == null:
+		return
+	var working: bool = status == MagnetCollector.STATUS_WORKING
+	var target_db: float = -6.0 if working else -40.0
+	_hum.volume_db = move_toward(_hum.volume_db, target_db, delta * 30.0)
+	_hum.pitch_scale = 1.15 if machine.get_cycle_seconds() < machine.profile.cycle_seconds else 1.0
+	if working and not _hum.playing:
+		_hum.play()
+	elif not working and _hum.playing and _hum.volume_db <= -39.0:
+		_hum.stop()
 
 
 func _set_cable(length: float) -> void:

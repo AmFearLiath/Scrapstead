@@ -9,6 +9,8 @@ extends Node
 
 ## A line started (localization key). Diagnostics and tests.
 signal line_spoken(line_key: String)
+## An entry of Walt's list was just completed (not emitted when loading).
+signal task_completed(entry: Dictionary, all_done: bool)
 
 const FLAG_LETTER_READ := "letter_read"
 const FLAG_FIRST_PICKUP := "first_pickup"
@@ -24,6 +26,8 @@ const MAX_NOTES := 2
 const MAX_QUEUE := 4
 
 @export var lines: ScrappyLines
+## Walt's list: the short main task sequence (P4).
+@export var task_list: TaskList
 ## Random seed; fixed so tests and recordings behave reproducibly.
 @export var seed_value: int = 7
 
@@ -48,6 +52,8 @@ var _speaking: bool = false
 var _idle_timer: float = 0.0
 var _memory_check: float = 0.0
 var _last_line: String = ""
+## Task IDs known to be done; null until the first check (no announcements then).
+var _done_tasks: Variant = null
 
 
 func setup(story: StoryState, scrappy: Node3D, bubble: Control, notes: Control, sound_fx: Node,
@@ -147,7 +153,34 @@ func compute_note_keys() -> PackedStringArray:
 	return keys
 
 
+## Walt's list with completion: [{"entry": Dictionary, "done": bool}].
+func get_task_states() -> Array:
+	var states: Array = []
+	if task_list == null:
+		return states
+	for entry: Dictionary in task_list.entries:
+		states.append({"entry": entry, "done": TaskList.is_done(entry, _story, _upgrades)})
+	return states
+
+
+## Announces entries that became done since the last check.
+func _check_tasks() -> void:
+	if task_list == null or _story == null:
+		return
+	var done: Dictionary = {}
+	for state: Dictionary in get_task_states():
+		if state["done"]:
+			done[state["entry"]["id"]] = true
+	if _done_tasks != null:
+		for state: Dictionary in get_task_states():
+			var id: String = state["entry"]["id"]
+			if state["done"] and not (_done_tasks as Dictionary).has(id):
+				task_completed.emit(state["entry"], done.size() == task_list.entries.size())
+	_done_tasks = done
+
+
 func refresh_notes() -> void:
+	_check_tasks()
 	if _notes == null:
 		return
 	var texts: PackedStringArray = []

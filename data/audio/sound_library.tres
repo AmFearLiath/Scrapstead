@@ -20,37 +20,40 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/hoist_0.wav" id="18"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/jingle_0.wav" id="19"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/kaching_0.wav" id="20"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/nope_0.wav" id="21"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/page_0.wav" id="22"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/page_1.wav" id="23"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/paper_0.wav" id="24"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/phone_0.wav" id="25"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_0.wav" id="26"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_1.wav" id="27"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_2.wav" id="28"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/rummage_0.wav" id="29"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_0.wav" id="30"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_1.wav" id="31"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_2.wav" id="32"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_3.wav" id="33"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_wake_0.wav" id="34"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/screw_0.wav" id="35"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_0.wav" id="36"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_1.wav" id="37"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_0.wav" id="38"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_1.wav" id="39"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_2.wav" id="40"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_3.wav" id="41"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/switch_0.wav" id="42"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_0.wav" id="43"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_1.wav" id="44"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_0.wav" id="45"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_1.wav" id="46"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/van_horn_0.wav" id="47"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="48"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="49"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="50"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="51"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/magnet_hum_0.wav" id="21"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/nope_0.wav" id="22"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/page_0.wav" id="23"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/page_1.wav" id="24"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/paper_0.wav" id="25"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/phone_0.wav" id="26"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_0.wav" id="27"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_1.wav" id="28"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pop_2.wav" id="29"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pry_0.wav" id="30"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/pry_1.wav" id="31"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/rummage_0.wav" id="32"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_0.wav" id="33"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_1.wav" id="34"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_2.wav" id="35"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_chirp_3.wav" id="36"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/scrappy_wake_0.wav" id="37"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/screw_0.wav" id="38"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_0.wav" id="39"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/spark_1.wav" id="40"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_0.wav" id="41"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_1.wav" id="42"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_2.wav" id="43"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/step_3.wav" id="44"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/switch_0.wav" id="45"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_0.wav" id="46"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_1.wav" id="47"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_0.wav" id="48"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_1.wav" id="49"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/van_horn_0.wav" id="50"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="51"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="52"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="53"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="54"]
 
 [resource]
 script = ExtResource("1")
@@ -68,22 +71,24 @@ sounds = {
 "hoist": [ExtResource("18")],
 "jingle": [ExtResource("19")],
 "kaching": [ExtResource("20")],
-"nope": [ExtResource("21")],
-"page": [ExtResource("22"), ExtResource("23")],
-"paper": [ExtResource("24")],
-"phone": [ExtResource("25")],
-"pop": [ExtResource("26"), ExtResource("27"), ExtResource("28")],
-"rummage": [ExtResource("29")],
-"scrappy_chirp": [ExtResource("30"), ExtResource("31"), ExtResource("32"), ExtResource("33")],
-"scrappy_wake": [ExtResource("34")],
-"screw": [ExtResource("35")],
-"spark": [ExtResource("36"), ExtResource("37")],
-"step": [ExtResource("38"), ExtResource("39"), ExtResource("40"), ExtResource("41")],
-"switch": [ExtResource("42")],
-"thud": [ExtResource("43"), ExtResource("44")],
-"tin": [ExtResource("45"), ExtResource("46")],
-"van_horn": [ExtResource("47")],
-"wire": [ExtResource("48"), ExtResource("49")],
-"wood": [ExtResource("50"), ExtResource("51")]
+"magnet_hum": [ExtResource("21")],
+"nope": [ExtResource("22")],
+"page": [ExtResource("23"), ExtResource("24")],
+"paper": [ExtResource("25")],
+"phone": [ExtResource("26")],
+"pop": [ExtResource("27"), ExtResource("28"), ExtResource("29")],
+"pry": [ExtResource("30"), ExtResource("31")],
+"rummage": [ExtResource("32")],
+"scrappy_chirp": [ExtResource("33"), ExtResource("34"), ExtResource("35"), ExtResource("36")],
+"scrappy_wake": [ExtResource("37")],
+"screw": [ExtResource("38")],
+"spark": [ExtResource("39"), ExtResource("40")],
+"step": [ExtResource("41"), ExtResource("42"), ExtResource("43"), ExtResource("44")],
+"switch": [ExtResource("45")],
+"thud": [ExtResource("46"), ExtResource("47")],
+"tin": [ExtResource("48"), ExtResource("49")],
+"van_horn": [ExtResource("50")],
+"wire": [ExtResource("51"), ExtResource("52")],
+"wood": [ExtResource("53"), ExtResource("54")]
 }
-loops = PackedStringArray("hoist", "rummage", "screw")
+loops = PackedStringArray("hoist", "magnet_hum", "rummage", "screw")

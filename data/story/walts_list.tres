@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TaskList" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/TaskList.gd" id="1_list"]
+
+[resource]
+script = ExtResource("1_list")
+entries = Array[Dictionary]([{"comment": "tasks.letter.comment", "condition": "flag:letter_read", "id": "letter", "title": "tasks.letter.title"}, {"comment": "tasks.first_sale.comment", "condition": "flag:first_sale", "id": "first_sale", "title": "tasks.first_sale.title"}, {"comment": "tasks.first_purchase.comment", "condition": "flag:first_purchase", "id": "first_purchase", "title": "tasks.first_purchase.title"}, {"comment": "tasks.scrappy.comment", "condition": "flag:scrappy_restored", "id": "scrappy", "title": "tasks.scrappy.title"}, {"comment": "tasks.entrance.comment", "condition": "owns:yard_entrance", "id": "entrance", "title": "tasks.entrance.title"}, {"comment": "tasks.helper.comment", "condition": "flag:first_hire", "id": "helper", "title": "tasks.helper.title"}, {"comment": "tasks.machine.comment", "condition": "owns:machine_magnet_collector", "id": "machine", "title": "tasks.machine.title"}])

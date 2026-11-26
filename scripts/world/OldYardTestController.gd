@@ -41,6 +41,10 @@ extends Node3D
 @export var letter_panel: Control
 @export var task_notes: Control
 @export var speech_bubble: Control
+## Walt's list (ui/hud/TaskListPanel.tscn); optional.
+@export var task_list_panel: Control
+## Settings during play (ui/hud/SettingsPanel.tscn); optional.
+@export var settings_panel: Control
 ## Speech bubble above the employee.
 @export var staff_bubble: Control
 @export_group("Data")
@@ -116,6 +120,13 @@ func _ready() -> void:
 	pause_menu.exit_without_saving_requested.connect(GameSession.return_to_main_menu)
 	if pause_menu.has_signal("letter_requested"):
 		pause_menu.letter_requested.connect(_on_letter_requested)
+	if pause_menu.has_signal("tasks_requested") and task_list_panel != null:
+		pause_menu.tasks_requested.connect(_on_tasks_requested)
+		task_list_panel.closed.connect(func() -> void: pause_menu.open())
+	if pause_menu.has_signal("settings_requested") and settings_panel != null:
+		pause_menu.settings_requested.connect(_on_settings_requested)
+		settings_panel.setting_changed.connect(_on_setting_changed)
+		settings_panel.closed.connect(func() -> void: pause_menu.open())
 	debug_overlay.setup(player, camera_rig, _interactor, _debug_extra_lines)
 	GameSession.save_completed.connect(_on_save_completed)
 	_update_controls_hint()
@@ -489,6 +500,12 @@ func _present_interaction(target_id: String, result: Dictionary) -> void:
 		if not str(result.get("message_key", "")).is_empty():
 			_sound("nope", -4.0)
 		return
+	if result.get("message_key", "") == "ui.item.pried_open":
+		# The crate is already gone from the registry; its contents lie there.
+		_sound("pry", -2.0)
+		if _animator != null:
+			_animator.play_pickup()
+		return
 	match result.get("panel", ""):
 		"sell":
 			_sound("bell")
@@ -557,6 +574,8 @@ func _on_hold_started(target: Interactable) -> void:
 		loop_name = "hoist"
 	elif target is DismantleStation:
 		loop_name = "screw"
+	elif target is ScrapItem and (target as ScrapItem).can_be_opened():
+		loop_name = "hoist"
 	if sound_fx != null and not loop_name.is_empty():
 		_hold_loop = sound_fx.start_loop(loop_name, -2.0)
 
@@ -619,6 +638,8 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 			story_director.bind_magnet(magnet)
 	if letter_panel != null:
 		letter_panel.closed.connect(_on_letter_closed)
+	if story_director != null:
+		story_director.task_completed.connect(_on_task_completed)
 
 
 ## Things Scrappy may wander to and look at: loose finds and unsearched sources.
@@ -771,7 +792,7 @@ func _setup_worker(saved: Dictionary) -> void:
 	worker.dismantled.connect(_on_worker_dismantled)
 	worker.pried_open.connect(func(crate: ScrapItem) -> void:
 		_dust(crate.global_position, 12, 0.25)
-		_sound("creak", -6.0)
+		_sound("pry", -4.0)
 		if sound_fx != null:
 			sound_fx.play_burst("pop", 3, 0.1, -8.0))
 	var animator: Node = worker.get_node_or_null("Animator")
@@ -907,3 +928,38 @@ func _on_worker_dismantled(_input: ScrapItem, _outputs: Array) -> void:
 	_sound("clink", -8.0)
 	if sound_fx != null:
 		sound_fx.play_burst("pop", 2, 0.12, -8.0)
+
+
+# --- Walt's list (P4) ----------------------------------------------------------
+
+func _on_tasks_requested() -> void:
+	pause_menu.close()
+	_sound("paper")
+	task_list_panel.open(story_director.get_task_states() if story_director != null else [])
+
+
+func _on_task_completed(entry: Dictionary, all_done: bool) -> void:
+	var key: String = "ui.tasks.all_done_toast" if all_done else "ui.tasks.completed"
+	feedback_toast.show_message(tr(key).format({"task": tr(str(entry.get("title", "")))}), true)
+	get_tree().create_timer(0.4).timeout.connect(_sound.bind("paper", -4.0))
+
+
+# --- Settings during play (P4) ---------------------------------------------------
+
+func _on_settings_requested() -> void:
+	pause_menu.close()
+	settings_panel.open(GameSession.get_setting(GameSession.SETTING_LOCALE),
+		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
+		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
+
+
+func _on_setting_changed(key: String, value: Variant) -> void:
+	if not GameSession.set_setting(key, value):
+		push_warning("OldYard: setting %s=%s was rejected." % [key, value])
+	settings_panel.show_values(GameSession.get_setting(GameSession.SETTING_LOCALE),
+		GameSession.get_setting(GameSession.SETTING_WINDOW_MODE),
+		GameSession.get_setting(GameSession.SETTING_MUSIC_VOLUME),
+		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
+	if key == "sfx_volume":
+		_sound("clink")

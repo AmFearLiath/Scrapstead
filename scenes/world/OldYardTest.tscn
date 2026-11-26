@@ -63,7 +63,10 @@
 [ext_resource type="PackedScene" path="res://ui/interaction/StaffPanel.tscn" id="71_staff_panel"]
 [ext_resource type="PackedScene" path="res://scenes/machines/MagnetCollector.tscn" id="72_magnet"]
 [ext_resource type="PackedScene" path="res://assets/models/equipment_handcart.glb" id="73_cart_model"]
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "magnet", "staff_panel", "staff_bubble")]
+[ext_resource type="PackedScene" path="res://ui/hud/TaskListPanel.tscn" id="74_task_list"]
+[ext_resource type="Resource" path="res://data/story/walts_list.tres" id="75_walts_list"]
+[ext_resource type="PackedScene" path="res://ui/hud/SettingsPanel.tscn" id="76_settings"]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "magnet", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -90,6 +93,8 @@ task_notes = NodePath("HUD/TaskNotes")
 speech_bubble = NodePath("HUD/SpeechBubble")
 staff_panel = NodePath("HUD/StaffPanel")
 staff_bubble = NodePath("HUD/StaffBubble")
+task_list_panel = NodePath("HUD/TaskListPanel")
+settings_panel = NodePath("HUD/SettingsPanel")
 item_catalog = ExtResource("21_items")
 upgrade_catalog = ExtResource("22_upgrades")
 balance = ExtResource("23_balance")
@@ -403,6 +408,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)
 [node name="StoryDirector" type="Node" parent="."]
 script = ExtResource("67_director")
 lines = ExtResource("68_lines")
+task_list = ExtResource("75_walts_list")
 
 [node name="PlayerStart" type="Marker3D" parent="." unique_id=320113948]
 transform = Transform3D(-1, 0, 2.5351817e-06, 0, 1, 0, -2.5351817e-06, 0, -1, 8, 0.1, -4.6)
@@ -481,8 +487,12 @@ theme_override_font_sizes/font_size = 16
 
 [node name="PauseMenu" parent="HUD" unique_id=640406047 instance=ExtResource("20_pause")]
 
+[node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
+
 [node name="LetterPanel" parent="HUD" instance=ExtResource("66_letter")]
 
-[node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
+[node name="TaskListPanel" parent="HUD" instance=ExtResource("74_task_list")]
+
+[node name="SettingsPanel" parent="HUD" instance=ExtResource("76_settings")]
 
 [node name="DebugOverlay" parent="HUD" unique_id=1859011714 instance=ExtResource("10_debug")]

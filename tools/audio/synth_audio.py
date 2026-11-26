@@ -626,6 +626,38 @@ def sfx_van_horn(_variant):
     return finish(reverb(out, 0.7, 0.22), peak_db=-7)
 
 
+def sfx_magnet_hum(_variant):
+    """2 s loop: the magnetic collector idling - a tired little diesel putter,
+    the electric hum of the magnet coil and the chain swinging now and then."""
+    seconds = 2.0
+    t = t_axis(seconds)
+    out = np.zeros(int(seconds * SR))
+    # Diesel: 9 puffs per second, a seamless whole number in the loop.
+    for index in range(18):
+        puff = lowpass(noise(0.07), 300) * env_exp(0.07, 0.03)
+        mix_into(out, puff, index / 9.0, 0.55 + 0.15 * (index % 3 == 0))
+    hum = np.sin(2 * np.pi * 100 * t) * 0.18 + np.sin(2 * np.pi * 200 * t) * 0.07 + np.sin(2 * np.pi * 300 * t) * 0.03
+    out += hum * (0.85 + 0.15 * np.sin(2 * np.pi * 0.5 * t))
+    for start in (0.35, 1.4):
+        mix_into(out, metal_clank(1900, 0.12) * 0.5, start, 0.25)
+    return finish(out, peak_db=-9, fade_out=0.0, fade_in=0.0)
+
+
+def sfx_pry(variant):
+    """Crowbar: wood groaning, a nail squealing out, a crack at the end."""
+    local = np.random.default_rng(700 + variant)
+    seconds = 0.9
+    t = t_axis(seconds)
+    groan = signal.sawtooth(2 * np.pi * np.cumsum(90 + 40 * t + local.uniform(-5, 5)) / SR)
+    out = bandpass(groan, 120, 900) * 0.3 * np.minimum(1.0, t / 0.2)
+    squeal_t = t_axis(0.35)
+    squeal = np.sin(2 * np.pi * np.cumsum(1400 + 900 * squeal_t) / SR) * np.sin(np.pi * squeal_t / 0.35)
+    mix_into(out, squeal, 0.3, 0.22)
+    crack = bandpass(noise(0.08), 400, 4000) * env_exp(0.08, 0.02)
+    mix_into(out, crack, 0.78, 0.9)
+    return finish(reverb(out, 0.5, 0.15), peak_db=-6)
+
+
 SFX = {
     "step": (sfx_footstep, 4), "clink": (sfx_clink, 3), "tin": (sfx_tin, 2), "wire": (sfx_wire, 2),
     "wood": (sfx_wood, 2), "brass": (sfx_brass, 1), "box": (sfx_box, 2), "basket": (sfx_basket, 2),
@@ -635,9 +667,9 @@ SFX = {
     "click": (sfx_click, 1), "rummage": (sfx_rummage, 1), "hoist": (sfx_hoist, 1), "screw": (sfx_screw, 1),
     "creak": (sfx_creak, 1), "scrappy_chirp": (sfx_scrappy_chirp, 4), "scrappy_wake": (sfx_scrappy_wake, 1),
     "spark": (sfx_spark, 2), "head_beep": (sfx_head_beep, 2),
-    "van_horn": (sfx_van_horn, 1),
+    "van_horn": (sfx_van_horn, 1), "magnet_hum": (sfx_magnet_hum, 1), "pry": (sfx_pry, 2),
 }
-LOOPS = {"rummage", "hoist", "screw"}
+LOOPS = {"rummage", "hoist", "screw", "magnet_hum"}
 
 
 def write_library(entries):

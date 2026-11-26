@@ -407,3 +407,24 @@ note.staff_needs_crowbar,Juri needs a crowbar for the nailed crate on the pallet
 staff.juri.needs_crowbar.1,Forty nails. Bare hands. No.,Vierzig Nägel. Bloße Hände. Nein.
 staff.juri.takes_crowbar.1,"Crowbar time. Stand back, everyone.",Brechstangenzeit. Alle zurücktreten.
 staff.juri.takes_crowbar.2,"I'll get the crowbar. Nails, you've been warned.","Ich hol die Brechstange. Nägel, ihr seid gewarnt."
+ui.pause.tasks,Walt's list,Walts Liste
+ui.tasks.title,Walt's list,Walts Liste
+ui.tasks.subtitle,Found pinned inside the office door. The handwriting gets worse towards the bottom.,Hing innen an der Bürotür. Die Schrift wird nach unten hin schlechter.
+ui.tasks.progress,{done} of {total} done,{done} von {total} erledigt
+ui.tasks.all_done,All done. Walt would be proud. Or he'd ask about the red button.,Alles erledigt. Walt wäre stolz. Oder würde nach dem roten Knopf fragen.
+ui.tasks.completed,"Walt's list: ""{task}"" ticked off.",Walts Liste: „{task}“ abgehakt.
+ui.tasks.all_done_toast,"Walt's list is complete: ""{task}"" was the last one. The yard is yours now. Properly.",Walts Liste ist komplett: „{task}“ war der letzte Punkt. Der Hof gehört jetzt richtig dir.
+tasks.letter.title,Read my letter,Meinen Brief lesen
+tasks.letter.comment,"If you are reading this list, you probably managed.","Wenn du diese Liste liest, hast du das vermutlich geschafft."
+tasks.first_sale.title,Sell your first load of scrap,Die erste Ladung Schrott verkaufen
+tasks.first_sale.comment,The counter takes almost anything. Almost.,Die Theke nimmt fast alles. Fast.
+tasks.first_purchase.title,Order something from the catalog,Etwas aus dem Katalog bestellen
+tasks.first_purchase.comment,"Delivery: ""immediately"". Has been since 1974.",Lieferung: „sofort“. Seit 1974.
+tasks.scrappy.title,Find Scrappy and wake him up,Scrappy finden und wecken
+tasks.scrappy.comment,He is around here somewhere. Probably in pieces. Don't press the red button.,Er ist irgendwo hier. Vermutlich in Teilen. Nicht den roten Knopf drücken.
+tasks.entrance.title,Spruce up the entrance,Den Eingang herrichten
+tasks.entrance.comment,So people come here voluntarily. It has happened before.,Damit Leute freiwillig herkommen. Das ist schon mal vorgekommen.
+tasks.helper.title,Find someone to lend a hand,"Jemanden finden, der mit anpackt"
+tasks.helper.comment,Pay fairly. Gloves are not optional.,Fair bezahlen. Handschuhe sind Pflicht.
+tasks.machine.title,Set up a machine,Eine Maschine aufstellen
+tasks.machine.comment,Something with an engine. The spot is reserved. Has been for years.,Etwas mit Motor. Der Platz ist reserviert. Seit Jahren.

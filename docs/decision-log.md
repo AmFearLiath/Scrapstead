@@ -871,3 +871,7 @@ Referenz: [Erste Maschine](first-machine.md).
 ## 26.11.2026 — Brechstange, vernagelte Kisten, Toaster; Griffposition am Handkarren
 
 **Beschluss (Rückmeldung nach dem Spielen):** Vernagelte Kisten öffnen sich mit der Brechstange direkt vor Ort, durch den Spieler oder Juri. Juri holt die Brechstange selbst und hängt sie zurück, immer nur ein Werkzeug zur Zeit. Der Toaster ist ein zweites zerlegbares Gerät, der Zerlegetisch kennt mehrere Profile. Der Handkarren steht jetzt so vor Juri, dass er den Griff hält. Neue Speicherfelder sind optional (`employee.tool` ersetzt `employee.cart`, alte Stände werden gelesen). Inhalte geöffneter Kisten speichern ihre Position.
+
+## 26.11.2026 — P4: Walts Liste statt Questsystem
+
+**Beschluss (autonome Entwicklungsphase, MVP-Plan 8):** Die geforderte „kurze Hauptaufgabenfolge“ wird als Walts handgeschriebene Liste mit sieben Punkten umgesetzt, nicht als eigenes Questsystem. Die Punkte leiten sich aus vorhandenen Storyflags und Käufen ab, also kein neuer Spielstand. Die Liste ist im Pausenmenü abrufbar, und jeder erledigte Punkt wird einmal gemeldet. Die Vorschläge des Notizzettels bleiben die kurzfristige Führung. Dazu kommen Einstellungen im Pausenmenü und ein Klangdurchgang. Die Leistung im vollen Hof wurde gemessen.

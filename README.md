@@ -152,6 +152,7 @@ docs/          Konzept, Spezifikationen, Decision Log, Abnahme
 - [Anlieferungen der Nachbarn (Nachschub)](docs/deliveries.md)
 - [Erster Mitarbeiter (P3a)](docs/first-employee.md)
 - [Erste Maschine (P3b)](docs/first-machine.md)
+- [Vertical Slice (P4)](docs/p4-vertical-slice.md) · [Playtest-Leitfaden](docs/playtest-guide.md)
 - [Maschinen und Automatisierung](docs/machines-automation.md)
 - [Art Direction: Walts Flickwerk-Diorama](docs/world-art-assets.md)
 - [UI- und UX-Spezifikation](docs/ui-ux.md)

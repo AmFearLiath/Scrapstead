@@ -208,6 +208,18 @@ func _staff_tool_shots(scene: Node, player: Node3D) -> void:
 	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
 	await _wait_for(func() -> bool: return false, 0.5)
 	await _shot("46_staff_handcart_grip")
+	scene._open_pause_menu()
+	await _frames(10)
+	await _shot("47_pause_menu")
+	scene.get_node("HUD/PauseMenu").get_node("%TasksButton").pressed.emit()
+	await _frames(30)
+	await _shot("48_walts_list")
+	scene.get_node("HUD/TaskListPanel").close()
+	scene.get_node("HUD/PauseMenu").get_node("%SettingsButton").pressed.emit()
+	await _frames(10)
+	await _shot("49_settings_in_game")
+	scene.get_node("HUD/SettingsPanel").close()
+	scene._close_pause_menu()
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.
