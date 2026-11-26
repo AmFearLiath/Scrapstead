@@ -98,6 +98,7 @@ func _ready() -> void:
 	# The employee claims the items he carries before the basket is checked.
 	_setup_worker(state.get("employee", {}))
 	_restore_inventory(state.get("inventory", []))
+	_verify_storages()
 	# Steps 5-7: camera snaps to the anchor, player gets its movement reference.
 	camera_rig.set_follow_target(player.get_node("CameraAnchor"))
 	camera_rig.activate()
@@ -576,8 +577,10 @@ func _present_interaction(target_id: String, result: Dictionary) -> void:
 		_sound("clink")
 		if sound_fx != null:
 			sound_fx.play_burst("pop", 2, 0.12)
-	elif target.has_method("is_on"):
+	elif target.has_method("is_on") or target is FloodlightSwitch:
 		_sound("switch")
+	elif target is PlacedStorage:
+		_sound("box", -2.0)
 
 
 func _on_item_arrived() -> void:
@@ -821,6 +824,9 @@ func _setup_worker(saved: Dictionary) -> void:
 	if worker == null:
 		return
 	worker.setup(_wallet, _objects, deliveries)
+	worker.rest_provider = _bench_rest_spot
+	if placed != null:
+		worker.ground_factor = placed.get_ground_factor
 	worker.set_upgrades(_upgrades)
 	worker.apply_save_state(saved)
 	worker.picked_up.connect(_on_worker_picked_up)
@@ -928,12 +934,19 @@ func _setup_placed(saved: Dictionary) -> void:
 	_update_reserved_sign()
 
 
-func _on_object_placed(_uid: String, node: Node3D) -> void:
+func _on_object_placed(uid: String, node: Node3D) -> void:
 	if node is MagnetCollector:
 		_setup_magnet(node as MagnetCollector)
+	for storage: Node in node.find_children("*", "PlacedStorage", true, false):
+		(storage as PlacedStorage).objects = _objects
+		(storage as PlacedStorage).context = _context
 	if not _restoring:
 		_dust(node.global_position, 16, 0.32)
 		_sound("thud", -2.0)
+		if story_director != null:
+			for entry: Dictionary in placed.get_entries():
+				if entry["uid"] == uid:
+					story_director.on_placed((entry["def"] as PlaceableDefinition).id)
 
 
 func _on_object_removed(_uid: String) -> void:
@@ -946,6 +959,37 @@ func _on_object_removed(_uid: String) -> void:
 		magnet = null
 		if story_director != null:
 			story_director.bind_magnet(null)
+
+
+func _verify_storages() -> void:
+	if placed == null:
+		return
+	for entry: Dictionary in placed.get_entries():
+		for storage: Node in (entry["node"] as Node).find_children("*", "PlacedStorage", true, false):
+			for note: String in (storage as PlacedStorage).verify_contents():
+				_note(note)
+
+
+## Juri waits on a bench if there is one (the nearest to the pallet).
+func _bench_rest_spot() -> Dictionary:
+	if placed == null:
+		return {}
+	var best: Dictionary = {}
+	var best_distance: float = INF
+	var anchor: Vector3 = deliveries.global_position if deliveries != null else Vector3.ZERO
+	for node: Node3D in placed.get_nodes_of("decor_bench"):
+		var seat: Vector3 = node.global_position + node.global_basis.z * 0.75
+		var distance: float = seat.distance_to(anchor)
+		if distance < best_distance:
+			best_distance = distance
+			best = {"position": seat, "yaw": node.global_rotation.y}
+	return best
+
+
+func _physics_process(_delta: float) -> void:
+	if placed == null:
+		return
+	player.speed_factor = placed.get_ground_factor(player.global_position)
 
 
 func _update_reserved_sign() -> void:

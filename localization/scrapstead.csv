@@ -513,3 +513,22 @@ build.detail.radius,Work radius {r} m,Arbeitsradius {r} m
 build.detail.walkable,Can be walked on,Begehbar
 build.detail.place_buy,Buy and set up ({price} Cr),Kaufen und aufstellen ({price} Cr)
 build.detail.place_stock,Set up from storage,Aus dem Lager aufstellen
+ui.action.light_on,Switch on,Einschalten
+ui.action.light_off,Switch off,Ausschalten
+ui.light.switched_on,Light on. The moths have been informed.,Licht an. Die Motten sind informiert.
+ui.light.switched_off,Light off.,Licht aus.
+ui.action.store,Store everything,Alles einlagern
+ui.action.take_out,Take out,Herausnehmen
+ui.storage.detail,Storage {used}/{capacity}: {contents},Lager {used}/{capacity}: {contents}
+ui.storage.empty,empty,leer
+ui.storage.full,No more room in here.,Hier passt nichts mehr rein.
+ui.storage.nothing_inside,Nothing stored here.,Hier ist nichts eingelagert.
+ui.storage.stored,{count} piece(s) stored ({used}/{capacity}).,{count} Teil(e) eingelagert ({used}/{capacity}).
+ui.storage.taken,{count} piece(s) taken out.,{count} Teil(e) herausgenommen.
+build.problem.storage_not_empty,Empty it first.,Erst ausräumen.
+scrappy.built_decor_gnome.1,A gnome! Finally someone my height. He doesn't talk much. I like him.,Ein Zwerg! Endlich jemand in meiner Größe. Redet nicht viel. Ich mag ihn.
+scrappy.built_decor_flamingo.1,Is that a bird? It's standing on one leg. I respect the commitment.,Ist das ein Vogel? Er steht auf einem Bein. Ich respektiere die Hingabe.
+scrappy.built_decor_bench.1,A bench! For breaks. I'll pretend I need one too.,"Eine Bank! Für Pausen. Ich tue so, als bräuchte ich auch eine."
+scrappy.built_decor_floodlight.1,Light! Now we can find scrap at night. Or be found by it.,Licht! Jetzt finden wir Schrott auch nachts. Oder er uns.
+scrappy.built_decor_planter.1,Walt grew tomatoes in one of these. They tasted of bath foam.,Walt hatte in so einer Tomaten. Die schmeckten nach Badeschaum.
+scrappy.built_storage_crates.1,Crates! Now we can store things properly. And forget where.,"Kisten! Jetzt können wir ordentlich einlagern. Und vergessen, wo."

@@ -81,6 +81,11 @@ const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale
 
 ## Read by the presentation-only PlayerAnimator.
 var move_speed: float = 2.4
+## Optional: where to wait for work instead of the rest marker, e.g. a bench:
+## `func() -> Dictionary` returning {"position": Vector3, "yaw": float} or {}.
+var rest_provider: Callable
+## Optional: ground speed factor, `func(position: Vector3) -> float`.
+var ground_factor: Callable
 
 var _presence: Presence = Presence.ABSENT
 var _paused: bool = false
@@ -466,7 +471,15 @@ func _next_task() -> void:
 	if _tool != "":
 		_go_return_tool()
 		return
-	_walk_to(_marker_position(rest_spot), Task.TO_REST)
+	_walk_to(_rest_point(), Task.TO_REST)
+
+
+func _rest_point() -> Vector3:
+	if rest_provider.is_valid():
+		var spot: Dictionary = rest_provider.call()
+		if not spot.is_empty():
+			return spot["position"]
+	return _marker_position(rest_spot)
 
 
 func _go_return_tool() -> void:
@@ -510,6 +523,10 @@ func _arrived() -> void:
 			_task = Task.IDLE
 			_idle_timer = 0.0
 			_face_marker(wait_spot if _presence == Presence.AVAILABLE else rest_spot)
+			if _presence == Presence.HIRED and rest_provider.is_valid():
+				var spot: Dictionary = rest_provider.call()
+				if not spot.is_empty():
+					_visual_root.rotation.y = spot["yaw"]
 
 
 func _finish_pick() -> void:
@@ -760,7 +777,8 @@ func _follow_path(delta: float) -> Vector3:
 		_blocked = false
 		_path.remove_at(0)
 		return Vector3.ZERO
-	return to_point.normalized() * minf(move_speed, to_point.length() * 4.0 + 0.6)
+	var speed: float = move_speed * (ground_factor.call(global_position) if ground_factor.is_valid() else 1.0)
+	return to_point.normalized() * minf(speed, to_point.length() * 4.0 + 0.6)
 
 
 ## Waypoint graph: the main route (drop-off -> counter) as a chain, the

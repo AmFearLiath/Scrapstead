@@ -37,9 +37,37 @@ var _counter: int = 0
 var _static_protected: Dictionary = {}
 ## Extra dynamic protected cells (loose scrap), refreshed before each check.
 var protected_provider: Callable
+## Cells covered by walkable path tiles (cached).
+var _path_cells: Dictionary = {}
+const PATH_SPEED_FACTOR := 1.25
+
+
+## Speed factor for someone standing on this cell (gravel paths are faster).
+func get_ground_factor(position: Vector3) -> float:
+	return PATH_SPEED_FACTOR if _path_cells.has(BuildGrid.world_to_cell(position)) else 1.0
+
+
+## All placed nodes of one placeable.
+func get_nodes_of(placeable_id: String) -> Array[Node3D]:
+	var nodes: Array[Node3D] = []
+	for uid: String in _entries:
+		if (_entries[uid]["def"] as PlaceableDefinition).id == placeable_id:
+			nodes.append(_entries[uid]["node"])
+	return nodes
+
+
+func _rebuild_path_cells() -> void:
+	_path_cells.clear()
+	for uid: String in _entries:
+		var entry: Dictionary = _entries[uid]
+		var definition: PlaceableDefinition = entry["def"]
+		if definition.category == PlaceableDefinition.CATEGORY_PATHS and not definition.solid:
+			for cell: Vector2i in BuildGrid.footprint_cells(definition, entry["anchor"], entry["rot"]):
+				_path_cells[cell] = true
 
 
 func _ready() -> void:
+	changed.connect(_rebuild_path_cells)
 	validator.plot = Rect2i(BuildGrid.world_to_cell(Vector3(buildable_area.position.x, 0, buildable_area.position.y)),
 		Vector2i(roundi(buildable_area.size.x / BuildGrid.CELL), roundi(buildable_area.size.y / BuildGrid.CELL)))
 	validator.static_blocked = _static_blocked
@@ -172,8 +200,9 @@ func move(uid: String, anchor: Vector2i, rotation_steps: int) -> Dictionary:
 	entry["anchor"] = anchor
 	entry["rot"] = posmod(rotation_steps, 4)
 	_apply_transform(node, definition, anchor, entry["rot"])
-	if node.has_method("on_relocated"):
-		node.on_relocated(old_transform, node.global_transform)
+	var mover: Object = hook(node, "on_relocated")
+	if mover != null:
+		mover.on_relocated(old_transform, node.global_transform)
 	object_moved.emit(uid, node)
 	changed.emit()
 	var result: Dictionary = _result(true, "build.moved", {"name": TranslationServer.translate(definition.name_key)})
@@ -188,12 +217,14 @@ func remove(uid: String) -> Dictionary:
 	var entry: Dictionary = _entries[uid]
 	var definition: PlaceableDefinition = entry["def"]
 	var node: Node3D = entry["node"]
-	if node.has_method("get_removal_problem"):
-		var problem: String = node.get_removal_problem()
+	var guard: Object = hook(node, "get_removal_problem")
+	if guard != null:
+		var problem: String = guard.get_removal_problem()
 		if not problem.is_empty():
 			return _result(false, problem)
-	if node.has_method("get_placed_state"):
-		_stored_states[definition.id] = node.get_placed_state()
+	var stateful: Object = hook(node, "get_placed_state")
+	if stateful != null:
+		_stored_states[definition.id] = stateful.get_placed_state()
 	if definition.unlock_ware.is_empty():
 		_stored[definition.id] = int(_stored.get(definition.id, 0)) + 1
 	_entries.erase(uid)
@@ -213,9 +244,9 @@ func get_save_state() -> Dictionary:
 		var entry: Dictionary = _entries[uid]
 		var saved: Dictionary = {"uid": uid, "def": (entry["def"] as PlaceableDefinition).id,
 			"cell": [entry["anchor"].x, entry["anchor"].y], "rot": entry["rot"]}
-		var node: Node3D = entry["node"]
-		if node.has_method("get_placed_state"):
-			saved["state"] = node.get_placed_state()
+		var stateful: Object = hook(entry["node"], "get_placed_state")
+		if stateful != null:
+			saved["state"] = stateful.get_placed_state()
 		objects.append(saved)
 	return {"counter": _counter, "objects": objects, "stored": _stored.duplicate(),
 		"stored_states": _stored_states.duplicate(true)}
@@ -265,9 +296,21 @@ func _spawn(uid: String, definition: PlaceableDefinition, anchor: Vector2i, rota
 		_add_footprint_body(node, definition)
 	_entries[uid] = {"uid": uid, "def": definition, "anchor": anchor, "rot": rot, "node": node}
 	object_placed.emit(uid, node)
-	if node.has_method("apply_placed_state"):
-		node.apply_placed_state(state)
+	var stateful: Object = hook(node, "apply_placed_state")
+	if stateful != null:
+		stateful.apply_placed_state(state)
 	return node
+
+
+## The node implementing a placement hook: the placed root or its first
+## descendant that has the method (e.g. the storage interactable).
+static func hook(node: Node, method: String) -> Object:
+	if node.has_method(method):
+		return node
+	for child: Node in node.find_children("*", "", true, false):
+		if child.has_method(method):
+			return child
+	return null
 
 
 func _apply_transform(node: Node3D, definition: PlaceableDefinition, anchor: Vector2i, rot: int) -> void:

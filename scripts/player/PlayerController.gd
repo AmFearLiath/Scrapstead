@@ -8,6 +8,8 @@ extends CharacterBody3D
 
 ## Maximum horizontal speed in m/s.
 @export var move_speed: float = 4.5
+## Ground bonus (e.g. 1.25 on gravel paths); set by the scene.
+var speed_factor: float = 1.0
 ## Acceleration towards the target speed in m/s².
 @export var acceleration: float = 18.0
 ## Braking deceleration after releasing the input in m/s².
@@ -80,7 +82,7 @@ func _physics_process(delta: float) -> void:
 		_input_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	_move_direction = _camera_relative_direction(_input_vector)
 	var horizontal := Vector3(velocity.x, 0.0, velocity.z)
-	var target: Vector3 = _move_direction * move_speed
+	var target: Vector3 = _move_direction * move_speed * speed_factor
 	var rate: float = acceleration if _move_direction != Vector3.ZERO else deceleration
 	horizontal = horizontal.move_toward(target, rate * delta)
 	velocity.x = horizontal.x

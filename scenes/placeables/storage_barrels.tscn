@@ -1,8 +1,28 @@
 [gd_scene format=3]
 
 [ext_resource type="PackedScene" path="res://assets/models/barrel_group.glb" id="1_model"]
+[ext_resource type="Script" path="res://scripts/build/PlacedStorage.gd" id="2_storage"]
+
+[sub_resource type="BoxShape3D" id="storage_shape"]
+size = Vector3(2.1, 1.0, 2.1)
 
 [node name="Placeable" type="Node3D"]
 
 [node name="Model" parent="." instance=ExtResource("1_model")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0.45)
+
+[node name="Storage" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_storage")
+name_key = "placeable.storage_barrels.name"
+action_key = "ui.action.store"
+highlight_radius = 1.20
+capacity = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Storage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("storage_shape")
+
+[node name="InteractionPoint" type="Marker3D" parent="Storage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.55)

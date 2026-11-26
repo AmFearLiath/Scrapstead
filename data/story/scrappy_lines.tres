@@ -6,6 +6,12 @@
 script = ExtResource("1_lines")
 events = {
 "basket_full": {"chance": 0.8, "cooldown": 90.0, "count": 2},
+"built_decor_bench": {"count": 1, "once": true, "priority": true},
+"built_decor_flamingo": {"count": 1, "once": true, "priority": true},
+"built_decor_floodlight": {"count": 1, "once": true, "priority": true},
+"built_decor_gnome": {"count": 1, "once": true, "priority": true},
+"built_decor_planter": {"count": 1, "once": true, "priority": true},
+"built_storage_crates": {"count": 1, "once": true, "priority": true},
 "delivery": {"chance": 0.85, "cooldown": 120.0, "count": 4},
 "delivery_first": {"count": 1, "once": true, "priority": true},
 "dismantle": {"chance": 0.5, "cooldown": 45.0, "count": 2},

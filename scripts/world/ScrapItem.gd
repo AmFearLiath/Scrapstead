@@ -9,9 +9,9 @@ extends Interactable
 ## contents, then the item itself is consumed.
 signal opened(item: ScrapItem)
 
-enum State { IN_WORLD, CARRIED, SOLD, PROCESSED, PENDING }
+enum State { IN_WORLD, CARRIED, SOLD, PROCESSED, PENDING, STORED }
 
-const STATE_NAMES: PackedStringArray = ["in_world", "carried", "sold", "processed", "pending"]
+const STATE_NAMES: PackedStringArray = ["in_world", "carried", "sold", "processed", "pending", "stored"]
 
 @export var definition: ItemDefinition
 ## Processing outputs start as not-yet-produced placements (P1b).

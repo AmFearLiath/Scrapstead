@@ -257,6 +257,11 @@ func on_staff_hired() -> void:
 	refresh_notes()
 
 
+## Something was built; Scrappy has opinions about some of it.
+func on_placed(placeable_id: String) -> void:
+	say_event("built_" + placeable_id, true)
+
+
 ## The first machine was delivered and set up.
 func on_machine_installed() -> void:
 	say_event("machine_installed", true)

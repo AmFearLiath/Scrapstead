@@ -25,6 +25,96 @@ PROPS = [
 ]
 
 
+FLOODLIGHT_SCENE = '''[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/build/PlacedFloodlight.gd" id="1_light"]
+[ext_resource type="PackedScene" path="res://assets/models/floodlight.glb" id="2_model"]
+[ext_resource type="Script" path="res://scripts/build/FloodlightSwitch.gd" id="3_switch"]
+
+[sub_resource type="BoxShape3D" id="switch_shape"]
+size = Vector3(0.5, 0.6, 0.4)
+
+[sub_resource type="BoxMesh" id="lens_mesh"]
+size = Vector3(0.48, 0.2, 0.04)
+
+[node name="Placeable" type="Node3D"]
+script = ExtResource("1_light")
+
+[node name="Model" parent="." instance=ExtResource("2_model")]
+
+[node name="Light" type="SpotLight3D" parent="."]
+transform = Transform3D(-1.0000, 0.0000, -0.0000, -0.0000, 0.7660, 0.6428, 0.0000, 0.6428, -0.7660, 0, 3.4, 0.25)
+light_color = Color(1, 0.88, 0.65, 1)
+light_energy = 4.0
+shadow_enabled = true
+spot_range = 12.0
+spot_angle = 38.0
+
+[node name="Glow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0.4)
+light_color = Color(1, 0.85, 0.6, 1)
+light_energy = 0.6
+omni_range = 2.5
+
+[node name="Lens" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.766, -0.643, 0, 0.643, 0.766, 0, 3.5, 0.35)
+mesh = SubResource("lens_mesh")
+
+[node name="Switch" type="StaticBody3D" parent="." node_paths=PackedStringArray("floodlight")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_switch")
+floodlight = NodePath("..")
+object_id = "floodlight_switch"
+name_key = "placeable.decor_floodlight.name"
+action_key = "ui.action.light_off"
+highlight_radius = 0.45
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Switch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0, 0.15)
+shape = SubResource("switch_shape")
+
+[node name="InteractionPoint" type="Marker3D" parent="Switch"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.75)
+'''
+
+
+def storage_scene(model, offset, size, capacity, pid):
+    w, d = size[0] * 0.5, size[1] * 0.5
+    return f'''[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/{model}.glb" id="1_model"]
+[ext_resource type="Script" path="res://scripts/build/PlacedStorage.gd" id="2_storage"]
+
+[sub_resource type="BoxShape3D" id="storage_shape"]
+size = Vector3({w + 0.1}, 1.0, {d + 0.1})
+
+[node name="Placeable" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {offset[0]}, 0, {offset[1]})
+
+[node name="Storage" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_storage")
+name_key = "placeable.{pid}.name"
+action_key = "ui.action.store"
+highlight_radius = {max(w, d) * 0.6:.2f}
+capacity = {capacity}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Storage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("storage_shape")
+
+[node name="InteractionPoint" type="Marker3D" parent="Storage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, {d * 0.5 + 0.55:.2f})
+'''
+
+
+STORAGE = {"storage_pallets": 6, "storage_crates": 10, "storage_barrels": 4}
+
+
 def write(path, text):
     full = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -108,7 +198,13 @@ height = {height}
 def main():
     ids = []
     for pid, category, price, size, height, model, offset, solid in PROPS:
-        write(f"scenes/placeables/{pid}.tscn", prop_scene(model, offset))
+        if pid == "decor_floodlight":
+            scene_text = FLOODLIGHT_SCENE
+        elif pid in STORAGE:
+            scene_text = storage_scene(model, offset, size, STORAGE[pid], pid)
+        else:
+            scene_text = prop_scene(model, offset)
+        write(f"scenes/placeables/{pid}.tscn", scene_text)
         write(f"data/placeables/{pid}.tres", definition(pid, category, price, size, height,
                                                        f"scenes/placeables/{pid}.tscn", solid))
         ids.append(pid)
