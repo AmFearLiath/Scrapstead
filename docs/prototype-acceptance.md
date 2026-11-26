@@ -154,6 +154,7 @@ Bei der Sichtprüfung gefundene und behobene Fehler: gespiegelte Grundstücksach
 | P1 | Abnahmesequenz 1–12 vollständig und wiederholbar geprüft | Erstes Anspielen durch die Projektleitung: Spielgefühl gut. Noch nicht freigegeben – Schleife wird vertieft (0.2) |
 | P1b | Umgesetzt und geprüft (siehe 8) | Offen: Bewertung im Playtest |
 | P2 | Brief, Notizen, Kopf/Kernteil, Wiederherstellung, Folgen/Warten, Sprüche, Eingang: 12 Integrationstests, Migrationstests und E2E-Neustart grün; Screenshots geprüft | Offen: Playtest (Auffindbarkeit des Kopfes, Häufigkeit der Sprüche) |
+| Nachschub | Anlieferungen der Nachbarn: 8 Integrationstests (Sperre, Verkauf, Rückstau, Reihenfolge, Speichern/Fortsetzen, Migration v3), Screenshots geprüft | Offen: Taktung im Playtest |
 
 Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerische Bewertung („befriedigende Schleife“) kann nur durch menschliche Playtests erfolgen.
 
@@ -169,7 +170,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 
 1. Es gibt **einen Speicherplatz**. „Neues Spiel“ überschreibt den alten Stand erst beim nächsten Speichern.
 2. Kein automatisches Speichern (bewusst, siehe Integrationsspezifikation); ungespeicherter Fortschritt geht bei „Hauptmenü ohne Speichern“ verloren.
-3. Fundstücke regenerieren nicht. Mit den Suchquellen (0.2) gibt es rund 115 Cr Gesamterlös bei 107 Cr Katalogkosten; danach endet die Schleife inhaltlich (Regeneration laut Matrix erst Phase 4–5).
+3. Fundstücke regenerieren nicht (Regeneration laut Matrix erst Phase 4–5). Nach dem Kauf „Eingang herrichten“ bringen Nachbarn jedoch regelmäßig kleine Lieferungen (~4,6 Cr/min, nur während des Spielens), siehe [Anlieferungen](deliveries.md).
 4. Die Verarbeitung ist an genau eine Radio-Platzierung gebunden (vorbereitete Ausgabeplätze); mehrere Verarbeitungsobjekte erfordern später eine Erzeugung von Ausgaben zur Laufzeit.
 5. Ablegen nimmt immer das zuletzt aufgenommene Teil; es gibt keine Auswahl einzelner Teile.
 6. Dezimalzahlen sind gebietsschemaabhängig (`NumberFormat`, „3,5 s“ im Deutschen). Credit-Beträge werden noch ohne Tausendertrennzeichen angezeigt (im Prototyp stets unter 1000).
@@ -186,7 +187,7 @@ Der Prototyp ist technisch abnahmefähig. Die im MVP-Plan geforderte spielerisch
 
 1. **Menschlicher Playtest** mit 3–5 Personen nach MVP-Plan 11.3; Bewegung, Kamera und Prompt-Lesbarkeit zuerst.
 2. **Balancing** der P1-Werte anhand der Playtests (Kapazität, Preise, Upgrade-Preis, Zerlege-Mehrwert).
-3. Entscheidung über **Regeneration oder Nachschub** (z. B. Schrotthaufen als Suchquelle), damit die Schleife länger trägt – als bewusste Designentscheidung vor P2.
+3. Erledigt: Nachschub über **Anlieferungen der Nachbarn** statt Regeneration ([Anlieferungen](deliveries.md)). Taktung im Playtest prüfen.
 4. Erledigt: gebietsschemaabhängige Dezimalzahlen und Platzhalterprüfung aller Übersetzungen in den Tests.
 5. Erledigt (Linux): `.github/workflows/tests.yml` führt bei jedem Push Unit-, Integrations- und E2E-Tests headless aus. Ein Windows-Lauf in CI fehlt noch.
 6. P2 ist umgesetzt (siehe [P2-Spezifikation](p2-arrival-and-scrappy.md)); als Nächstes Playtest der Einstiegsstunde.

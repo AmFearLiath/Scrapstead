@@ -816,3 +816,17 @@ Referenz: [Art Direction, Abschnitt 11](world-art-assets.md).
 - Scrappy ist szenenlokal (kein Autoload) und hat keine Kollisionsebene, kann also nie den Weg versperren.
 
 Referenz: [P2-Spezifikation](p2-arrival-and-scrappy.md).
+
+## 26.11.2026 — Nachschub über Anlieferungen der Nachbarn
+
+**Beschluss (autonome Entwicklungsphase, offene Entscheidung aus der Prototyp-Abnahme, Empfehlung 3):** Die Schleife wird nicht durch Regeneration der Weltfunde verlängert, sondern durch Beschaffungsweg 2 des Konzepts: Anlieferungen von Privatpersonen.
+
+- Freischaltung durch die Katalogware „Eingang herrichten“.
+- Abladestelle mit Palette neben dem Tor.
+- Feste, handgeschriebene Reihenfolge von sieben Lieferungen; drei wiederkehrende Nachbarn und ein Unbekannter.
+- Mäßiger Ertrag (~4,6 Cr/min). Rückstau verhindert das Anhäufen; keine Lieferungen offline.
+- Handgesetzte Funde und Storyfunde bleiben einmalig. Regeneration der Weltfunde bleibt Phase 4–5.
+- Spielstand Version 4 mit expliziter Migration aus Version 3.
+- Die Lieferungen sind als erste delegierbare Aufgabe für P3a gedacht.
+
+Referenz: [Anlieferungen](deliveries.md).

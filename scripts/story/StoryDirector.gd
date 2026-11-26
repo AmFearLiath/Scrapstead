@@ -33,6 +33,7 @@ var _notes: Control
 var _sound_fx: Node
 var _upgrades: UpgradeProgress
 var _player: Node3D
+var _deliveries: ScrapDeliveries
 var _rng := RandomNumberGenerator.new()
 var _time: float = 0.0
 var _quiet_until: float = 0.0
@@ -61,6 +62,12 @@ func setup(story: StoryState, scrappy: Node3D, bubble: Control, notes: Control, 
 	_story.changed.connect(refresh_notes)
 	if _upgrades != null:
 		_upgrades.upgrade_purchased.connect(func(_definition: UpgradeDefinition) -> void: refresh_notes())
+	refresh_notes()
+
+
+## Optional: the drop-off spot, so the notes can point at waiting deliveries.
+func bind_deliveries(deliveries: ScrapDeliveries) -> void:
+	_deliveries = deliveries
 	refresh_notes()
 
 
@@ -100,6 +107,8 @@ func compute_note_keys() -> PackedStringArray:
 		keys.append("note.catalog")
 	if restored and _upgrades != null and not _upgrades.is_owned(ENTRANCE_WARE):
 		keys.append("note.entrance")
+	if _deliveries != null and _deliveries.get_waiting_count() > 0:
+		keys.append("note.delivery_waiting")
 	while keys.size() > MAX_NOTES:
 		keys.remove_at(keys.size() - 1)
 	return keys
@@ -151,6 +160,13 @@ func on_purchase(definition: UpgradeDefinition) -> void:
 		say_event("purchase", true)
 		if first and _upgrades != null and not _upgrades.is_owned(ENTRANCE_WARE):
 			say_event("suggest_entrance", true)
+
+
+## Neighbors dropped off scrap at the gate.
+func on_delivery() -> void:
+	if not say_event("delivery_first", true):
+		say_event("delivery")
+	refresh_notes()
 
 
 func on_refused() -> void:

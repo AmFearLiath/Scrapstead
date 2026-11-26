@@ -12,6 +12,8 @@ extends Node3D
 @export var player_start: Marker3D
 @export var camera_rig: Node3D
 @export var world_objects_root: Node3D
+## Neighbors' drop-off spot (scripts/world/ScrapDeliveries.gd); optional.
+@export var deliveries: ScrapDeliveries
 @export_group("HUD")
 @export var interaction_prompt: Control
 @export var feedback_toast: Control
@@ -66,6 +68,8 @@ func _ready() -> void:
 	var state: Dictionary = GameSession.get_current_state()
 	_create_economy(state)
 	_story = StoryState.new(state.get("story", {}))
+	# Delivered items exist only at runtime; recreate them before their states.
+	_setup_deliveries(state.get("deliveries", {}))
 	# Steps 3-4: player, object states and carried items.
 	_restore_player(state.get("player", {}))
 	_restore_world_objects(state.get("world_objects", {}))
@@ -157,6 +161,7 @@ func create_snapshot() -> Dictionary:
 		"upgrades": _upgrades.to_save_data(),
 		"story": _story.to_save_data(),
 		"scrappy": scrappy.get_save_state() if scrappy != null else {"state": "dormant", "follow": true},
+		"deliveries": deliveries.get_save_state() if deliveries != null else {},
 	}
 
 
@@ -197,6 +202,10 @@ func get_inventory() -> CarryInventory:
 
 func get_upgrades() -> UpgradeProgress:
 	return _upgrades
+
+
+func get_deliveries() -> ScrapDeliveries:
+	return deliveries
 
 
 func get_story() -> StoryState:
@@ -397,9 +406,13 @@ func _update_controls_hint() -> void:
 
 
 func _debug_extra_lines() -> String:
-	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nRestore notes: %s" % [
+	var delivery_line: String = "-"
+	if deliveries != null:
+		delivery_line = "%s, next in %.0f s, waiting %d" % ["open" if deliveries.is_unlocked() else "locked",
+			deliveries.get_seconds_until_next(), deliveries.get_waiting_count()]
+	return "Credits: %d  Carry: %d/%d  Upgrades: %s\nDeliveries: %s\nRestore notes: %s" % [
 		_wallet.get_balance(), _inventory.get_used_slots(), _inventory.get_capacity(),
-		", ".join(_upgrades.to_save_data()),
+		", ".join(_upgrades.to_save_data()), delivery_line,
 		", ".join(_restore_notes) if not _restore_notes.is_empty() else "-"]
 
 
@@ -550,6 +563,8 @@ func _setup_story(scrappy_state: Dictionary) -> void:
 			(target as ScrappyHeadSite).beeped.connect(func(volume_db: float) -> void: _sound("head_beep", volume_db))
 	if story_director != null:
 		story_director.setup(_story, scrappy, speech_bubble, task_notes, sound_fx, _upgrades, player)
+		if deliveries != null:
+			story_director.bind_deliveries(deliveries)
 	if letter_panel != null:
 		letter_panel.closed.connect(_on_letter_closed)
 
@@ -651,3 +666,37 @@ func _repair_sparks(at: Vector3) -> void:
 	if fx != null and fx.has_method("sparks"):
 		fx.sparks(at + Vector3(0, 0.5, 0), 12)
 	_sound("spark", -6.0)
+
+
+# --- Neighbors' deliveries ---------------------------------------------------
+
+func _setup_deliveries(saved: Dictionary) -> void:
+	if deliveries == null:
+		return
+	deliveries.setup(_upgrades)
+	deliveries.item_spawned.connect(_on_delivery_item_spawned)
+	deliveries.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
+	deliveries.delivery_arrived.connect(_on_delivery_arrived)
+	deliveries.apply_save_state(saved)
+
+
+func _on_delivery_item_spawned(item: ScrapItem) -> void:
+	if _objects.has(item.object_id):
+		push_error("OldYard: duplicate delivered object_id '%s'." % item.object_id)
+		return
+	_objects[item.object_id] = item
+	item.interaction_state_changed.connect(func(_target: Interactable) -> void:
+		if story_director != null:
+			story_director.refresh_notes())
+
+
+func _on_delivery_arrived(entry: Dictionary, items: Array) -> void:
+	feedback_toast.show_message(tr("ui.delivery.arrived").format({
+		"sender": tr(str(entry.get("sender", ""))), "note": tr(str(entry.get("note", "")))}))
+	_sound("van_horn", -8.0)
+	get_tree().create_timer(0.6).timeout.connect(_sound.bind("delivery", -4.0))
+	for item: Variant in items:
+		if item is Node3D:
+			_dust((item as Node3D).global_position, 6, 0.14)
+	if story_director != null:
+		story_director.on_delivery()

@@ -46,10 +46,11 @@
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/thud_1.wav" id="44"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_0.wav" id="45"]
 [ext_resource type="AudioStream" path="res://assets/audio/sfx/tin_1.wav" id="46"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="47"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="48"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="49"]
-[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="50"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/van_horn_0.wav" id="47"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_0.wav" id="48"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wire_1.wav" id="49"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_0.wav" id="50"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/wood_1.wav" id="51"]
 
 [resource]
 script = ExtResource("1")
@@ -81,7 +82,8 @@ sounds = {
 "switch": [ExtResource("42")],
 "thud": [ExtResource("43"), ExtResource("44")],
 "tin": [ExtResource("45"), ExtResource("46")],
-"wire": [ExtResource("47"), ExtResource("48")],
-"wood": [ExtResource("49"), ExtResource("50")]
+"van_horn": [ExtResource("47")],
+"wire": [ExtResource("48"), ExtResource("49")],
+"wood": [ExtResource("50"), ExtResource("51")]
 }
 loops = PackedStringArray("hoist", "rummage", "screw")

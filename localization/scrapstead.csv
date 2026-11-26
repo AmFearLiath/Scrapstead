@@ -284,3 +284,24 @@ scrappy.memory.container,The container! Mrs. Mouser the cat lived in there. She 
 scrappy.memory.wheelbarrow,Walt's wheelbarrow. He called it Bertha and never changed the wheel. Out of respect.,Walts Schubkarre. Er nannte sie Bertha und hat nie das Rad gewechselt. Aus Respekt.
 scrappy.memory.gate,"Every morning Walt said ""Good morning, yard"" at this gate. The yard never answered. Until now, sort of.","Jeden Morgen hat Walt an diesem Tor „Guten Morgen, Hof“ gesagt. Der Hof hat nie geantwortet. Bis heute, sozusagen."
 note.heap_beep,Did the big scrap heap just beep?,Hat der große Schrotthaufen eben gepiept?
+ui.delivery.arrived,"{sender} dropped off scrap at the gate: ""{note}""",{sender} hat am Tor Schrott abgeladen: „{note}“
+note.delivery_waiting,Someone left scrap at the gate.,Jemand hat Schrott am Tor abgeladen.
+neighbor.pohl,Mrs Pohl,Frau Pohl
+neighbor.krull,Benno from the garage,Benno von der Werkstatt
+neighbor.lotte,Lotte (9),Lotte (9)
+neighbor.anonymous,Someone,Jemand
+delivery.note.pohl_1,From my husband's basement. He kept everything. EVERYTHING.,Aus dem Keller meines Mannes. Er hat alles aufgehoben. ALLES.
+delivery.note.krull_1,Was in my way. Now it's in yours. Cheers.,Lag bei mir im Weg. Jetzt liegt es bei dir im Weg. Gruß.
+delivery.note.lotte_1,For the robot. He is not allowed to eat them.,Für den Roboter. Er darf die nicht essen.
+delivery.note.pohl_2,Second basement. I did not know we had a second basement.,"Zweiter Keller. Ich wusste nicht, dass wir einen zweiten Keller haben."
+delivery.note.anonymous_1,Don't ask.,Nicht fragen.
+delivery.note.krull_2,Leftovers from a tractor. The tractor is fine. Mostly.,Reste von einem Traktor. Dem Traktor geht es gut. Größtenteils.
+delivery.note.lotte_2,Found these by the creek. Mum says I'm not allowed over the fence anymore.,"Hab ich am Bach gefunden. Mama sagt, ich darf nicht mehr über den Zaun."
+scrappy.delivery_first.1,A delivery! Somebody brought us their junk. Voluntarily. Walt would have cried.,Eine Lieferung! Jemand bringt uns freiwillig seinen Kram. Walt hätte geweint.
+scrappy.delivery.1,More gifts at the gate. Or evidence. Hard to say.,Neue Geschenke am Tor. Oder Beweismittel. Schwer zu sagen.
+scrappy.delivery.2,"Someone cleaned out their garage. Their loss, our stock.","Da hat jemand die Garage aufgeräumt. Sein Verlust, unser Lagerbestand."
+scrappy.delivery.3,Delivery at the gate! I checked: nothing is ticking.,Lieferung am Tor! Ich habe nachgesehen: Es tickt nichts.
+scrappy.delivery.4,The neighbors trust us with their scrap. That is basically friendship.,Die Nachbarn vertrauen uns ihren Schrott an. Das ist praktisch Freundschaft.
+ui.delivery.sign,"DROP-OFF
+no questions asked","ABLADEN
+keine Fragen"

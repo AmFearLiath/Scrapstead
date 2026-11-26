@@ -610,6 +610,22 @@ def sfx_spark(variant):
     return finish(highpass(hiss + crackle, 1500), peak_db=-8)
 
 
+def sfx_van_horn(_variant):
+    """A small delivery van honking twice at the gate, slightly out of breath."""
+    out = np.zeros(int(1.3 * SR))
+    for start, length, freq in ((0.0, 0.16, 392.0), (0.24, 0.32, 370.0)):
+        t = t_axis(length)
+        tone = np.zeros_like(t)
+        for detune in (1.0, 1.012):
+            phase = (freq * detune * t) % 1.0
+            tone += 2.0 * phase - 1.0  # sawtooth: nasal horn
+        tone *= np.minimum(1.0, t / 0.015) * np.minimum(1.0, (length - t) / 0.03)
+        tone = bandpass(tone, 300, 2200)
+        mix_into(out, tone, start, 0.5)
+    out = lowpass(out, 2400)  # a few metres away, behind the fence
+    return finish(reverb(out, 0.7, 0.22), peak_db=-7)
+
+
 SFX = {
     "step": (sfx_footstep, 4), "clink": (sfx_clink, 3), "tin": (sfx_tin, 2), "wire": (sfx_wire, 2),
     "wood": (sfx_wood, 2), "brass": (sfx_brass, 1), "box": (sfx_box, 2), "basket": (sfx_basket, 2),
@@ -619,6 +635,7 @@ SFX = {
     "click": (sfx_click, 1), "rummage": (sfx_rummage, 1), "hoist": (sfx_hoist, 1), "screw": (sfx_screw, 1),
     "creak": (sfx_creak, 1), "scrappy_chirp": (sfx_scrappy_chirp, 4), "scrappy_wake": (sfx_scrappy_wake, 1),
     "spark": (sfx_spark, 2), "head_beep": (sfx_head_beep, 2),
+    "van_horn": (sfx_van_horn, 1),
 }
 LOOPS = {"rummage", "hoist", "screw"}
 

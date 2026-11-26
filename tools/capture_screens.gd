@@ -89,6 +89,13 @@ func _p2_shots(scene: Node, player: Node3D) -> void:
 	player.place(Vector3(9.5, 0.1, -3.0), PI * 0.8)
 	await _frames(240)
 	await _shot("29_entrance_improved")
+	var deliveries: ScrapDeliveries = scene.get_deliveries()
+	deliveries._process(deliveries.get_seconds_until_next() + 0.1)
+	await _frames(30)
+	await _shot("30_delivery_arrived")
+	player.place(Vector3(6.2, 0.1, -3.1), 0.3)
+	await _frames(120)
+	await _shot("31_delivery_pickup")
 
 
 ## P1 sequence: carried items, salvage, sell panel, upgrade panel, pause menu.

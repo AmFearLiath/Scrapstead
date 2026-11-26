@@ -11,8 +11,9 @@ extends Node
 
 ## Current save schema version. Other versions are rejected, never silently
 ## migrated. Version 1 was the P0 schema; version 2 adds wallet, inventory and
-## upgrades (P1).
-const SAVE_VERSION: int = 3
+## upgrades (P1), version 3 story and Scrappy (P2), version 4 the neighbors'
+## scrap deliveries.
+const SAVE_VERSION: int = 4
 ## Oldest version that can be migrated explicitly (see _migrate()).
 const OLDEST_MIGRATABLE_VERSION: int = 2
 const SAVE_FILE_NAME: String = "slot_0.json"
@@ -134,6 +135,19 @@ func validate_save_data(data: Dictionary) -> bool:
 	var scrappy: Dictionary = data["scrappy"]
 	if scrappy.has("position") and not _is_vector3_array(scrappy["position"]):
 		return false
+	if typeof(data.get("deliveries")) != TYPE_DICTIONARY:
+		return false
+	var deliveries: Dictionary = data["deliveries"]
+	for key: String in ["timer", "next_entry", "counter"]:
+		if deliveries.has(key) and not _is_number(deliveries[key]):
+			return false
+	if deliveries.has("items"):
+		if typeof(deliveries["items"]) != TYPE_ARRAY:
+			return false
+		for entry: Variant in deliveries["items"]:
+			if typeof(entry) != TYPE_DICTIONARY or typeof(entry.get("id")) != TYPE_STRING \
+					or typeof(entry.get("item")) != TYPE_STRING:
+				return false
 	return true
 
 
@@ -237,4 +251,8 @@ func _migrate(data: Dictionary) -> Dictionary:
 		migrated["story"] = {"flags": [], "key_items": [], "spoken_once": []}
 		migrated["scrappy"] = {"state": "dormant", "follow": true}
 		migrated["save_version"] = 3
+	if int(migrated["save_version"]) == 3:
+		# v3 -> v4: no deliveries had arrived yet.
+		migrated["deliveries"] = {}
+		migrated["save_version"] = 4
 	return migrated

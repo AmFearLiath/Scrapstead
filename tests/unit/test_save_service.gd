@@ -89,7 +89,7 @@ func _write_raw(text: String) -> void:
 	file.close()
 
 
-func test_version_2_save_is_migrated_to_version_3() -> void:
+func test_version_2_save_is_migrated_to_current_version() -> void:
 	var data: Dictionary = _valid_data()
 	data["save_version"] = 2
 	data.erase("story")
@@ -102,6 +102,7 @@ func test_version_2_save_is_migrated_to_version_3() -> void:
 	check_eq(migrated.get("save_version"), _service.SAVE_VERSION, "version raised to current")
 	check_eq(migrated.get("story", {}).get("flags"), [], "empty story added")
 	check_eq(migrated.get("scrappy", {}).get("state"), "dormant", "Scrappy starts dormant")
+	check_eq(migrated.get("deliveries"), {}, "no deliveries yet")
 	check_eq(int(migrated["wallet"]["balance"]), 17, "existing data kept")
 
 
