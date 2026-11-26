@@ -81,7 +81,7 @@ ui.hud.carry_value,{used} / {capacity},{used} / {capacity}
 ui.hud.carry_line,{name} ×{count} · {value} Cr,{name} ×{count} · {value} Cr
 ui.hud.credits_value,{credits} Cr,{credits} Cr
 ui.hud.drop_hint,[{key}] Put down last item,[{key}] Letztes Teil ablegen
-ui.hud.controls,{move} Move · {interact} Interact · {drop} Put down · {menu} Menu · Mouse wheel Zoom,{move} Bewegen · {interact} Interagieren · {drop} Ablegen · {menu} Menü · Mausrad Zoom
+ui.hud.controls,{move} Move · {interact} Interact · {drop} Put down · {menu} Menu · Mouse wheel Zoom · {build} Build,{move} Bewegen · {interact} Interagieren · {drop} Ablegen · {menu} Menü · Mausrad Zoom · {build} Bauen
 ui.pause.title,Paused,Pause
 ui.pause.resume,Resume,Weiterspielen
 ui.pause.save,Save,Speichern
@@ -475,3 +475,36 @@ placeable.decor_bench.name,Tyre bench,Reifenbank
 placeable.decor_bench.description,"Two tyre stacks, one plank, one cushion with a past.","Zwei Reifenstapel, ein Brett, ein Kissen mit Vergangenheit."
 placeable.decor_flamingo.name,Pipe flamingo,Rohrflamingo
 placeable.decor_flamingo.description,"Bent from copper pipe, painted by someone with ambition.","Aus Kupferrohr gebogen, angemalt von jemandem mit Ambitionen."
+build.controls,WASD Camera · Wheel Zoom · {rotate} Rotate (Shift: back) · Left click Do · Right click Cancel · {undo} Undo · {done} Done,WASD Kamera · Mausrad Zoom · {rotate} Drehen (Shift: zurück) · Linksklick Ausführen · Rechtsklick Abbrechen · {undo} Rückgängig · {done} Fertig
+build.tool.build,Build,Bauen
+build.tool.move,Move,Verschieben
+build.tool.remove,Remove,Entfernen
+build.tool.look,Look,Ansehen
+build.undo,Undo,Rückgängig
+build.redo,Redo,Wiederholen
+build.done,Done (B),Fertig (B)
+build.category.machines,Machines,Maschinen
+build.category.storage,Storage,Lager & Ablagen
+build.category.paths,Paths & fences,Wege & Zäune
+build.category.decor,Decoration,Dekoration
+build.card.status.available,In storage: {count},Im Lager: {count}
+build.card.status.buy,{price} Cr,{price} Cr
+build.card.status.too_expensive,{price} Cr (too little),{price} Cr (zu wenig)
+build.card.status.locked,Not yet,Noch nicht
+build.card.status.limit,Already standing,Steht schon
+build.card.size,{w}×{d} m,{w}×{d} m
+build.info.pick,Pick something below to build.,Wähle unten etwas zum Bauen aus.
+build.info.place_buy,{name}: left click to buy for {price} Cr and set up. R rotates.,{name}: Linksklick kauft für {price} Cr und stellt auf. R dreht.
+build.info.place_stock,{name}: left click to set up from storage. R rotates.,{name}: Linksklick stellt aus dem Lager auf. R dreht.
+build.info.set_down,"Left click to set it down here. R rotates, right click cancels.","Linksklick stellt es hier ab. R dreht, Rechtsklick bricht ab."
+build.info.pick_up,Left click picks up {name}.,Linksklick nimmt {name} auf.
+build.info.choose_move,Point at something you built to move it.,"Zeig auf etwas, das du gebaut hast, um es zu versetzen."
+build.info.remove,Left click puts {name} back into storage (no money lost).,Linksklick bringt {name} zurück ins Lager (kein Geld verloren).
+build.info.choose_remove,Point at something you built to put it back into storage.,"Zeig auf etwas, das du gebaut hast, um es zurück ins Lager zu bringen."
+build.info.look,Point at something you built. Orange areas: Juri's walkways and the gate. Teal: space in front of stations.,"Zeig auf etwas, das du gebaut hast. Orange Flächen: Juris Laufwege und das Tor. Türkis: Platz vor Stationen."
+build.undone,Undone.,Rückgängig gemacht.
+build.redone,Redone.,Wiederholt.
+build.nothing_to_undo,Nothing to undo.,Nichts rückgängig zu machen.
+build.nothing_to_redo,Nothing to redo.,Nichts zu wiederholen.
+build.cannot_undo,Can't undo that any more - something is in the way.,Das geht nicht mehr rückgängig - da ist jetzt etwas im Weg.
+build.cannot_redo,Can't redo that any more - something is in the way.,Das geht nicht mehr - da ist jetzt etwas im Weg.

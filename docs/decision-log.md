@@ -875,3 +875,16 @@ Referenz: [Erste Maschine](first-machine.md).
 ## 26.11.2026 — P4: Walts Liste statt Questsystem
 
 **Beschluss (autonome Entwicklungsphase, MVP-Plan 8):** Die geforderte „kurze Hauptaufgabenfolge“ wird als Walts handgeschriebene Liste mit sieben Punkten umgesetzt, nicht als eigenes Questsystem. Die Punkte leiten sich aus vorhandenen Storyflags und Käufen ab, also kein neuer Spielstand. Die Liste ist im Pausenmenü abrufbar, und jeder erledigte Punkt wird einmal gemeldet. Die Vorschläge des Notizzettels bleiben die kurzfristige Führung. Dazu kommen Einstellungen im Pausenmenü und ein Klangdurchgang. Die Leistung im vollen Hof wurde gemessen.
+
+## 26.11.2026 — Bausystem: Raster, Lager statt Rückerstattung, Maschinenkauf im Baumenü
+
+**Beschluss (Phase 4, Wunsch: erst das Bausystem, dann Inhalt):**
+- 0,5-m-Raster, 90°-Drehung, immer einrastend.
+- Platzierbare Objekte werden im Baumenü gekauft. Entfernte Objekte gehen kostenlos ins Lager; es gibt kein Geld zurück, aber auch keinen Verlust.
+- Erreichbarkeit über freizuhaltende Flächen (Tor, Juris Laufwege, Stationen, Bedienflächen) statt Navigationsnetz.
+- Rückgängig/Wiederholen für die Sitzung (50 Schritte).
+- Der Magnetsammler ist platzierbar; Walts Nagelhaufen bleibt fest und zählt nur in Reichweite.
+- Verbinden folgt mit der zweiten Maschine.
+- Spielstand Version 7 mit Migration.
+
+Referenz: [Bausystem](building-system.md).

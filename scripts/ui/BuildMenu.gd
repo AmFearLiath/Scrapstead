@@ -19,6 +19,7 @@ var _placed: PlacedObjects
 var _category: String = PlaceableDefinition.CATEGORY_DECOR
 var _info: Label
 var _hint: Label
+var _controls: Label
 var _tool_buttons: Dictionary = {}
 var _category_buttons: Dictionary = {}
 var _undo_button: Button
@@ -78,6 +79,11 @@ func get_info_text() -> String:
 	return _info.text
 
 
+## The key line (shown inside the menu so nothing hides it).
+func set_controls_text(text: String) -> void:
+	_controls.text = text
+
+
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSLATION_CHANGED and _info != null:
 		_retranslate()
@@ -95,13 +101,19 @@ func _build_ui() -> void:
 	_panel.anchor_bottom = 1.0
 	_panel.offset_left = -560
 	_panel.offset_right = 560
-	_panel.offset_top = -250
+	_panel.offset_top = -282
 	_panel.offset_bottom = -12
 	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_panel)
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", 8)
 	_panel.add_child(rows)
+	_controls = Label.new()
+	_controls.name = "Controls"
+	_controls.add_theme_font_size_override("font_size", 14)
+	_controls.add_theme_color_override("font_color", Color(0.949, 0.902, 0.812, 0.65))
+	_controls.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	rows.add_child(_controls)
 	_info = Label.new()
 	_info.name = "Info"
 	_info.add_theme_font_size_override("font_size", 19)
@@ -187,8 +199,9 @@ func _rebuild_cards() -> void:
 		card.name = definition.id
 		card.toggle_mode = true
 		card.focus_mode = Control.FOCUS_NONE
-		card.custom_minimum_size = Vector2(168, 78)
+		card.custom_minimum_size = Vector2(212, 78)
 		card.clip_text = true
+		card.add_theme_font_size_override("font_size", 16)
 		var size_m: Vector2 = Vector2(definition.size) * BuildGrid.CELL
 		var line: String = tr("build.card.status." + status).format({
 			"price": _placed.get_price(definition), "count": _placed.get_available(definition)})

@@ -22,6 +22,9 @@ extends Node3D
 @export var nail_heap: Node3D
 ## "Reserved" sign on the empty machine pad; hidden once a machine stands.
 @export var reserved_sign: Node3D
+## Build mode and its menu (scripts/build/BuildMode.gd, scripts/ui/BuildMenu.gd); optional.
+@export var build_mode: BuildMode
+@export var build_menu: Control
 @export_group("HUD")
 @export var interaction_prompt: Control
 @export var feedback_toast: Control
@@ -136,6 +139,7 @@ func _ready() -> void:
 		settings_panel.closed.connect(func() -> void: pause_menu.open())
 	debug_overlay.setup(player, camera_rig, _interactor, _debug_extra_lines)
 	GameSession.save_completed.connect(_on_save_completed)
+	_setup_build_mode()
 	_update_controls_hint()
 	# Step 10: release input once physics has seen the restored positions.
 	await get_tree().physics_frame
@@ -147,6 +151,19 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if build_mode != null and build_mode.is_active():
+		if event.is_action_pressed("build_mode"):
+			get_viewport().set_input_as_handled()
+			exit_build_mode()
+		elif event.is_action_pressed("pause_menu"):
+			get_viewport().set_input_as_handled()
+			if not build_mode.cancel():
+				exit_build_mode()
+		return
+	if event.is_action_pressed("build_mode") and not _modal_open and not _staging and build_mode != null:
+		get_viewport().set_input_as_handled()
+		enter_build_mode()
+		return
 	if event.is_action_pressed("pause_menu") and not _modal_open:
 		get_viewport().set_input_as_handled()
 		_open_pause_menu()
@@ -453,10 +470,20 @@ func _free_drop_position() -> Vector3:
 
 
 func _update_controls_hint() -> void:
+	if build_mode != null and build_mode.is_active():
+		var text: String = tr("build.controls").format({"undo": "Strg+Z" if TranslationServer.get_locale().begins_with("de")
+			else "Ctrl+Z", "rotate": InputHints.key_name(&"build_rotate"), "done": InputHints.key_name(&"build_mode")})
+		controls_hint.text = text
+		controls_hint.visible = false
+		if build_menu != null and build_menu.has_method("set_controls_text"):
+			build_menu.set_controls_text(text)
+		return
+	controls_hint.visible = true
 	var move_keys: String = "%s%s%s%s" % [InputHints.key_name(&"move_up"), InputHints.key_name(&"move_left"),
 		InputHints.key_name(&"move_down"), InputHints.key_name(&"move_right")]
 	controls_hint.text = tr("ui.hud.controls").format({"move": move_keys,
 		"interact": InputHints.key_name(&"interact"), "drop": InputHints.key_name(&"drop_item"),
+		"build": InputHints.key_name(&"build_mode"),
 		"menu": InputHints.key_name(&"pause_menu")})
 
 
@@ -1109,3 +1136,52 @@ func _on_setting_changed(key: String, value: Variant) -> void:
 		GameSession.get_setting(GameSession.SETTING_SFX_VOLUME))
 	if key == "sfx_volume":
 		_sound("clink")
+
+
+# --- Build mode -------------------------------------------------------------------
+
+func _setup_build_mode() -> void:
+	if build_mode == null or placed == null:
+		return
+	build_mode.action_result.connect(_on_build_result)
+	if build_menu != null:
+		build_menu.setup(build_mode, placed)
+		build_menu.done_requested.connect(exit_build_mode)
+		_wallet.balance_changed.connect(func(_balance: int, _delta: int, _reason: String) -> void: build_menu.refresh())
+
+
+func enter_build_mode() -> void:
+	if build_mode == null or build_mode.is_active():
+		return
+	_set_gameplay_input(false)
+	player.velocity = Vector3.ZERO
+	placed.set_static_protected(_build_protected_cells())
+	build_mode.enter(player.global_position)
+	if task_notes != null:
+		task_notes.visible = false
+	_sound("page")
+	_update_controls_hint()
+
+
+func exit_build_mode() -> void:
+	if build_mode == null or not build_mode.is_active():
+		return
+	build_mode.exit(player.get_node("CameraAnchor"))
+	if task_notes != null:
+		task_notes.visible = true
+	_set_gameplay_input(true)
+	_sound("page")
+	_update_controls_hint()
+
+
+func _on_build_result(result: Dictionary) -> void:
+	var key: String = result.get("message_key", "")
+	if key.is_empty():
+		return
+	feedback_toast.show_message(tr(key).format(result.get("message_args", {})), result.get("ok", false))
+	if not result.get("ok", false):
+		_sound("nope", -4.0)
+	elif key == "build.removed":
+		_sound("box", -2.0)
+	elif key in ["build.undone", "build.redone", "build.moved"]:
+		_sound("click")

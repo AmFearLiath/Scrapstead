@@ -142,8 +142,9 @@ func _machine_shots(scene: Node, player: Node3D) -> void:
 	scroll.scroll_vertical = 10000
 	await _frames(10)
 	await _shot("38_catalog_machine")
-	scene._on_interaction_finished(desk.object_id, desk.buy("machine_magnet_collector"))
 	panel.close()
+	scene.get_placed().place("magnet_collector", Vector2i(69, -27), 0)
+	magnet = scene.get_magnet()
 	await _frames(90)
 	await _shot("39_machine_installed")
 	magnet._timer = magnet.get_cycle_seconds() * 0.58
@@ -220,6 +221,59 @@ func _staff_tool_shots(scene: Node, player: Node3D) -> void:
 	await _shot("49_settings_in_game")
 	scene.get_node("HUD/SettingsPanel").close()
 	scene._close_pause_menu()
+	await _build_shots(scene, player)
+
+
+## Build system: menu, previews, a reason, the machine, a small garden.
+func _build_shots(scene: Node, player: Node3D) -> void:
+	var mode: BuildMode = scene.get_node("BuildMode")
+	var placed: PlacedObjects = scene.get_placed()
+	var menu: Control = scene.get_node("HUD/BuildMenu")
+	scene.get_wallet().credit(300, "capture-build", "capture")
+	player.place(Vector3(21.0, 0.1, -19.0), 2.4)
+	scene.get_node("GameplayCamera")._target_zoom = 12.0
+	await _wait_for(func() -> bool: return false, 0.8)
+	scene.enter_build_mode()
+	menu.set_category("decor")
+	mode.aim_at(Vector3(21.0, 0, -19.0))
+	await _wait_for(func() -> bool: return false, 0.8)
+	await _shot("50_build_menu")
+	mode.select(placed.catalog.get_definition("decor_bench"))
+	mode.aim_at(Vector3(20.0, 0, -21.0))
+	await _frames(10)
+	await _shot("51_build_preview_ok")
+	mode.confirm()
+	mode.select(placed.catalog.get_definition("decor_planter"))
+	mode.aim_at(Vector3(17.6, 0, -14.6))
+	await _frames(10)
+	await _shot("52_build_preview_blocked")
+	for spot: Array in [["decor_planter", Vector3(23.0, 0, -21.0), 0], ["decor_gnome", Vector3(18.2, 0, -21.2), 0],
+			["decor_flamingo", Vector3(24.6, 0, -19.6), 1], ["decor_floodlight", Vector3(17.0, 0, -22.6), 0],
+			["paths_gravel", Vector3(20.0, 0, -19.5), 0], ["paths_gravel", Vector3(21.0, 0, -19.5), 0],
+			["paths_gravel", Vector3(22.0, 0, -19.5), 0], ["paths_fence_low", Vector3(21.0, 0, -23.0), 0]]:
+		mode.select(placed.catalog.get_definition(spot[0]))
+		mode._rotation = spot[2]
+		mode.aim_at(spot[1])
+		mode.confirm()
+	mode._rotation = 0
+	mode.set_tool(BuildMode.TOOL_LOOK)
+	mode.aim_at(Vector3(20.0, 0, -21.0))
+	await _frames(10)
+	await _shot("53_build_garden")
+	scene.exit_build_mode()
+	await _wait_for(func() -> bool: return false, 0.8)
+	await _shot("54_build_garden_play")
+	player.place(Vector3(33.0, 0.1, -9.5), 2.4)
+	await _wait_for(func() -> bool: return false, 0.6)
+	scene.enter_build_mode()
+	mode.set_tool(BuildMode.TOOL_MOVE)
+	mode.aim_at(scene.get_magnet().global_position)
+	mode.confirm()
+	mode.aim_at(Vector3(30.0, 0, -15.0))
+	await _frames(10)
+	await _shot("55_build_move_magnet")
+	mode.cancel()
+	scene.exit_build_mode()
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.

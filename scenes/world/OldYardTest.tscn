@@ -64,6 +64,8 @@
 [ext_resource type="Script" path="res://scripts/build/PlacedObjects.gd" id="77_placed_script"]
 [ext_resource type="Resource" path="res://data/placeables/placeable_catalog.tres" id="78_placeables"]
 [ext_resource type="PackedScene" path="res://scenes/world/NailHeap.tscn" id="79_nail_heap"]
+[ext_resource type="Script" path="res://scripts/build/BuildMode.gd" id="80_build_mode"]
+[ext_resource type="Script" path="res://scripts/ui/BuildMenu.gd" id="81_build_menu"]
 [ext_resource type="PackedScene" path="res://assets/models/equipment_handcart.glb" id="73_cart_model"]
 [ext_resource type="PackedScene" path="res://ui/hud/TaskListPanel.tscn" id="74_task_list"]
 [ext_resource type="Resource" path="res://data/story/walts_list.tres" id="75_walts_list"]
@@ -80,7 +82,7 @@ roughness = 0.9
 material = SubResource("reserved_material")
 size = Vector3(1.2, 0.42, 0.04)
 
-[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "placed", "nail_heap", "reserved_sign", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
+[node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "placed", "nail_heap", "reserved_sign", "build_mode", "build_menu", "staff_panel", "staff_bubble", "task_list_panel", "settings_panel")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
 player_start = NodePath("PlayerStart")
@@ -91,6 +93,8 @@ worker = NodePath("Staff/YardWorker")
 placed = NodePath("Placed")
 nail_heap = NodePath("NailHeap")
 reserved_sign = NodePath("ReservedSign")
+build_mode = NodePath("BuildMode")
+build_menu = NodePath("HUD/BuildMenu")
 interaction_prompt = NodePath("HUD/InteractionPrompt")
 feedback_toast = NodePath("HUD/FeedbackToast")
 inspect_panel = NodePath("HUD/InspectPanel")
@@ -422,6 +426,11 @@ crowbar_display = NodePath("../../DeliveryArea/tool_crowbar")
 script = ExtResource("77_placed_script")
 catalog = ExtResource("78_placeables")
 
+[node name="BuildMode" type="Node3D" parent="." node_paths=PackedStringArray("placed", "camera_rig")]
+script = ExtResource("80_build_mode")
+placed = NodePath("../Placed")
+camera_rig = NodePath("../GameplayCamera")
+
 [node name="NailHeap" parent="." instance=ExtResource("79_nail_heap")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.65, 0, -12.75)
 
@@ -525,6 +534,16 @@ theme_override_font_sizes/font_size = 16
 [node name="StaffPanel" parent="HUD" instance=ExtResource("71_staff_panel")]
 
 [node name="PauseMenu" parent="HUD" unique_id=640406047 instance=ExtResource("20_pause")]
+
+[node name="BuildMenu" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("81_build_menu")
 
 [node name="FeedbackToast" parent="HUD" unique_id=595741718 instance=ExtResource("11_toast")]
 

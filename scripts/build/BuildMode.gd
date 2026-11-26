@@ -202,9 +202,11 @@ func confirm() -> Dictionary:
 				result = {"ok": true, "message_key": "", "message_args": {}}
 			else:
 				var entry: Dictionary = _entry(_moving_uid)
+				var from_anchor: Vector2i = entry["anchor"]
+				var from_rot: int = entry["rot"]
 				result = placed.move(_moving_uid, _anchor, _rotation)
 				if result["ok"]:
-					_push({"op": "move", "uid": _moving_uid, "from": entry["anchor"], "from_rot": entry["rot"],
+					_push({"op": "move", "uid": _moving_uid, "from": from_anchor, "from_rot": from_rot,
 						"to": _anchor, "to_rot": _rotation})
 					_end_move()
 		TOOL_REMOVE:

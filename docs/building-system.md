@@ -1,6 +1,6 @@
 # Scrapstead — Bausystem (Phase 4, Block B)
 
-**Status:** In Arbeit (26.11.2026, autonome Entwicklungsphase)
+**Status:** Platzieren, Verschieben, Drehen, Entfernen, Lager, Rückgängig/Wiederholen umgesetzt (26.11.2026); Verbinden folgt mit der zweiten Maschine
 **Bezug:** [Bauen und Maschinenverbindungen](building-and-logistics.md), [Baumodus und Bauinteraktionen](build-mode-and-interactions.md), [Kernmatrix 4.6](core-gameplay-matrix.md), [Entscheidungslog 25.11.2026](decision-log.md), [Produktionsfahrplan Phase 4](production-scope-and-roadmap.md)
 
 ## 1. Ziel
@@ -80,3 +80,52 @@ Die Prüfkriterien aus beiden Konzeptdokumenten gelten, soweit sie nicht das Ver
 6. Rückgängig und Wiederholen ohne inkonsistente Zustände.
 7. Bedien- und Laufflächen bleiben nutzbar; Juri kommt weiter überall hin.
 8. Alles übersteht Speichern und Laden.
+
+## 7. Umsetzung
+
+### Bedienung im Spiel
+- **B** öffnet den Baumodus. Der Spieler bleibt stehen, die Kamera folgt einem Baucursor (WASD, mit Shift schneller), und das Mausrad zoomt.
+- Unten erscheint das Baumenü:
+  - Oben die Tastenzeile.
+  - Darunter die **Infozeile**: Sie sagt immer, was ein Klick tut („Reifenbank: Linksklick kauft für 14 Cr und stellt auf. R dreht.“) oder warum es nicht geht („Hier läuft Juri. Er würde sich nur vorbeiquetschen.“).
+  - Darunter ein gelber Hinweis, z. B. zur Reichweite des Nagelhaufens.
+  - Dann die Werkzeuge, Rückgängig/Wiederholen und „Fertig (B)“.
+  - Ganz unten die Kategorien und die Objektkarten mit Preis oder Lagerbestand und Größe in Metern.
+- **Vorschau:**
+  - Durchscheinendes Modell.
+  - Belegte Zellen grün oder rot (nur die problematischen Zellen sind rot), die freizuhaltende Bedienfläche blau.
+  - Ein heller Rasterkreis um die Stelle.
+  - Ein Ring für den Arbeitsradius (Magnetsammler).
+  - In der Nähe: orange Flächen für Juris Laufwege und das Tor, türkise für den Platz vor Stationen.
+- **Werkzeuge:**
+  - **Bauen:** Linksklick platziert. Das Objekt bleibt ausgewählt, damit man mehrere hintereinander setzen kann.
+  - **Verschieben:** Ein Klick nimmt auf (das Original wird blass), ein zweiter stellt ab, R dreht.
+  - **Entfernen:** Das Objekt geht ins Lager, ebenso mit `Entf` oder `X`.
+  - **Ansehen:** Name und Beschreibung beim Zeigen.
+- Rechtsklick bricht die laufende Aktion ab. Esc bricht ab und verlässt den Baumodus, wenn nichts läuft; das Pausenmenü öffnet sich dabei nicht. `Strg+Z` / `Strg+Y` machen rückgängig und wiederholen.
+- Aufstellen staubt und poltert, Entfernen klappert, Fehler machen „nope“.
+
+### Regeln (getestet)
+- Rückgängig eines Kaufs bringt das Objekt ins Lager. Geld wird nur einmal bezahlt und geht nie verloren.
+- Passt ein Schritt nicht mehr, weil inzwischen etwas im Weg steht, wird er mit Begründung verworfen.
+- Der Magnetsammler wird nur noch im Baumenü gekauft (60 Cr, als Katalogware hinterlegt, damit „Stärkerer Magnet“ ihn weiter voraussetzt).
+  - Er lässt sich nur mit leerer Kiste entfernen. Dabei behält er seinen Zustand (Haufenbestand, Schalter).
+  - Beim Versetzen wandern Teile in der Kiste mit.
+- Die Vorschau blockiert nie: Sie hat keine Kollision, verarbeitet nichts und wird nicht gespeichert.
+
+### Technik
+- `scripts/build/`: `BuildGrid`, `PlaceableDefinition`, `PlaceableCatalog`, `PlacementValidator`, `PlacedObjects`, `BuildMode`; `scripts/ui/BuildMenu.gd`.
+- Daten: `data/placeables/*.tres` und `scenes/placeables/*.tscn`, erzeugt mit `tools/make_placeables.py`.
+- Neue Deko-Modelle (Schrottzwerg, Reifenbank, Rohrflamingo) in `tools/blender/props_machines.py`.
+- Walts Nagelhaufen: `scenes/world/NailHeap.tscn`, fest im Hof.
+- Spielstand Version 7 (`placed`); Migration aus Version 6.
+- Tests:
+  - `test_building.gd` (7): Raster, Gründe, Kaufen, Versetzen/Drehen/Lager, Magnet versetzen, Speichern, Walts Liste.
+  - `test_build_mode.gd` (4): Ein/Aus, Bauen mit Infozeile, Verschieben/Entfernen/Rückgängig/Wiederholen, Vorschau.
+  - Magnet-Tests auf das Bausystem umgestellt, einschließlich v6-Migration.
+- Screenshots `50_build_menu` bis `55_build_move_magnet`.
+
+### Offen
+- **Verbinden** (Anschlusspunkte sind im Datenmodell angelegt) kommt mit der zweiten Maschine.
+- Lager mit Funktion (Teile einlagern), Grundstückserweiterung, Gebäude.
+- Menschlicher Test der Bedienung, besonders der Maussteuerung (die Tests zielen über die Programmierschnittstelle).
