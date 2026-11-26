@@ -95,8 +95,8 @@ func test_build_tool_places_repeatedly_and_explains_problems() -> void:
 	mode.aim_at(_cell_point(FREE + Vector2i(2, 0)))
 	check(mode.confirm()["ok"], "second gnome next to it")
 	check_eq(placed.count_placed("decor_gnome"), 2, "two gnomes")
-	mode.aim_at(_cell_point(BuildGrid.world_to_cell(Vector3(17.5, 0, -2.8))))
-	check(menu.get_info_text().contains(tr("build.problem.keep_free_route")), "Juri's way is explained")
+	mode.aim_at(scene.get_worker().rest_spot.global_position)
+	check(menu.get_info_text().contains(tr("build.problem.keep_free_route")), "Juri's spot is explained")
 	mode.aim_at(_cell_point(FREE + Vector2i(6, 0)))
 	var ghost_cells: Array = mode.get_last_check()["footprint"]
 	mode.rotate_preview()

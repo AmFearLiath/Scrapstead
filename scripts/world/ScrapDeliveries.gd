@@ -218,3 +218,12 @@ func _free_slot(used: Dictionary) -> int:
 
 func _hash_id(text: String) -> int:
 	return absi(text.hash()) % 1000
+
+
+## Build mode moved the pallet: delivered items are children and move along;
+## the saved positions of spilled crate contents follow.
+func on_relocated(_old_transform: Transform3D, _new_transform: Transform3D) -> void:
+	for entry: Dictionary in _live:
+		var item: ScrapItem = entry["node"]
+		if is_instance_valid(item) and entry.has("pos"):
+			entry["pos"] = [item.global_position.x, item.global_position.y, item.global_position.z]

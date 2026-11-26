@@ -20,6 +20,8 @@ var occupied: Dictionary = {}
 var reserved: Dictionary = {}
 ## Cell -> reason key ("gate", "route", "station", "scrap") of areas to keep free.
 var protected: Dictionary = {}
+## Cell -> uid of the object a protected cell belongs to (it may move over it).
+var protected_owner: Dictionary = {}
 ## Optional extra hints: `func(definition, anchor, rotation) -> PackedStringArray`.
 var hint_source: Callable
 
@@ -44,7 +46,8 @@ func check(definition: PlaceableDefinition, anchor: Vector2i, rotation_steps: in
 	if definition.solid:
 		for reason: String in ["gate", "route", "station", "scrap"]:
 			_add(problems, "keep_free_" + reason, footprint.filter(func(cell: Vector2i) -> bool:
-				return protected.get(cell, "") == reason))
+				return protected.get(cell, "") == reason and protected_owner.get(cell, "") != ignore_uid \
+					or ignore_uid.is_empty() and protected.get(cell, "") == reason))
 	else:
 		_add(problems, "keep_free_scrap", footprint.filter(func(cell: Vector2i) -> bool:
 			return protected.get(cell, "") == "scrap"))
@@ -59,7 +62,8 @@ func check(definition: PlaceableDefinition, anchor: Vector2i, rotation_steps: in
 static func describe(result: Dictionary) -> String:
 	var problems: Array = result.get("problems", [])
 	if not problems.is_empty():
-		return TranslationServer.translate("build.problem." + str(problems[0]["key"]))
+		return TranslationServer.translate("build.problem." + str(problems[0]["key"])).format(
+			problems[0].get("args", {}))
 	var hints: PackedStringArray = result.get("hints", PackedStringArray())
 	if not hints.is_empty():
 		return TranslationServer.translate(hints[0])

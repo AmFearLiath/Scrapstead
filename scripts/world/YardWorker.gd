@@ -86,6 +86,8 @@ var move_speed: float = 2.4
 var rest_provider: Callable
 ## Optional: ground speed factor, `func(position: Vector3) -> float`.
 var ground_factor: Callable
+## Optional: walkable grid of the yard (A*); the fixed route graph is the fallback.
+var navigation: YardNavigation
 
 var _presence: Presence = Presence.ABSENT
 var _paused: bool = false
@@ -838,6 +840,10 @@ func _nearest_node(point: Vector3, from: int = 0, to: int = -1) -> int:
 ## Waypoints from the node nearest to him to the node nearest to the target,
 ## then the target itself. Short hops skip the graph.
 func _path_to(target: Vector3) -> Array[Vector3]:
+	if navigation != null and navigation.is_ready():
+		var found: Array[Vector3] = navigation.find_path(global_position, target)
+		if not found.is_empty():
+			return found
 	if _nodes.is_empty():
 		_build_graph()
 	var path: Array[Vector3] = []

@@ -826,6 +826,8 @@ func _setup_worker(saved: Dictionary) -> void:
 	worker.setup(_wallet, _objects, deliveries)
 	worker.rest_provider = _bench_rest_spot
 	if placed != null:
+		worker.navigation = placed.navigation
+	if placed != null:
 		worker.ground_factor = placed.get_ground_factor
 	worker.set_upgrades(_upgrades)
 	worker.apply_save_state(saved)
@@ -929,9 +931,122 @@ func _setup_placed(saved: Dictionary) -> void:
 	_restoring = true
 	for note: String in placed.apply_save_state(saved):
 		_note(note)
+	_adopt_yard()
+	var yard: Variant = saved.get("yard", {})
+	for note: String in placed.apply_yard_state(yard if typeof(yard) == TYPE_DICTIONARY else {}):
+		_note(note)
 	_restoring = false
-	placed.set_static_protected(_build_protected_cells())
+	placed.access_provider = _access_points
+	placed.access_origin = Vector3(8.0, 0.0, -2.5)
+	placed.rebuild_navigation()
+	_after_layout_change()
+	placed.changed.connect(_after_layout_change)
 	_update_reserved_sign()
+
+
+## Everything built into the yard becomes movable in build mode
+## (docs/building-system.md): buildings, props, stations, the pallet, the heap.
+const YARD_FIXTURES: Array = [
+	["LevelGeometry/Walls/WorkshopShed", "yard.workshop", true],
+	["LevelGeometry/Walls/SalesKiosk", "yard.kiosk", true],
+	["LevelGeometry/Walls/WallSegment", "yard.wall", true],
+	["LevelGeometry/Walls/Girder0", "yard.girder", true],
+	["LevelGeometry/Walls/Girder1", "yard.girder", true],
+	["LevelGeometry/Walls/Girder2", "yard.girder", true],
+	["LevelGeometry/Walls/Girder3", "yard.girder", true],
+	["LevelGeometry/Obstacles/StorageZoneA/Crates1", "yard.crates", true],
+	["LevelGeometry/Obstacles/StorageZoneA/Crates2", "yard.crates", true],
+	["LevelGeometry/Obstacles/StorageZoneA/Shelf", "yard.shelf", true],
+	["LevelGeometry/Obstacles/StorageZoneA/Barrels", "yard.barrels", true],
+	["LevelGeometry/Obstacles/StorageZoneA/SmallScrapPile", "yard.scrap_pile", true],
+	["LevelGeometry/Obstacles/ScrapYardB/LargeScrapHeap", "yard.scrap_heap_large", true],
+	["LevelGeometry/Obstacles/ScrapYardB/SmallScrapHeap", "yard.scrap_heap_small", true],
+	["LevelGeometry/Obstacles/ScrapYardB/CarWreck", "yard.car_wreck", true],
+	["LevelGeometry/Obstacles/ScrapYardB/EngineBlock", "yard.engine_block", true],
+	["LevelGeometry/Obstacles/ScrapYardB/Container", "yard.container", true],
+	["LevelGeometry/Obstacles/WorkAreaD/Pallets", "yard.pallets", true],
+	["LevelGeometry/Obstacles/WorkAreaD/Tyres", "yard.tyres", true],
+	["LevelGeometry/Obstacles/WaltsWheelbarrow", "yard.wheelbarrow", true],
+	["LevelGeometry/Obstacles/Planter", "yard.planter", true],
+	["TestObjects/SellStation", "yard.sell_counter", true],
+	["TestObjects/OrderDesk", "yard.order_desk", true],
+	["TestObjects/Workbench", "yard.workbench", true],
+	["TestObjects/DismantleStation", "yard.dismantle_table", true],
+	["TestObjects/InspectTestObject", "yard.notice_board", true],
+	["TestObjects/UseTestObject", "yard.floodlight", true],
+	["TestObjects/source_small_scrap_pile_01", "yard.source_pile", true],
+	["TestObjects/source_old_toolbox_01", "yard.source_toolbox", true],
+	["TestObjects/source_storage_crate_01", "yard.source_crate", true],
+	["TestObjects/source_rusted_drum_01", "yard.source_drum", true],
+	["TestObjects/ScrappyHeadSite", "yard.head_heap", true],
+	["TestObjects/RedToolbox", "yard.red_toolbox", true],
+	["DropOffSpot", "yard.drop_off", false, Vector2i(6, 4)],
+	["NailHeap", "yard.nail_heap", false, Vector2i(4, 4)],
+	["DeliveryArea/tool_crowbar", "yard.tool_crowbar", false, Vector2i(2, 2)],
+	["DeliveryArea/tool_hoist", "yard.tool_hoist", false, Vector2i(3, 3)],
+	["DeliveryArea/upgrade_handcart", "yard.tool_handcart", false, Vector2i(3, 4)],
+]
+
+## uid -> node of adopted yard fixtures.
+var _fixtures: Dictionary = {}
+## Helper spots relative to the fixture they belong to: spot -> [fixture node, local transform].
+var _spot_links: Dictionary = {}
+
+
+func _adopt_yard() -> void:
+	for fixture: Array in YARD_FIXTURES:
+		var node: Node3D = get_node_or_null(str(fixture[0])) as Node3D
+		if node == null:
+			continue
+		var uid: String = "yard_" + node.name.to_snake_case()
+		var size: Vector2i = fixture[3] if fixture.size() > 3 else Vector2i.ZERO
+		placed.adopt(node, uid, str(fixture[1]), bool(fixture[2]), size)
+		_fixtures[uid] = node
+	if worker == null:
+		return
+	var links: Array = [[worker.counter_spot, "TestObjects/SellStation"], [worker.station_spot, "TestObjects/DismantleStation"],
+		[worker.rest_spot, "DropOffSpot"], [worker.cart_spot, "DeliveryArea/upgrade_handcart"],
+		[worker.crowbar_spot, "DeliveryArea/tool_crowbar"]]
+	for link: Array in links:
+		var spot: Node3D = link[0]
+		var owner_node: Node3D = get_node_or_null(str(link[1])) as Node3D
+		if spot != null and owner_node != null:
+			_spot_links[spot] = [owner_node, owner_node.global_transform.affine_inverse() * spot.global_transform]
+
+
+## Helper spots follow the station, pallet or tool they belong to.
+func _update_staff_spots() -> void:
+	for spot: Node3D in _spot_links:
+		var link: Array = _spot_links[spot]
+		spot.global_transform = (link[0] as Node3D).global_transform * (link[1] as Transform3D)
+
+
+func _fixture_uid_of(node: Node) -> String:
+	for uid: String in _fixtures:
+		var fixture: Node = _fixtures[uid]
+		if fixture == node or fixture.is_ancestor_of(node):
+			return uid
+	return ""
+
+
+func _fixture_uid_near(spot: Node3D) -> String:
+	if _spot_links.has(spot):
+		return _fixture_uid_of(_spot_links[spot][0])
+	return ""
+
+
+## Places that must stay reachable from the gate after any build action.
+func _access_points() -> Array:
+	var points: Array = []
+	for target: Interactable in _objects.values():
+		if target is ScrapItem or not target.is_inside_tree() or not target.is_interaction_available():
+			continue
+		points.append({"position": target.get_interaction_point(), "name": target.name_key,
+			"uid": _fixture_uid_of(target)})
+	if deliveries != null:
+		points.append({"position": deliveries.global_position + deliveries.global_basis.z * 1.4,
+			"name": "yard.drop_off", "uid": _fixture_uid_of(deliveries)})
+	return points
 
 
 func _on_object_placed(uid: String, node: Node3D) -> void:
@@ -1032,36 +1147,39 @@ func _on_magnet_refilled(amount: int) -> void:
 		_dust(nail_heap.global_position, 14, 0.3)
 
 
-## Areas the yard needs to keep working: the gate, the helper's walkways,
-## the spots in front of every station, the pallet and the nail heap.
-func _build_protected_cells() -> Dictionary:
+## Areas the yard needs to keep working: the gate, the helpers' spots and the
+## space in front of every station. Returns [cells, owners]: cell -> reason,
+## cell -> uid of the fixture it belongs to (that fixture may move over it).
+func _build_protected() -> Array:
 	var cells: Dictionary = {}
+	var owners: Dictionary = {}
 	_protect_rect(cells, Rect2(5.4, -1.6, 5.2, 1.6), "gate")
 	if worker != null:
-		var chains: Array = [_chain(worker.route_root, worker.counter_spot), _chain(worker.station_route_root,
-			worker.station_spot), _chain(worker.cart_route_root, worker.cart_spot)]
-		for chain: Array in chains:
-			for index: int in range(chain.size() - 1):
-				_protect_segment(cells, chain[index], chain[index + 1], 0.6, "route")
-		# Each branch joins the main route at its nearest point.
-		var main: Array = chains[0]
-		for branch: Array in [chains[1], chains[2]]:
-			if not branch.is_empty() and not main.is_empty():
-				_protect_segment(cells, _nearest(main, branch[0]), branch[0], 0.6, "route")
-		for spot: Node3D in [worker.wait_spot, worker.rest_spot, worker.crowbar_spot]:
+		for spot: Node3D in [worker.wait_spot, worker.rest_spot, worker.crowbar_spot, worker.cart_spot,
+				worker.counter_spot, worker.station_spot]:
 			if spot != null:
-				_protect_circle(cells, spot.global_position, 0.6, "route")
+				_protect_circle(cells, spot.global_position, 0.5, "route", owners, _fixture_uid_near(spot))
 	for target: Interactable in _objects.values():
 		if target is ScrapItem or not target.is_inside_tree():
 			continue
 		if placed != null and placed.is_ancestor_of(target):
 			continue
-		_protect_circle(cells, target.get_interaction_point(), 0.7, "station")
-	if deliveries != null:
-		_protect_circle(cells, deliveries.global_position, 1.9, "station")
-	if nail_heap != null:
-		_protect_circle(cells, nail_heap.global_position, 1.0, "station")
-	return cells
+		_protect_circle(cells, target.get_interaction_point(), 0.7, "station", owners, _fixture_uid_of(target))
+	return [cells, owners]
+
+
+func _build_protected_cells() -> Dictionary:
+	return _build_protected()[0]
+
+
+## Re-applies everything that depends on the layout: helper spots, keep-free
+## areas and the walkable grid.
+func _after_layout_change() -> void:
+	if placed == null:
+		return
+	_update_staff_spots()
+	var protected: Array = _build_protected()
+	placed.set_static_protected(protected[0], protected[1])
 
 
 ## Non-blocking notes for the preview: e.g. whether the nail heap is in reach.
@@ -1114,7 +1232,8 @@ func _protect_rect(cells: Dictionary, rect: Rect2, reason: String) -> void:
 			cells[Vector2i(x, y)] = reason
 
 
-func _protect_circle(cells: Dictionary, center: Vector3, radius: float, reason: String) -> void:
+func _protect_circle(cells: Dictionary, center: Vector3, radius: float, reason: String, owners: Dictionary = {},
+		owner: String = "") -> void:
 	var from: Vector2i = BuildGrid.world_to_cell(center - Vector3(radius, 0, radius))
 	var to: Vector2i = BuildGrid.world_to_cell(center + Vector3(radius, 0, radius))
 	for x: int in range(from.x, to.x + 1):
@@ -1123,6 +1242,8 @@ func _protect_circle(cells: Dictionary, center: Vector3, radius: float, reason: 
 			var offset: Vector3 = BuildGrid.cell_center(cell) - Vector3(center.x, 0, center.z)
 			if offset.length() <= radius + BuildGrid.CELL * 0.5 and not cells.has(cell):
 				cells[cell] = reason
+				if not owner.is_empty():
+					owners[cell] = owner
 
 
 func _protect_segment(cells: Dictionary, a: Vector3, b: Vector3, half_width: float, reason: String) -> void:
@@ -1201,7 +1322,7 @@ func enter_build_mode() -> void:
 		return
 	_set_gameplay_input(false)
 	player.velocity = Vector3.ZERO
-	placed.set_static_protected(_build_protected_cells())
+	_after_layout_change()
 	build_mode.enter(player.global_position)
 	if task_notes != null:
 		task_notes.visible = false
@@ -1213,6 +1334,8 @@ func exit_build_mode() -> void:
 	if build_mode == null or not build_mode.is_active():
 		return
 	build_mode.exit(player.get_node("CameraAnchor"))
+	placed.rebuild_navigation()
+	_after_layout_change()
 	if task_notes != null:
 		task_notes.visible = true
 	_set_gameplay_input(true)

@@ -426,7 +426,7 @@ func _refresh() -> void:
 func _update_ghost(definition: PlaceableDefinition) -> void:
 	if _ghost_for != definition.id:
 		_free_ghost()
-		_ghost = definition.scene.instantiate()
+		_ghost = definition.scene.instantiate() if definition.scene != null else _visual_clone(_moving_uid)
 		_ghost.name = "Ghost"
 		_ghost.process_mode = Node.PROCESS_MODE_DISABLED
 		add_child(_ghost)
@@ -441,11 +441,33 @@ func _update_ghost(definition: PlaceableDefinition) -> void:
 	_ghost.rotation = Vector3(0, BuildGrid.rotation_y(_rotation), 0)
 	if _ghost.has_method("get_scene_offset"):
 		_ghost.global_position += _ghost.global_basis * _ghost.get_scene_offset()
+	elif not _moving_uid.is_empty():
+		_ghost.global_position += _ghost.global_basis * (_entry(_moving_uid).get("offset", Vector3.ZERO) as Vector3)
 	_ghost.global_position.y = 0.02
 	for mesh: Node in _ghost.find_children("*", "GeometryInstance3D", true, false):
 		var geometry := mesh as GeometryInstance3D
 		geometry.transparency = 0.35 if ok else 0.55
 		geometry.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
+## Preview of a yard fixture: copies of its meshes only (no scripts, no bodies).
+func _visual_clone(uid: String) -> Node3D:
+	var root := Node3D.new()
+	var source: Node3D = placed.get_node_for(uid)
+	if source == null:
+		return root
+	var inverse: Transform3D = source.global_transform.affine_inverse()
+	for mesh: Node in source.find_children("*", "MeshInstance3D", true, false):
+		if PlacedObjects._inside_scrap_item(mesh, source) or (mesh as MeshInstance3D).name == "HighlightRing":
+			continue
+		var copy := MeshInstance3D.new()
+		copy.mesh = (mesh as MeshInstance3D).mesh
+		copy.material_override = (mesh as MeshInstance3D).material_override
+		copy.transform = inverse * (mesh as MeshInstance3D).global_transform
+		for surface: int in (mesh as MeshInstance3D).get_surface_override_material_count():
+			copy.set_surface_override_material(surface, (mesh as MeshInstance3D).get_surface_override_material(surface))
+		root.add_child(copy)
+	return root
 
 
 func _free_ghost() -> void:

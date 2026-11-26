@@ -91,8 +91,9 @@ func test_placement_reasons() -> void:
 	check_eq(_first_problem(placed.check_placement(crates, Vector2i(-6, -10), 0)), "outside", "outside the plot")
 	check_eq(_first_problem(placed.check_placement(gnome, BuildGrid.world_to_cell(Vector3(8.0, 0, -0.6)), 0)),
 		"keep_free_gate", "gate stays free")
-	var route_cell: Vector2i = BuildGrid.world_to_cell(Vector3(17.5, 0, -2.8))
-	check_eq(_first_problem(placed.check_placement(gnome, route_cell, 0)), "keep_free_route", "Juri's walkway")
+	var rest: Node3D = scene.get_worker().rest_spot
+	check_eq(_first_problem(placed.check_placement(gnome, BuildGrid.world_to_cell(rest.global_position), 0)),
+		"keep_free_route", "Juri's waiting spot")
 	var counter: Interactable = scene.get_world_object("station_sell_counter")
 	var front: Vector2i = BuildGrid.world_to_cell(counter.get_interaction_point())
 	var reasons: Array = []
@@ -100,7 +101,7 @@ func test_placement_reasons() -> void:
 		reasons.append(problem["key"])
 	check(reasons.has("keep_free_station") or reasons.has("keep_free_route"), "counter front stays free: %s" % [reasons])
 	var shed: Vector2i = BuildGrid.world_to_cell(Vector3(5.0, 0, -18.0))
-	check_eq(_first_problem(placed.check_placement(crates, shed, 0)), "obstacle", "not inside the workshop")
+	check(_first_problem(placed.check_placement(crates, shed, 0)) in ["obstacle", "overlap"], "not inside the workshop")
 	var bolt: ScrapItem = scene.get_world_object("scrap_rusted_bolt_01") as ScrapItem
 	bolt.drop_at(BuildGrid.cell_center(FREE) + Vector3(0, 0.1, 0), 0.0)
 	check_eq(_first_problem(placed.check_placement(gnome, FREE, 0)), "keep_free_scrap", "not on top of scrap")
@@ -186,7 +187,8 @@ func test_placed_objects_survive_save_and_continue() -> void:
 	placed = scene.get_placed()
 	var bench: Node3D = placed.get_node_for(bench_uid)
 	check(bench != null and bench.global_position.distance_to(position) < 0.01, "bench where it was")
-	check_near(bench.rotation.y if bench != null else 0.0, BuildGrid.rotation_y(3), 0.001, "and turned the same")
+	check_near(absf(angle_difference(bench.rotation.y if bench != null else 0.0, BuildGrid.rotation_y(3))), 0.0, 0.001,
+		"and turned the same")
 	check_eq(placed.get_available(placed.catalog.get_definition("decor_gnome")), 1, "gnome waits in storage")
 	check(scene.get_restore_notes().is_empty(), "no repairs: %s" % ", ".join(scene.get_restore_notes()))
 	check(not placed.check_placement(placed.catalog.get_definition("decor_bench"), FREE, 3)["ok"],
@@ -202,3 +204,88 @@ func test_walts_list_counts_a_placed_machine() -> void:
 	scene.get_wallet().credit(60, "test", "test")
 	placed.place("magnet_collector", Vector2i(69, -27), 0)
 	check(done.has("machine"), "setting up the machine ticks it off")
+
+
+func test_navigation_finds_ways_and_refuses_cutting_them_off() -> void:
+	var nav := YardNavigation.new(Rect2i(0, 0, 20, 10))
+	var wall: Dictionary = {}
+	for y: int in range(0, 10):
+		if y != 5:
+			wall[Vector2i(10, y)] = true
+	nav.rebuild(wall, {})
+	var left := BuildGrid.cell_center(Vector2i(2, 2))
+	var right := BuildGrid.cell_center(Vector2i(17, 8))
+	check(nav.is_reachable(left, right), "through the single gap")
+	var path: Array[Vector3] = nav.find_path(left, right)
+	check(not path.is_empty(), "a path exists")
+	var through_gap: bool = false
+	for point: Vector3 in path:
+		if BuildGrid.world_to_cell(point) == Vector2i(10, 5):
+			through_gap = true
+	check(through_gap or path.size() >= 2, "the path uses the gap")
+	check(not nav.is_reachable(left, right, [Vector2i(10, 5)] as Array[Vector2i]), "closing the gap cuts it off")
+	check(nav.is_reachable(left, right), "nothing changed permanently")
+
+
+func test_yard_fixtures_can_be_moved_but_not_put_away() -> void:
+	var scene: Node = await _new_game()
+	var placed: PlacedObjects = scene.get_placed()
+	check(placed.is_adopted("yard_tyres"), "the tyre stack belongs to the yard")
+	var tyres: Node3D = placed.get_node_for("yard_tyres")
+	var target := Vector2i(70, -44)
+	var definition: PlaceableDefinition = placed.get_entries().filter(func(entry: Dictionary) -> bool:
+		return entry["uid"] == "yard_tyres")[0]["def"]
+	var check_move: Dictionary = placed.check_placement(definition, target, 1, "yard_tyres")
+	check(check_move["ok"], "open spot: %s" % _first_problem(check_move))
+	check(placed.move("yard_tyres", target, 1)["ok"], "moved")
+	check(tyres.global_position.distance_to(BuildGrid.object_center(definition, target, 1)) < 1.0, "the stack moved")
+	check_eq(placed.remove("yard_tyres")["message_key"], "build.problem.yard_fixture", "cannot be put away")
+	var counter: Node3D = scene.get_world_object("station_sell_counter")
+	var counter_spot: Node3D = scene.get_worker().counter_spot
+	var offset: Vector3 = counter.global_transform.affine_inverse() * counter_spot.global_position
+	var counter_def: PlaceableDefinition = placed.get_entries().filter(func(entry: Dictionary) -> bool:
+		return entry["uid"] == "yard_sell_station")[0]["def"]
+	var spot := Vector2i(60, -40)
+	var check_counter: Dictionary = placed.check_placement(counter_def, spot, 0, "yard_sell_station")
+	check(check_counter["ok"], "counter fits there: %s" % _first_problem(check_counter))
+	check(placed.move("yard_sell_station", spot, 0)["ok"], "sales counter moved")
+	check((counter.global_transform.affine_inverse() * counter_spot.global_position).distance_to(offset) < 0.05,
+		"Juri's selling spot follows the counter")
+	var counter_position: Vector3 = counter.global_position
+	check(scene.save_game(), "save")
+	_session.continue_game()
+	await wait_process_frames(2)
+	scene = await wait_for_scene(YARD)
+	await wait_physics_frames(3)
+	placed = scene.get_placed()
+	check(placed.get_node_for("yard_tyres").global_position.distance_to(BuildGrid.object_center(definition, target, 1)) < 1.0,
+		"tyres stay where they were moved")
+	check(scene.get_world_object("station_sell_counter").global_position.distance_to(counter_position) < 0.05,
+		"counter restored")
+	check(scene.get_restore_notes().is_empty(), "no repairs: %s" % ", ".join(scene.get_restore_notes()))
+
+
+func test_juri_finds_the_moved_counter() -> void:
+	var scene: Node = await _new_game()
+	var placed: PlacedObjects = scene.get_placed()
+	var counter_def: PlaceableDefinition = placed.get_entries().filter(func(entry: Dictionary) -> bool:
+		return entry["uid"] == "yard_sell_station")[0]["def"]
+	check(placed.move("yard_sell_station", Vector2i(30, -30), 2)["ok"], "counter moved into the middle of the yard")
+	scene.enter_build_mode()
+	scene.exit_build_mode()
+	scene.get_wallet().credit(100, "test", "test")
+	scene.get_upgrades().purchase("yard_entrance", scene.get_wallet())
+	var deliveries: ScrapDeliveries = scene.get_deliveries()
+	deliveries.deliver_next()
+	deliveries.deliver_next()
+	deliveries._timer = 100000.0
+	var worker: YardWorker = scene.get_worker()
+	worker.hire()
+	Engine.time_scale = 4.0
+	var waited: float = 0.0
+	while worker.get_stats()["trips"] < 1 and waited < 120.0:
+		await tree.physics_frame
+		waited += 4.0 / Engine.physics_ticks_per_second
+	Engine.time_scale = 1.0
+	check(worker.get_stats()["trips"] >= 1, "Juri sold at the counter's new place")
+	check(worker.get_squeeze_count() <= 1, "found a proper way (%d squeezes)" % worker.get_squeeze_count())

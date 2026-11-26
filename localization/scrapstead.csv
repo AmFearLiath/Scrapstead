@@ -532,3 +532,40 @@ scrappy.built_decor_bench.1,A bench! For breaks. I'll pretend I need one too.,"E
 scrappy.built_decor_floodlight.1,Light! Now we can find scrap at night. Or be found by it.,Licht! Jetzt finden wir Schrott auch nachts. Oder er uns.
 scrappy.built_decor_planter.1,Walt grew tomatoes in one of these. They tasted of bath foam.,Walt hatte in so einer Tomaten. Die schmeckten nach Badeschaum.
 scrappy.built_storage_crates.1,Crates! Now we can store things properly. And forget where.,"Kisten! Jetzt können wir ordentlich einlagern. Und vergessen, wo."
+yard.workshop,Workshop,Werkstatt
+yard.kiosk,Sales kiosk,Verkaufskiosk
+yard.wall,Brick wall,Mauerstück
+yard.girder,Girder stack,Trägerstapel
+yard.crates,Crate stack,Kistenstapel
+yard.shelf,Storage shelf,Lagerregal
+yard.barrels,Barrels,Fässer
+yard.scrap_pile,Small scrap pile,Kleiner Schrotthaufen
+yard.scrap_heap_large,Large scrap heap,Großer Schrotthaufen
+yard.scrap_heap_small,Scrap heap,Schrotthaufen
+yard.car_wreck,Car wreck,Autowrack
+yard.engine_block,Engine block,Motorblock
+yard.container,Container,Container
+yard.pallets,Pallet stack,Palettenstapel
+yard.tyres,Tyre stack,Reifenstapel
+yard.wheelbarrow,Walt's wheelbarrow,Walts Schubkarre
+yard.planter,Bathtub planter,Badewannenbeet
+yard.sell_counter,Sales counter,Annahmetresen
+yard.order_desk,Office desk,Bürotisch
+yard.workbench,Workbench,Werkbank
+yard.dismantle_table,Dismantling table,Zerlegetisch
+yard.notice_board,Notice board,Schwarzes Brett
+yard.floodlight,Floodlight,Hofstrahler
+yard.source_pile,Scrap pile,Schrotthaufen
+yard.source_toolbox,Old toolbox,Alter Werkzeugkasten
+yard.source_crate,Storage crate,Lagerkiste
+yard.source_drum,Rusty drum,Rostiges Fass
+yard.head_heap,Heap with a beeping,Piepender Haufen
+yard.red_toolbox,Red toolbox,Roter Werkzeugkasten
+yard.drop_off,Drop-off pallet,Abladepalette
+yard.nail_heap,Walt's nail heap,Walts Nagelhaufen
+yard.tool_crowbar,Crowbar rack,Brechstangen-Halter
+yard.tool_hoist,Hoist stand,Flaschenzug-Platz
+yard.tool_handcart,Handcart parking,Handkarren-Platz
+build.yard_fixture,"Part of the yard. Can be moved and turned, not put away.","Gehört zum Hof. Lässt sich versetzen und drehen, aber nicht wegräumen."
+build.problem.yard_fixture,"That belongs to the yard - you can move it, not put it away.","Das gehört zum Hof - du kannst es versetzen, aber nicht wegräumen."
+build.problem.blocks_access,That would cut off the way to: {name}.,Das würde den Weg abschneiden zu: {name}.

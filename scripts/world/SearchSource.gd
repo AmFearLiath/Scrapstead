@@ -84,3 +84,11 @@ func _apply_visual() -> void:
 func _has_tool(context: InteractionContext) -> bool:
 	return required_tool.is_empty() or (context != null and context.upgrades != null
 		and context.upgrades.has_tool(required_tool))
+
+
+## Build mode moved the source: its prepared contents move along.
+func on_relocated(old_transform: Transform3D, new_transform: Transform3D) -> void:
+	var delta: Transform3D = new_transform * old_transform.affine_inverse()
+	for item: ScrapItem in contents:
+		if item != null and item.get_state() == ScrapItem.State.PENDING:
+			item.global_transform = delta * item.global_transform

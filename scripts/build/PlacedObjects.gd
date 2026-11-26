@@ -39,6 +39,14 @@ var _static_protected: Dictionary = {}
 var protected_provider: Callable
 ## Cells covered by walkable path tiles (cached).
 var _path_cells: Dictionary = {}
+## Walkable grid for helpers; rebuilt after every layout change.
+var navigation: YardNavigation
+## Places that must stay reachable from `access_origin`:
+## `func() -> Array` of {"position": Vector3, "name": String key, "uid": String owner or ""}.
+var access_provider: Callable
+var access_origin: Vector3 = Vector3.ZERO
+## Cells blocked by things PlacedObjects does not manage (fences, gate posts).
+var _static_solid: Dictionary = {}
 const PATH_SPEED_FACTOR := 1.25
 
 
@@ -68,9 +76,11 @@ func _rebuild_path_cells() -> void:
 
 func _ready() -> void:
 	changed.connect(_rebuild_path_cells)
+	changed.connect(_update_navigation)
 	validator.plot = Rect2i(BuildGrid.world_to_cell(Vector3(buildable_area.position.x, 0, buildable_area.position.y)),
 		Vector2i(roundi(buildable_area.size.x / BuildGrid.CELL), roundi(buildable_area.size.y / BuildGrid.CELL)))
 	validator.static_blocked = _static_blocked
+	navigation = YardNavigation.new(validator.plot)
 
 
 func setup(upgrades: UpgradeProgress, wallet: Wallet, story: StoryState = null) -> void:
@@ -79,9 +89,11 @@ func setup(upgrades: UpgradeProgress, wallet: Wallet, story: StoryState = null) 
 	_story = story
 
 
-## Cells that must stay free for the yard to keep working: cell -> reason.
-func set_static_protected(cells: Dictionary) -> void:
+## Cells that must stay free for the yard to keep working: cell -> reason;
+## `owners`: cell -> uid of the object they belong to.
+func set_static_protected(cells: Dictionary, owners: Dictionary = {}) -> void:
 	_static_protected = cells
+	validator.protected_owner = owners
 
 
 # --- Queries ------------------------------------------------------------------
@@ -143,7 +155,33 @@ func get_price(definition: PlaceableDefinition) -> int:
 func check_placement(definition: PlaceableDefinition, anchor: Vector2i, rotation_steps: int,
 		ignore_uid: String = "") -> Dictionary:
 	_refresh_validator(ignore_uid)
-	return validator.check(definition, anchor, rotation_steps, ignore_uid)
+	var result: Dictionary = validator.check(definition, anchor, rotation_steps, ignore_uid)
+	if result["ok"] and definition.solid:
+		var blocked: Dictionary = _first_cut_off(result["footprint"], ignore_uid)
+		if not blocked.is_empty():
+			result["ok"] = false
+			(result["problems"] as Array).append({"key": "blocks_access", "cells": result["footprint"],
+				"args": {"name": TranslationServer.translate(str(blocked["name"]))}})
+	return result
+
+
+## The first important place the footprint would cut off, or {}.
+func _first_cut_off(footprint: Array[Vector2i], ignore_uid: String) -> Dictionary:
+	if navigation == null or not navigation.is_ready() or not access_provider.is_valid():
+		return {}
+	var freed: Array[Vector2i] = []
+	if not ignore_uid.is_empty() and _entries.has(ignore_uid):
+		var entry: Dictionary = _entries[ignore_uid]
+		freed = BuildGrid.footprint_cells(entry["def"], entry["anchor"], entry["rot"])
+	for target: Dictionary in access_provider.call():
+		if str(target.get("uid", "")) == ignore_uid and not ignore_uid.is_empty():
+			continue
+		var cell: Vector2i = BuildGrid.world_to_cell(target["position"])
+		if footprint.has(cell):
+			return target
+		if not navigation.is_reachable(access_origin, target["position"], footprint, freed):
+			return target
+	return {}
 
 
 # --- Actions (each returns {"ok", "message_key", "uid"}) ----------------------------
@@ -199,7 +237,8 @@ func move(uid: String, anchor: Vector2i, rotation_steps: int) -> Dictionary:
 	var old_transform: Transform3D = node.global_transform
 	entry["anchor"] = anchor
 	entry["rot"] = posmod(rotation_steps, 4)
-	_apply_transform(node, definition, anchor, entry["rot"])
+	entry["moved"] = true
+	_apply_transform(node, definition, anchor, entry["rot"], entry.get("offset", Vector3.ZERO))
 	var mover: Object = hook(node, "on_relocated")
 	if mover != null:
 		mover.on_relocated(old_transform, node.global_transform)
@@ -217,6 +256,8 @@ func remove(uid: String) -> Dictionary:
 	var entry: Dictionary = _entries[uid]
 	var definition: PlaceableDefinition = entry["def"]
 	var node: Node3D = entry["node"]
+	if entry.get("adopted", false):
+		return _result(false, "build.problem.yard_fixture")
 	var guard: Object = hook(node, "get_removal_problem")
 	if guard != null:
 		var problem: String = guard.get_removal_problem()
@@ -240,8 +281,13 @@ func remove(uid: String) -> Dictionary:
 
 func get_save_state() -> Dictionary:
 	var objects: Array = []
+	var yard: Dictionary = {}
 	for uid: String in _entries:
 		var entry: Dictionary = _entries[uid]
+		if entry.get("adopted", false):
+			if entry.get("moved", false):
+				yard[uid] = {"cell": [entry["anchor"].x, entry["anchor"].y], "rot": entry["rot"]}
+			continue
 		var saved: Dictionary = {"uid": uid, "def": (entry["def"] as PlaceableDefinition).id,
 			"cell": [entry["anchor"].x, entry["anchor"].y], "rot": entry["rot"]}
 		var stateful: Object = hook(entry["node"], "get_placed_state")
@@ -249,7 +295,7 @@ func get_save_state() -> Dictionary:
 			saved["state"] = stateful.get_placed_state()
 		objects.append(saved)
 	return {"counter": _counter, "objects": objects, "stored": _stored.duplicate(),
-		"stored_states": _stored_states.duplicate(true)}
+		"stored_states": _stored_states.duplicate(true), "yard": yard}
 
 
 ## Recreates placed objects. Unknown definitions are skipped and reported.
@@ -283,6 +329,122 @@ func apply_save_state(state: Dictionary) -> PackedStringArray:
 	return notes
 
 
+# --- The existing yard (adopted fixtures) -------------------------------------------
+
+## Takes over an object that was built into the yard scene, so it can be moved
+## like a placed one (not removed). Its footprint comes from its collision
+## boxes unless `size` is given. Returns the uid.
+func adopt(node: Node3D, uid: String, name_key: String, solid: bool = true, size: Vector2i = Vector2i.ZERO,
+		height: float = 1.5) -> String:
+	var bounds: Rect2 = _local_footprint(node)
+	var definition := PlaceableDefinition.new()
+	definition.id = uid
+	definition.name_key = name_key
+	definition.description_key = "build.yard_fixture"
+	definition.category = "yard"
+	definition.solid = solid
+	definition.height = height
+	if size == Vector2i.ZERO:
+		size = Vector2i(maxi(1, ceili(bounds.size.x / BuildGrid.CELL - 0.15)), maxi(1, ceili(bounds.size.y / BuildGrid.CELL - 0.15)))
+		definition.size = size
+	else:
+		definition.size = size
+		bounds = Rect2(-Vector2(size) * BuildGrid.CELL * 0.5, Vector2(size) * BuildGrid.CELL)
+	var rot: int = posmod(roundi(-node.global_rotation.y / (PI * 0.5)), 4)
+	var local_center := Vector3(bounds.get_center().x, 0.0, bounds.get_center().y)
+	var world_center: Vector3 = node.global_transform * local_center
+	var anchor: Vector2i = BuildGrid.anchor_for(definition, world_center, rot)
+	_entries[uid] = {"uid": uid, "def": definition, "anchor": anchor, "rot": rot, "node": node, "adopted": true,
+		"offset": -local_center, "moved": false}
+	return uid
+
+
+## Applies saved moves of adopted fixtures (call after adopting them all).
+func apply_yard_state(yard: Dictionary) -> PackedStringArray:
+	var notes: PackedStringArray = []
+	for uid: Variant in yard:
+		var saved: Variant = yard[uid]
+		if not _entries.has(str(uid)) or typeof(saved) != TYPE_DICTIONARY:
+			notes.append("yard fixture '%s' unknown" % uid)
+			continue
+		var cell: Variant = saved.get("cell", [])
+		if typeof(cell) != TYPE_ARRAY or cell.size() != 2:
+			continue
+		var entry: Dictionary = _entries[str(uid)]
+		var node: Node3D = entry["node"]
+		var old_transform: Transform3D = node.global_transform
+		entry["anchor"] = Vector2i(int(cell[0]), int(cell[1]))
+		entry["rot"] = posmod(int(saved.get("rot", 0)), 4)
+		entry["moved"] = true
+		_apply_transform(node, entry["def"], entry["anchor"], entry["rot"], entry["offset"])
+		var mover: Object = hook(node, "on_relocated")
+		if mover != null:
+			mover.on_relocated(old_transform, node.global_transform)
+	changed.emit()
+	return notes
+
+
+func is_adopted(uid: String) -> bool:
+	return _entries.has(uid) and _entries[uid].get("adopted", false)
+
+
+## Scans the static yard once (everything not managed here) and builds the
+## walkable grid. Call after adopting and restoring, and when build mode closes.
+func rebuild_navigation() -> void:
+	_static_solid.clear()
+	var all_cells: Array[Vector2i] = []
+	for x: int in range(validator.plot.position.x, validator.plot.end.x):
+		for y: int in range(validator.plot.position.y, validator.plot.end.y):
+			all_cells.append(Vector2i(x, y))
+	for cell: Vector2i in _static_blocked(all_cells):
+		_static_solid[cell] = true
+	_update_navigation()
+
+
+func _update_navigation() -> void:
+	if navigation == null:
+		return
+	var footprints: Dictionary = {}
+	for uid: String in _entries:
+		var entry: Dictionary = _entries[uid]
+		if (entry["def"] as PlaceableDefinition).solid:
+			for cell: Vector2i in BuildGrid.footprint_cells(entry["def"], entry["anchor"], entry["rot"]):
+				footprints[cell] = uid
+	navigation.rebuild(_static_solid, footprints)
+
+
+## XZ bounds (node-local) of the node's collision boxes, ignoring scrap items.
+func _local_footprint(node: Node3D) -> Rect2:
+	var bounds := Rect2()
+	var first: bool = true
+	var inverse: Transform3D = node.global_transform.affine_inverse()
+	for shape_node: Node in node.find_children("*", "CollisionShape3D", true, false):
+		var collision := shape_node as CollisionShape3D
+		if collision.shape is not BoxShape3D or _inside_scrap_item(collision, node):
+			continue
+		var extents: Vector3 = (collision.shape as BoxShape3D).size * 0.5
+		for corner: Vector3 in [Vector3(-1, 0, -1), Vector3(1, 0, -1), Vector3(-1, 0, 1), Vector3(1, 0, 1)]:
+			var local: Vector3 = inverse * (collision.global_transform * (corner * extents))
+			var point := Vector2(local.x, local.z)
+			if first:
+				bounds = Rect2(point, Vector2.ZERO)
+				first = false
+			else:
+				bounds = bounds.expand(point)
+	if first:
+		bounds = Rect2(-0.5, -0.5, 1.0, 1.0)
+	return bounds
+
+
+static func _inside_scrap_item(node: Node, root: Node) -> bool:
+	var current: Node = node.get_parent()
+	while current != null and current != root:
+		if current is ScrapItem:
+			return true
+		current = current.get_parent()
+	return false
+
+
 # --- Helpers ------------------------------------------------------------------
 
 func _spawn(uid: String, definition: PlaceableDefinition, anchor: Vector2i, rotation_steps: int,
@@ -313,11 +475,13 @@ static func hook(node: Node, method: String) -> Object:
 	return null
 
 
-func _apply_transform(node: Node3D, definition: PlaceableDefinition, anchor: Vector2i, rot: int) -> void:
-	node.global_position = BuildGrid.object_center(definition, anchor, rot)
-	node.rotation = Vector3(0, BuildGrid.rotation_y(rot), 0)
+func _apply_transform(node: Node3D, definition: PlaceableDefinition, anchor: Vector2i, rot: int,
+		offset: Vector3 = Vector3.ZERO) -> void:
+	var position: Vector3 = BuildGrid.object_center(definition, anchor, rot)
+	node.global_rotation = Vector3(0, BuildGrid.rotation_y(rot), 0)
 	if node.has_method("get_scene_offset"):
-		node.global_position += node.global_basis * node.get_scene_offset()
+		offset = node.get_scene_offset()
+	node.global_position = Vector3(position.x, node.global_position.y, position.z) + node.global_basis * offset
 
 
 func _add_footprint_body(node: Node3D, definition: PlaceableDefinition) -> void:

@@ -276,6 +276,21 @@ func _build_shots(scene: Node, player: Node3D) -> void:
 	await _shot("55_build_move_magnet")
 	mode.cancel()
 	scene.exit_build_mode()
+	player.place(Vector3(28.0, 0.1, -27.0), 2.4)
+	await _wait_for(func() -> bool: return false, 0.6)
+	scene.enter_build_mode()
+	mode.set_tool(BuildMode.TOOL_MOVE)
+	mode.aim_at(placed.get_node_for("yard_car_wreck").global_position)
+	mode.confirm()
+	mode.aim_at(Vector3(31.0, 0, -24.5))
+	mode.rotate_preview()
+	await _frames(10)
+	await _shot("56_build_move_car_wreck")
+	mode.confirm()
+	await _frames(10)
+	scene.exit_build_mode()
+	await _wait_for(func() -> bool: return false, 0.6)
+	await _shot("57_car_wreck_moved")
 
 
 ## Waits real time (physics runs at its own rate) until the condition holds.
