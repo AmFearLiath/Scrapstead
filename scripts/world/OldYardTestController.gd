@@ -840,6 +840,7 @@ func _setup_magnet(saved_machines: Dictionary) -> void:
 	magnet.item_removed.connect(func(object_id: String) -> void: _objects.erase(object_id))
 	magnet.piece_collected.connect(_on_magnet_piece_collected)
 	magnet.installed.connect(_on_magnet_installed)
+	magnet.refilled.connect(_on_magnet_refilled)
 	var saved: Variant = saved_machines.get("magnet_collector", {})
 	magnet.apply_save_state(saved if typeof(saved) == TYPE_DICTIONARY else {})
 	var animator: Node = magnet.get_node_or_null("Animator")
@@ -864,3 +865,12 @@ func _on_magnet_installed() -> void:
 	_sound("delivery", -2.0)
 	if story_director != null:
 		story_director.on_machine_installed()
+
+
+func _on_magnet_refilled(amount: int) -> void:
+	feedback_toast.show_message(tr(magnet.profile.refill_message_key).format({"amount": amount}))
+	_sound("van_horn", -10.0)
+	get_tree().create_timer(0.7).timeout.connect(_sound.bind("delivery", -6.0))
+	var heap: Node3D = magnet.get_node_or_null("Heap") as Node3D
+	if heap != null:
+		_dust(heap.global_position, 14, 0.3)

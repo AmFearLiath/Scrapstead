@@ -19,6 +19,8 @@ signal item_spawned(item: ScrapItem)
 signal item_removed(object_id: String)
 ## The machine was installed (bought) while the scene runs.
 signal installed
+## The supplier tipped new small scrap onto the heap.
+signal refilled(amount: int)
 
 const OBJECT_PREFIX := "magnet_"
 const STATUS_WORKING := "working"
@@ -40,7 +42,11 @@ var _upgrades: UpgradeProgress
 var _objects: Dictionary = {}
 var _switched_on: bool = true
 var _timer: float = 0.0
+## Pieces ever taken from the heap (position in the heap pattern).
 var _heap_taken: int = 0
+## Pieces currently in the heap.
+var _heap_stock: int = 0
+var _refill_timer: float = 0.0
 var _counter: int = 0
 var _status: String = ""
 ## Live crate items created from the heap: {"id", "item", "slot", "node"}.
@@ -48,6 +54,9 @@ var _live: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	if profile != null:
+		_heap_stock = profile.heap_size
+		_refill_timer = profile.refill_interval_seconds
 	_apply_installed()
 
 
@@ -84,7 +93,12 @@ func get_cycle_progress() -> float:
 
 
 func get_heap_remaining() -> int:
-	return maxi(profile.heap_size - _heap_taken, 0) if profile != null else 0
+	return _heap_stock
+
+
+## Seconds of play time until the supplier's next load (diagnostics, tests).
+func get_seconds_until_refill() -> float:
+	return maxf(_refill_timer, 0.0)
 
 
 ## "working", "off", "bin_full" or "empty"; empty string while not installed.
@@ -131,6 +145,7 @@ func toggle() -> bool:
 func _process(delta: float) -> void:
 	if not is_installed():
 		return
+	_process_refill(delta)
 	_update_status()
 	if _status != STATUS_WORKING:
 		return
@@ -156,6 +171,7 @@ func collect_once() -> ScrapItem:
 		return null
 	var item_id: String = profile.get_heap_item(_heap_taken)
 	_heap_taken += 1
+	_heap_stock -= 1
 	_counter += 1
 	var item: ScrapItem = _spawn("%s%d" % [OBJECT_PREFIX, _counter], item_id, slot)
 	if item != null:
@@ -170,14 +186,18 @@ func get_save_state() -> Dictionary:
 	for entry: Dictionary in _live:
 		items.append({"id": entry["id"], "item": entry["item"], "slot": entry["slot"]})
 	return {"on": _switched_on, "timer": snappedf(_timer, 0.01), "heap_taken": _heap_taken,
-		"counter": _counter, "items": items}
+		"heap_stock": _heap_stock, "refill_timer": snappedf(_refill_timer, 0.01), "counter": _counter,
+		"items": items}
 
 
 ## Recreates the crate items of a save. Call before the world object states.
 func apply_save_state(state: Dictionary) -> void:
 	_switched_on = bool(state.get("on", true))
 	_timer = float(state.get("timer", get_cycle_seconds()))
-	_heap_taken = clampi(int(state.get("heap_taken", 0)), 0, profile.heap_size)
+	_heap_taken = maxi(int(state.get("heap_taken", 0)), 0)
+	# Saves from before the refills only knew how much had been taken.
+	_heap_stock = clampi(int(state.get("heap_stock", profile.heap_size - _heap_taken)), 0, profile.heap_size)
+	_refill_timer = float(state.get("refill_timer", profile.refill_interval_seconds))
 	_counter = int(state.get("counter", 0))
 	for saved: Variant in state.get("items", []):
 		if typeof(saved) != TYPE_DICTIONARY:
@@ -191,6 +211,28 @@ func apply_save_state(state: Dictionary) -> void:
 
 
 # --- Helpers ----------------------------------------------------------------
+
+## The supplier only comes while the machine stands and the heap has room.
+func _process_refill(delta: float) -> void:
+	if profile.refill_interval_seconds <= 0.0 or profile.refill_amount <= 0:
+		return
+	_refill_timer -= delta
+	if _refill_timer > 0.0:
+		return
+	_refill_timer = profile.refill_interval_seconds
+	refill_now()
+
+
+## Tips one supplier load onto the heap now. Returns the pieces added.
+func refill_now() -> int:
+	var amount: int = mini(profile.refill_amount, profile.heap_size - _heap_stock)
+	if amount <= 0:
+		return 0
+	_heap_stock += amount
+	refilled.emit(amount)
+	_update_status()
+	return amount
+
 
 ## Nearest loose magnetic item in the work area that is not already in the crate.
 func _find_loose_piece() -> ScrapItem:

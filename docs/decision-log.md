@@ -855,3 +855,8 @@ Referenz: [Erster Mitarbeiter](first-employee.md).
 - Spielstand Version 6 mit expliziter Migration aus Version 5.
 
 Referenz: [Erste Maschine](first-machine.md).
+
+## 26.11.2026 — Nachschub für den Nagelhaufen, günstigerer Magnet
+
+**Beschluss (Rückmeldung nach dem ersten Spielen: Sammler und Upgrade sind nach dem Haufen nutzlos):** Schrotthändler Kowalski kippt alle 4 Minuten Spielzeit 12 Teile auf den Nagelhaufen (höchstens 45). „Stärkerer Magnet“ kostet 25 statt 35 Cr. Versetzen der Maschine bleibt zurückgestellt, weil es ein Platzierungssystem erfordert.
+

@@ -18,10 +18,17 @@ extends Resource
 @export var work_radius: float = 3.0
 ## Item IDs the magnet can lift (iron and steel only).
 @export var magnetic_items: PackedStringArray = []
-## Finite stock of the heap the machine works on, taken in this repeating
-## order. Nothing is produced beyond `heap_size` pieces.
+## Stock of the heap the machine works on, taken in this repeating order.
+## The heap starts with and never holds more than `heap_size` pieces; it only
+## grows through the supplier's refills below.
 @export var heap_pattern: PackedStringArray = []
 @export var heap_size: int = 0
+## A supplier tips more small scrap onto the heap at this play-time interval
+## (0 = never). The heap never grows beyond `heap_size`.
+@export var refill_interval_seconds: float = 0.0
+@export var refill_amount: int = 0
+## Localized announcement of a refill ({amount} placeholder).
+@export var refill_message_key: String = ""
 
 
 func get_heap_item(index: int) -> String:

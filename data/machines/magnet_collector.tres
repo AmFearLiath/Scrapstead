@@ -16,3 +16,6 @@ work_radius = 3.0
 magnetic_items = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can")
 heap_pattern = PackedStringArray("scrap_rusted_bolt", "scrap_empty_can", "scrap_rusted_bolt", "scrap_rusted_bolt", "scrap_empty_can")
 heap_size = 45
+refill_interval_seconds = 240.0
+refill_amount = 12
+refill_message_key = "ui.machine.refilled"

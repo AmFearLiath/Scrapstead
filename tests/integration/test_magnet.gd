@@ -129,10 +129,10 @@ func test_full_crate_stops_the_machine_until_emptied() -> void:
 	check_eq(magnet.get_bin_count(), magnet.profile.bin_capacity, "crate full")
 	check_eq(magnet.get_status(), MagnetCollector.STATUS_BIN_FULL, "status says so")
 	check(scene.get_node("HUD/TaskNotes").get_notes().has(tr("note.magnet_full")), "note points at the crate")
-	var heap: int = magnet.get_heap_remaining()
+	var taken: int = magnet._heap_taken
 	magnet._process(1000.0)
 	check(magnet.collect_once() == null, "nothing more fits")
-	check_eq(magnet.get_heap_remaining(), heap, "heap untouched while full")
+	check_eq(magnet._heap_taken, taken, "nothing taken from the heap while full")
 	var positions: Array = []
 	for item: ScrapItem in magnet.get_live_items():
 		for other: Vector3 in positions:
@@ -257,3 +257,38 @@ func test_old_version_5_save_migrates_and_broken_machine_data_is_rejected() -> v
 	check(not service.validate_save_data(data), "broken crate entry rejected")
 	data["machines"] = {"magnet_collector": {"on": "yes"}}
 	check(not service.validate_save_data(data), "broken switch rejected")
+
+
+func test_kowalski_refills_the_heap_while_the_machine_stands() -> void:
+	var scene: Node = await _new_game()
+	var magnet: MagnetCollector = scene.get_magnet()
+	magnet._process(10000.0)
+	check_eq(magnet.get_heap_remaining(), magnet.profile.heap_size, "no supplier before the purchase")
+	magnet = _installed(scene)
+	magnet.apply_save_state({"heap_taken": magnet.profile.heap_size, "counter": 0})
+	check_eq(magnet.get_heap_remaining(), 0, "old saves without stock: heap derived from what was taken")
+	check_eq(magnet.get_status(), MagnetCollector.STATUS_EMPTY, "empty heap")
+	var loads: Array = []
+	magnet.refilled.connect(func(amount: int) -> void: loads.append(amount))
+	magnet.toggle()
+	magnet._process(magnet.profile.refill_interval_seconds + 0.5)
+	check_eq(loads, [magnet.profile.refill_amount], "one load after the interval, even while switched off")
+	check_eq(magnet.get_heap_remaining(), magnet.profile.refill_amount, "heap refilled")
+	magnet.toggle()
+	check_eq(magnet.get_status(), MagnetCollector.STATUS_WORKING, "back to work")
+	var item: ScrapItem = magnet.collect_once()
+	check(item != null, "lifts from the new load")
+	check_eq(item.get_item_id(), magnet.profile.get_heap_item(magnet.profile.heap_size), "pattern continues")
+	for index: int in 10:
+		magnet.refill_now()
+	check_eq(magnet.get_heap_remaining(), magnet.profile.heap_size, "never more than the heap holds")
+	check_eq(magnet.refill_now(), 0, "a full heap takes nothing")
+	magnet._refill_timer = 33.0
+	check(scene.save_game(), "save succeeds")
+	_session.continue_game()
+	await wait_process_frames(2)
+	scene = await wait_for_scene(YARD)
+	await wait_physics_frames(3)
+	magnet = scene.get_magnet()
+	check_eq(magnet.get_heap_remaining(), magnet.profile.heap_size - 0, "stock kept")
+	check_near(magnet.get_seconds_until_refill(), 33.0, 0.5, "supplier timer kept")

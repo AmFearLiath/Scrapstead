@@ -352,7 +352,7 @@ scrappy.staff_hired.1,A colleague! Does he have wheels? ...No. Pity. I like him 
 scrappy.staff_dismissed.1,He's waiting by the gate. That is either loyal or creepy.,Er wartet am Tor. Das ist entweder treu oder unheimlich.
 upgrade.machine_magnet_collector.name,Small magnetic collector,Kleiner Magnetsammler
 upgrade.machine_magnet_collector.description,"Second-hand, from a workshop clearance. Lifts anything that rusts. Ignores copper and wood, a little offended. Set up on the free work area next to Walt's nail heap.","Gebraucht, aus einer Werkstattauflösung. Hebt alles, was rostet. Kupfer und Holz ignoriert er leicht beleidigt. Wird auf der freien Arbeitsfläche neben Walts Nagelhaufen aufgestellt."
-upgrade.machine_magnet_collector.effect,Every 20 s one bolt or can from the nail heap (45 pieces) into its crate · stops when the crate holds 6,"Alle 20 s eine Schraube oder Dose aus dem Nagelhaufen (45 Teile) in seine Kiste · hält an, wenn 6 drin liegen"
+upgrade.machine_magnet_collector.effect,Every 20 s one bolt or can from the nail heap into its crate · stops when the crate holds 6 · Kowalski tips 12 more pieces onto the heap every 4 min,"Alle 20 s eine Schraube oder Dose aus dem Nagelhaufen in seine Kiste · hält an, wenn 6 drin liegen · Kowalski kippt alle 4 min 12 Teile nach"
 upgrade.machine_magnet_collector.bought,The magnetic collector is set up on the work area. Mind your watch.,Der Magnetsammler steht auf der Arbeitsfläche. Achte auf deine Armbanduhr.
 upgrade.upgrade_strong_magnet.name,Stronger magnet,Stärkerer Magnet
 upgrade.upgrade_strong_magnet.description,"Double-wound coil from an old scrapyard crane. Please don't stand too close with a pacemaker, a watch or strong opinions.","Doppelt gewickelte Spule aus einem alten Schrottplatzkran. Bitte nicht mit Herzschrittmacher, Armbanduhr oder festen Überzeugungen zu nah ran."
@@ -373,8 +373,9 @@ ui.machine.status.working,working,arbeitet
 ui.machine.status.off,switched off,ausgeschaltet
 ui.machine.status.bin_full,crate full,Kiste voll
 ui.machine.status.empty,nothing left to lift,nichts mehr zu holen
-ui.machine.rules,"One piece every {seconds} s. Stops when the crate holds {capacity} pieces. Pieces left in the heap: {heap}. Copper, wood and anything valuable stay where they are.","Ein Teil alle {seconds} s. Hält an, wenn {capacity} Teile in der Kiste liegen. Noch im Haufen: {heap} Teile. Kupfer, Holz und alles Wertvolle bleiben liegen."
+ui.machine.rules,"One piece every {seconds} s. Stops when the crate holds {capacity} pieces. Pieces in the heap: {heap}. Kowalski the scrap dealer tips a load of small scrap onto it every few minutes. Copper, wood and anything valuable stay where they are.","Ein Teil alle {seconds} s. Hält an, wenn {capacity} Teile in der Kiste liegen. Im Haufen: {heap} Teile. Schrotthändler Kowalski kippt alle paar Minuten eine Fuhre Kleinschrott nach. Kupfer, Holz und alles Wertvolle bleiben liegen."
 ui.machine.switched_on,{name} rattles back to life.,{name} rattert wieder los.
 ui.machine.switched_off,{name} switched off.,{name} ausgeschaltet.
 note.magnet_full,The magnet's crate is full.,Die Kiste am Magnetsammler ist voll.
 scrappy.machine_installed.1,A magnet! Lovely. I'll keep my distance. I'm rather attached to my screws.,Ein Magnet! Schön. Ich halte Abstand. Ich hänge an meinen Schrauben.
+ui.machine.refilled,"Kowalski the scrap dealer tipped {amount} pieces of small scrap onto the nail heap. ""Saves me the landfill fee.""",Schrotthändler Kowalski hat {amount} Teile Kleinschrott auf den Nagelhaufen gekippt. „Spart mir die Deponiegebühr.“

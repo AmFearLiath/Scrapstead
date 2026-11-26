@@ -14,19 +14,21 @@ P3b soll zeigen, dass eine Maschine eine erkennbare Wiederholungstätigkeit übe
 3. **Arbeit:** Der Ausleger schwenkt zum Haufen und senkt den Magneten ab. Er hebt ein Teil an, das sichtbar am Magneten hängt, schwenkt zur Drahtkiste und lässt es hineinfallen. Die Statuslampe leuchtet grün.
 4. **Ausgabe:** Die Teile in der Kiste sind gewöhnliche Fundstücke. Du hebst sie auf und verkaufst sie an der Theke.
 5. **Kiste voll:** Bei 6 Teilen hält die Maschine an. Die Lampe blinkt gelb, und der Notizzettel sagt „Die Kiste am Magnetsammler ist voll.“ Sobald ein Platz frei ist, arbeitet sie weiter.
-6. **Haufen leer:** Nach 45 Teilen meldet sie „nichts mehr zu holen“ (graue Lampe). Der Haufen schrumpft sichtbar mit seinem Bestand.
-7. **Bedienung:** Am Schaltkasten schaltest du ein und aus. Der Hinweis zeigt Status, Haufenbestand und Kistenfüllung, z. B. „arbeitet · Haufen 37 · Kiste 2/6“. Mit R siehst du die Regeln.
-8. **Upgrade:** „Stärkerer Magnet“ (35 Cr, setzt die Maschine voraus) verkürzt den Takt von 20 auf 12 s. Beschreibung: „Bitte nicht mit Herzschrittmacher, Armbanduhr oder festen Überzeugungen zu nah ran.“
+6. **Nachschub:** Solange die Maschine steht, kippt Schrotthändler Kowalski alle 4 Minuten Spielzeit 12 Teile Kleinschrott auf den Nagelhaufen („Spart mir die Deponiegebühr.“), höchstens bis 45 Teile. Lose Schrauben und Dosen, die du selbst neben den Haufen legst, nimmt der Magnet zuerst.
+7. **Haufen leer:** Ist der Haufen leer, meldet sie „nichts mehr zu holen“ (graue Lampe), bis die nächste Fuhre kommt. Der Haufen schrumpft und wächst sichtbar mit seinem Bestand.
+8. **Bedienung:** Am Schaltkasten schaltest du ein und aus. Der Hinweis zeigt Status, Haufenbestand und Kistenfüllung, z. B. „arbeitet · Haufen 37 · Kiste 2/6“. Mit R siehst du die Regeln.
+9. **Upgrade:** „Stärkerer Magnet“ (25 Cr, setzt die Maschine voraus) verkürzt den Takt von 20 auf 12 s. Beschreibung: „Bitte nicht mit Herzschrittmacher, Armbanduhr oder festen Überzeugungen zu nah ran.“
 
 ## 3. Regeln
 
 | Regel | Wert | Begründung |
 |---|---|---|
-| Eingabe | Walts Nagelhaufen: 45 Teile in fester Reihenfolge (Schraube, Dose, Schraube, Schraube, Dose …). Lose Schrauben und Dosen im Umkreis von 3 m um den Haufen nimmt er zuerst. | Klar definierte, endliche Quelle; nichts entsteht aus dem Nichts |
+| Eingabe | Walts Nagelhaufen: bis zu 45 Teile in fester Reihenfolge (Schraube, Dose, Schraube, Schraube, Dose …). Lose Schrauben und Dosen im Umkreis von 3 m um den Haufen nimmt er zuerst. | Klar definierte Quelle; nichts entsteht aus dem Nichts |
+| Nachschub | Kowalski: alle 240 s Spielzeit +12 Teile, nie über 45, auch bei ausgeschalteter Maschine | Beschaffungsweg Lieferant; hält die Maschine nach dem ersten Haufen nützlich (Rückmeldung aus dem ersten Spielen) |
 | Magnetisch | Nur verrostete Schraube und leere Dose | Kupfer und Holz sind nicht magnetisch; Wertvolles bleibt beim Spieler |
 | Takt | 20 s, mit Upgrade 12 s | ~7,8 bzw. 13 Cr/min, solange geleert wird |
 | Ausgabe | Drahtkiste, 6 Plätze | Eindeutiger Ausgabepunkt; volle Kiste stoppt die Maschine (kein Leerlauf-Tycoon) |
-| Wert | Haufen ≈ 117 Cr bei 60 Cr Kaufpreis | Lohnt sich spürbar, ist aber endlich |
+| Wert | Erster Haufen ≈ 117 Cr bei 60 Cr Kaufpreis; danach ≈ 7,8 Cr/min aus Kowalskis Fuhren | Lohnt sich dauerhaft, bleibt aber Nebeneinkommen |
 | Status | arbeitet · Kiste voll · nichts mehr zu holen · ausgeschaltet | Lampe, Hinweis am Schaltkasten, Notiz bei voller Kiste |
 | Offline | Arbeitet nur, während gespielt wird | Konzept: keine vollständige Offline-Produktion |
 | Hindernis | Erst nach dem Kauf fest (Kollision) | Vorher läuft man über den freien Stellplatz |
@@ -63,5 +65,6 @@ Screenshots `37_machine_pad_reserved` bis `42_machine_crate_full`.
 
 - Playtest: ob 20 s und 6 Plätze sich gut anfühlen und ob das Leeren der Kiste Beschäftigung oder Pflicht ist.
 - Juri leert die Kiste bewusst nicht (eine Aufgabe pro Mitarbeiter). Eine zweite Aufgabe wäre ein naheliegender nächster Delegationsschritt.
-- Nach dem leeren Haufen gibt es keine neue Eingabe. Spätere Idee: gemischte Nachbarlieferungen auf den Haufen statt auf die Palette.
+- Mit Kowalskis Takt (12 Teile / 4 min) bremst der Nachschub die schnellere Spule auf Dauer aus. Sie leert vor allem den Rückstand schneller. Ob das reicht, zeigt der Playtest.
+- Versetzen der Maschine an andere Haufen (Platzierung) ist bewusst noch nicht umgesetzt.
 - Der Magnet hat noch kein eigenes Brummgeräusch; er nutzt vorhandene Klänge.

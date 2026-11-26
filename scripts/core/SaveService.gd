@@ -160,7 +160,7 @@ func _is_valid_machines(value: Variant) -> bool:
 		var machine: Variant = value[machine_id]
 		if typeof(machine_id) != TYPE_STRING or typeof(machine) != TYPE_DICTIONARY:
 			return false
-		for key: String in ["timer", "heap_taken", "counter"]:
+		for key: String in ["timer", "heap_taken", "heap_stock", "refill_timer", "counter"]:
 			if machine.has(key) and not _is_number(machine[key]):
 				return false
 		if machine.has("on") and typeof(machine["on"]) != TYPE_BOOL:
