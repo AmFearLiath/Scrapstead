@@ -156,6 +156,46 @@ func _machine_shots(scene: Node, player: Node3D) -> void:
 		magnet.collect_once()
 	await _frames(60)
 	await _shot("42_machine_crate_full")
+	await _staff_tool_shots(scene, player)
+
+
+## Juri with the handcart and at the dismantling table.
+func _staff_tool_shots(scene: Node, player: Node3D) -> void:
+	var worker: YardWorker = scene.get_worker()
+	var upgrades: UpgradeProgress = scene.get_upgrades()
+	for ware_id: String in ["upgrade_carry_basket", "upgrade_handcart"]:
+		if not upgrades.is_owned(ware_id):
+			scene.get_wallet().credit(upgrades.get_catalog().get_definition(ware_id).price, "capture", "capture")
+			upgrades.purchase(ware_id, scene.get_wallet())
+	(scene.get_world_object("station_order_desk") as OrderDesk).refresh_deliveries(upgrades)
+	var deliveries: ScrapDeliveries = scene.get_deliveries()
+	for item: ScrapItem in deliveries.get_live_items():
+		if item.get_state() == ScrapItem.State.IN_WORLD:
+			item.set_state(ScrapItem.State.SOLD)
+	deliveries._next_entry = 8
+	var beam: ScrapItem = deliveries.deliver_next()[0]
+	scene.get_node("GameplayCamera")._target_zoom = 11.0
+	await _wait_for(func() -> bool: return worker.has_cart(), 40.0)
+	await _wait_for(func() -> bool: return false, 0.6)
+	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
+	await _wait_for(func() -> bool: return false, 0.8)
+	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
+	await _wait_for(func() -> bool: return false, 0.3)
+	await _shot("43_staff_handcart")
+	deliveries._next_entry = 4
+	await _wait_for(func() -> bool: return worker.get_carried_items().is_empty() and not worker.has_cart(), 60.0)
+	deliveries.deliver_next()
+	await _wait_for(func() -> bool: return worker._task == YardWorker.Task.DISMANTLING, 60.0)
+	player.place(worker.global_position + Vector3(0.9, 0.1, 1.1), 3.8)
+	await _frames(20)
+	await _shot("44_staff_dismantling")
+
+
+## Waits real time (physics runs at its own rate) until the condition holds.
+func _wait_for(condition: Callable, seconds: float) -> void:
+	var deadline: int = Time.get_ticks_msec() + int(seconds * 1000.0)
+	while not condition.call() and Time.get_ticks_msec() < deadline:
+		await process_frame
 
 
 ## P1 sequence: carried items, salvage, sell panel, upgrade panel, pause menu.

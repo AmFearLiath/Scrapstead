@@ -863,3 +863,7 @@ Referenz: [Erste Maschine](first-machine.md).
 ## 26.11.2026 — Juri zerlegt Geräte vor dem Verkauf
 
 **Beschluss (Rückmeldung nach dem ersten Spielen):** Nachbarn liefern gelegentlich defekte Radios. Juri bringt sie, wenn der Spieler es erlaubt (Standard: an), allein zum Zerlegetisch, braucht dort 1,5-mal so lange und verkauft die Teile. Hof +14 statt +11 Cr, Juri 2 statt 1 Cr Lohn. Der Zerlegetisch erzeugt Ausgaben für jedes weitere Radio zur Laufzeit; das ursprüngliche Radio bleibt unverändert, damit P1b-Spielstände gültig bleiben. Eine Speicherversion ist nicht nötig (neue Felder sind optional).
+
+## 26.11.2026 — Mitarbeiter nutzen gekaufte Werkzeuge: der Handkarren
+
+**Beschluss (Rückmeldung nach dem ersten Spielen):** Schwere Lieferungen (Stahlträger von Benno) bewegt Juri nur mit dem gekauften Handkarren. Er holt ihn selbst vom Stellplatz beim Büro, schiebt ihn sichtbar und stellt ihn danach zurück. Ohne Karren bleibt das Teil liegen, und eine Notiz nennt den Grund. Brechstange und Flaschenzug für Mitarbeiter sind als nächste Ausbaustufe vorgemerkt.

@@ -18,6 +18,11 @@ extends Resource
 ## Category of broken devices he takes to the dismantling station first
 ## (if the player allows it); carried alone, one per trip.
 @export var device_category: String = "device"
+## Items of this carry size or more are heavy: he moves them only with a
+## cart from the catalog, alone, and fetches the cart himself first.
+@export var heavy_carry_size: int = 3
+## Catalog ware that provides the cart for heavy items.
+@export var cart_upgrade: String = "upgrade_handcart"
 ## Factor on a station's processing time ("good on his feet, less so with tools").
 @export var tool_time_factor: float = 1.5
 ## Items per trip.

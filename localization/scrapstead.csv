@@ -386,3 +386,8 @@ ui.staff.dismantle_on,{name} will take broken devices to the dismantling table f
 ui.staff.dismantle_off,{name} will sell broken devices as they are.,"{name} verkauft defekte Geräte so, wie sie sind."
 staff.juri.dismantles.1,"Screwdriver, screwdriver... Benno always said: righty-tighty. Or was it lefty?","Schraubenzieher, Schraubenzieher... Benno hat immer gesagt: rechts fest. Oder links?"
 staff.juri.dismantles.2,"If this radio plays polka now, I'm not responsible.","Wenn das Radio gleich Polka spielt, war ich das nicht."
+delivery.note.krull_3,A steel beam. Don't ask where from. Lift with your knees. — Benno,"Ein Stahlträger. Frag nicht, woher. Aus den Knien heben. — Benno"
+note.staff_needs_cart,Juri needs a handcart for the heavy piece on the pallet.,Juri braucht einen Handkarren für das schwere Teil auf der Palette.
+staff.juri.needs_cart.1,That beam? With these arms? Get me a handcart and we'll talk.,"Der Träger? Mit diesen Armen? Besorg mir einen Handkarren, dann reden wir."
+staff.juri.takes_cart.1,Heavy one. I'll get the cart.,Schweres Teil. Ich hol den Karren.
+staff.juri.takes_cart.2,Cart time! Beep beep.,Karrenzeit! Piep piep.

@@ -762,6 +762,7 @@ func _setup_worker(saved: Dictionary) -> void:
 	if worker == null:
 		return
 	worker.setup(_wallet, _objects, deliveries)
+	worker.set_upgrades(_upgrades)
 	worker.apply_save_state(saved)
 	worker.picked_up.connect(_on_worker_picked_up)
 	worker.sold.connect(_on_worker_sold)

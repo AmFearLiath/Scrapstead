@@ -23,7 +23,7 @@ signal dismantled(input: ScrapItem, outputs: Array)
 signal remark(line_key: String)
 
 enum Presence { ABSENT, AVAILABLE, HIRED }
-enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING }
+enum Task { IDLE, TO_ITEM, PICKING, TO_COUNTER, SELLING, TO_REST, TO_STATION, DISMANTLING, TO_CART, TO_CART_RETURN }
 
 const PRESENCE_NAMES: PackedStringArray = ["absent", "available", "hired"]
 const STATUS_WORKING := "working"
@@ -38,7 +38,7 @@ const STATUS_COLORS: Dictionary = {"working": Color(0.62, 0.85, 0.5), "waiting":
 	"blocked": Color(0.95, 0.45, 0.35), "paused": Color(0.88, 0.66, 0.23)}
 ## Event -> number of authored variants ("<line_prefix>.<event>.<n>").
 const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale": 1, "paused": 2,
-	"resumed": 2, "dismissed": 1, "refuses": 1, "dismantles": 2}
+	"resumed": 2, "dismissed": 1, "refuses": 1, "dismantles": 2, "needs_cart": 1, "takes_cart": 2}
 
 @export var profile: EmployeeProfile
 ## Where he waits to be hired, by the gate.
@@ -56,6 +56,15 @@ const LINE_COUNTS: Dictionary = {"appear": 1, "hired": 1, "idle": 4, "first_sale
 @export var station_route_root: Node3D
 ## Where he stands at the station.
 @export var station_spot: Marker3D
+@export_group("Cart")
+## Marker3D children from the main route towards the cart's parking spot.
+@export var cart_route_root: Node3D
+## Where he picks up and returns the cart.
+@export var cart_spot: Marker3D
+## The bought cart standing at its parking spot (hidden while he uses it).
+@export var cart_display: Node3D
+## Cart model he pushes (instanced in front of him while in use).
+@export var cart_scene: PackedScene
 
 ## Read by the presentation-only PlayerAnimator.
 var move_speed: float = 2.4
@@ -64,6 +73,12 @@ var _presence: Presence = Presence.ABSENT
 var _paused: bool = false
 ## Player's rule: take broken devices to the station before selling them.
 var _dismantle_devices: bool = true
+var _upgrades: UpgradeProgress
+## He is pushing the cart.
+var _has_cart: bool = false
+var _cart_visual: Node3D
+## A heavy item waits on the pallet but the yard owns no cart.
+var _missing_cart: bool = false
 ## Waypoint graph: positions and neighbour lists (built on first use).
 var _nodes: Array[Vector3] = []
 var _edges: Array = []
@@ -109,6 +124,28 @@ func get_presence() -> Presence:
 	return _presence
 
 
+## Optional: lets him use bought tools (the cart).
+func set_upgrades(upgrades: UpgradeProgress) -> void:
+	_upgrades = upgrades
+
+
+func has_cart() -> bool:
+	return _has_cart
+
+
+## True while a heavy item waits that he could only move with a cart.
+func is_missing_cart() -> bool:
+	return _missing_cart and _presence == Presence.HIRED
+
+
+func is_heavy(item: ScrapItem) -> bool:
+	return item != null and item.definition != null and item.definition.carry_size >= profile.heavy_carry_size
+
+
+func _owns_cart() -> bool:
+	return _upgrades != null and _upgrades.is_owned(profile.cart_upgrade) and cart_spot != null
+
+
 func is_hired() -> bool:
 	return _presence == Presence.HIRED
 
@@ -125,7 +162,8 @@ func get_status() -> String:
 		return STATUS_PAUSED
 	if _blocked:
 		return STATUS_BLOCKED
-	if _task in [Task.TO_ITEM, Task.PICKING, Task.TO_COUNTER, Task.SELLING, Task.TO_STATION, Task.DISMANTLING]:
+	if _task in [Task.TO_ITEM, Task.PICKING, Task.TO_COUNTER, Task.SELLING, Task.TO_STATION, Task.DISMANTLING,
+			Task.TO_CART, Task.TO_CART_RETURN]:
 		return STATUS_WORKING
 	return STATUS_WAITING
 
@@ -212,6 +250,7 @@ func dismiss() -> Dictionary:
 	if _presence != Presence.HIRED:
 		return Interactable.make_result(false, "ui.interaction.unavailable")
 	_return_carried_items()
+	_set_cart(false)
 	_paused = false
 	_blocked = false
 	_set_presence(Presence.AVAILABLE)
@@ -235,7 +274,7 @@ func on_delivery_arrived() -> void:
 
 func get_save_state() -> Dictionary:
 	var data: Dictionary = {"presence": PRESENCE_NAMES[_presence], "seen": _seen, "paused": _paused,
-		"dismantle": _dismantle_devices, "stats": _stats.duplicate()}
+		"dismantle": _dismantle_devices, "cart": _has_cart, "stats": _stats.duplicate()}
 	if _presence != Presence.ABSENT:
 		data["position"] = [snappedf(global_position.x, 0.001), snappedf(global_position.y, 0.001),
 			snappedf(global_position.z, 0.001)]
@@ -264,6 +303,7 @@ func apply_save_state(data: Dictionary) -> void:
 	_presence = presence as Presence
 	_paused = bool(data.get("paused", false)) and _presence == Presence.HIRED
 	_dismantle_devices = bool(data.get("dismantle", true))
+	_set_cart(bool(data.get("cart", false)) and _presence == Presence.HIRED)
 	var saved_position: Variant = data.get("position")
 	if typeof(saved_position) == TYPE_ARRAY and saved_position.size() == 3:
 		global_position = Vector3(saved_position[0], saved_position[1], saved_position[2])
@@ -291,7 +331,7 @@ func _physics_process(delta: float) -> void:
 	if _task == Task.TO_REST and _presence == Presence.HIRED and not _paused and _find_item() != null:
 		_next_task()
 	match _task:
-		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION:
+		Task.TO_ITEM, Task.TO_COUNTER, Task.TO_REST, Task.TO_STATION, Task.TO_CART, Task.TO_CART_RETURN:
 			target_velocity = _follow_path(delta)
 			if _path.is_empty():
 				_arrived()
@@ -315,6 +355,9 @@ func _physics_process(delta: float) -> void:
 	velocity.y = 0.0 if is_on_floor() else velocity.y - _gravity * delta
 	move_and_slide()
 	_face(delta, horizontal)
+	if _has_cart and cart_display != null and cart_display.visible:
+		# The catalog shows bought wares; the cart is with him right now.
+		cart_display.visible = false
 	_update_status()
 
 
@@ -337,11 +380,17 @@ func _next_task() -> void:
 		_path = _path_to(station_spot.global_position)
 		_task = Task.TO_STATION
 		return
-	if device == null and _carrying.size() < profile.carry_capacity:
+	if device == null and not _carries_heavy() and _carrying.size() < profile.carry_capacity:
 		var item: ScrapItem = _find_item(not _carrying.is_empty())
+		if item != null and is_heavy(item) and not _has_cart:
+			_arrive_distance = 0.25
+			_path = _path_to(cart_spot.global_position)
+			_task = Task.TO_CART
+			_say("takes_cart")
+			return
 		if item != null:
 			_target = item
-			_arrive_distance = 0.55
+			_arrive_distance = 0.55 if not _has_cart else 0.9
 			_path = _path_to(item.global_position)
 			_task = Task.TO_ITEM
 			return
@@ -349,6 +398,11 @@ func _next_task() -> void:
 		_arrive_distance = 0.2
 		_path = _path_to(_marker_position(counter_spot))
 		_task = Task.TO_COUNTER
+		return
+	if _has_cart:
+		_arrive_distance = 0.25
+		_path = _path_to(cart_spot.global_position)
+		_task = Task.TO_CART_RETURN
 		return
 	_walk_to(_marker_position(rest_spot), Task.TO_REST)
 
@@ -370,6 +424,12 @@ func _arrived() -> void:
 		Task.TO_COUNTER:
 			_task = Task.SELLING
 			_timer = profile.sell_seconds
+		Task.TO_CART:
+			_set_cart(true)
+			_next_task()
+		Task.TO_CART_RETURN:
+			_set_cart(false)
+			_next_task()
 		Task.TO_STATION:
 			_task = Task.DISMANTLING
 			_timer = dismantle_station.profile.seconds * profile.tool_time_factor
@@ -385,6 +445,7 @@ func _finish_pick() -> void:
 		_target.set_state(ScrapItem.State.CARRIED)
 		_carrying.append(_target)
 		picked_up.emit(_target)
+		_update_cart_load()
 	_next_task()
 
 
@@ -399,6 +460,55 @@ func _finish_dismantling() -> void:
 			_stats["dismantled"] += 1
 			dismantled.emit(device, outputs)
 	_next_task()
+
+
+func _set_missing_cart(missing: bool) -> void:
+	if missing == _missing_cart:
+		return
+	_missing_cart = missing
+	if missing:
+		_say("needs_cart")
+	status_changed.emit(_status)
+
+
+func _carries_heavy() -> bool:
+	for item: ScrapItem in _carrying:
+		if is_instance_valid(item) and is_heavy(item):
+			return true
+	return false
+
+
+## Takes or parks the cart (state and the visible model).
+func _set_cart(with_cart: bool) -> void:
+	_has_cart = with_cart
+	if cart_display != null:
+		cart_display.visible = not with_cart and _owns_cart()
+	if with_cart and _cart_visual == null and cart_scene != null:
+		_cart_visual = cart_scene.instantiate()
+		_cart_visual.name = "PushedCart"
+		_visual_root.add_child(_cart_visual)
+		_cart_visual.position = Vector3(0, 0, 0.85)
+		_cart_visual.rotation.y = PI
+	if _cart_visual != null:
+		_cart_visual.visible = with_cart
+	_update_cart_load()
+
+
+## Heavy load lies visibly on the cart (presentation only).
+func _update_cart_load() -> void:
+	if _cart_visual == null:
+		return
+	var load_root: Node3D = _cart_visual.get_node_or_null("Load") as Node3D
+	if load_root == null:
+		load_root = Node3D.new()
+		load_root.name = "Load"
+		_cart_visual.add_child(load_root)
+		load_root.position = Vector3(0, 0.55, 0)
+	for child: Node in load_root.get_children():
+		child.queue_free()
+	for item: ScrapItem in _carrying:
+		if is_instance_valid(item) and is_heavy(item) and item.definition.model != null:
+			load_root.add_child(item.definition.model.instantiate())
 
 
 func _carried_device() -> ScrapItem:
@@ -422,6 +532,7 @@ func _finish_sale() -> void:
 			total += item.definition.sell_value
 			count += 1
 	_carrying.clear()
+	_update_cart_load()
 	if count > 0 and total > 0 and _wallet != null:
 		var wage: int = mini(profile.wage_per_item * count, total)
 		_wallet.credit(total, _wallet.next_transaction_id("staff_sale"), "ui.ledger.staff_sale")
@@ -460,6 +571,7 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 		return null
 	var best: ScrapItem
 	var best_distance: float = INF
+	var missing_cart: bool = false
 	for target: Variant in _objects.values():
 		var item: ScrapItem = target as ScrapItem
 		if not _is_workable(item):
@@ -469,12 +581,16 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 				_refused[item.object_id] = true
 				_say("refuses")
 			continue
-		if skip_devices and item.definition.category == profile.device_category:
+		if is_heavy(item) and not _owns_cart():
+			missing_cart = true
+			continue
+		if skip_devices and (item.definition.category == profile.device_category or is_heavy(item)):
 			continue
 		var distance: float = item.global_position.distance_to(global_position)
 		if distance < best_distance:
 			best = item
 			best_distance = distance
+	_set_missing_cart(missing_cart)
 	return best
 
 
@@ -546,6 +662,10 @@ func _build_graph() -> void:
 		branch.append(station_spot.global_position)
 		var join: int = _nearest_node(branch[0], 0, main.size())
 		_add_chain(branch, join)
+	if cart_route_root != null and cart_spot != null:
+		var cart_branch: Array[Vector3] = _marker_points(cart_route_root)
+		cart_branch.append(cart_spot.global_position)
+		_add_chain(cart_branch, _nearest_node(cart_branch[0], 0, main.size()))
 
 
 func _add_chain(points: Array[Vector3], join: int) -> void:

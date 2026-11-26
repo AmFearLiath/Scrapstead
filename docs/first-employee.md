@@ -52,6 +52,14 @@ Seit der Rückmeldung nach dem ersten Spielen bringen Nachbarn gelegentlich defe
 - Der Zerlegetisch nimmt jetzt jedes Radio an. Das ursprüngliche Radio behält seine vorbereiteten Ausgaben; alle weiteren bekommen frische Teile (`dismantled_<n>`), die mit dem Spielstand gespeichert und nach dem Verkauf entfernt werden.
 - Juri läuft über einen kleinen Wegpunktgraphen (Hauptroute Palette → Theke, Abzweig zum Zerlegetisch) statt über eine einzelne Route.
 
+## 4b. Schwere Teile und der Handkarren (Erweiterung)
+
+- Benno liefert gelegentlich einen Stahlträger („Aus den Knien heben.“, 20 Cr, Tragegröße 3).
+- **Ohne Handkarren:** Juri lässt schwere Teile (Tragegröße ab 3) liegen. Er sagt einmal „Der Träger? Mit diesen Armen? Besorg mir einen Handkarren, dann reden wir.“, und der Notizzettel zeigt „Juri braucht einen Handkarren für das schwere Teil auf der Palette.“ Anderes erledigt er weiter, und der Spieler kann den Träger jederzeit selbst tragen.
+- **Mit gekauftem Handkarren:** Juri holt den Karren selbst von seinem Stellplatz beim Büro („Karrenzeit! Piep piep.“). Dort verschwindet der abgestellte Karren, und Juri schiebt ihn sichtbar vor sich her, mit dem Träger darauf. Er verkauft den Träger an der Theke (20 Cr, 1 Cr Lohn) und stellt den Karren danach zurück. Schwere Teile transportiert er immer allein.
+- Beim Entlassen stellt er den Karren sofort zurück. Der Karren ist Teil des Spielstands (`employee.cart`).
+- Brechstange und Flaschenzug nutzt er noch nicht. Denkbar wären verschlossene Kisten (Brechstange) oder sperrige Lieferungen, die erst angehoben werden müssen (Flaschenzug).
+
 ## 5. Technik
 
 - `EmployeeProfile` (Resource, `data/employees/juri.tres`): Name, Rolle, Kosten, Kapazität, Tempo, Arbeitsradius und Erscheinen.
@@ -82,4 +90,5 @@ Screenshots `32_staff_at_gate` bis `36_staff_at_counter`.
 - Playtest: Ob sich Handgeld und Lohn wie eine Entscheidung anfühlen oder wie eine Selbstverständlichkeit, und ob Juris Tempo nervt oder beruhigt.
 - Scrappy beobachtet Juri noch nicht bei der Arbeit (Konzept: Scrappy besucht Mitarbeiter). Das ist ein guter nächster Schritt für die Figurenbeziehungen.
 - Keine Erfahrung oder Entwicklung; das feste Rollenprofil genügt laut Kernmatrix für die Kernversion.
+- Tests des Handkarrens: `tests/integration/test_staff_cart.gd` (3 Tests: ohne Karren mit Notiz, Karren holen, transportieren, zurückstellen, Neustart und Entlassen mit Karren).
 - Tests der Erweiterung: `tests/integration/test_staff_dismantling.gd` (4 Tests: Spieler zerlegt ein geliefertes Radio, Juri mit und ohne Regel, Gerät allein und Neustart mitten in der Runde).

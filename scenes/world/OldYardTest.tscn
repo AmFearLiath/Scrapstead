@@ -62,6 +62,7 @@
 [ext_resource type="PackedScene" path="res://scenes/staff/YardWorker.tscn" id="70_worker"]
 [ext_resource type="PackedScene" path="res://ui/interaction/StaffPanel.tscn" id="71_staff_panel"]
 [ext_resource type="PackedScene" path="res://scenes/machines/MagnetCollector.tscn" id="72_magnet"]
+[ext_resource type="PackedScene" path="res://assets/models/equipment_handcart.glb" id="73_cart_model"]
 [node name="OldYardTest" type="Node3D" unique_id=1756386812 node_paths=PackedStringArray("player", "player_start", "camera_rig", "world_objects_root", "interaction_prompt", "feedback_toast", "inspect_panel", "sell_panel", "catalog_panel", "pause_menu", "economy_hud", "controls_hint", "debug_overlay", "fx", "sound_fx", "scrappy", "story_director", "letter_panel", "task_notes", "speech_bubble", "deliveries", "worker", "magnet", "staff_panel", "staff_bubble")]
 script = ExtResource("1_controller")
 player = NodePath("Player")
@@ -357,10 +358,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5, 0, -3.8)
 [node name="Point4" type="Marker3D" parent="Staff/StationRoute"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2, 0, -4.6)
 
+[node name="CartRoute" type="Node3D" parent="Staff"]
+
+[node name="Point1" type="Marker3D" parent="Staff/CartRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0, 0, -6.0)
+
+[node name="Point2" type="Marker3D" parent="Staff/CartRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 0, -10.6)
+
+[node name="Point3" type="Marker3D" parent="Staff/CartRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 0, -12.0)
+
+[node name="Point4" type="Marker3D" parent="Staff/CartRoute"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 0, -18.0)
+
+[node name="CartSpot" type="Marker3D" parent="Staff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0, -19.3)
+
 [node name="StationSpot" type="Marker3D" parent="Staff"]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 31.5, 0, -5.9)
 
-[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot", "dismantle_station", "station_route_root", "station_spot") instance=ExtResource("70_worker")]
+[node name="YardWorker" parent="Staff" node_paths=PackedStringArray("wait_spot", "rest_spot", "route_root", "counter_spot", "dismantle_station", "station_route_root", "station_spot", "cart_route_root", "cart_spot", "cart_display") instance=ExtResource("70_worker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9, 0, -0.9)
 wait_spot = NodePath("../WaitSpot")
 rest_spot = NodePath("../RestSpot")
@@ -369,6 +387,10 @@ counter_spot = NodePath("../CounterSpot")
 dismantle_station = NodePath("../../TestObjects/DismantleStation")
 station_route_root = NodePath("../StationRoute")
 station_spot = NodePath("../StationSpot")
+cart_route_root = NodePath("../CartRoute")
+cart_spot = NodePath("../CartSpot")
+cart_display = NodePath("../../DeliveryArea/upgrade_handcart")
+cart_scene = ExtResource("73_cart_model")
 
 [node name="MagnetCollector" parent="." instance=ExtResource("72_magnet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5, 0, -12.8)

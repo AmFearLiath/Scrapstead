@@ -54,7 +54,7 @@ func test_table_is_valid_and_only_delivers_common_scrap_and_devices() -> void:
 		for item_id: String in entry["items"]:
 			var definition: ItemDefinition = catalog.get_definition(item_id)
 			total += definition.sell_value
-			check(definition.category in ["loose_scrap", "device"], "%s is common scrap or a broken device" % item_id)
+			check(definition.category in ["loose_scrap", "device", "bulk_scrap"], "%s is common scrap, a broken device or a heavy piece" % item_id)
 			check(definition.carry_size <= 2 or definition.category == "bulk_scrap", "%s fits a basket" % item_id)
 		for key: String in [entry["sender"], entry["note"]]:
 			for locale: String in ["de", "en"]:
