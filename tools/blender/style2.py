@@ -17,19 +17,19 @@ import bpy
 # colour name -> (kind, base colour hex). Warm, slightly desaturated; a few
 # accents stay strong (Scrappy's teal, signal yellow, warning red).
 PALETTE = {
-    "rust": ("rust", "7a4027"), "rust_light": ("paint", "b0643a"), "mustard": ("paint", "d9a441"),
-    "cream": ("paint", "e8dcc4"), "moss": ("plant", "6e7d4a"), "teal": ("paint", "4b8f8a"),
-    "steel": ("metal", "707a80"), "steel_light": ("metal", "a3abad"), "wood": ("wood", "8f6a46"),
-    "wood_light": ("wood", "b38b5e"), "wood_dark": ("wood", "5a4330"), "sand": ("concrete", "c2a782"),
-    "soil": ("concrete", "8a7559"), "ink": ("paint", "2e2a27"), "plum": ("fabric", "5e4a5e"),
-    "red": ("paint", "b5462f"), "tyre": ("rubber", "2c2a28"), "brass": ("metal", "b59a52"),
-    "paper": ("paper", "efe4cc"), "glass": ("glass", "6f8f96"), "green": ("paint", "5f8650"),
-    "skin": ("skin", "e0a37f"),
+    "rust": ("rust", "7e3a1e"), "rust_light": ("paint", "c8602c"), "mustard": ("paint", "f0b52e"),
+    "cream": ("paint", "efe3c8"), "moss": ("plant", "a08f4f"), "teal": ("paint", "2f9d96"),
+    "steel": ("metal", "6d7a82"), "steel_light": ("metal", "b5bcbe"), "wood": ("wood", "9a6a40"),
+    "wood_light": ("wood", "c79560"), "wood_dark": ("wood", "5e4029"), "sand": ("concrete", "d6aa7c"),
+    "soil": ("concrete", "93704f"), "ink": ("paint", "2a2624"), "plum": ("fabric", "6b4a6b"),
+    "red": ("paint", "c63f2a"), "tyre": ("rubber", "262422"), "brass": ("metal", "c9a24a"),
+    "paper": ("paper", "f3e9d2"), "glass": ("glass", "5f8f9c"), "green": ("paint", "5c9a4a"),
+    "skin": ("skin", "e8a47c"),
 }
 
 RUST = (0.29, 0.13, 0.06, 1.0)
 DIRT = (0.42, 0.33, 0.24, 1.0)
-DUST = (0.80, 0.68, 0.52, 1.0)
+DUST = (0.86, 0.62, 0.45, 1.0)
 TEXELS_PER_METRE = 160
 _materials = {}
 
@@ -122,15 +122,15 @@ def _weather(tree, colour, rust=0.35, streaks=0.3, dirt=0.5, dust=0.35, variatio
     result = tree.mix(1.0, colour, bleach, "MULTIPLY")
     edges = tree.ramp(tree.geometry.outputs["Pointiness"], 0.52, 0.62)
     if chips > 0.0:
-        chip_noise = tree.ramp(tree.noise(11.0, 6.0, 0.7, offset=seed + 4.4), 0.42, 0.5)
+        chip_noise = tree.ramp(tree.noise(6.0, 2.0, 0.5, offset=seed + 4.4), 0.5, 0.56)
         chip_mask = tree.math("MULTIPLY", tree.math("MULTIPLY", edges, chip_noise), chips)
         result = tree.mix(chip_mask, result, chip_colour)
     if rust > 0.0:
-        low = tree.ramp(tree.height(), 0.0, 1.1, (1, 1, 1, 1), (0.25, 0.25, 0.25, 1))
-        spots = tree.ramp(tree.noise(5.5, 8.0, 0.68, offset=seed + 3.1), 0.6, 0.68)
+        low = tree.ramp(tree.height(), 0.0, 0.8, (1, 1, 1, 1), (0, 0, 0, 1))
+        spots = tree.ramp(tree.noise(2.6, 3.0, 0.55, offset=seed + 3.1), 0.56, 0.64)
         near = tree.math("MAXIMUM", edges, low)
         spot_mask = tree.math("MULTIPLY", tree.math("MULTIPLY", spots, near), min(1.0, rust * 2.2))
-        rust_tone = tree.mix(tree.noise(9.0, 4.0, 0.6, offset=seed + 1.3), RUST, (0.5, 0.24, 0.09, 1.0))
+        rust_tone = tree.mix(tree.noise(6.0, 2.0, 0.5, offset=seed + 1.3), RUST, (0.5, 0.24, 0.09, 1.0))
         result = tree.mix(spot_mask, result, rust_tone)
         runs = tree.ramp(tree.noise(7.0, 4.0, 0.55, stretch=(9.0, 9.0, 0.25), offset=seed + 6.2), 0.58, 0.72)
         run_mask = tree.math("MULTIPLY", runs, rust * 0.55)
@@ -141,11 +141,11 @@ def _weather(tree, colour, rust=0.35, streaks=0.3, dirt=0.5, dust=0.35, variatio
         result = tree.mix(1.0, result, streak, "MULTIPLY")
     if dirt > 0.0:
         ground = tree.ramp(tree.height(), 0.0, 0.6, (dirt, dirt, dirt, 1), (0, 0, 0, 1))
-        grime = tree.ramp(tree.noise(3.5, 6.0, 0.6, offset=seed + 9.9), 0.3, 0.7)
+        grime = tree.ramp(tree.noise(2.5, 3.0, 0.5, offset=seed + 9.9), 0.3, 0.7)
         result = tree.mix(tree.math("MULTIPLY", ground, grime), result, DIRT)
     if dust > 0.0:
         upward = tree.ramp(tree.up(), 0.6, 0.95)
-        blotch = tree.ramp(tree.noise(3.0, 5.0, 0.6, offset=seed + 2.2), 0.25, 0.85)
+        blotch = tree.ramp(tree.noise(2.0, 3.0, 0.5, offset=seed + 2.2), 0.25, 0.85)
         result = tree.mix(tree.math("MULTIPLY", tree.math("MULTIPLY", upward, blotch), dust), result, DUST)
     return result
 
@@ -153,7 +153,11 @@ def _weather(tree, colour, rust=0.35, streaks=0.3, dirt=0.5, dust=0.35, variatio
 def material_for(colour_name):
     """Procedural material for a palette colour name (shared per name)."""
     if colour_name in _materials:
-        return _materials[colour_name]
+        try:
+            _materials[colour_name].name  # noqa: B018 - removed by a scene reset?
+            return _materials[colour_name]
+        except ReferenceError:
+            _materials.clear()
     kind, hex_value = PALETTE.get(colour_name, ("paint", "999999"))
     base = _linear(hex_value)
     material = bpy.data.materials.new(f"S2_{colour_name}")
@@ -162,12 +166,13 @@ def material_for(colour_name):
     tree = _Tree(material)
     seed = (sum(ord(c) for c in colour_name) % 97) * 0.37
     if kind == "paint":
-        colour = _weather(tree, base, rust=0.3, streaks=0.3, dirt=0.55, dust=0.3, seed=seed, chips=0.8)
+        colour = _weather(tree, base, rust=0.28, streaks=0.3, dirt=0.5, dust=0.18, seed=seed, chips=0.0,
+                          variation=0.08)
         roughness = 0.75
     elif kind == "metal":
         darker = tuple(c * 0.72 for c in base[:3]) + (1.0,)
         blotch = tree.mix(tree.ramp(tree.noise(2.0, 6.0, 0.55, offset=seed), 0.3, 0.75), darker, base)
-        colour = _weather(tree, blotch, rust=0.4, streaks=0.4, dirt=0.5, dust=0.25, seed=seed, chips=0.4,
+        colour = _weather(tree, blotch, rust=0.4, streaks=0.4, dirt=0.5, dust=0.25, seed=seed, chips=0.0,
                           chip_colour=tuple(min(1.0, c * 1.25) for c in base[:3]) + (1.0,))
         roughness = 0.6
     elif kind == "rust":
@@ -189,7 +194,7 @@ def material_for(colour_name):
         roughness = 0.95
     elif kind == "glass":
         sheen = tree.ramp(tree.height(), 0.5, 2.5, base, (0.75, 0.86, 0.88, 1.0))
-        colour = _weather(tree, sheen, rust=0.0, streaks=0.45, dirt=0.3, dust=0.2, seed=seed)
+        colour = _weather(tree, sheen, rust=0.0, streaks=0.2, dirt=0.0, dust=0.15, seed=seed)
         roughness = 0.2
     elif kind == "concrete":
         speckle = tree.mix(tree.ramp(tree.noise(25.0, 2.0, 0.5, offset=seed), 0.45, 0.6),

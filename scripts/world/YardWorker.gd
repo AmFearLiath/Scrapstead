@@ -727,8 +727,12 @@ func _find_item(skip_devices: bool = false) -> ScrapItem:
 	return best
 
 
-func _is_workable(item: ScrapItem) -> bool:
-	if item == null or not is_instance_valid(item) or item.definition == null:
+func _is_workable(target: Variant) -> bool:
+	# The target may have been freed meanwhile (sold, opened, dismantled).
+	if target == null or not is_instance_valid(target) or not target is ScrapItem:
+		return false
+	var item: ScrapItem = target
+	if item.definition == null:
 		return false
 	if item.get_state() != ScrapItem.State.IN_WORLD or _drop_off == null:
 		return false

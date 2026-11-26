@@ -1,5 +1,9 @@
 [gd_scene format=3]
 
+[ext_resource type="Material" path="res://assets/materials/ground_sand.tres" id="g2_sand"]
+[ext_resource type="Material" path="res://assets/materials/ground_outer.tres" id="g2_outer"]
+[ext_resource type="Material" path="res://assets/materials/ground_path.tres" id="g2_path"]
+[ext_resource type="Material" path="res://assets/materials/ground_concrete.tres" id="g2_concrete"]
 [ext_resource type="Shader" path="res://assets/shaders/toon.gdshader" id="1_yopi7"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_tall_a.glb" id="2_j6r7a"]
 [ext_resource type="PackedScene" path="res://assets/models/fence_tall_b.glb" id="3_jfrso"]
@@ -232,7 +236,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.15, -18)
 collision_mask = 0
 
 [node name="Mesh" type="MeshInstance3D" parent="Ground/Plot" unique_id=1917357750]
-material_override = SubResource("ShaderMaterial_r8h3s")
+material_override = ExtResource("g2_sand")
 mesh = SubResource("BoxMesh_h8qq8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Plot" unique_id=135327661]
@@ -240,7 +244,7 @@ shape = SubResource("BoxShape3D_6ct2k")
 
 [node name="Surroundings" type="MeshInstance3D" parent="Ground" unique_id=2059875990]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, -0.16999999, -18)
-material_override = SubResource("ShaderMaterial_26xb1")
+material_override = ExtResource("g2_outer")
 mesh = SubResource("BoxMesh_5sjri")
 
 [node name="Boundaries" type="Node3D" parent="." unique_id=1849565582]
@@ -1441,22 +1445,22 @@ transform = Transform3D(1.1459455, 0, 0, 0, 1.1459455, 0, 0, 0, 1.1459455, 0, 0,
 
 [node name="MainPathGate" type="MeshInstance3D" parent="Markings" unique_id=561464246]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.01, -6.25)
-material_override = SubResource("ShaderMaterial_2k0wn")
+material_override = ExtResource("g2_path")
 mesh = SubResource("BoxMesh_lae63")
 
 [node name="MainPathEast" type="MeshInstance3D" parent="Markings" unique_id=34552469]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0.01, -12)
-material_override = SubResource("ShaderMaterial_2k0wn")
+material_override = ExtResource("g2_path")
 mesh = SubResource("BoxMesh_n2fy8")
 
 [node name="SidePathStorage" type="MeshInstance3D" parent="Markings" unique_id=377312399]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0.0105, -18.5)
-material_override = SubResource("ShaderMaterial_2k0wn")
+material_override = ExtResource("g2_path")
 mesh = SubResource("BoxMesh_q31hl")
 
 [node name="SidePathNorth" type="MeshInstance3D" parent="Markings" unique_id=1530484870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0.0105, -24)
-material_override = SubResource("ShaderMaterial_2k0wn")
+material_override = ExtResource("g2_path")
 mesh = SubResource("BoxMesh_emgw2")
 
 [node name="PadN" type="MeshInstance3D" parent="Markings" unique_id=640181106]
@@ -1481,5 +1485,5 @@ mesh = SubResource("BoxMesh_kwnra")
 
 [node name="SalesApron" type="MeshInstance3D" parent="Markings" unique_id=1986686415]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.0125, -5.5)
-material_override = SubResource("ShaderMaterial_vrxct")
+material_override = ExtResource("g2_concrete")
 mesh = SubResource("BoxMesh_0a8kv")

@@ -72,6 +72,11 @@ func _build_materials() -> void:
 	_mat("plant", Color("6f8a4a"))
 	_mat("brass", Color("c9a248"), 0.35, 0.85)
 	_mat("toolbox", Color("6d7f5e"), 0.7, 0.2)
+	# Art style 2 (docs/art-style-2.md): the ground uses the desert sand shader.
+	_materials["ground"] = load("res://assets/materials/ground_sand.tres")
+	_materials["ground_outside"] = load("res://assets/materials/ground_outer.tres")
+	_materials["gravel"] = load("res://assets/materials/ground_path.tres")
+	_materials["concrete"] = load("res://assets/materials/ground_concrete.tres")
 
 
 func _mat(key: String, color: Color, _roughness: float = 0.9, _metallic: float = 0.0) -> void:

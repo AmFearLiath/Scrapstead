@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cdlpivcyxd4ku" path="res://scripts/world/OldYardTestController.gd" id="1_controller"]
 [ext_resource type="Environment" path="res://assets/environment/yard_environment.tres" id="2_env"]
 [ext_resource type="PackedScene" path="res://scenes/world/YardBlockout.tscn" id="3_yard"]
+[ext_resource type="PackedScene" path="res://scenes/world/OutsideScenery.tscn" id="3_scenery"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/InspectTestObject.tscn" id="5_inspect"]
 [ext_resource type="PackedScene" path="res://scenes/interaction/UseTestObject.tscn" id="6_use"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="7_player"]
@@ -124,12 +125,18 @@ environment = ExtResource("2_env")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=483212802]
 transform = Transform3D(0.49757108, 0.7105858, -0.49748453, 0, 0.57352, 0.8191916, 0.8674232, -0.40760604, 0.28536698, 24, 20, -18)
-light_color = Color(1, 0.93, 0.82, 1)
-light_energy = 1.25
+light_color = Color(1, 0.91, 0.78, 1)
+light_energy = 1.7
+light_angular_distance = 1.2
 shadow_enabled = true
-directional_shadow_max_distance = 80.0
+shadow_bias = 0.04
+shadow_blur = 1.4
+directional_shadow_max_distance = 70.0
 
 [node name="LevelGeometry" parent="." unique_id=1654515028 instance=ExtResource("3_yard")]
+metadata/_edit_lock_ = true
+
+[node name="OutsideScenery" parent="." instance=ExtResource("3_scenery")]
 metadata/_edit_lock_ = true
 
 [node name="TestObjects" type="Node3D" parent="." unique_id=330993599]
