@@ -922,3 +922,7 @@ Referenz: [Schrottpresse](scrap-press.md), [Maschinenverbindungen](machine-links
 **Beschluss (Vorschlag des Nutzers):** Die Sortiermaschine trennt gemischten Schrott in Stahl, Kupfer & Elektronik und Holz; jede Kiste speist über ein Band eine eigene Presse, die sortenreine Ballen mit Aufpreis presst (bis zu drei Pressen, Stückkauf). Juri bringt Lieferungen und Zerlegeteile zuerst zu einer Presse, sonst zur Sortiermaschine, und verkauft nur, was keine Maschine nimmt; fertige Ballen holt er selbst ab. Fehlende Maschinen blockieren nichts: Dann wird von Hand verkauft. Eine Verkaufspalette für Ballen ist zurückgestellt, weil Juri die Ballen direkt abholt.
 
 Referenz: [Verarbeitungskette](processing-chain.md).
+
+## 27.11.2026 — Förderband-Timing und Schrottautos aus CC0-Modellen
+
+**Beschluss:** Ein Teil auf dem Förderband kommt erst an, wenn es sichtbar in den Trichter fällt; vorher wird nur der Platz reserviert (Befund des Nutzers: Bei langen Bändern kam ein anderes Teil aus der Sortiermaschine, als gerade hineinfiel). Die Autos aus dem CC0-City-Pack von Quaternius werden per Blender-Skript zu Schrottautos umgebaut (Rost, Dellen, fehlende Räder, Flicken) und ersetzen das Autowrack im Hof; fremde Assets werden in `docs/asset-credits.md` geführt.

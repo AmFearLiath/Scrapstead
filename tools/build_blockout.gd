@@ -301,7 +301,7 @@ func _build_obstacles(obstacles: Node3D) -> void:
 	var yard := _group(obstacles, "ScrapYardB")
 	_prop(yard, "LargeScrapHeap", "scrap_heap_large", Vector3(34, 0, 28.5), 0.0, Vector3(4.25, 2.4, 3.4))
 	_prop(yard, "SmallScrapHeap", "scrap_heap_small", Vector3(42, 0, 23.5), 0.0, Vector3(2.55, 1.4, 2.55))
-	_prop(yard, "CarWreck", "car_wreck", Vector3(26.5, 0, 31), 12.0, Vector3(1.9, 1.7, 4.1))
+	_prop(yard, "CarWreck", "scrap_car_a", Vector3(26.5, 0, 31), 12.0, Vector3(1.9, 1.7, 4.3))
 	_prop(yard, "EngineBlock", "engine_block", Vector3(40.5, 0, 31.5), 20.0, Vector3(1.4, 0.9, 1.0))
 	_prop(yard, "Container", "container", Vector3(44.5, 0, 31), 0.0, Vector3(2.5, 2.6, 6.0))
 	# Zone D - open work area: pallets near the reserved machine pad, tyres.

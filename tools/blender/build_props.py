@@ -600,11 +600,14 @@ import props_style2  # noqa: E402
 
 import props_press  # noqa: E402
 
+import props_scrapcars  # noqa: E402
+
 ASSETS.update(props_world.ASSETS)
 ASSETS.update(props_story.ASSETS)
 ASSETS.update(props_machines.ASSETS)
 ASSETS.update(props_style2.ASSETS)
 ASSETS.update(props_press.ASSETS)
+ASSETS.update(props_scrapcars.ASSETS)
 
 
 # Humans get fabric clothes and clean skin in art style 2 (docs/art-style-2.md).

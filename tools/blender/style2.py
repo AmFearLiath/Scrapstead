@@ -25,6 +25,8 @@ PALETTE = {
     "red": ("paint", "c63f2a"), "tyre": ("rubber", "262422"), "brass": ("metal", "c9a24a"), "copper": ("metal", "b8693a"),
     "paper": ("paper", "f3e9d2"), "glass": ("glass", "5f8f9c"), "green": ("paint", "5c9a4a"),
     "skin": ("skin", "e8a47c"),
+    "wreck_teal": ("wreck", "2f9d96"), "wreck_orange": ("wreck", "c8602c"), "wreck_mustard": ("wreck", "f0b52e"),
+    "wreck_red": ("wreck", "c63f2a"), "window": ("fabric", "34434a"),
 }
 
 RUST = (0.29, 0.13, 0.06, 1.0)
@@ -176,6 +178,14 @@ def material_for(colour_name):
         colour = _weather(tree, base, rust=0.28, streaks=0.3, dirt=0.5, dust=0.18, seed=seed, chips=0.0,
                           variation=0.08)
         roughness = 0.75
+    elif kind == "wreck":
+        # Car wrecks: sun-bleached paint, big rust blooms, heavy streaks and dust.
+        faded = tree.mix(0.16, base, (0.78, 0.72, 0.62, 1.0))
+        bloom = tree.ramp(tree.noise(1.8, 3.0, 0.55, offset=seed + 7.7), 0.52, 0.6)
+        rusty = tree.mix(bloom, faded, tree.mix(tree.noise(5.0, 2.0, 0.5, offset=seed), RUST, (0.5, 0.24, 0.09, 1.0)))
+        colour = _weather(tree, rusty, rust=0.6, streaks=0.6, dirt=0.7, dust=0.4, seed=seed, chips=0.0,
+                          variation=0.12)
+        roughness = 0.85
     elif kind == "metal":
         darker = tuple(c * 0.72 for c in base[:3]) + (1.0,)
         blotch = tree.mix(tree.ramp(tree.noise(2.0, 6.0, 0.55, offset=seed), 0.3, 0.75), darker, base)

@@ -70,6 +70,17 @@ along the inside of it) into `scenes/world/OutsideScenery.tscn`. The models
 have no collisions, so navigation, the build grid and placement are not
 affected.
 
+## Scrap cars
+
+`tools/blender/props_scrapcars.py` turns CC0 city cars (Quaternius, see
+[asset credits](asset-credits.md)) into wrecks: materials are mapped to the
+palette (`wreck_*` paint kind: sun-faded paint with big rust blooms, heavy
+streaks and dust; dirty dark windows), the bodywork gets noise dents, one or
+more wheels go missing and the car sags onto that corner, Walt's riveted
+patches, a block under the bare axle and a loose tyre are added. `scrap_car_a`
+is the car wreck in the yard (with its stash); all four stand outside the
+fence.
+
 ## Characters
 
 The player and Juri (`CHARACTERS` in `tools/blender/build_props.py`) are

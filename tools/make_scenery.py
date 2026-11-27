@@ -58,7 +58,8 @@ def outside_ring(count, near, far, kinds, gap=0.0):
 
 
 # Big pieces first, a little further out so they frame the yard.
-outside_ring(12, 3.0, 9.0, ["car_stack_a", "scrap_mountain", "car_stack_b", "car_stack_c"], gap=6.0)
+outside_ring(16, 3.0, 9.0, ["car_stack_a", "scrap_car_b", "scrap_mountain", "scrap_car_c", "car_stack_b",
+                            "scrap_car_d", "car_stack_c", "scrap_car_a"], gap=6.0)
 outside_ring(12, 1.5, 6.0, ["tyre_tower", "car_wreck", "scrap_heap_large", "barrel_group"], gap=3.5)
 outside_ring(70, 0.6, 12.0, ["dry_grass_a", "dry_grass_b"])
 

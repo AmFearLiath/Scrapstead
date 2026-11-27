@@ -20,7 +20,8 @@ PALETTE = {
     "moss": "6f8a4a", "teal": "3e8a86", "steel": "5e7c8c", "steel_light": "8fa3ab",
     "wood": "8a6440", "wood_light": "b08658", "wood_dark": "4e3a28", "sand": "b39a72",
     "soil": "8c7a5b", "ink": "2b211b", "plum": "5b4560", "red": "b8402f", "tyre": "2e2b29",
-    "brass": "c9a248", "copper": "b8693a", "paper": "efe2c4", "glass": "a9cfd2", "green": "5c8a4e", "skin": "e3a77e",
+    "brass": "c9a248", "copper": "b8693a", "wreck_teal": "2f9d96", "wreck_orange": "c8602c",
+    "wreck_mustard": "f0b52e", "wreck_red": "c63f2a", "window": "34434a", "paper": "efe2c4", "glass": "a9cfd2", "green": "5c8a4e", "skin": "e3a77e",
 }
 
 _rng = random.Random(1974)

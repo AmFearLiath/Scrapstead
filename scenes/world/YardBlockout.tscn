@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" path="res://assets/models/scrap_heap_pile.glb" id="17_k0xlf"]
 [ext_resource type="PackedScene" path="res://assets/models/scrap_heap_large.glb" id="18_b0s34"]
 [ext_resource type="PackedScene" path="res://assets/models/scrap_heap_small.glb" id="19_8cnmt"]
-[ext_resource type="PackedScene" path="res://assets/models/car_wreck.glb" id="20_q8ihk"]
+[ext_resource type="PackedScene" path="res://assets/models/scrap_car_a.glb" id="20_q8ihk"]
 [ext_resource type="PackedScene" path="res://assets/models/engine_block.glb" id="21_l2rvp"]
 [ext_resource type="PackedScene" path="res://assets/models/container.glb" id="22_xfyor"]
 [ext_resource type="PackedScene" path="res://assets/models/pallet_stack.glb" id="23_nlpql"]
@@ -121,7 +121,7 @@ size = Vector3(4.25, 2.4, 3.4)
 size = Vector3(2.55, 1.4, 2.55)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4ggw6"]
-size = Vector3(1.9, 1.7, 4.1)
+size = Vector3(1.9, 1.7, 4.3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4gm7e"]
 size = Vector3(1.4, 0.9, 1)
