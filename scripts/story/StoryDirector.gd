@@ -262,6 +262,16 @@ func on_placed(placeable_id: String) -> void:
 	say_event("built_" + placeable_id, true)
 
 
+## A conveyor connects two machines for the first time (docs/machine-links.md).
+func on_linked() -> void:
+	say_event("first_link", true)
+
+
+## A press finished its first bale (docs/processing-chain.md).
+func on_bale_pressed() -> void:
+	say_event("first_bale", true)
+
+
 ## The first machine was delivered and set up.
 func on_machine_installed() -> void:
 	say_event("machine_installed", true)

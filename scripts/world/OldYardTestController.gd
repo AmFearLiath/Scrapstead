@@ -976,6 +976,9 @@ func _setup_placed(saved: Dictionary) -> void:
 	for note: String in placed.links.apply_save_state(saved_links if typeof(saved_links) == TYPE_ARRAY else []):
 		_note(note)
 	placed.links.link_blocked.connect(_on_link_blocked)
+	placed.links.linked.connect(func(_link_id: int) -> void:
+		if story_director != null and not _restoring:
+			story_director.on_linked())
 	_update_reserved_sign()
 
 
@@ -1216,7 +1219,9 @@ func _setup_press(press: ScrapPress, uid: String) -> void:
 	press.setup(_objects, uid)
 	press.bale_pressed.connect(func(bale: ScrapItem) -> void:
 		_dust(bale.global_position, 10, 0.18)
-		_sound("thud", -4.0))
+		_sound("thud", -4.0)
+		if story_director != null:
+			story_director.on_bale_pressed())
 	press.piece_fed.connect(func(_item_id: String) -> void: _sound("clink", -14.0))
 
 

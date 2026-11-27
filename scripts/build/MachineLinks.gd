@@ -23,6 +23,8 @@ extends Node3D
 ## steel, copper and wood chutes); every channel feeds its own link.
 
 signal changed
+## A link was created (by the player or when loading).
+signal linked(link_id: int)
 ## A link could no longer be routed (or works again).
 signal link_blocked(link_id: int, blocked: bool)
 ## A piece left a source towards a target (presentation).
@@ -172,6 +174,7 @@ func link(from_uid: String, to_uid: String, link_id: int = -1, channel: Variant 
 		"cells": check["cells"], "blocked": false, "timer": SEND_INTERVAL, "visual": null}
 	_build_visual(link_id)
 	changed.emit()
+	linked.emit(link_id)
 	return {"ok": true, "message_key": "build.linked", "message_args": {"from": _name(from_uid), "to": _name(to_uid)},
 		"link_id": link_id}
 

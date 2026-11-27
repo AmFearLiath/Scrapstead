@@ -680,3 +680,10 @@ ui.sorter.fed,{count} piece(s) into the hopper ({hopper} waiting).,{count} Teil(
 build.problem.sorter_not_empty,Empty hopper and bins first.,Erst Trichter und Kisten leeren.
 ui.press.hopper_empty,empty,leer
 ui.press.rule,{pieces} × {material} → {bale},{pieces} × {material} → {bale}
+scrappy.built_scrap_press.1,A press. It flattens things. I'm going to stand over there. Far over there.,Eine Presse. Sie macht Dinge platt. Ich stelle mich da drüben hin. Weit da drüben.
+scrappy.built_scrap_press.2,"Tip: put bolts, cans, copper or wood into the hopper at the back. Six bolts become one bale - worth more and lighter to carry.","Tipp: Schrauben, Dosen, Kupfer oder Holz hinten in den Trichter. Sechs Schrauben werden ein Ballen - mehr wert und leichter zu tragen."
+scrappy.built_sorter.1,"It rattles, it shakes, it sorts. Like me before breakfast.","Sie rattert, sie wackelt, sie sortiert. Wie ich vor dem Frühstück."
+scrappy.built_sorter.2,"Tip: build mode, tool Connect (L). Click the sorter next to a bin, then a press. Three bins, three presses - and the yard works by itself.","Tipp: Baumodus, Werkzeug Verbinden (L). Klick die Sortiermaschine neben einer Kiste an, dann eine Presse. Drei Kisten, drei Pressen - und der Hof arbeitet von allein."
+scrappy.first_link.1,A conveyor! Now the scrap walks by itself. Finally someone else doing the carrying.,Ein Förderband! Jetzt läuft der Schrott von allein. Endlich trägt mal jemand anders.
+scrappy.first_bale.1,Our first bale! Look at it. So square. So proud.,Unser erster Ballen! Sieh ihn dir an. So eckig. So stolz.
+scrappy.first_bale.2,"Juri fetches bales from the press by himself - and gets one wage per bale, not per screw. Everybody wins.","Juri holt Ballen selbst an der Presse ab - und bekommt einen Lohn pro Ballen, nicht pro Schraube. Alle gewinnen."
