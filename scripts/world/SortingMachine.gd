@@ -39,6 +39,10 @@ var _status: String = ""
 ## {"id", "item", "slot", "channel", "node"}
 var _live: Array[Dictionary] = []
 var _installed: bool = false
+## Pieces on their way over a belt: {"item": id, "left": seconds}. They
+## count against the hopper but arrive (and get processed) only when the
+## piece visibly drops in.
+var _incoming: Array[Dictionary] = []
 ## Prefix of the items this machine creates; unique per placed machine.
 var _prefix: String = OBJECT_PREFIX
 
@@ -74,7 +78,7 @@ func toggle() -> bool:
 
 
 func get_hopper_count() -> int:
-	return _queue.size()
+	return _queue.size() + _incoming.size()
 
 
 func get_bin_count(channel: String) -> int:
@@ -120,14 +124,18 @@ func accepts_item_type(item_id: String) -> bool:
 
 
 func can_accept(item_id: String) -> bool:
-	return is_installed() and profile.accepts(item_id) and _queue.size() < profile.hopper_capacity
+	return is_installed() and profile.accepts(item_id) and get_hopper_count() < profile.hopper_capacity
 
 
-func accept_item(item: ScrapItem) -> bool:
+## `delay`: seconds until the piece arrives (it rides a belt meanwhile).
+func accept_item(item: ScrapItem, delay: float = 0.0) -> bool:
 	if item == null or not can_accept(item.get_item_id()):
 		return false
-	_queue.append(item.get_item_id())
 	item.set_state(ScrapItem.State.PROCESSED)
+	if delay > 0.0:
+		_incoming.append({"item": item.get_item_id(), "left": delay})
+		return true
+	_queue.append(item.get_item_id())
 	piece_fed.emit(item.get_item_id())
 	_update_status()
 	return true
@@ -195,7 +203,7 @@ func on_relocated(_old_transform: Transform3D, _new_transform: Transform3D) -> v
 
 
 func get_removal_problem() -> String:
-	if not _queue.is_empty():
+	if get_hopper_count() > 0:
 		return "build.problem.sorter_not_empty"
 	for group: MaterialGroup in profile.groups:
 		if get_bin_count(group.id) > 0:
@@ -208,6 +216,7 @@ func get_removal_problem() -> String:
 func _process(delta: float) -> void:
 	if not is_installed():
 		return
+	_advance_incoming(delta)
 	_update_status()
 	if _status != STATUS_WORKING:
 		_timer = get_cycle_seconds()
@@ -241,7 +250,7 @@ func get_save_state() -> Dictionary:
 	var items: Array = []
 	for entry: Dictionary in _live:
 		items.append({"id": entry["id"], "item": entry["item"], "slot": entry["slot"], "channel": entry["channel"]})
-	return {"on": _switched_on, "timer": snappedf(_timer, 0.01), "hopper": Array(_queue), "counter": _counter,
+	return {"on": _switched_on, "timer": snappedf(_timer, 0.01), "hopper": _saved_hopper(), "counter": _counter,
 		"items": items}
 
 
@@ -264,6 +273,23 @@ func apply_save_state(state: Dictionary) -> void:
 
 
 # --- Helpers -----------------------------------------------------------------------
+
+## Hopper contents for saving: pieces still on a belt count as arrived.
+func _saved_hopper() -> Array:
+	var saved: Array = Array(_queue)
+	for entry: Dictionary in _incoming:
+		saved.append(str(entry["item"]))
+	return saved
+
+
+## Pieces riding a belt drop into the hopper when their time is up.
+func _advance_incoming(delta: float) -> void:
+	for index: int in range(_incoming.size() - 1, -1, -1):
+		_incoming[index]["left"] = float(_incoming[index]["left"]) - delta
+	while not _incoming.is_empty() and float(_incoming[0]["left"]) <= 0.0:
+		var item_id: String = str(_incoming.pop_front()["item"])
+		_queue.append(item_id)
+		piece_fed.emit(item_id)
 
 func _next_index() -> int:
 	for index: int in _queue.size():

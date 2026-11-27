@@ -37,9 +37,12 @@ Verbinden und Entfernen lassen sich rückgängig machen und wiederholen.
 ## Transport
 
 Alle 2 Sekunden schickt ein Band ein passendes Teil aus der Ausgabe der
-Quelle zur Zielmaschine, wenn diese es annimmt. Die Übergabe wird sofort
-logisch entschieden; das Teil, das man über das Band fahren sieht, ist nur die
-Darstellung. Darum muss der Spielstand keine Teile „unterwegs“ kennen.
+Quelle los, wenn die Zielmaschine Platz hat. Der Platz im Trichter wird sofort
+reserviert, das Teil kommt aber erst an, wenn es sichtbar in den Trichter
+fällt (Fahrzeit über das Band plus kurzer Sprung). Erst dann wird es
+verarbeitet. So kommt aus einer Maschine immer das Teil, das man hineinfallen
+sah, auch bei langen Bändern. Beim Speichern gelten Teile auf dem Band als
+angekommen, der Spielstand muss also keine Teile „unterwegs“ kennen.
 
 ## Technik
 

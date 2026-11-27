@@ -145,6 +145,8 @@ func test_sorter_feeds_three_presses_over_three_belts() -> void:
 	for link: Dictionary in placed.links.get_links():
 		while placed.links.send_once(link["id"]) != "":
 			pass
+	for press: Node3D in presses.values():
+		(press as ScrapPress)._advance_incoming(60.0)
 	check_eq(sorter.get_bin_count("steel"), 0, "steel bin emptied by its belt")
 	check_eq(sorter.get_bin_count("copper"), 0, "copper bin emptied by its belt")
 	check_eq((presses["steel"] as ScrapPress).get_group_counts().keys(), ["steel"], "only steel in the steel press")
@@ -275,3 +277,44 @@ func test_juri_starts_the_chain_at_a_connected_sorter() -> void:
 		"all three materials reach the press: %s" % press.get_group_counts())
 	check_eq(refed, [], "nothing went back into the sorter")
 	check_eq(sorter.get_hopper_count(), 0, "sorter hopper empty")
+
+
+func test_belt_delivers_when_the_piece_visibly_arrives() -> void:
+	var scene: Node = await _new_game()
+	var placed: PlacedObjects = scene.get_placed()
+	_credit(scene, 60)
+	var magnet_uid: String = placed.place("magnet_collector", Vector2i(69, -27), 0)["uid"]
+	var magnet: MagnetCollector = placed.get_node_for(magnet_uid) as MagnetCollector
+	var sorter_uid: String = _place_near(scene, "sorter", Vector2i(60, -45), func(candidate: String) -> bool:
+		return placed.links.check_link(magnet_uid, candidate)["ok"])
+	var sorter: SortingMachine = placed.get_node_for(sorter_uid) as SortingMachine
+	var link_id: int = placed.links.link(magnet_uid, sorter_uid)["link_id"]
+	var travel: float = placed.links._travel_seconds(placed.links.get_link(link_id), magnet.get_port_position("out"))
+	check(travel > 1.0, "the belt takes a while (%.1f s)" % travel)
+	var first: ScrapItem = magnet.collect_once()
+	var first_id: String = first.get_item_id()
+	check_eq(placed.links.send_once(link_id), first_id, "first piece leaves the crate")
+	check_eq(sorter.get_hopper_count(), 1, "its place in the hopper is reserved")
+	check(sorter.sort_once() == null, "nothing to sort while it still rides the belt")
+	sorter._advance_incoming(travel * 0.6)
+	check(sorter.sort_once() == null, "still on its way")
+	var second: ScrapItem = magnet.collect_once()
+	var second_id: String = second.get_item_id()
+	placed.links.send_once(link_id)
+	sorter._advance_incoming(travel * 0.5)
+	var out: ScrapItem = sorter.sort_once()
+	check(out != null and out.get_item_id() == first_id, "the first piece comes out first: %s" % first_id)
+	check(sorter.sort_once() == null, "the second one is still riding")
+	sorter._advance_incoming(travel)
+	var out2: ScrapItem = sorter.sort_once()
+	check(out2 != null and out2.get_item_id() == second_id, "then the second: %s" % second_id)
+	# Saved while riding: the piece counts as arrived after loading.
+	magnet.collect_once()
+	placed.links.send_once(link_id)
+	check(scene.save_game(), "save while a piece rides")
+	_session.continue_game()
+	await wait_process_frames(2)
+	scene = await wait_for_scene(YARD)
+	await wait_physics_frames(3)
+	var restored: SortingMachine = scene.get_placed().get_node_for(sorter_uid) as SortingMachine
+	check_eq(restored.get_hopper_count(), 1, "the riding piece is in the hopper after loading")

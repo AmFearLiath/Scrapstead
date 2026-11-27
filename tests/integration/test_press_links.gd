@@ -169,9 +169,11 @@ func test_conveyor_links_magnet_to_press() -> void:
 	for index: int in 6:
 		check(placed.links.send_once(link["id"]) != "", "piece %d sent" % (index + 1))
 	check_eq(magnet.get_bin_count(), 0, "crate emptied by the belt")
-	check_eq(press.get_hopper_count(), 6, "hopper filled")
+	check_eq(press.get_hopper_count(), 6, "hopper filled (pieces still riding count)")
 	check_eq(placed.links.send_once(link["id"]), "", "nothing left to send")
-	check(press.press_once() != null, "bale pressed from belt scrap")
+	check(press.press_once() == null, "nothing is pressed before the pieces arrive")
+	press._advance_incoming(60.0)
+	check(press.press_once() != null, "bale pressed from belt scrap once it arrived")
 	# Waiting in real time: the belt keeps sending by itself.
 	magnet.collect_once()
 	placed.links._links[link["id"]]["timer"] = 0.01

@@ -30,6 +30,8 @@ signal piece_sent(link_id: int, item_id: String)
 
 const BELT_SPEED := 1.4
 const SEND_INTERVAL := 2.0
+## The last hop from the belt end into the hopper.
+const HOP_SECONDS := 0.35
 const BELT_HEIGHT := 0.36
 const COST_PROTECTED := 3.0
 const COST_NEAR_PORT := 12.0
@@ -244,7 +246,7 @@ func send_once(link_id: int) -> String:
 		var start: Vector3 = item.global_position
 		var item_id: String = item.get_item_id()
 		var model: PackedScene = item.definition.model if item.definition != null else null
-		if target.accept_item(item):
+		if target.accept_item(item, _travel_seconds(current, start)):
 			_animate_piece(current, start, model)
 			piece_sent.emit(link_id, item_id)
 			return item_id
@@ -445,6 +447,18 @@ func _free_visual(current: Dictionary) -> void:
 	current["visual"] = null
 
 
+## How long a piece needs from `start` over the belt into the target (the
+## same timing as the picture in _animate_piece).
+func _travel_seconds(current: Dictionary, start: Vector3) -> float:
+	var seconds: float = 0.0
+	var previous: Vector3 = start
+	for cell: Vector2i in current["cells"]:
+		var point: Vector3 = BuildGrid.cell_center(cell) + Vector3(0, BELT_HEIGHT, 0)
+		seconds += maxf(previous.distance_to(point) / BELT_SPEED, 0.05)
+		previous = point
+	return seconds + HOP_SECONDS
+
+
 ## The picture of a piece riding the belt and hopping into the target.
 func _animate_piece(current: Dictionary, start: Vector3, model: PackedScene) -> void:
 	if model == null or not is_inside_tree():
@@ -462,7 +476,7 @@ func _animate_piece(current: Dictionary, start: Vector3, model: PackedScene) -> 
 		var point: Vector3 = BuildGrid.cell_center(cell) + Vector3(0, BELT_HEIGHT, 0)
 		tween.tween_property(piece, "global_position", point, maxf(previous.distance_to(point) / BELT_SPEED, 0.05))
 		previous = point
-	tween.tween_property(piece, "global_position", end, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(piece, "global_position", end, HOP_SECONDS).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(piece.queue_free)
 
 

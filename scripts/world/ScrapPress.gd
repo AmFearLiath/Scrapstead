@@ -49,6 +49,10 @@ var _counter: int = 0
 var _status: String = ""
 var _live: Array[Dictionary] = []
 var _installed: bool = false
+## Pieces on their way over a belt: {"item": id, "left": seconds}. They
+## count against the hopper but arrive (and get processed) only when the
+## piece visibly drops in.
+var _incoming: Array[Dictionary] = []
 ## Prefix of the items this machine creates; unique per placed machine.
 var _prefix: String = OBJECT_PREFIX
 
@@ -85,7 +89,7 @@ func toggle() -> bool:
 
 
 func get_hopper_count() -> int:
-	return _hopper.size()
+	return _hopper.size() + _incoming.size()
 
 
 func get_hopper_items() -> Array[String]:
@@ -143,15 +147,19 @@ func get_output_item_ids(_channel: String = "") -> PackedStringArray:
 
 ## Whether the hopper takes this item now.
 func can_accept(item_id: String) -> bool:
-	return is_installed() and profile.accepts(item_id) and _hopper.size() < profile.hopper_capacity
+	return is_installed() and profile.accepts(item_id) and get_hopper_count() < profile.hopper_capacity
 
 
 ## Takes a piece into the hopper: the item is consumed (state "processed").
-func accept_item(item: ScrapItem) -> bool:
+## `delay`: seconds until the piece arrives (it rides a belt meanwhile).
+func accept_item(item: ScrapItem, delay: float = 0.0) -> bool:
 	if item == null or not can_accept(item.get_item_id()):
 		return false
-	_hopper.append(item.get_item_id())
 	item.set_state(ScrapItem.State.PROCESSED)
+	if delay > 0.0:
+		_incoming.append({"item": item.get_item_id(), "left": delay})
+		return true
+	_hopper.append(item.get_item_id())
 	piece_fed.emit(item.get_item_id())
 	_update_status()
 	return true
@@ -204,7 +212,7 @@ func on_relocated(_old_transform: Transform3D, _new_transform: Transform3D) -> v
 
 ## Hopper and tray must be empty before the press goes back to storage.
 func get_removal_problem() -> String:
-	if get_tray_count() > 0 or not _hopper.is_empty():
+	if get_tray_count() > 0 or get_hopper_count() > 0:
 		return "build.problem.press_not_empty"
 	return ""
 
@@ -214,6 +222,7 @@ func get_removal_problem() -> String:
 func _process(delta: float) -> void:
 	if not is_installed():
 		return
+	_advance_incoming(delta)
 	_update_status()
 	if _status != STATUS_WORKING:
 		_timer = get_cycle_seconds()
@@ -252,7 +261,7 @@ func get_save_state() -> Dictionary:
 	var items: Array = []
 	for entry: Dictionary in _live:
 		items.append({"id": entry["id"], "item": entry["item"], "slot": entry["slot"]})
-	return {"on": _switched_on, "timer": snappedf(_timer, 0.01), "hopper": Array(_hopper),
+	return {"on": _switched_on, "timer": snappedf(_timer, 0.01), "hopper": _saved_hopper(),
 		"counter": _counter, "items": items}
 
 
@@ -275,6 +284,23 @@ func apply_save_state(state: Dictionary) -> void:
 
 
 # --- Helpers -----------------------------------------------------------------------
+
+## Hopper contents for saving: pieces still on a belt count as arrived.
+func _saved_hopper() -> Array:
+	var saved: Array = Array(_hopper)
+	for entry: Dictionary in _incoming:
+		saved.append(str(entry["item"]))
+	return saved
+
+
+## Pieces riding a belt drop into the hopper when their time is up.
+func _advance_incoming(delta: float) -> void:
+	for index: int in range(_incoming.size() - 1, -1, -1):
+		_incoming[index]["left"] = float(_incoming[index]["left"]) - delta
+	while not _incoming.is_empty() and float(_incoming[0]["left"]) <= 0.0:
+		var item_id: String = str(_incoming.pop_front()["item"])
+		_hopper.append(item_id)
+		piece_fed.emit(item_id)
 
 ## Pieces waiting per material group id.
 func get_group_counts() -> Dictionary:
